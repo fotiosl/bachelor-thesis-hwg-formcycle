@@ -42,10 +42,12 @@ api_keys.json
 *.swp
 *.swo
 
-# OS
+# OS & Office Temp
 .DS_Store
 Thumbs.db
 desktop.ini
+~$*
+*.tmp
 
 # Output / Temp
 scratch/
