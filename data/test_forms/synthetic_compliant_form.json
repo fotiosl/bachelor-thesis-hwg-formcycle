@@ -1,0 +1,140 @@
+{
+  "name": "Synthetic Compliant Form (Ground Truth 100%)",
+  "description": "Synthetisches Referenzformular der HWG Ludwigshafen, das alle 18 Regeln der Compliance-Registry strikt einhält.",
+  "properties": {
+    "maxwidth": "850px",
+    "minwidth": "300px"
+  },
+  "items": [
+    {
+      "className": "XImage",
+      "properties": {
+        "name": "imgHWGLogo",
+        "alt": "Offizielles Logo der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
+        "url": "https://www.hwg-lu.de/typo3conf/ext/hwg_sitepackage/Resources/Public/Images/logo.svg"
+      }
+    },
+    {
+      "className": "XFieldSet",
+      "properties": {
+        "name": "fsPersoenlicheAngaben",
+        "legend": "Persönliche Angaben",
+        "maxwidth": "850px"
+      }
+    },
+    {
+      "className": "XSelect",
+      "properties": {
+        "name": "selAnrede",
+        "label": "Anrede",
+        "required": "1",
+        "showrequiredhint": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfVorname",
+        "label": "Vorname",
+        "required": "1",
+        "showrequiredhint": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfNachname",
+        "label": "Nachname",
+        "required": "1",
+        "showrequiredhint": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfEmail",
+        "label": "E-Mail-Adresse",
+        "required": "1",
+        "showrequiredhint": "1",
+        "validation": { "type": "email" }
+      }
+    },
+    {
+      "className": "XFieldSet",
+      "properties": {
+        "name": "fsAnschriftBank",
+        "legend": "Anschrift und Bankverbindung",
+        "maxwidth": "850px"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfPLZ",
+        "label": "Postleitzahl",
+        "maxwidth": "120px",
+        "pattern": "^[0-9]{5}$",
+        "validation": { "regex": "^[0-9]{5}$" },
+        "required": "1",
+        "showrequiredhint": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfOrt",
+        "label": "Wohnort",
+        "required": "1",
+        "showrequiredhint": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfIBAN",
+        "label": "IBAN",
+        "pattern": "^[A-Z]{2}[0-9]{20}$",
+        "validation": { "regex": "^[A-Z]{2}[0-9]{20}$", "type": "iban" },
+        "required": "1",
+        "showrequiredhint": "1"
+      }
+    },
+    {
+      "className": "XUpload",
+      "properties": {
+        "name": "uplNachweise",
+        "label": "Nachweisbelege hochladen",
+        "help": "Erlaubte Dateiformate: PDF, JPG, PNG. Maximale Dateigröße: max. 10 MB pro Datei."
+      }
+    },
+    {
+      "className": "XFieldSet",
+      "properties": {
+        "name": "fsDatenschutzAblauf",
+        "legend": "Datenschutz und Verfahrensablauf"
+      }
+    },
+    {
+      "className": "XText",
+      "properties": {
+        "name": "txtDatenschutzHinweis",
+        "text": "Informationen zur Datenverarbeitung: Ihre personenbezogenen Daten werden gemäß Art. 13 DSGVO vertraulich verarbeitet. Ausführliche Informationen finden Sie in der Datenschutzerklärung der HWG Ludwigshafen unter www.hwg-lu.de/datenschutz."
+      }
+    },
+    {
+      "className": "XText",
+      "properties": {
+        "name": "txtVerfahrensablauf",
+        "text": "Weiterer Ablauf: Nach dem Absenden wird Ihr Antrag geprüft. Die reguläre Bearbeitungsdauer beträgt ca. 10 Werktage. Sie erhalten den schriftlichen Bescheid per E-Mail."
+      }
+    },
+    {
+      "className": "XButton",
+      "properties": {
+        "name": "btnSubmit",
+        "text": "Antrag einreichen",
+        "type": "submit"
+      }
+    }
+  ]
+}

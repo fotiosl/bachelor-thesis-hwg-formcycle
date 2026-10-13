@@ -1,14 +1,37 @@
 \chapter{Fazit und Ausblick}
 \label{chap:fazit}
 
+Das abschließende Kapitel fasst die zentralen Erkenntnisse der Arbeit zusammen, leitet handlungsleitende Empfehlungen für den operativen Hochschulbetrieb an der HWG Ludwigshafen ab und skizziert zukünftige Forschungs- und Entwicklungspotenziale.
+
 \section{Zusammenfassung der Kernergebnisse}
 \label{sec:fazit_ergebnisse}
-[Zusammenfassung der Beantwortung der Forschungsfragen.]
+
+Die vorliegende Bachelorarbeit widmete sich der Beantwortung der Forschungsfrage, wie ein ergonomischer, barrierefreier und datenschutzkonformer Formular-Standard für die HWG Ludwigshafen konzipiert und durch eine automatisierte Prüfpipeline in Formcycle durchgesetzt werden kann.
+
+Die zentralen Meilensteine umfassen:
+\begin{enumerate}
+    \item \textbf{Empirische Offenlegung gewachsener Mängel:} Die Vollerhebung von 34 Formcyclen-Formularen und die DOM-Analyse von acht gerenderten Formularen wiesen fundamentale Brüche im Corporate Design (700px vs. 850px, fehlende Logos), Barrierefreiheitsdefizite nach WCAG 2.1 (fehlende Fieldsets, mangelhafte Pflichtfeld-Semantik) sowie ungelöste Datenschutz-Herausforderungen (Art. 13 DSGVO) nach.
+    \item \textbf{Konzeption eines ganzheitlichen Formular-Standards:} Es wurde ein verbindliches Regelwerk mit 18 formalisierten Kriterien über sechs Dimensionen definiert. Besondere ergonomische Akzente setzen das standardisierte Stammdaten-Muster sowie die Entkopplung von Ausnahme-Workflows und Button-Aktionen (Fallstudie \textit{\enquote{Kritischer Fall}}).
+    \item \textbf{Prototypische Umsetzung einer hybriden Prüfpipeline:} Durch die Kombination eines deterministischen JSON-Parsers mit semantischem Context-Engineering wurde ein System geschaffen, das Formcycle-Exportdateien innerhalb von Millisekunden auditiert und mit einem mathematisch fundierten Compliance-Score bewertet.
+    \item \textbf{Erfolgreiche quantitative Evaluation:} Am synthetischen Kontrollkorpus demonstrierte die Pipeline eine 100\%ige Erkennungsgenauigkeit. Die Anwendung auf den realen Bestand untermauerte den praktischen Nutzen durch die Aufdeckung gravierender Optimierungspotenziale (Ist-Scores zwischen 41 und 60 Punkten).
+\end{enumerate}
 
 \section{Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}
 \label{sec:handlungsempfehlungen}
-[Konkrete Empfehlungen zur Verankerung des Formular-Standards im Hochschulbetrieb.]
 
-\section{Zukünftige Forschungsansätze}
+Für die nachhaltige Verankerung der Formular-Governance im Regelbetrieb der Hochschule werden folgende Maßnahmen empfohlen:
+\begin{enumerate}
+    \item \textbf{Verbindliche Freigabe-Gates:} Integration des Compliance-Scoring in den Veröffentlichungsprozess. Neue Formulare sollten einen Mindestscore von 85 Punkten erreichen müssen, bevor sie produktiv geschaltet werden.
+    \item \textbf{Aktualisierung des Master-Formulars:} Die interne Stammdaten-Vorlage muss dringend auf das 850px-Raster migriert, von HTML-Artefakten bereinigt und mit einer standardisierten DSGVO-Klausel versehen werden.
+    \item \textbf{Rollenbasiertes Berechtigungskonzept in Workflows:} Fachliche Sonderprozesse (wie die ZFK-Präsidiumsprüfung) sollten über Formcycle-interne Workflow-Status abgebildet werden, anstatt verwirrende Ausnahmeschaltflächen für Antragstellende bereitzustellen.
+\end{enumerate}
+
+\section{Zukünftige Forschungs- und Entwicklungsperspektiven}
 \label{sec:ausblick}
-[Weiterentwicklungsmöglichkeiten des KI-Assistenten.]
+
+Zukünftige Arbeiten können auf den Ergebnissen dieser Thesis aufbauen:
+\begin{itemize}
+    \item \textbf{Integration eines multimodalen Vision-Audits:} Ergänzung des DOM-Parsers durch Bildverarbeitungsmodelle, um Kontrastverhältnisse und visuelle Abstände direkt auf gerenderten Screenshots zu evaluieren.
+    \item \textbf{Automatisierte Auto-Remediation:} Erweiterung der Pipeline um die Fähigkeit, fehlerhafte Formcycle-\texttt{.xfp}-Dateien automatisiert zu patchen (z.\,B. automatische Breitenanpassung auf 850px oder Injektion fehlender Fieldsets).
+    \item \textbf{Interaktiver KI-Chatbot im Formcycle-Designer:} Einbettung eines dialogbasierten Assistenten, der Formularautorinnen und -autoren bereits während der Erstellung in Echtzeit berät.
+\end{itemize}

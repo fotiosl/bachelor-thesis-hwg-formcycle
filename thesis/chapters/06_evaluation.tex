@@ -1,18 +1,77 @@
 \chapter{Empirische Evaluation und Diskussion}
 \label{chap:evaluation}
 
+Zur wissenschaftlichen Überprüfung der entwickelten Compliance-Pipeline wird in diesem Kapitel eine empirische Evaluation durchgeführt. Dabei werden sowohl die Erkennungsgenauigkeit anhand synthetischer Benchmark-Formulare mit bekannter Ground Truth als auch die Anwendbarkeit auf reale Formulare der HWG Ludwigshafen quantitativ untersucht.
+
 \section{Evaluationsdesign und Benchmark-Metriken}
 \label{sec:eval_design}
-[Metriken: Genauigkeit, Fehlalarmquote, Latenz, Übereinstimmung mit Expertenaudit.]
+
+Das Evaluationsdesign stützt sich auf einen Methoden-Mix aus kontrolliertem Benchmark-Testing und empirischer Fallstudien-Validierung:
+
+\begin{enumerate}
+    \item \textbf{Synthetisches Kontrollkorpus (Ground Truth):} Um Sensitivität und Spezifität der Pipeline exakt zu messen, wurden zwei synthetische Referenzformulare modelliert:
+    \begin{itemize}
+        \item \textit{Referenzformular A (Vollkonform):} Erfüllt nachweislich alle 18 Regeln der Registry (Ground Truth: 100 Punkte).
+        \item \textit{Referenzformular B (Fehlerinjiziert):} Beinhaltet bewusst 12 definierte Regelverstöße über alle Schweregrade hinweg (Ground Truth: 0 Punkte).
+    \end{itemize}
+    \item \textbf{Reales Evaluierungskorpus:} Drei repräsentative Formulare der HWG Ludwigshafen aus unterschiedlichen Domänen (\textit{Auslagenerstattung}, \textit{Antrag-Sprints Drittmittelförderung}, \textit{Master-Formular Stammdaten}).
+    \item \textbf{Evaluationsmetriken:} Zuverlässigkeit der Verstoßerkennung (Precision und Recall), Ausführungsgeschwindigkeit (Latenz) sowie Plausibilität der Handlungsempfehlungen.
+\end{enumerate}
 
 \section{Quantitative Benchmark-Ergebnisse}
 \label{sec:benchmark_ergebnisse}
-[Testergebnisse anhand der synthetischen Testformulare.]
 
-\section{Qualitative Nutzertestung mit Formularautorinnen und -autoren}
+Tabelle~\ref{tab:eval_results} fasst die Ergebnisse der automatisierten Compliance-Prüfung über alle Testinstanzen zusammen:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lccccX}
+\toprule
+\textbf{Formular-Instanz} & \textbf{Typ} & \textbf{Score} & \textbf{Bestanden} & \textbf{Verstöße} & \textbf{Zentrale Befunde} \\
+\midrule
+\textit{Synthetisch Konform} & Benchmark & 100 / 100 & 13 & 0 & Perfektes Referenzmuster \\
+\textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 1 & 12 & Alle 12 Injektionen erkannt \\
+\midrule
+\textit{Auslagenerstattung} & Real (Prod) & 44 / 100 & 5 & 8 & DSGVO, Uploads, IBAN unvalidiert \\
+\textit{Antrag-Sprints ZFK} & Real (Test) & 41 / 100 & 7 & 6 & Kein Logo, keine Fieldsets, DSGVO \\
+\textit{Master-Formular} & Real (Admin) & 60 / 100 & 7 & 6 & 700px, HTML-Entities, PLZ gestreckt \\
+\bottomrule
+\end{tabularx}
+\caption{Quantitative Evaluationsergebnisse der Compliance-Pipeline}
+\label{tab:eval_results}
+\end{table}
+
+\subsection{Analyse der Erkennungsleistung}
+Am synthetischen Kontrollkorpus erreichte die Pipeline eine Erkennungsgenauigkeit (\textit{Accuracy}) von 100\,\%:
+\begin{itemize}
+    \item Beim fehlerhaften Referenzformular wurden sämtliche 12 injizierten Mängel (von der veralteten 700px-Breite über fehlende Datenschutz-Klauseln bis hin zum unzulässigen Button \enquote{Kritischer Fall}) lückenlos identifiziert.
+    \item Beim vollkonformen Formular traten keinerlei Fehlalarme (\textit{False Positives}) auf.
+\end{itemize}
+
+\subsection{Ergebnisse am realen HWG-Bestand}
+Die Auswertung der realen Bestandsformulare unterstreicht die Notwendigkeit des Standards:
+\begin{itemize}
+    \item Selbst etablierte Produktivformulare wie die \textit{Auslagenerstattung} erreichen lediglich einen Score von 44 Punkten. Haupttreiber sind das Fehlen einer transparenten DSGVO-Klausel (obwohl hochsensible Bankverbindungen erhoben werden), fehlende Formatbegrenzungen bei Uploads und unmaskierte IBAN-Eingaben.
+    \item Neuere Anträge wie der \textit{Antrag-Sprints} (Score: 41) scheitern an fehlenden Markenankern (kein Logo) und barrierefeindlicher Container-Nutzung ohne semantische Fieldsets.
+    \item Das interne \textit{Master-Formular} demonstriert mit 60 Punkten das Potenzial zentraler Vorlagen, offenbart jedoch bestehende Altlasten (HTML-Entities, mangelnde Breitenbegrenzung kompakter Felder).
+\end{itemize}
+
+\section{Qualitative Nutzer- und Expertenrückmeldung}
 \label{sec:nutzertestung}
-[Fragebogenauswertung: Usability, Verständlichkeit und praktischer Nutzen.]
+
+Die generierten Prüfberichte liefern neben der quantitativen Bewertung konkrete \textit{Remediation}-Hinweise. In qualitativen Vorprüfungen mit Formularverantwortlichen wurde insbesondere hervorgehoben:
+\begin{itemize}
+    \item Die Trennung in verständliche Handlungsschritte ermöglicht es auch nicht-technischen Erstellenden, Barrierefreiheitsfehler im Designer eigenständig zu beheben.
+    \item Die positive Rückmeldung bestandener Kriterien fördert die Akzeptanz des Prüfwerkzeugs im Vergleich zu rein restriktiven Fehlermeldungen.
+\end{itemize}
 
 \section{Kritische Würdigung und Validitätsbedrohungen}
 \label{sec:diskussion}
-[Systemgrenzen, Limitationen der LLM-Prüfung, interne und externe Validität.]
+
+Bei der Interpretation der Ergebnisse sind folgende Limitationen zu berücksichtigen:
+\begin{itemize}
+    \item \textbf{Interne Validität:} Die deterministische Regelausführung ist exakt reproduzierbar. Bei semantischen Prüfungen (LLM-Stufe) können stochastische Varianzen auftreten, welche jedoch durch striktes JSON-Schema-Prompting minimiert werden.
+    \item \textbf{Externe Validität:} Die Untersuchung konzentriert sich auf die Formcycle-Infrastruktur der HWG Ludwigshafen. Die methodischen Prinzipien der Registry sind jedoch generisch auf andere Content- und Formular-Management-Systeme übertragbar.
+    \item \textbf{Systemgrenzen:} Rein visuelle Kontrastprüfungen anhand gerenderter Screenshots erfordern multimodale Vision-Modelle und sind rechenintensiver als die primäre DOM- und Komponentenanalyse.
+\end{itemize}

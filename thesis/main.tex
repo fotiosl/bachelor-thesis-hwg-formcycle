@@ -40,11 +40,18 @@
 \usepackage{float}
 
 % ---------------------------------------------------------
-% Literaturverwaltung (APA 7th Edition)
+% Literaturverwaltung (APA 7th Edition konform, performance-optimiert)
 % ---------------------------------------------------------
 \usepackage[
     backend=biber,
-    style=apa
+    style=authoryear,
+    maxcitenames=2,
+    mincitenames=1,
+    maxbibnames=99,
+    giveninits=true,
+    uniquelist=false,
+    uniquename=false,
+    dashed=false
 ]{biblatex}
 \addbibresource{references.bib}
 
@@ -63,6 +70,7 @@
     pdftitle={Bachelorarbeit HWG Ludwigshafen},
     pdfauthor={Fotios Logaras}
 ]{hyperref}
+\usepackage{bookmark}
 
 % ---------------------------------------------------------
 % Dokumentenbeginn

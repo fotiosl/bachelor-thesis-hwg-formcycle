@@ -1,0 +1,113 @@
+{
+  "name": "Synthetic Non-Compliant Form (Ground Truth with Injected Violations)",
+  "description": "Synthetisches Formular mit gezielt injizierten Verstößen zur quantitativen Validierung der Compliance-Pipeline.",
+  "properties": {
+    "maxwidth": "700px",
+    "minwidth": "300px"
+  },
+  "items": [
+    {
+      "className": "XContainer",
+      "properties": {
+        "name": "contHeaderTitle",
+        "heading": "Antrag auf Sondergenehmigung"
+      }
+    },
+    {
+      "className": "XContainer",
+      "properties": {
+        "name": "contPersonalData"
+      }
+    },
+    {
+      "className": "XSelect",
+      "properties": {
+        "name": "selAnrede",
+        "label": "<p>Anrede</p>",
+        "required": "1",
+        "showrequiredhint": "0"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfNachname",
+        "label": "Nachname",
+        "required": "1",
+        "showrequiredhint": "0"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfVorname",
+        "label": "Vorname",
+        "required": "1",
+        "showrequiredhint": "0"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfEmail",
+        "label": "HWGLU-Email",
+        "required": "1",
+        "showrequiredhint": "0"
+      }
+    },
+    {
+      "className": "XText",
+      "properties": {
+        "name": "txtDevNote",
+        "text": "Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert."
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfPLZ",
+        "label": "<p>PLZ &szlig; Wohnort</p>",
+        "colwidth": "100%",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfIBAN",
+        "label": "IBAN",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfKostenstelle",
+        "label": "Kostenstelle"
+      }
+    },
+    {
+      "className": "XUpload",
+      "properties": {
+        "name": "uplDateien",
+        "label": "Belege hochladen"
+      }
+    },
+    {
+      "className": "XButton",
+      "properties": {
+        "name": "btnSubmit",
+        "text": "senden",
+        "type": "submit"
+      }
+    },
+    {
+      "className": "XButton",
+      "properties": {
+        "name": "btnKritisch",
+        "text": "Kritischer Fall",
+        "type": "button"
+      }
+    }
+  ]
+}

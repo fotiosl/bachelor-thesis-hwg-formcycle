@@ -1,18 +1,53 @@
 \chapter{Prototypische Implementierung der Compliance-Prüfpipeline}
 \label{chap:implementierung}
 
-\section{Systemarchitektur und Datenfluss der Middleware}
+Dieses Kapitel beschreibt die technische Realisierung der entwickelten Compliance-Prüfpipeline. Um höchste Verlässlichkeit bei gleichzeitig hoher semantischer Tiefe zu erreichen, folgt das System einer hybriden zweistufigen Architektur: Deterministische strukturelle Regeln werden über einen performanten Python-Parser verifiziert, während sprachliche und ergonomische Nuancen durch ein kontextoptimiertes LLM-Modul auditiert werden.
+
+\section{Systemarchitektur und Datenfluss der Prüfpipeline}
 \label{sec:systemarchitektur}
-[Architektur: Parser für Formcycle .xfp/.fcp, Prompt-Engine, deterministische Scoring-Engine.]
+
+Die Middleware ist als leichtgewichtiger Microservice konzipiert, der Formcycle-Exportdateien (\texttt{.xfp}) entgegennimmt und einen detaillierten Prüfbericht mit Compliance-Score und Korrekturempfehlungen erzeugt (siehe Abbildung des Datenflusses).
+
+Der Verarbeitungsprozess gliedert sich in vier sequentielle Phasen:
+\begin{enumerate}
+    \item \textbf{Ingestion \& Dekompression:} Das ZIP-basierte Formcycle-Archiv (\texttt{.xfp}) wird automatisiert entpackt und die darin enthaltene JSON-Repräsentation (\texttt{.fcp}) in den Arbeitsspeicher geladen.
+    \item \textbf{Stufe 1 (Deterministische Regelausführung):} Alle Regeln mit formalen Kriterien (z.\,B. Layout-Breite 850px, Header-Image, Fieldsets, DSGVO-Klausel, Pflichtfeld-Attribute, Formatvalidierung) werden direkt auf dem Komponentenbaum evaluiert.
+    \item \textbf{Stufe 2 (Semantische LLM-Evaluation):} Für Regeln der Kategorien Microcopy und Leichte Sprache (z.\,B. Handlungsverben auf Buttons, Jargon-Erkennung, Satzkomplexität) werden die extrahierten Textelemente gebündelt an das LLM übergeben.
+    \item \textbf{Aggregation \& Scoring:} Die Ergebnisse beider Stufen werden fusioniert, der finale Compliance-Score nach Gleichung~(\ref{eq:compliance_score}) berechnet und strukturierte Handlungsempfehlungen generiert.
+\end{enumerate}
 
 \section{Datenextraktion aus Formcycle-Strukturen}
 \label{sec:datenextraktion}
-[JSON-Parsing der Formcycle-Komponenten, Attributabbildung.]
 
-\section{Context-Engineering und LLM-Prompt-Design}
+Das interne Datenmodell von Formcycle basiert auf einer hierarchischen Liste von Komponentenobjekten (\texttt{items}). Jedes Element besitzt eine eindeutige \texttt{className} (z.\,B. \texttt{XTextField}, \texttt{XFieldSet}, \texttt{XButton}) sowie ein assoziiertes Eigenschafts-Dictionary (\texttt{properties}).
+
+Der Parser traversiert diesen Komponentenbaum und extrahiert standardisierte Merkmalsvektoren:
+\begin{itemize}
+    \item \textbf{Layout- und Container-Eigenschaften:} Formularbreiten (\texttt{maxwidth}), Grid-Zuordnungen (\texttt{colwidth}) und Container-Hierarchien.
+    \item \textbf{Eingabe- und Validierungsattribute:} Pflichtfeldstatus (\texttt{required}), Hilfetexte (\texttt{showrequiredhint}), Validierungsausdrücke (\texttt{validation.regex}, \texttt{pattern}) und Hilfetexte (\texttt{help}, \texttt{tooltip}).
+    \item \textbf{Textuelle Oberflächenelemente:} Labels, Platzhalter, Info-Texte und Button-Beschriftungen zur semantischen Weiterverarbeitung.
+\end{itemize}
+
+\section{Context-Engineering und semantische LLM-Integration}
 \label{sec:prompt_design}
-[System-Prompts, Injection der rules\_registry.json, Fehlererkennung.]
+
+Für die semantische Evaluation setzt die Pipeline auf zielgerichtetes Context-Engineering (\textcite{cha2026design}). Statt des gesamten unbereinigten JSON-Codes erhält das Modell einen bereinigten, hochgradig strukturierten Prompt:
+
+\begin{itemize}
+    \item \textbf{Rollen- und Wissensdefinition (System-Prompt):} Das Modell agiert als strikter Usability- und Barrierefreiheits-Auditor für Hochschulformulare.
+    \item \textbf{Regel-Injektion:} Die formalen Spezifikationen der semantischen Regeln (\texttt{HWG-BTN-01}, \texttt{HWG-LANG-01}, \texttt{HWG-LANG-02}, \texttt{HWG-FEEDBACK-01}) werden als deterministische Vorgaben direkt in den Prompt injiziert.
+    \item \textbf{Strukturierte JSON-Ausgabe:} Das LLM antwortet in einem strikt definierten JSON-Format mit Angabe von betroffener Regel-ID, Fehlerkategorie und konkretem Formulierungsvorschlag. Dies verhindert Formatbrüche und ermöglicht die nahtlose Weiterverarbeitung im Python-Backend.
+\end{itemize}
 
 \section{Deterministische Berechnung des Compliance-Scores}
 \label{sec:scoring_logik}
-[Mathematische Aggregation, Abzugspunkte je Verstoß-Kategorie.]
+
+Die Aggregation der Verstöße folgt dem in Kapitel~\ref{sec:registry_definition} eingeführten mathematischen Bewertungsmodell. Um maximale Objektivität und Nachvollziehbarkeit zu garantieren, wird der Punktabzug deterministisch anhand der Schweregrade vollzogen:
+
+\begin{itemize}
+    \item \textbf{Transparenz:} Für jeden Verstoß wird der genaue Punktabzug im Prüfbericht ausgewiesen.
+    \item \textbf{Bestandene Prüfungen:} Neben den Verstößen führt der Bericht alle erfolgreich eingehaltenen Regeln explizit auf, was den Erstellenden eine positive Rückkopplung über bereits erreichte Qualitätsstandards bietet.
+    \item \textbf{Konkrete Handlungsanleitungen (\textit{Remediation}):} Zu jedem festgestellten Defizit liefert die Pipeline eine präzise Anleitung zur Fehlerbehebung im Formcycle-Designer.
+\end{itemize}
+
+Durch diese modulare Architektur lässt sich die Prüf-Engine sowohl als lokales CLI-Tool, als automatisierter Git-Hook bei Formular-Releases als auch als serverseitige Middleware einsetzen.

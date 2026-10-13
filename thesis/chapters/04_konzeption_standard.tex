@@ -1,14 +1,116 @@
 \chapter{Konzeption des Formular-Standards und der Prüf-Registry}
 \label{chap:konzeption}
 
+Aufbauend auf den Befunden der empirischen Ist-Analyse wird in diesem Kapitel der formale Formular-Standard für die Hochschule für Wirtschaft und Gesellschaft Ludwigshafen entwickelt. Dieser Standard adressiert nicht nur ergonomische und gestalterische Dimensionen nach DIN EN ISO 9241-110 und BITV 2.0, sondern integriert auch rechtliche Vorgaben der Datenschutz-Grundverordnung (DSGVO). Anschließend wird dieser Standard in eine maschinenlesbare Komponenten- und Regel-Registry überführt, die als deterministische Wissensbasis für die automatisierte Compliance-Prüfung dient.
+
 \section{Struktur-, Navigations- und Informationsarchitektur}
 \label{sec:architektur}
-[Vorgaben zu Stepping, Seitenumbruch, Fortschrittsanzeige.]
 
-\section{Corporate-Design- und Komponenten-Vorgaben}
+Eine verlässliche Formular-Governance bedarf klar definierter architektonischer Leitplanken. Die heterogene Verteilung zwischen 700px und 850px im Bestand wird durch eine verbindliche Standardbreite harmonisiert:
+
+\begin{itemize}
+    \item \textbf{Responsives Desktop-Raster (850px):} Alle Formularvorlagen werden verbindlich auf eine Maximalbreite von \texttt{850px} (\texttt{max-width: 850px; min-width: 300px;}) normiert. Dies garantiert einen ruhigen Zeilenrhythmus, verhindert übermäßige Zeilenlängen bei Textfeldern und gewährleistet eine konsistente Einbindung in das Hochschulportal.
+    \item \textbf{Seitenstrukturierung und Pagination (Chunking):} Formulare mit mehr als 20 Einzelelementen müssen in thematisch abgegrenzte Seiten oder Abschnitte unterteilt werden. Für mehrseitige Formulare wird ein linearer Pagination-Flow vorgegeben.
+    \item \textbf{Navigationsschaltflächen:} Schaltflächen zur Seitensteuerung müssen strikt mit den handlungsorientierten Verben \textit{\enquote{Weiter}} und \textit{\enquote{Zurück}} bezeichnet werden. Technische Bezeichnungen wie \textit{\enquote{weiter zu Seite 2}} sind unzulässig.
+\end{itemize}
+
+\section{Corporate Design, Barrierefreiheit und Stammdaten-Muster}
 \label{sec:cd_komponenten}
-[Feldkomponenten, Farbkontraste, Typografie, Pflichtfeldkennzeichnung.]
+
+Die visuelle und programmatische Gestaltung bildet das Bindeglied zwischen institutioneller Wiedererkennung und digitaler Barrierefreiheit.
+
+\subsection{Corporate Identity und Header-Struktur}
+Jedes Formular muss im Kopfbereich über das offizielle Bildbanner der Hochschule (\texttt{XImage}) verfügen. Zur Wahrung der Barrierefreiheit (WCAG 2.1 Erfolgskriterium 1.1.1) ist ein textueller Alternativtext zwingend vorgeschrieben (\enquote{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}).
+
+\subsection{Semantische Gruppierung und Pflichtfeld-Indikation}
+Gemäß WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) dürfen Container nicht ausschließlich über visuelle \texttt{<div>}-Tags realisiert werden. Jeder logische Block (z.\,B. persönliche Angaben, Anschrift, Bankdaten) muss als semantisches \texttt{<fieldset>} mit einer lesbaren Legende (\texttt{<legend>}) ausgezeichnet werden. 
+
+Zur Wahrung des Erfolgskriteriums 3.3.2 (Beschriftungen) muss jedes Pflichtfeld sowohl optisch über einen konsistenten Pflichtfeld-Stern (\texttt{showrequiredhint="1"}) als auch maschinenlesbar im DOM über \texttt{aria-required="true"} deklariert sein.
+
+\subsection{Das normierte HWG-Stammdaten-Muster}
+Um die im Bestand identifizierten Copy-Paste-Abweichungen zu eliminieren, wird die Erfassung persönlicher Angaben standardisiert:
+\begin{enumerate}
+    \item \textbf{Feste Sequenz:} Die Erfassung folgt dem natürlichen Lesefluss: $\text{Anrede} \rightarrow \text{Vorname} \rightarrow \text{Nachname} \rightarrow \text{E-Mail-Adresse}$. Eine Voranstellung des Nachnamens ist nur in behördlichen Spezialregistern gestattet.
+    \item \textbf{Einheitliche E-Mail-Semantik:} Das Postfach wird einheitlich als \textit{\enquote{E-Mail-Adresse}} bezeichnet; bei zwingend erforderlicher Hochschul-Kennung als \textit{\enquote{Hochschul-E-Mail}}.
+    \item \textbf{Bereinigung von Entwickler-Rückständen:} Sichtbare technische Implementierungs-Notizen (z.\,B. Verweise auf JavaScript, Shibboleth-Gruppen oder LDAP) sind im Produktivzustand strikt untersagt.
+\end{enumerate}
+
+\section{Datenschutz, Eingabevalidierung und Schaltflächen-Semantik}
+\label{sec:datenschutz_validierung}
+
+Über das Layout hinaus werden zentrale funktionale Anforderungen definiert:
+
+\subsection{Datenschutz-Transparenz (Art. 13 DSGVO)}
+Sobald ein Formular personenbezogene Daten verarbeitet, muss unmittelbar vor der Absende-Schaltfläche ein verständlicher Hinweis auf den Verarbeitungszweck sowie ein klickbarer Hyperlink auf die zentrale Datenschutzerklärung der HWG Ludwigshafen hinterlegt sein.
+
+\subsection{Strukturierte Validierung und Dateiuploads}
+Eingabefelder für strukturierte Datenformate (IBAN, Postleitzahl, Telefonnummer, Datum) dürfen nicht als unvalidierte Freitexte verbleiben. Es sind formale Validierungsmuster (Regex) oder Formcycle-Presets zu hinterlegen. Kurze Felder wie die fünfstellige Postleitzahl oder Hausnummern dürfen nicht auf 100\,\% Zeilenbreite gestreckt werden, um dem Nutzenden die erwartete Inhaltslänge visuell zu signalisieren (Affordanz nach Nielsen Norman Group).
+
+Für Dateiuploads (\texttt{XUpload}, \texttt{XFile}) gilt: Das Label oder der Hilfetext muss die akzeptierten Dateiformate (z.\,B. \enquote{Nur PDF, JPG}) sowie die maximale Dateigröße (z.\,B. \enquote{max. 10 MB}) transparent ausweisen.
+
+\subsection{Schaltflächen-Semantik und Prozess-Entkopplung}
+Aktionsschaltflächen müssen zwingend ein Handlungsverb im Infinitiv tragen (z.\,B. \textit{\enquote{Antrag einreichen}} statt dem kleingeschriebenen generischen \textit{\enquote{senden}}). 
+
+Zustandsbezeichnungen und fachliche Ausnahme-Workflows (wie die Fallstudie \textit{\enquote{Kritischer Fall}}) dürfen niemals als Schaltflächentext genutzt werden. Ausnahmerouten müssen organisatorisch und rollenspezifisch in die nachgelagerte Sachbearbeitung verlagert werden (z.\,B. \textit{\enquote{Zur Präsidiumsprüfung weiterleiten}}).
 
 \section{Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}
 \label{sec:registry_definition}
-[Struktur der rules\_registry.json: JSON-Schema, Prüfregeln, Gewichtungen.]
+
+Um die Einhaltung dieser Vorgaben automatisiert überprüfen zu können, werden alle Kriterien in ein maschinenlesbares JSON-Schema (\texttt{rules\_registry.json}) überführt.
+
+\subsection{Mathematisches Bewertungsmodell}
+Das Konformitätsniveau eines Formulars wird über einen normalisierten Compliance-Score $S \in [0, 100]$ quantifiziert. Ausgehend von einem Basisscore von 100 Punkten führt jeder detektierte Verstoß zu einem fest definierten Punktabzug in Abhängigkeit von seiner Schweregrad-Klasse:
+
+\begin{equation}
+    S = \max\left(0, \, 100 - \sum_{i=1}^{M} w(r_i) \cdot v(r_i)\right)
+    \label{eq:compliance_score}
+\end{equation}
+
+Hierbei bezeichnet:
+\begin{itemize}
+    \item $v(r_i) \in \{0, 1\}$ den binären Erfüllungsstatus der Regel $r_i$ ($1 = \text{Verstoß}$, $0 = \text{konform}$).
+    \item $w(r_i)$ das gewichtete Strafmaß der jeweiligen Schweregrad-Kategorie:
+    \begin{equation}
+        w(r_i) = \begin{cases}
+            15 & \text{für } \textit{critical} \text{ (rechtliche/technische Blocker)} \\
+            8  & \text{für } \textit{major} \text{ (schwere Usability-/CI-Verletzungen)} \\
+            3  & \text{für } \textit{minor} \text{ (visuelle oder syntaktische Mängel)}
+        \end{cases}
+    \end{equation}
+\end{itemize}
+
+\subsection{Katalog der formalisierten Governance-Regeln}
+Tabelle~\ref{tab:rules_overview} fasst die 18 formalisierten Prüfregeln der Registry zusammen:
+
+\begin{table}[H]
+\centering
+\scriptsize
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Regel-ID} & \textbf{Bezeichnung} & \textbf{Kategorie} & \textbf{Typ} & \textbf{Schweregrad \& Begründung} \\
+\midrule
+\texttt{HWG-CD-01} & Standardbreite 850px & Corporate Design & Deterministisch & Major (8 Pkt): Einheitliches Raster \\
+\texttt{HWG-CD-02} & Offizieller CI-Header & Corporate Design & Deterministisch & Critical (15 Pkt): Authentizität \\
+\texttt{HWG-A11Y-01} & Fieldset-Gruppierung & Accessibility & Deterministisch & Critical (15 Pkt): WCAG 1.3.1 \\
+\texttt{HWG-A11Y-02} & Pflichtfeld-Stern/ARIA & Accessibility & Deterministisch & Major (8 Pkt): WCAG 3.3.2 \\
+\texttt{HWG-A11Y-03} & Saubere Label-Syntax & Accessibility & Deterministisch & Minor (3 Pkt): Keine HTML-Entities \\
+\texttt{HWG-STAMM-01} & Stammdaten-Sequenz & Stammdaten & Deterministisch & Major (8 Pkt): Natürlicher Lesefluss \\
+\texttt{HWG-STAMM-02} & E-Mail-Bezeichnung & Stammdaten & Semantisch & Minor (3 Pkt): Eindeutige Kennung \\
+\texttt{HWG-STAMM-03} & Keine Dev-Notizen & Stammdaten & Deterministisch & Critical (15 Pkt): Saubere UI \\
+\texttt{HWG-BTN-01} & Handlungsorientierter Submit & Microcopy & Semantisch & Major (8 Pkt): Vollverb im Infinitiv \\
+\texttt{HWG-BTN-02} & Einheitliche Pagination & Microcopy & Semantisch & Minor (3 Pkt): Weiter/Zurück \\
+\texttt{HWG-BTN-03} & Rollen-/Zustandsentkopplung & Microcopy & Deterministisch & Critical (15 Pkt): Kein Status als Button \\
+\texttt{HWG-DSGVO-01} & Datenschutz-Transparenz & Datenschutz & Deterministisch & Critical (15 Pkt): Art. 13 DSGVO \\
+\texttt{HWG-UPLOAD-01} & Upload-Spezifikation & Validierung/UX & Deterministisch & Major (8 Pkt): Dateitypen \& Max-Größe \\
+\texttt{HWG-VAL-01} & Formatvalidierung & Validierung/UX & Deterministisch & Major (8 Pkt): IBAN/PLZ/Datum-Regex \\
+\texttt{HWG-UX-01} & Feldbreiten-Affordanz & Validierung/UX & Deterministisch & Minor (3 Pkt): Kompakte Breiten \\
+\texttt{HWG-LANG-01} & Amtsjargon mit Erklärung & Leichte Sprache & Semantisch & Major (8 Pkt): WCAG 3.1 \\
+\texttt{HWG-LANG-02} & Barrierearme Sprache & Leichte Sprache & Semantisch & Minor (3 Pkt): Keine Schachtelsätze \\
+\texttt{HWG-FEEDBACK-01} & Prozesstransparenz & Transparenz & Semantisch & Minor (3 Pkt): Erläuterung Folgeschritte \\
+\bottomrule
+\end{tabularx}
+\caption{Übersicht der formalisierten Formular-Governance-Regeln in der Registry v1.1.0}
+\label{tab:rules_overview}
+\end{table}
+
+Diese Registry bildet die operative Grundlage für die im folgenden Kapitel beschriebene Prüf-Pipeline.

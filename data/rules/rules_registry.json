@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "HWG Ludwigshafen Formcycle Compliance Registry",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
   "scoring": {
     "base_score": 100,
@@ -190,6 +190,124 @@
         "check": "Ein Button darf kein Substantiv sein, das einen Fall oder Zustand beschreibt. Aktionen für interne Prüfer müssen die exakte Zielhandlung beschreiben (z. B. 'Zur Präsidiumsprüfung weiterleiten')."
       },
       "remediation": "Ersetzen Sie Status-Schaltflächen wie 'Kritischer Fall' durch eindeutige Handlungsverben für die jeweilige Sachbearbeiter-Rolle (z. B. 'Zur Präsidiumsprüfung weiterleiten')."
+    },
+    {
+      "id": "HWG-DSGVO-01",
+      "name": "Datenschutz-Hinweis und DSGVO-Transparenz",
+      "category": "data_privacy_security",
+      "evaluation_type": "deterministic",
+      "severity": "critical",
+      "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Hinweis mit Link zur zentralen HWG-Datenschutzerklärung ist rechtlich zwingend.",
+      "specification": {
+        "target": "privacy_section",
+        "condition": "form_contains_personal_data",
+        "required_elements": [
+          "Datenschutz-Hinweis",
+          "Link zur Datenschutzerklärung der HWG Ludwigshafen"
+        ],
+        "keywords": ["Datenschutz", "Datenschutzerklärung", "DSGVO", "hwg-lu.de"]
+      },
+      "remediation": "Fügen Sie am Ende des Formulars unmittelbar vor der Absende-Schaltfläche einen verbindlichen Hinweis auf die Datenverarbeitung mit funktionierendem Link zur Datenschutzerklärung der HWG Ludwigshafen ein."
+    },
+    {
+      "id": "HWG-UPLOAD-01",
+      "name": "Transparente Dateiupload-Spezifikation (Formate & Maximalgröße)",
+      "category": "input_validation_ux",
+      "evaluation_type": "deterministic",
+      "severity": "major",
+      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nutzende müssen vor dem Upload wissen, welche Dateiformate (z. B. PDF) und Dateigrößen (z. B. max. 10 MB) akzeptiert werden, um Systemabbrüche zu verhindern.",
+      "specification": {
+        "target": "upload_components",
+        "component_types": ["XUpload", "XFile"],
+        "required_hint_elements": [
+          "Zulässige Dateiformate (z. B. 'PDF, JPG')",
+          "Maximale Dateigröße (z. B. 'max. 10 MB')"
+        ]
+      },
+      "remediation": "Hinterlegen Sie im Hilfetext (Tooltip/Beschreibung) des Upload-Elements klar ersichtlich die erlaubten Dateiformate (z. B. 'Nur PDF-Dateien') sowie die maximale Upload-Größe (z. B. 'max. 10 MB')."
+    },
+    {
+      "id": "HWG-VAL-01",
+      "name": "Formale Validierung strukturierter Eingabefelder",
+      "category": "input_validation_ux",
+      "evaluation_type": "deterministic",
+      "severity": "major",
+      "rationale": "Fehlerrobustheit und Benutzerführung nach ISO 9241-110: Strukturierte Daten (IBAN, PLZ, Telefon, Datum) dürfen nicht als unvalidierte Freitexte erfasst werden, sondern benötigen Validierungsmuster.",
+      "specification": {
+        "target": "structured_fields",
+        "field_patterns": ["iban", "plz", "postleitzahl", "telefon", "datum", "geburtsdatum"],
+        "required_property": "validation_pattern_or_preset"
+      },
+      "remediation": "Aktivieren Sie im Formcycle-Designer für Felder wie IBAN, PLZ oder Telefonnummer die entsprechende Validierungsregel (z. B. IBAN-Prüfziffer oder 5-stellige Ziffernfolge bei PLZ)."
+    },
+    {
+      "id": "HWG-UX-01",
+      "name": "Affordanzgerechte Feldbreiten (Kompakte Felder)",
+      "category": "input_validation_ux",
+      "evaluation_type": "deterministic",
+      "severity": "minor",
+      "rationale": "Nielsen Norman Group Form Design: Die optische Breite eines Feldes signalisiert die erwartete Inhaltslänge. Extrem kurze Angaben (PLZ, Hausnummer) dürfen nicht über 100% Breite gestreckt werden.",
+      "specification": {
+        "target": "compact_fields",
+        "field_names": ["plz", "postleitzahl", "hausnummer", "hnr"],
+        "max_recommended_width_percentage": 40
+      },
+      "remediation": "Begrenzen Sie die Spaltenbreite von kurzen Eingabefeldern wie Postleitzahl oder Hausnummer auf maximal 30-40% der Zeilenbreite oder platzieren Sie sie nebeneinander in einer Mehrspaltenzeile."
+    },
+    {
+      "id": "HWG-LANG-01",
+      "name": "Erklärung von Hochschul- und Amtsjargon",
+      "category": "plain_language_semantics",
+      "evaluation_type": "semantic",
+      "severity": "major",
+      "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich): Hochschulspezifische Fachbegriffe und Abkürzungen ohne begleitende Hilfetexte überfordern Studierende und externe Antragstellende.",
+      "specification": {
+        "target": "text_and_labels",
+        "jargon_terms": [
+          "GStB",
+          "Kostenstelle",
+          "Vergabevermerk",
+          "Remonstration",
+          "Promotionsausschuss",
+          "Exmatrikulation",
+          "Shibboleth",
+          "KAP",
+          "Mittelbewirtschafter"
+        ],
+        "requirement": "Muss mit Hilfetext, Tooltip oder Glossarverweis versehen sein."
+      },
+      "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen mit einem verständlichen Hilfetext (Tooltip) oder einer kurzen Begriffserklärung."
+    },
+    {
+      "id": "HWG-LANG-02",
+      "name": "Prägnante und barrierearme Formulierung (Vermeidung von Schachtelsätzen)",
+      "category": "plain_language_semantics",
+      "evaluation_type": "semantic",
+      "severity": "minor",
+      "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte und Hinweise müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das kognitive Verständnis.",
+      "specification": {
+        "target": "instructions_and_descriptions",
+        "max_sentence_length_words": 25,
+        "style_criteria": "Aktivformulierungen, keine verschachtelten Passivkonstruktionen, klare Handlungsanweisungen."
+      },
+      "remediation": "Kürzen Sie überlange Schachtelsätze in Anleitungen und Hilfetexten auf maximal 20-25 Wörter pro Satz und nutzen Sie handlungsorientierte Aktivsätze."
+    },
+    {
+      "id": "HWG-FEEDBACK-01",
+      "name": "Prozesstransparenz und Erwartungsmanagement über Folgeschritte",
+      "category": "process_transparency",
+      "evaluation_type": "semantic",
+      "severity": "minor",
+      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende wissen, welche Folgeschritte stattfinden, wer prüft und welche Bearbeitungsdauer zu erwarten ist.",
+      "specification": {
+        "target": "submission_feedback_section",
+        "required_information": [
+          "Zuständige Abteilung / Bearbeitende Stelle",
+          "Voraussichtliche Bearbeitungsdauer oder Frist",
+          "Kommunikationsweg für Rückfragen / Bescheid"
+        ]
+      },
+      "remediation": "Ergänzen Sie vor oder auf der Bestätigungsseite einen prägnanten Hinweis zum weiteren Ablauf (z. B. 'Ihr Antrag wird vom ZFK geprüft. Die Bearbeitungsdauer beträgt ca. 10 Werktage. Rückfragen erhalten Sie per E-Mail.')."
     }
   ]
 }
