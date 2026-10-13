@@ -17,7 +17,7 @@
 \usepackage{lmodern}
 
 % ---------------------------------------------------------
-% Seitenlayout & Ränder
+% Seitenlayout & Ränder (DIN A4 Vorgaben)
 % ---------------------------------------------------------
 \usepackage[
     left=3.0cm,
@@ -26,13 +26,12 @@
     bottom=2.5cm
 ]{geometry}
 \usepackage{setspace}
-\onehalfspacing % 1,5-facher Zeilenabstand
+\onehalfspacing
 
 % ---------------------------------------------------------
-% Typografie & Formatierung
+% Typografie & Tabellen
 % ---------------------------------------------------------
-\usepackage{microtype}
-\usepackage{csquotes}
+\usepackage[autostyle=true,german=quotes]{csquotes}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -45,11 +44,8 @@
 % ---------------------------------------------------------
 \usepackage[
     backend=biber,
-    style=apa,
-    sortcites=true,
-    sorting=nyt
+    style=apa
 ]{biblatex}
-\DeclareLanguageMapping{ngerman}{ngerman-apa}
 \addbibresource{references.bib}
 
 % ---------------------------------------------------------
@@ -64,7 +60,7 @@
     linkcolor=hwgblue,
     citecolor=hwgblue,
     urlcolor=hwgblue,
-    pdftitle={Konzeption eines einheitlichen Formular-Standards fuer die HWG Ludwigshafen und prototypische Umsetzung einer KI-gestuetzten Compliance-Pruefung in Formcycle},
+    pdftitle={Bachelorarbeit HWG Ludwigshafen},
     pdfauthor={Fotios Logaras}
 ]{hyperref}
 

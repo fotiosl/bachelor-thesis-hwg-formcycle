@@ -89,10 +89,10 @@ Wie der Vergleich in Abbildung~\ref{fig:vergleich_stammdaten} zeigt, weichen Pfl
     \item Im \textit{Master-Formular} sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} als Pflichtfelder markiert; die \textit{Matrikelnummer} ist optional.
     \item Im \textit{FB1-Praktikum} fehlen die Pflichtfeldsterne bei Name und E-Mail vollständig (obwohl sie technisch zwingend erforderlich sind), während die \textit{Matrikelnummer*} als Pflichtfeld deklariert ist.
     \item Das E-Mail-Feld variiert in der Beschriftung zwischen \textit{E-Mail} und \textit{HWGLU-Email}.
-    \item Zudem enthält die Vorlage im Live-Zustand sichtbare Entwickler-Notizen (\textit{„Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member...“}) sowie Tippfehler in den internen Feldbezeichnern (\texttt{tfMasterFachbereichSudiengang}).
+    \item Zudem enthält die Vorlage im Live-Zustand sichtbare Entwickler-Notizen (\textit{\enquote{Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member...}}) sowie Tippfehler in den internen Feldbezeichnern (\texttt{tfMasterFachbereichSudiengang}).
 \end{itemize}
 
-\subsection{Problemfeld 4: Schaltflächen-Semantik und die Fallstudie „Kritischer Fall“}
+\subsection{Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote{Kritischer Fall}}
 Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Konventionen. Es finden sich uneinheitliche Mischformen aus Kleinschreibung (\texttt{senden}), formalen Formulierungen (\texttt{Antrag einreichen}) und seitenbezogenen Navigationsschritten (\texttt{weiter zu Seite 2}, siehe Abbildung~\ref{fig:buttons_beispiele}).
 
 \begin{figure}[H]
@@ -110,21 +110,21 @@ Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitliche
     \label{fig:buttons_beispiele}
 \end{figure}
 
-Besonders instruktiv ist die Fallstudie \textbf{„Kritischer Fall“} im ZFK-Förderantrag (siehe Abbildung~\ref{fig:button_kritisch}):
+Besonders instruktiv ist die Fallstudie \textbf{\enquote{Kritischer Fall}} im ZFK-Förderantrag (siehe Abbildung~\ref{fig:button_kritisch}):
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{figures/Antrag_Sprints_Button.png}
-    \caption{Fallstudie: Schaltfläche „Kritischer Fall“ im Antragsformular}
+    \caption{Fallstudie: Schaltfläche \enquote{Kritischer Fall} im Antragsformular}
     \label{fig:button_kritisch}
 \end{figure}
 
-\textbf{Hintergrund \& Analyse:} Fachlich bestand die legitime Anforderung des Zentrums für Forschung und Kooperation (ZFK), bei Anträgen mit außergewöhnlicher Tragweite eine nachgelagerte Prüfung durch das Hochschulpräsidium zu veranlassen. In der technischen Umsetzung wurde dieser mehrstufige Workflow jedoch in die primäre UI verlagert: Bei Aktivierung der Checkbox wird der reguläre Submit-Button deaktiviert und ein neuer Button namens \textit{„Kritischer Fall“} eingeblendet. 
+\textbf{Hintergrund \& Analyse:} Fachlich bestand die legitime Anforderung des Zentrums für Forschung und Kooperation (ZFK), bei Anträgen mit außergewöhnlicher Tragweite eine nachgelagerte Prüfung durch das Hochschulpräsidium zu veranlassen. In der technischen Umsetzung wurde dieser mehrstufige Workflow jedoch in die primäre UI verlagert: Bei Aktivierung der Checkbox wird der reguläre Submit-Button deaktiviert und ein neuer Button namens \textit{\enquote{Kritischer Fall}} eingeblendet. 
 
 Aus Sicht der Interaktionsergonomie verletzt dies das Prinzip der \textbf{Erwartungskonformität (ISO 9241-110)}: Ein Button muss stets eine eindeutige Handlung (ein Verb) beschreiben. Ein Substantiv, das einen Ausnahmezustand beschreibt, stiftet Verwirrung über die ausgelöste Aktion. Die ergonomische Lösung erfordert eine klare Trennung von Rollen und Prozessphasen:
 \begin{itemize}
-    \item \textbf{Antragsstellende:} Betätigen stets die einheitliche Aktion \textit{„Antrag einreichen“}.
-    \item \textbf{ZFK-Sachbearbeitung:} Betätigt in der Prüfphase die rollenspezifische Aktion \textit{„Zur Präsidiumsprüfung weiterleiten“}.
-    \item \textbf{Präsidium:} Übermittelt die Stellungnahme über \textit{„Rückmeldung an ZFK senden“}.
+    \item \textbf{Antragsstellende:} Betätigen stets die einheitliche Aktion \textit{\enquote{Antrag einreichen}}.
+    \item \textbf{ZFK-Sachbearbeitung:} Betätigt in der Prüfphase die rollenspezifische Aktion \textit{\enquote{Zur Präsidiumsprüfung weiterleiten}}.
+    \item \textbf{Präsidium:} Übermittelt die Stellungnahme über \textit{\enquote{Rückmeldung an ZFK senden}}.
 \end{itemize}
 
 \subsection{Problemfeld 5: Defizite bei digitaler Barrierefreiheit (WCAG 2.1 / BITV 2.0)}
