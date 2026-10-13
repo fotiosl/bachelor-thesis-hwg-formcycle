@@ -1,0 +1,18 @@
+\chapter{Prototypische Implementierung der Compliance-Prüfpipeline}
+\label{chap:implementierung}
+
+\section{Systemarchitektur und Datenfluss der Middleware}
+\label{sec:systemarchitektur}
+[Architektur: Parser für Formcycle .xfp/.fcp, Prompt-Engine, deterministische Scoring-Engine.]
+
+\section{Datenextraktion aus Formcycle-Strukturen}
+\label{sec:datenextraktion}
+[JSON-Parsing der Formcycle-Komponenten, Attributabbildung.]
+
+\section{Context-Engineering und LLM-Prompt-Design}
+\label{sec:prompt_design}
+[System-Prompts, Injection der rules\_registry.json, Fehlererkennung.]
+
+\section{Deterministische Berechnung des Compliance-Scores}
+\label{sec:scoring_logik}
+[Mathematische Aggregation, Abzugspunkte je Verstoß-Kategorie.]

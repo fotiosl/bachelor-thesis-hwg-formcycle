@@ -1,0 +1,138 @@
+\documentclass[
+    12pt,
+    a4paper,
+    ngerman,
+    oneside,
+    parskip=half,
+    listof=totoc,
+    bibliography=totoc
+]{scrreprt}
+
+% ---------------------------------------------------------
+% Grundlegende Pakete & Kodierung
+% ---------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+
+% ---------------------------------------------------------
+% Seitenlayout & Ränder
+% ---------------------------------------------------------
+\usepackage[
+    left=3.0cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing % 1,5-facher Zeilenabstand
+
+% ---------------------------------------------------------
+% Typografie & Formatierung
+% ---------------------------------------------------------
+\usepackage{microtype}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+
+% ---------------------------------------------------------
+% Literaturverwaltung (APA 7th Edition)
+% ---------------------------------------------------------
+\usepackage[
+    backend=biber,
+    style=apa,
+    sortcites=true,
+    sorting=nyt
+]{biblatex}
+\DeclareLanguageMapping{ngerman}{ngerman-apa}
+\addbibresource{references.bib}
+
+% ---------------------------------------------------------
+% Hyperlinks & PDF-Metadaten
+% ---------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{hwgblue}{RGB}{0, 51, 102}
+\definecolor{hwgred}{RGB}{180, 20, 20}
+
+\usepackage[
+    colorlinks=true,
+    linkcolor=hwgblue,
+    citecolor=hwgblue,
+    urlcolor=hwgblue,
+    pdftitle={Konzeption eines einheitlichen Formular-Standards fuer die HWG Ludwigshafen und prototypische Umsetzung einer KI-gestuetzten Compliance-Pruefung in Formcycle},
+    pdfauthor={Fotios Logaras}
+]{hyperref}
+
+% ---------------------------------------------------------
+% Dokumentenbeginn
+% ---------------------------------------------------------
+\begin{document}
+
+% ---------------------------------------------------------
+% Titelseite
+% ---------------------------------------------------------
+\begin{titlepage}
+    \centering
+    {\LARGE \textbf{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}}\\[0.5cm]
+    {\large Fachbereich Wirtschaftsinformatik}\\[2.0cm]
+    
+    {\Large \textbf{BACHELORARBEIT}}\\[1.0cm]
+    
+    \begin{spacing}{1.3}
+    {\huge \textbf{Konzeption eines einheitlichen Formular-Standards für die HWG Ludwigshafen und prototypische Umsetzung einer KI-gestützten Compliance-Prüfung in Formcycle}}\\[1.5cm]
+    \end{spacing}
+    
+    \vfill
+    
+    \begin{tabular}{ll}
+        \textbf{Autor:} & Fotios Logaras \\
+        \textbf{Matrikelnummer:} & [Deine Matrikelnummer] \\
+        \textbf{Studiengang:} & Wirtschaftsinformatik (B.Sc.) \\
+        \textbf{Erstprüfer:} & Prof. Dr. Simon Kloker \\
+        \textbf{Abgabedatum:} & 07. Dezember 2026 \\
+    \end{tabular}
+\end{titlepage}
+
+% ---------------------------------------------------------
+% Verzeichnisse
+% ---------------------------------------------------------
+\pagenumbering{Roman}
+\tableofcontents
+\newpage
+
+\listoffigures
+\listoftables
+\newpage
+
+% ---------------------------------------------------------
+% Hauptteil (Arabische Seitennummerierung)
+% ---------------------------------------------------------
+\pagenumbering{arabic}
+
+\include{chapters/01_einleitung}
+\include{chapters/02_theoretischer_hintergrund}
+\include{chapters/03_ist_analyse}
+\include{chapters/04_konzeption_standard}
+\include{chapters/05_implementierung}
+\include{chapters/06_evaluation}
+\include{chapters/07_fazit}
+
+% ---------------------------------------------------------
+% Literaturverzeichnis (APA 7th)
+% ---------------------------------------------------------
+\newpage
+\printbibliography[title={Literaturverzeichnis}]
+
+% ---------------------------------------------------------
+% Anhang
+% ---------------------------------------------------------
+\appendix
+\include{appendix/reflexionsbericht}
+\include{appendix/eidesstattliche_erklaerung}
+
+\end{document}
