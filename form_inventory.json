@@ -1,0 +1,603 @@
+[
+  {
+    "file": "01_Veranstaltungsmanagement.xfp",
+    "category": "prod",
+    "title": "01_Veranstaltungsmanagement",
+    "desc": "Bedarfsanmeldung für Veranstaltungsmanagement",
+    "pages": "850px",
+    "item_count": 89,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "A Externe Weiterbildung.xfp",
+    "category": "prod",
+    "title": "A Externe Weiterbildung",
+    "desc": "",
+    "pages": "700px",
+    "item_count": 71,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "A Neu Beschaffungsantrag.xfp",
+    "category": "prod",
+    "title": "A Neu Beschaffungsantrag",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 66,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Auslagenerstattung _20260929.xfp",
+    "category": "prod",
+    "title": "Auslagenerstattung _20260929",
+    "desc": "",
+    "pages": "700px",
+    "item_count": 97,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Bedarfsmeldung für Digitalisierungsmaßnahmen (online).xfp",
+    "category": "prod",
+    "title": "Bedarfsmeldung für Digitalisierungsmaßnahmen (online)",
+    "desc": "Bedarfsmeldung für Digitalisierungsmaßnahmen",
+    "pages": "850px",
+    "item_count": 99,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 250,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "FB1-GiP_Praktikum_final_20251115.xfp",
+    "category": "prod",
+    "title": "FB1-GiP_Praktikum_final_20251115",
+    "desc": "Antrag auf Genehmigung der Praxisphase (GiP)",
+    "pages": "700px",
+    "item_count": 133,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "FB1_PraktikumBMC20251217_final.xfp",
+    "category": "prod",
+    "title": "FB1_PraktikumBMC20251217_final",
+    "desc": "Formularvorlage",
+    "pages": "700px",
+    "item_count": 114,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "HaushaltVergabevermerk_20251111.xfp",
+    "category": "prod",
+    "title": "HaushaltVergabevermerk_20251111",
+    "desc": "Vergabevermerk \nDirektkauf von Liefer-/Dienstleistungen\n3000 € bis maximal 10.000 € netto",
+    "pages": "850px",
+    "item_count": 102,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "KI-Beschaffung.xfp",
+    "category": "prod",
+    "title": "KI-Beschaffung",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 63,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Personal_Stellenausschreibung_final.xfp",
+    "category": "prod",
+    "title": "Personal_Stellenausschreibung_final",
+    "desc": "Antrag auf Genehmigung der Stellenausschreibung",
+    "pages": "700px",
+    "item_count": 220,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Personal_Vertragsaenderung_20260623_final.xfp",
+    "category": "prod",
+    "title": "Personal_Vertragsaenderung_20260623_final",
+    "desc": "Antrag auf Änderung des Vertragsverhältnisses | Antrag auf Genehmigung durch den Personalrat",
+    "pages": "700px",
+    "item_count": 345,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "ZFK Antragsübersicht.xfp",
+    "category": "prod",
+    "title": "ZFK Antragsübersicht",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 112,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "ZFK-Fördermittel (20260227).xfp",
+    "category": "prod",
+    "title": "ZFK-Fördermittel (20260227)",
+    "desc": "Information über ein Fördermittelvorhaben | Finale Version Stand 27.02.2026",
+    "pages": "700px",
+    "item_count": 419,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Authentifizierung Landes-IDP (SAML 2.0).xfp",
+    "category": "test\\adminformulare",
+    "title": "Authentifizierung Landes-IDP (SAML 2.0)",
+    "desc": "",
+    "pages": "700px",
+    "item_count": 11,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Master-Formular.xfp",
+    "category": "test\\adminformulare",
+    "title": "Master-Formular",
+    "desc": "Formularvorlage",
+    "pages": "700px",
+    "item_count": 43,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "SG1_Genehmigung_Anzeige_Nebentätigkeit.xfp",
+    "category": "test\\adminformulare",
+    "title": "SG1_Genehmigung_Anzeige_Nebentätigkeit",
+    "desc": "Ersteller: TG / 20230120",
+    "pages": "700px",
+    "item_count": 110,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "01_Veranstaltungsmanagement.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "01_Veranstaltungsmanagement",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 82,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "3 IT Systeme .xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "3 IT Systeme ",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 148,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "A Neu Beschaffungsantrag.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "A Neu Beschaffungsantrag",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 64,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "AFörderung Antrag-Sprints für Drittmittelanträge.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "AFörderung Antrag-Sprints für Drittmittelanträge",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 30,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Antrag auf Förderung Forschungsprojekte_Promotionsvorhaben.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Antrag auf Förderung Forschungsprojekte/Promotionsvorhaben",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 42,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Antrag auf Förderung für Durchführung von F&T-Veranstaltungen.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Antrag auf Förderung für Durchführung von F&T-Veranstaltungen",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 46,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Auslagenerstattung _20260915.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Auslagenerstattung _20260915",
+    "desc": "",
+    "pages": "700px",
+    "item_count": 97,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Bedarfsanforderung Veranstaltungsmanagement.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Bedarfsanforderung Veranstaltungsmanagement",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 84,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "ExtWeiterbildung.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "ExtWeiterbildung",
+    "desc": "",
+    "pages": "700px",
+    "item_count": 63,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "FB1-GiP_Praktikum_final-20251115.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "FB1-GiP_Praktikum_final-20251115",
+    "desc": "Antrag auf Genehmigung der Praxisphase (GiP)",
+    "pages": "700px",
+    "item_count": 133,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "HaushaltVergabevermerk3000_20251110.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "HaushaltVergabevermerk3000_20251110",
+    "desc": "Vergabevermerk \nDirektkauf von Liefer-/Dienstleistungen\n3000 € bis maximal 10.000 € netto",
+    "pages": "850px",
+    "item_count": 101,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "KI-Beschaffung.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "KI-Beschaffung",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 39,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Personal_Stellenausschreibung_20260727.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Personal_Stellenausschreibung_20260727",
+    "desc": "Antrag auf Genehmigung der Stellenausschreibung",
+    "pages": "700px",
+    "item_count": 220,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Personal_Vertragsaenderung_20251119_final.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Personal_Vertragsaenderung_20251119_final",
+    "desc": "Formularvorlage",
+    "pages": "700px",
+    "item_count": 336,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "RKA_Antrag auf Dienstreise (LF 20261006).xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "RKA_Antrag auf Dienstreise (LF 20261006)",
+    "desc": "",
+    "pages": "700px",
+    "item_count": 424,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "TEST-FB1-BNM_Praktikum_20260309(Test-Version).xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "TEST-FB1-BNM_Praktikum_20260309(Test-Version)",
+    "desc": "Formularvorlage",
+    "pages": "700px",
+    "item_count": 129,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "Wohungsplattform-Formular (WIP).xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Wohungsplattform-Formular (WIP)",
+    "desc": "",
+    "pages": "850px",
+    "item_count": 43,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  },
+  {
+    "file": "ZFK-Fördermittel.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "ZFK-Fördermittel",
+    "desc": "Information über ein Fördermittelvorhaben | Finale Version Stand 08.12.2025",
+    "pages": "700px",
+    "item_count": 411,
+    "theme": {
+      "kind": "system",
+      "type": "MODERN"
+    },
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "has_upload": false,
+    "has_table": false,
+    "custom_css_bytes": 0,
+    "unique_types": [
+      "unknown"
+    ]
+  }
+]

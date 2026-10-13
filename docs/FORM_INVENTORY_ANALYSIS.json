@@ -1,0 +1,1424 @@
+[
+  {
+    "file": "01_Veranstaltungsmanagement.xfp",
+    "rel_path": "prod\\01_Veranstaltungsmanagement.xfp",
+    "category": "prod",
+    "title": "01_Veranstaltungsmanagement",
+    "desc": "Bedarfsanmeldung für Veranstaltungsmanagement",
+    "total_elements": 89,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 2,
+      "XContainer": 9,
+      "XSpan": 12,
+      "XSelect": 27,
+      "XTextField": 27,
+      "XSpacer": 1,
+      "XTextArea": 4,
+      "XUpload": 1,
+      "XButtonList": 4,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Abteilung/Fachbereich</p>\n",
+      "<p>Sonstiges</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Telefon</p>\n"
+    ]
+  },
+  {
+    "file": "A Externe Weiterbildung.xfp",
+    "rel_path": "prod\\A Externe Weiterbildung.xfp",
+    "category": "prod",
+    "title": "A Externe Weiterbildung",
+    "desc": "",
+    "total_elements": 71,
+    "pages": 4,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 1,
+      "XSpan": 7,
+      "XPage": 4,
+      "XFieldSet": 7,
+      "XSelect": 8,
+      "XSpacer": 2,
+      "XTextField": 25,
+      "XUpload": 2,
+      "XCheckbox": 1,
+      "XTextArea": 3,
+      "XButtonList": 9,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Name</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Mobiltelefon</p>\n"
+    ]
+  },
+  {
+    "file": "A Neu Beschaffungsantrag.xfp",
+    "rel_path": "prod\\A Neu Beschaffungsantrag.xfp",
+    "category": "prod",
+    "title": "A Neu Beschaffungsantrag",
+    "desc": "",
+    "total_elements": 66,
+    "pages": 4,
+    "classes": {
+      "XHeader": 1,
+      "XSpacer": 5,
+      "XImage": 1,
+      "XSpan": 4,
+      "XPage": 4,
+      "XContainer": 7,
+      "XTextField": 18,
+      "XSelect": 10,
+      "XTextArea": 2,
+      "XCheckbox": 1,
+      "XButtonList": 11,
+      "XUpload": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Name Antragsteller*in</p>\n",
+      "<p>Vorname Antragsteller*in</p>\n",
+      "<p>E-Mail Antragsteller*in</p>\n",
+      "<p>Telefonnummer Antragsteller*in</p>\n",
+      "<p>Geb&auml;ude/Raum Antragsteller*in</p"
+    ]
+  },
+  {
+    "file": "Auslagenerstattung _20260929.xfp",
+    "rel_path": "prod\\Auslagenerstattung _20260929.xfp",
+    "category": "prod",
+    "title": "Auslagenerstattung _20260929",
+    "desc": "",
+    "total_elements": 97,
+    "pages": 3,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 1,
+      "XSpan": 4,
+      "XPage": 3,
+      "XFieldSet": 11,
+      "XSelect": 9,
+      "XSpacer": 8,
+      "XTextField": 29,
+      "XTextArea": 7,
+      "XUpload": 4,
+      "XLine": 3,
+      "XContainerInvisible": 4,
+      "XContainer": 1,
+      "XButtonList": 11,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Telefonnummer</p>\n"
+    ]
+  },
+  {
+    "file": "Bedarfsmeldung für Digitalisierungsmaßnahmen (online).xfp",
+    "rel_path": "prod\\Bedarfsmeldung für Digitalisierungsmaßnahmen (online).xfp",
+    "category": "prod",
+    "title": "Bedarfsmeldung für Digitalisierungsmaßnahmen (online)",
+    "desc": "Bedarfsmeldung für Digitalisierungsmaßnahmen",
+    "total_elements": 99,
+    "pages": 7,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 7,
+      "XImage": 1,
+      "XSpan": 10,
+      "XContainer": 14,
+      "XTextField": 21,
+      "XSelect": 20,
+      "XButtonList": 16,
+      "XTextArea": 6,
+      "XUpload": 1,
+      "XCheckbox": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 250,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Antragsteller*in:</p>\n",
+      "<p>E-Mail Antragsteller*in:</p>\n",
+      "<p>Abteilung / Fachbereich:</p>\n",
+      "<p>Titel der Ma&szlig;nahme / des Prozes",
+      "<p>Wunschzeitraum der Umsetzung:</p>\n"
+    ]
+  },
+  {
+    "file": "FB1-GiP_Praktikum_final_20251115.xfp",
+    "rel_path": "prod\\FB1-GiP_Praktikum_final_20251115.xfp",
+    "category": "prod",
+    "title": "FB1-GiP_Praktikum_final_20251115",
+    "desc": "Antrag auf Genehmigung der Praxisphase (GiP)",
+    "total_elements": 133,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 7,
+      "XImage": 1,
+      "XSpacer": 8,
+      "XPage": 2,
+      "XContainerInvisible": 4,
+      "XFieldSet": 20,
+      "XSelect": 13,
+      "XTextField": 21,
+      "XUpload": 17,
+      "XButtonList": 11,
+      "XTextArea": 21,
+      "XCheckbox": 6,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Matrikelnummer</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Stra&szlig;e</p>\n"
+    ]
+  },
+  {
+    "file": "FB1_PraktikumBMC20251217_final.xfp",
+    "rel_path": "prod\\FB1_PraktikumBMC20251217_final.xfp",
+    "category": "prod",
+    "title": "FB1_PraktikumBMC20251217_final",
+    "desc": "Formularvorlage",
+    "total_elements": 114,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 6,
+      "XImage": 1,
+      "XPage": 2,
+      "XContainerInvisible": 4,
+      "XFieldSet": 19,
+      "XSelect": 10,
+      "XTextField": 12,
+      "XSpacer": 6,
+      "XTextArea": 21,
+      "XUpload": 15,
+      "XButtonList": 10,
+      "XCheckbox": 6,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Matrikelnummer</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Stra&szlig;e</p>\n"
+    ]
+  },
+  {
+    "file": "HaushaltVergabevermerk_20251111.xfp",
+    "rel_path": "prod\\HaushaltVergabevermerk_20251111.xfp",
+    "category": "prod",
+    "title": "HaushaltVergabevermerk_20251111",
+    "desc": "Vergabevermerk \nDirektkauf von Liefer-/Dienstleistungen\n3000 € bis maximal 10.000 € netto",
+    "total_elements": 102,
+    "pages": 4,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 4,
+      "XImage": 1,
+      "XPage": 4,
+      "XContainerInvisible": 13,
+      "XFieldSet": 12,
+      "XTextField": 20,
+      "XSelect": 12,
+      "XSpacer": 10,
+      "XTextArea": 8,
+      "XButtonList": 11,
+      "XUpload": 2,
+      "XCheckbox": 2,
+      "XContainer": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Abteilung / Fachbereich / Institut</p",
+      "<p>Anrede Bearbeiter*in</p>\n",
+      "<p>HWGLU-Email Bearbeiter*in</p>\n",
+      "<p>Bearbeiter*in (SucheName)</p>\n",
+      "<p>Telefon</p>\n"
+    ]
+  },
+  {
+    "file": "KI-Beschaffung.xfp",
+    "rel_path": "prod\\KI-Beschaffung.xfp",
+    "category": "prod",
+    "title": "KI-Beschaffung",
+    "desc": "",
+    "total_elements": 63,
+    "pages": 5,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 5,
+      "XImage": 1,
+      "XSpan": 2,
+      "XContainer": 5,
+      "XTextField": 19,
+      "XSpacer": 5,
+      "XSelect": 5,
+      "XCheckbox": 3,
+      "XButtonList": 14,
+      "XUpload": 2,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Telefonnummer</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Datum</p>\n"
+    ]
+  },
+  {
+    "file": "Personal_Stellenausschreibung_final.xfp",
+    "rel_path": "prod\\Personal_Stellenausschreibung_final.xfp",
+    "category": "prod",
+    "title": "Personal_Stellenausschreibung_final",
+    "desc": "Antrag auf Genehmigung der Stellenausschreibung",
+    "total_elements": 220,
+    "pages": 6,
+    "classes": {
+      "XHeader": 1,
+      "XContainerInvisible": 16,
+      "XSpan": 12,
+      "XImage": 1,
+      "XPage": 6,
+      "XContainer": 8,
+      "XFieldSet": 21,
+      "XSelect": 12,
+      "XTextField": 43,
+      "XSpacer": 24,
+      "XUpload": 11,
+      "XCheckbox": 31,
+      "XLine": 1,
+      "XButtonList": 16,
+      "XTextArea": 16,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede F&uuml;hrungskraft</p>\n",
+      "<p>HWGLU-Email F&uuml;hrungskraft</p>\n",
+      "<p>Name der F&uuml;hrungskraft (SucheNam",
+      "<p>Fachbereich|Abteilung|Institut</p>\n",
+      "<p>Vorname F&uuml;hrungskraft</p>\n"
+    ]
+  },
+  {
+    "file": "Personal_Vertragsaenderung_20260623_final.xfp",
+    "rel_path": "prod\\Personal_Vertragsaenderung_20260623_final.xfp",
+    "category": "prod",
+    "title": "Personal_Vertragsaenderung_20260623_final",
+    "desc": "Antrag auf Änderung des Vertragsverhältnisses | Antrag auf Genehmigung durch den Personalrat",
+    "total_elements": 345,
+    "pages": 9,
+    "classes": {
+      "XHeader": 1,
+      "XContainerInvisible": 24,
+      "XSpan": 26,
+      "XImage": 2,
+      "XPage": 9,
+      "XContainer": 13,
+      "XFieldSet": 22,
+      "XSelect": 18,
+      "XTextField": 81,
+      "XCheckbox": 47,
+      "XTextArea": 20,
+      "XUpload": 14,
+      "XSpacer": 43,
+      "XLine": 1,
+      "XButtonList": 23,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede F&uuml;hrungskraft</p>\n",
+      "<p>HWGLU-Email F&uuml;hrungskraft</p>\n",
+      "<p>Vorname F&uuml;hrungskraft</p>\n",
+      "<p>Nachname F&uuml;hrungskraft</p>\n",
+      "<p>Fachbereich|Abteilung|Institut</p>\n"
+    ]
+  },
+  {
+    "file": "ZFK Antragsübersicht.xfp",
+    "rel_path": "prod\\ZFK Antragsübersicht.xfp",
+    "category": "prod",
+    "title": "ZFK Antragsübersicht",
+    "desc": "",
+    "total_elements": 112,
+    "pages": 11,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 1,
+      "XPage": 11,
+      "XContainer": 19,
+      "XSpan": 26,
+      "XSelect": 9,
+      "XButtonList": 32,
+      "XLine": 4,
+      "XCheckbox": 8,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>ZFK-Antr&auml;ge</p>\n",
+      "<p>Gelesen</p>\n",
+      "<p>Gelesen</p>\n",
+      "<p>Gelesen</p>\n",
+      "<p>Gelesen</p>\n"
+    ]
+  },
+  {
+    "file": "ZFK-Fördermittel (20260227).xfp",
+    "rel_path": "prod\\ZFK-Fördermittel (20260227).xfp",
+    "category": "prod",
+    "title": "ZFK-Fördermittel (20260227)",
+    "desc": "Information über ein Fördermittelvorhaben | Finale Version Stand 27.02.2026",
+    "total_elements": 419,
+    "pages": 10,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 55,
+      "XImage": 2,
+      "XPage": 10,
+      "XFieldSet": 18,
+      "XTextField": 66,
+      "XSpacer": 40,
+      "XContainer": 18,
+      "XCheckbox": 23,
+      "XTextArea": 44,
+      "XButtonList": 50,
+      "XSelect": 32,
+      "XUpload": 10,
+      "XContainerInvisible": 45,
+      "XLine": 4,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Projektverantwortliche(r)</p>\n",
+      "<p>Tel.</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Arbeitstitel des Vorhabens (Langtext)",
+      "<p>Arbeitstitel (Kurztext, max. 15 Zeich"
+    ]
+  },
+  {
+    "file": "Authentifizierung Landes-IDP (SAML 2.0).xfp",
+    "rel_path": "test\\adminformulare\\Authentifizierung Landes-IDP (SAML 2.0).xfp",
+    "category": "test\\adminformulare",
+    "title": "Authentifizierung Landes-IDP (SAML 2.0)",
+    "desc": "",
+    "total_elements": 11,
+    "pages": 1,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 3,
+      "XPage": 1,
+      "XContainer": 1,
+      "XTextField": 2,
+      "XTextArea": 2,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Person (Benutzername / eppn)</p>\n",
+      "<p>Email</p>\n"
+    ]
+  },
+  {
+    "file": "Master-Formular.xfp",
+    "rel_path": "test\\adminformulare\\Master-Formular.xfp",
+    "category": "test\\adminformulare",
+    "title": "Master-Formular",
+    "desc": "Formularvorlage",
+    "total_elements": 43,
+    "pages": 1,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 1,
+      "XSpan": 3,
+      "XPage": 1,
+      "XFieldSet": 4,
+      "XSelect": 6,
+      "XTextField": 23,
+      "XSpacer": 3,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Matrikelnummer</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Stra&szlig;e</p>\n"
+    ]
+  },
+  {
+    "file": "SG1_Genehmigung_Anzeige_Nebentätigkeit.xfp",
+    "rel_path": "test\\adminformulare\\SG1_Genehmigung_Anzeige_Nebentätigkeit.xfp",
+    "category": "test\\adminformulare",
+    "title": "SG1_Genehmigung_Anzeige_Nebentätigkeit",
+    "desc": "Ersteller: TG / 20230120",
+    "total_elements": 110,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XContainer": 24,
+      "XSpan": 24,
+      "XImage": 1,
+      "XTextField": 24,
+      "XPage": 2,
+      "XSelect": 15,
+      "XTextArea": 13,
+      "XCheckbox": 1,
+      "XButtonList": 4,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "0",
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Label zum Auslesen von Daten</p>\n",
+      "<p><b><span style=\"font-size:9.0pt\"><spa",
+      "<p>Anrede:</p>\n",
+      "<p>Akad. Titel:</p>\n",
+      "<p>Vorname:</p>\n"
+    ]
+  },
+  {
+    "file": "01_Veranstaltungsmanagement.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\01_Veranstaltungsmanagement.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "01_Veranstaltungsmanagement",
+    "desc": "",
+    "total_elements": 82,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 2,
+      "XContainer": 9,
+      "XSpan": 10,
+      "XSelect": 25,
+      "XTextField": 24,
+      "XSpacer": 1,
+      "XTextArea": 4,
+      "XUpload": 1,
+      "XButtonList": 4,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Abteilung/Fachbereich</p>\n",
+      "<p>Sonstiges</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Telefon</p>\n"
+    ]
+  },
+  {
+    "file": "3 IT Systeme .xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\3 IT Systeme .xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "3 IT Systeme ",
+    "desc": "",
+    "total_elements": 148,
+    "pages": 8,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 8,
+      "XSpan": 14,
+      "XImage": 8,
+      "XContainer": 15,
+      "XTextField": 43,
+      "XSelect": 24,
+      "XTextArea": 4,
+      "XButtonList": 22,
+      "XUpload": 4,
+      "XSpacer": 3,
+      "XCheckbox": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Wollen Sie ein System testen oder ein",
+      "<p>Soll das neue System ein altes ersetz"
+    ]
+  },
+  {
+    "file": "A Neu Beschaffungsantrag.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\A Neu Beschaffungsantrag.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "A Neu Beschaffungsantrag",
+    "desc": "",
+    "total_elements": 64,
+    "pages": 4,
+    "classes": {
+      "XHeader": 1,
+      "XSpacer": 5,
+      "XImage": 1,
+      "XSpan": 2,
+      "XPage": 4,
+      "XContainer": 7,
+      "XTextField": 18,
+      "XSelect": 10,
+      "XTextArea": 2,
+      "XCheckbox": 1,
+      "XButtonList": 11,
+      "XUpload": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Name Antragsteller*in</p>\n",
+      "<p>Vorname Antragsteller*in</p>\n",
+      "<p>E-Mail Antragsteller*in</p>\n",
+      "<p>Telefonnummer Antragsteller*in</p>\n",
+      "<p>Geb&auml;ude/Raum Antragsteller*in</p"
+    ]
+  },
+  {
+    "file": "AFörderung Antrag-Sprints für Drittmittelanträge.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\AFörderung Antrag-Sprints für Drittmittelanträge.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "AFörderung Antrag-Sprints für Drittmittelanträge",
+    "desc": "",
+    "total_elements": 30,
+    "pages": 1,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 1,
+      "XContainerInvisible": 1,
+      "XSpan": 2,
+      "XContainer": 4,
+      "XTextField": 6,
+      "XTextArea": 8,
+      "XSelect": 1,
+      "XButtonList": 4,
+      "XCheckbox": 1,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Name Antragstellende/r</p>\n",
+      "<p>Vorname Antragstellende/r</p>\n",
+      "<p>Telefonnummer</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Kurze inhaltliche Beschreibung des Pr"
+    ]
+  },
+  {
+    "file": "Antrag auf Förderung Forschungsprojekte_Promotionsvorhaben.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Antrag auf Förderung Forschungsprojekte_Promotionsvorhaben.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Antrag auf Förderung Forschungsprojekte/Promotionsvorhaben",
+    "desc": "",
+    "total_elements": 42,
+    "pages": 1,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 1,
+      "XContainerInvisible": 1,
+      "XSpan": 2,
+      "XContainer": 9,
+      "XTextField": 10,
+      "XSelect": 1,
+      "XTextArea": 10,
+      "XFormula": 1,
+      "XButtonList": 4,
+      "XCheckbox": 1,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Name Antragstellende/r</p>\n",
+      "<p>Vorname Antragstellende/r</p>\n",
+      "<p>Telefonnummer</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Ich beantrage einen Zuschuss f&uuml;r"
+    ]
+  },
+  {
+    "file": "Antrag auf Förderung für Durchführung von F&T-Veranstaltungen.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Antrag auf Förderung für Durchführung von F&T-Veranstaltungen.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Antrag auf Förderung für Durchführung von F&T-Veranstaltungen",
+    "desc": "",
+    "total_elements": 46,
+    "pages": 1,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 1,
+      "XContainerInvisible": 1,
+      "XSpan": 2,
+      "XContainer": 9,
+      "XTextField": 9,
+      "XSelect": 2,
+      "XTextArea": 14,
+      "XFormula": 1,
+      "XButtonList": 4,
+      "XCheckbox": 1,
+      "XFooter": 1
+    },
+    "has_upload": false,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Name Antragstellende/r</p>\n",
+      "<p>Vorname Antragstellende/r</p>\n",
+      "<p>Telefonnummer</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Ich m&ouml;chte eine F&ouml;rderung f"
+    ]
+  },
+  {
+    "file": "Auslagenerstattung _20260915.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Auslagenerstattung _20260915.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Auslagenerstattung _20260915",
+    "desc": "",
+    "total_elements": 97,
+    "pages": 3,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 1,
+      "XSpan": 4,
+      "XPage": 3,
+      "XFieldSet": 11,
+      "XSelect": 9,
+      "XSpacer": 8,
+      "XTextField": 29,
+      "XTextArea": 7,
+      "XUpload": 4,
+      "XLine": 3,
+      "XContainerInvisible": 4,
+      "XContainer": 1,
+      "XButtonList": 11,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Telefonnummer</p>\n"
+    ]
+  },
+  {
+    "file": "Bedarfsanforderung Veranstaltungsmanagement.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Bedarfsanforderung Veranstaltungsmanagement.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Bedarfsanforderung Veranstaltungsmanagement",
+    "desc": "",
+    "total_elements": 84,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 12,
+      "XImage": 1,
+      "XPage": 2,
+      "XContainer": 8,
+      "XSelect": 25,
+      "XTextField": 24,
+      "XSpacer": 3,
+      "XTextArea": 3,
+      "XUpload": 1,
+      "XButtonList": 3,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Abteilung/Fachbereich</p>\n",
+      "<p>Sonstiges</p>\n",
+      "<p>Ansprechpartner Vorname</p>\n",
+      "<p>Ansprechpartner Nachname</p>\n",
+      "<p>Telefon</p>\n"
+    ]
+  },
+  {
+    "file": "ExtWeiterbildung.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\ExtWeiterbildung.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "ExtWeiterbildung",
+    "desc": "",
+    "total_elements": 63,
+    "pages": 5,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 1,
+      "XSpan": 6,
+      "XPage": 5,
+      "XFieldSet": 8,
+      "XSelect": 8,
+      "XSpacer": 2,
+      "XTextField": 20,
+      "XUpload": 3,
+      "XCheckbox": 1,
+      "XTextArea": 3,
+      "XButtonList": 4,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Name</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Mobiltelefon</p>\n"
+    ]
+  },
+  {
+    "file": "FB1-GiP_Praktikum_final-20251115.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\FB1-GiP_Praktikum_final-20251115.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "FB1-GiP_Praktikum_final-20251115",
+    "desc": "Antrag auf Genehmigung der Praxisphase (GiP)",
+    "total_elements": 133,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 7,
+      "XImage": 1,
+      "XSpacer": 8,
+      "XPage": 2,
+      "XContainerInvisible": 4,
+      "XFieldSet": 20,
+      "XSelect": 13,
+      "XTextField": 21,
+      "XUpload": 17,
+      "XButtonList": 11,
+      "XTextArea": 21,
+      "XCheckbox": 6,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Matrikelnummer</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Stra&szlig;e</p>\n"
+    ]
+  },
+  {
+    "file": "HaushaltVergabevermerk3000_20251110.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\HaushaltVergabevermerk3000_20251110.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "HaushaltVergabevermerk3000_20251110",
+    "desc": "Vergabevermerk \nDirektkauf von Liefer-/Dienstleistungen\n3000 € bis maximal 10.000 € netto",
+    "total_elements": 101,
+    "pages": 4,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 3,
+      "XImage": 1,
+      "XPage": 4,
+      "XContainerInvisible": 13,
+      "XFieldSet": 12,
+      "XTextField": 20,
+      "XSelect": 12,
+      "XSpacer": 10,
+      "XTextArea": 8,
+      "XButtonList": 11,
+      "XUpload": 2,
+      "XCheckbox": 2,
+      "XContainer": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Abteilung / Fachbereich / Institut</p",
+      "<p>Anrede Bearbeiter*in</p>\n",
+      "<p>HWGLU-Email Bearbeiter*in</p>\n",
+      "<p>Bearbeiter*in (SucheName)</p>\n",
+      "<p>Telefon</p>\n"
+    ]
+  },
+  {
+    "file": "KI-Beschaffung.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\KI-Beschaffung.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "KI-Beschaffung",
+    "desc": "",
+    "total_elements": 39,
+    "pages": 4,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 4,
+      "XImage": 1,
+      "XContainer": 4,
+      "XTextField": 10,
+      "XSelect": 4,
+      "XSpan": 1,
+      "XCheckbox": 3,
+      "XButtonList": 9,
+      "XUpload": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Telefonnummer</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Fachbereich, Abteilung, Institut</p>\n"
+    ]
+  },
+  {
+    "file": "Personal_Stellenausschreibung_20260727.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Personal_Stellenausschreibung_20260727.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Personal_Stellenausschreibung_20260727",
+    "desc": "Antrag auf Genehmigung der Stellenausschreibung",
+    "total_elements": 220,
+    "pages": 6,
+    "classes": {
+      "XHeader": 1,
+      "XContainerInvisible": 16,
+      "XSpan": 12,
+      "XImage": 1,
+      "XPage": 6,
+      "XContainer": 8,
+      "XFieldSet": 21,
+      "XSelect": 12,
+      "XTextField": 43,
+      "XSpacer": 24,
+      "XUpload": 11,
+      "XCheckbox": 31,
+      "XLine": 1,
+      "XButtonList": 16,
+      "XTextArea": 16,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede F&uuml;hrungskraft</p>\n",
+      "<p>HWGLU-Email F&uuml;hrungskraft</p>\n",
+      "<p>Name der F&uuml;hrungskraft (SucheNam",
+      "<p>Fachbereich|Abteilung|Institut</p>\n",
+      "<p>Vorname F&uuml;hrungskraft</p>\n"
+    ]
+  },
+  {
+    "file": "Personal_Vertragsaenderung_20251119_final.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Personal_Vertragsaenderung_20251119_final.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Personal_Vertragsaenderung_20251119_final",
+    "desc": "Formularvorlage",
+    "total_elements": 336,
+    "pages": 9,
+    "classes": {
+      "XHeader": 1,
+      "XContainerInvisible": 21,
+      "XSpan": 25,
+      "XImage": 2,
+      "XPage": 9,
+      "XContainer": 13,
+      "XFieldSet": 21,
+      "XSelect": 18,
+      "XTextField": 78,
+      "XCheckbox": 47,
+      "XTextArea": 20,
+      "XUpload": 15,
+      "XSpacer": 42,
+      "XLine": 1,
+      "XButtonList": 22,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede F&uuml;hrungskraft</p>\n",
+      "<p>HWGLU-Email F&uuml;hrungskraft</p>\n",
+      "<p>Vorname F&uuml;hrungskraft</p>\n",
+      "<p>Nachname F&uuml;hrungskraft</p>\n",
+      "<p>Fachbereich|Abteilung|Institut</p>\n"
+    ]
+  },
+  {
+    "file": "RKA_Antrag auf Dienstreise (LF 20261006).xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\RKA_Antrag auf Dienstreise (LF 20261006).xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "RKA_Antrag auf Dienstreise (LF 20261006)",
+    "desc": "",
+    "total_elements": 424,
+    "pages": 12,
+    "classes": {
+      "XHeader": 1,
+      "XImage": 3,
+      "XSpan": 19,
+      "XPage": 12,
+      "XFieldSet": 32,
+      "XSelect": 32,
+      "XSpacer": 61,
+      "XTextField": 139,
+      "XButtonList": 34,
+      "XContainerInvisible": 13,
+      "XTextArea": 28,
+      "XUpload": 10,
+      "XCheckbox": 28,
+      "XContainer": 9,
+      "XFormula": 1,
+      "XLine": 1,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Stra&szlig;e</p>\n",
+      "<p>Ort</p>\n"
+    ]
+  },
+  {
+    "file": "TEST-FB1-BNM_Praktikum_20260309(Test-Version).xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\TEST-FB1-BNM_Praktikum_20260309(Test-Version).xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "TEST-FB1-BNM_Praktikum_20260309(Test-Version)",
+    "desc": "Formularvorlage",
+    "total_elements": 129,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 5,
+      "XImage": 1,
+      "XPage": 2,
+      "XContainerInvisible": 4,
+      "XFieldSet": 20,
+      "XSelect": 10,
+      "XTextField": 23,
+      "XSpacer": 7,
+      "XUpload": 17,
+      "XButtonList": 11,
+      "XTextArea": 21,
+      "XCheckbox": 6,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1"
+    ],
+    "sample_labels": [
+      "<p>Anrede</p>\n",
+      "<p>Matrikelnummer</p>\n",
+      "<p>Vorname</p>\n",
+      "<p>Nachname</p>\n",
+      "<p>Stra&szlig;e</p>\n"
+    ]
+  },
+  {
+    "file": "Wohungsplattform-Formular (WIP).xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\Wohungsplattform-Formular (WIP).xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "Wohungsplattform-Formular (WIP)",
+    "desc": "",
+    "total_elements": 43,
+    "pages": 2,
+    "classes": {
+      "XHeader": 1,
+      "XPage": 2,
+      "XContainer": 5,
+      "XSpan": 4,
+      "XTextField": 14,
+      "XSelect": 5,
+      "XTextArea": 4,
+      "XUpload": 2,
+      "XContainerInvisible": 1,
+      "XButtonList": 4,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "default",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "850px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Art der Unterkunft</p>\n",
+      "<p>Miete inkl. Nebenkosten</p>\n",
+      "<p>Kaution</p>\n",
+      "<p>Gr&ouml;&szlig;e der Unterkunft in Qu",
+      "<p>Anzahl der Zimmer</p>\n"
+    ]
+  },
+  {
+    "file": "ZFK-Fördermittel.xfp",
+    "rel_path": "test\\unfertige und vielleicht fertige formulare\\ZFK-Fördermittel.xfp",
+    "category": "test\\unfertige und vielleicht fertige formulare",
+    "title": "ZFK-Fördermittel",
+    "desc": "Information über ein Fördermittelvorhaben | Finale Version Stand 08.12.2025",
+    "total_elements": 411,
+    "pages": 10,
+    "classes": {
+      "XHeader": 1,
+      "XSpan": 47,
+      "XImage": 2,
+      "XPage": 10,
+      "XFieldSet": 18,
+      "XTextField": 66,
+      "XSpacer": 40,
+      "XContainer": 18,
+      "XCheckbox": 23,
+      "XTextArea": 44,
+      "XButtonList": 50,
+      "XSelect": 32,
+      "XUpload": 10,
+      "XContainerInvisible": 45,
+      "XLine": 4,
+      "XFooter": 1
+    },
+    "has_upload": true,
+    "theme": "Custom/Dict",
+    "errorstyle": "error-static-view error-static-view-bubble",
+    "custom_css_len": 0,
+    "widths": [
+      "700px"
+    ],
+    "required_hints": [
+      "1",
+      "False"
+    ],
+    "sample_labels": [
+      "<p>Projektverantwortliche(r)</p>\n",
+      "<p>Tel.</p>\n",
+      "<p>E-Mail</p>\n",
+      "<p>Arbeitstitel des Vorhabens (Langtext)",
+      "<p>Arbeitstitel (Kurztext, max. 15 Zeich"
+    ]
+  }
+]

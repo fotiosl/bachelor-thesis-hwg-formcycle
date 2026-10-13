@@ -1,0 +1,1 @@
+:root,:host{--xformula-background: repeating-linear-gradient(45deg, transparent, transparent 2px, #f1f1f1 2px, #f1f1f1 3px)}.XFormula.XItem.XTextField{background:var(--xformula-background)}::-moz-placeholder{color:gray}::placeholder{color:gray}.xm-summary .CXFormula>label:not(.unit),.xm-summary .CXFormula>.dynamic-row>label:not(.unit){width:220px!important;vertical-align:top}
