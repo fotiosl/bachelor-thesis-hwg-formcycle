@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HWG Ludwigshafen Formcycle Compliance Registry",
+  "version": "1.0.0",
+  "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
+  "scoring": {
+    "base_score": 100,
+    "severity_penalties": {
+      "critical": 15,
+      "major": 8,
+      "minor": 3
+    },
+    "score_formula": "max(0, 100 - sum(penalty_i))"
+  },
+  "rules": [
+    {
+      "id": "HWG-CD-01",
+      "name": "Standardisierte Layout-Breite",
+      "category": "corporate_design",
+      "evaluation_type": "deterministic",
+      "severity": "major",
+      "rationale": "Verhindert visuelle Sprünge und heterogene Zeilenlängen im Hochschulportal (ISO 9241-110 Erwartungskonformität).",
+      "specification": {
+        "target": "form_properties",
+        "expected_maxwidth": "850px",
+        "allowed_minwidth": "300px"
+      },
+      "remediation": "Setzen Sie im Formcycle-Designer unter Formular-Eigenschaften die maximale Breite auf 850px und die minimale Breite auf 300px."
+    },
+    {
+      "id": "HWG-CD-02",
+      "name": "Offizieller Corporate Design Header",
+      "category": "corporate_design",
+      "evaluation_type": "deterministic",
+      "severity": "critical",
+      "rationale": "Sicherstellung der institutionellen Authentizität und Wiedererkennung der HWG Ludwigshafen.",
+      "specification": {
+        "target": "header_elements",
+        "required_component": "XImage",
+        "alt_pattern": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen"
+      },
+      "remediation": "Fügen Sie im Kopfbereich das offizielle HWG-Logo als XImage mit barrierefreiem Alternativtext ein."
+    },
+    {
+      "id": "HWG-A11Y-01",
+      "name": "Semantische Gruppierung mit Fieldsets",
+      "category": "accessibility",
+      "evaluation_type": "deterministic",
+      "severity": "critical",
+      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen): Screenreader benötigen Fieldset-Strukturen zur Kontextualisierung logischer Blöcke.",
+      "specification": {
+        "target": "form_sections",
+        "required_container": "XFieldSet",
+        "forbidden_container_as_section": ["XContainer", "XContainerInvisible"],
+        "require_legend": true
+      },
+      "remediation": "Gruppieren Sie zusammengehörige Felder in einem XFieldSet mit einer aussagekräftigen Legende (z. B. 'Persönliche Angaben'). Nutzen Sie reine Container nur für internes Styling."
+    },
+    {
+      "id": "HWG-A11Y-02",
+      "name": "Konsistente Pflichtfeld-Kennzeichnung (Sternchen und ARIA)",
+      "category": "accessibility",
+      "evaluation_type": "deterministic",
+      "severity": "major",
+      "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen): Pflichtfelder müssen sowohl optisch als auch programmatisch via aria-required deklariert sein.",
+      "specification": {
+        "target": "input_fields",
+        "condition": "properties.validation.required == true",
+        "required_properties": {
+          "showrequiredhint": "1",
+          "aria_required": "true"
+        }
+      },
+      "remediation": "Stellen Sie sicher, dass bei allen Pflichtfeldern die Eigenschaft 'showrequiredhint' aktiviert ist, sodass das rote Sternchen angezeigt und im DOM aria-required='true' gesetzt wird."
+    },
+    {
+      "id": "HWG-A11Y-03",
+      "name": "Saubere Label-Syntax ohne HTML-Entities",
+      "category": "accessibility",
+      "evaluation_type": "semantic",
+      "severity": "minor",
+      "rationale": "HTML-Fragmente wie '<p>Stra&szlig;e</p>' oder Sonderzeichen wie '|' in Labels führen bei Screenreadern und Sprachausgaben zu fehlerhaften Aussprachen.",
+      "specification": {
+        "target": "field_labels",
+        "check": "Keine HTML-Tags (<p>, <br>), keine Entities (&szlig;, &ouml;) und keine technischen Trenner (|) im sichtbaren Text."
+      },
+      "remediation": "Verwenden Sie sauberen Text ohne HTML-Elemente für die Beschriftung (z. B. 'Straße' statt '<p>Stra&szlig;e</p>' und 'Fachbereich und Studiengang' statt 'Fachbereichen|Studiengang')."
+    },
+    {
+      "id": "HWG-STAMM-01",
+      "name": "Einheitliche Abfolge persönlicher Stammdaten",
+      "category": "master_data",
+      "evaluation_type": "semantic",
+      "severity": "major",
+      "rationale": "Erwartungskonformität nach ISO 9241-110: Natürlicher Lesefluss für Stammdaten erfordert Anrede -> Vorname -> Nachname.",
+      "specification": {
+        "target": "personal_data_block",
+        "expected_sequence": [
+          "Anrede",
+          "Vorname",
+          "Nachname",
+          "E-Mail"
+        ],
+        "disallowed_sequence": [
+          "Nachname vor Vorname"
+        ]
+      },
+      "remediation": "Ordnen Sie im Stammdaten-Block zuerst das Feld 'Vorname' und danach das Feld 'Nachname' an. Vermeiden Sie umgekehrte Reihenfolgen."
+    },
+    {
+      "id": "HWG-STAMM-02",
+      "name": "Standardisierte E-Mail-Bezeichnung",
+      "category": "master_data",
+      "evaluation_type": "semantic",
+      "severity": "minor",
+      "rationale": "Einheitliche Benennung verhindert Verwirrung über erforderliche Postfächer (z. B. Hochschul- vs. Privat-Adresse).",
+      "specification": {
+        "target": "email_field_label",
+        "allowed_labels": [
+          "E-Mail-Adresse",
+          "E-Mail",
+          "Hochschul-E-Mail"
+        ],
+        "disallowed_labels": [
+          "HWGLU-Email",
+          "Email",
+          "tf1"
+        ]
+      },
+      "remediation": "Beschriften Sie das E-Mail-Feld einheitlich mit 'E-Mail' oder bei zwingender Hochschuladresse mit 'Hochschul-E-Mail'."
+    },
+    {
+      "id": "HWG-STAMM-03",
+      "name": "Keine Entwickler-Notizen oder Code-Artefakte im Frontend",
+      "category": "master_data",
+      "evaluation_type": "semantic",
+      "severity": "critical",
+      "rationale": "Verhindert Verunsicherung der Nutzenden und unprofessionelle Darstellung durch unbereinigte Template-Reste.",
+      "specification": {
+        "target": "all_text_elements",
+        "check": "Texte dürfen keine technischen Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB') enthalten."
+      },
+      "remediation": "Entfernen Sie alle technischen Kommentare aus sichtbaren Textelementen. Interne Notizen gehören ausschließlich in das Entwickler-Kommentarfeld der Komponente."
+    },
+    {
+      "id": "HWG-BTN-01",
+      "name": "Handlungsorientierte Absende-Schaltfläche (Infinitive Action)",
+      "category": "microcopy_buttons",
+      "evaluation_type": "semantic",
+      "severity": "major",
+      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Buttons müssen die resultierende Aktion unmissverständlich durch ein Vollverb im Infinitiv beschreiben.",
+      "specification": {
+        "target": "submit_buttons",
+        "recommended_labels": [
+          "Antrag einreichen",
+          "Bedarfsmeldung absenden",
+          "Speichern und einreichen"
+        ],
+        "disallowed_labels": [
+          "senden",
+          "Submit",
+          "OK"
+        ]
+      },
+      "remediation": "Beschriften Sie den primären Absende-Button mit einer konkreten Handlungsaufforderung wie 'Antrag einreichen' statt mit dem kleingeschriebenen generischen 'senden'."
+    },
+    {
+      "id": "HWG-BTN-02",
+      "name": "Einheitliche Navigations-Schaltflächen (Mehrseitige Formulare)",
+      "category": "microcopy_buttons",
+      "evaluation_type": "semantic",
+      "severity": "minor",
+      "rationale": "Konsistente Bezeichnungen bei Pagination verringern die kognitive Belastung.",
+      "specification": {
+        "target": "navigation_buttons",
+        "standard_next": "Weiter",
+        "standard_back": "Zurück"
+      },
+      "remediation": "Verwenden Sie für die Seitennavigation einheitlich 'Weiter' und 'Zurück' anstelle von seitenbezogenen Konstrukten wie 'weiter zu Seite 2'."
+    },
+    {
+      "id": "HWG-BTN-03",
+      "name": "Rollen- und Zustands-Entkopplung bei Schaltflächen",
+      "category": "microcopy_buttons",
+      "evaluation_type": "semantic",
+      "severity": "critical",
+      "rationale": "Statusbezeichnungen wie 'Kritischer Fall' dürfen niemals als Schaltflächen-Label verwendet werden, da sie den Eindruck einer Fehlermeldung oder eines Systemabbruchs erwecken.",
+      "specification": {
+        "target": "workflow_action_buttons",
+        "check": "Ein Button darf kein Substantiv sein, das einen Fall oder Zustand beschreibt. Aktionen für interne Prüfer müssen die exakte Zielhandlung beschreiben (z. B. 'Zur Präsidiumsprüfung weiterleiten')."
+      },
+      "remediation": "Ersetzen Sie Status-Schaltflächen wie 'Kritischer Fall' durch eindeutige Handlungsverben für die jeweilige Sachbearbeiter-Rolle (z. B. 'Zur Präsidiumsprüfung weiterleiten')."
+    }
+  ]
+}
