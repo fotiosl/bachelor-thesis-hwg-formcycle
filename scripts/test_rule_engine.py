@@ -188,38 +188,60 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-A11Y-03 (Saubere Labels)")
 
-    # 5. HWG-STAMM-03
+    # 5. HWG-UI-01: Keine Entwickler-Notizen
     if dev_notes:
         results["violations"].append({
-            "rule": "HWG-STAMM-03",
+            "rule": "HWG-UI-01",
             "severity": "critical",
             "message": f"Sichtbare Entwickler-Notizen / Skript-Reste im Frontend: {dev_notes}"
         })
         results["score"] -= penalties["critical"]
     else:
-        results["passed"].append("HWG-STAMM-03 (Keine Entwickler-Notizen)")
+        results["passed"].append("HWG-UI-01 (Keine Entwickler-Notizen)")
 
-    # 6. HWG-BTN-03
-    if any("Kritischer Fall" in b for b in button_labels):
+    # 6. HWG-STAMM-02: Standardisierte Stammdaten-Bezeichnungen
+    non_canonical_master_labels = []
+    for it in items:
+        props = it.get("properties", {})
+        lbl = str(props.get("label", "") or "").strip()
+        name = str(props.get("name", "")).lower()
+        if "email" in name or "mail" in name:
+            if lbl and lbl not in ["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"]:
+                non_canonical_master_labels.append((lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"))
+        if "nachname" in name or ("name" in name and "vorname" not in name and "antrag" not in name):
+            if "antragstellende" in lbl.lower() or lbl == "Name":
+                non_canonical_master_labels.append((lbl, "Erwartet: Nachname"))
+
+    if non_canonical_master_labels:
         results["violations"].append({
-            "rule": "HWG-BTN-03",
-            "severity": "critical",
-            "message": "Unzulässige Statusbezeichnung 'Kritischer Fall' als Schaltflächen-Label verwendet."
+            "rule": "HWG-STAMM-02",
+            "severity": "minor",
+            "message": f"Nicht-standardisierte Stammdaten-Bezeichnungen gefunden: {non_canonical_master_labels[:2]}"
         })
-        results["score"] -= penalties["critical"]
+        results["score"] -= penalties["minor"]
     else:
-        results["passed"].append("HWG-BTN-03 (Keine Statusbezeichnung auf Buttons)")
+        results["passed"].append("HWG-STAMM-02 (Kanonische Stammdaten-Labels)")
 
-    # 7. HWG-BTN-01
-    if any(b.strip() == "senden" for b in button_labels):
+    # 7. HWG-BTN-01: Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)
+    invalid_buttons = []
+    for b in button_labels:
+        b_clean = b.strip()
+        b_lower = b_clean.lower()
+        # Bare state or generic minimal label
+        if b_clean in ["Kritischer Fall", "Status", "Genehmigung", "Fehler"]:
+            invalid_buttons.append((b_clean, "Reine Status-/Zustandsbezeichnung ohne Handlungsverb"))
+        elif b_lower in ["senden", "submit", "ok", "abschicken"]:
+            invalid_buttons.append((b_clean, "Generisches Minimal-Label ohne Zielobjekt"))
+
+    if invalid_buttons:
         results["violations"].append({
             "rule": "HWG-BTN-01",
             "severity": "major",
-            "message": "Absende-Button verwendet kleingeschriebenes generisches 'senden' statt 'Antrag einreichen'."
+            "message": f"Schaltflächen verletzen das Action-Verb-Muster: {invalid_buttons}"
         })
         results["score"] -= penalties["major"]
     else:
-        results["passed"].append("HWG-BTN-01 (Handlungsorientierter Absende-Button)")
+        results["passed"].append("HWG-BTN-01 (Aktionsorientierte Schaltflächen)")
 
     # 8. HWG-DSGVO-01
     if has_personal_data and not has_dsgvo_notice:

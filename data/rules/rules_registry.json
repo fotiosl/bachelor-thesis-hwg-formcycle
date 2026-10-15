@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "HWG Ludwigshafen Formcycle Compliance Registry",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
   "scoring": {
     "base_score": 100,
@@ -77,9 +77,9 @@
       "id": "HWG-A11Y-03",
       "name": "Saubere Label-Syntax ohne HTML-Entities",
       "category": "accessibility",
-      "evaluation_type": "semantic",
+      "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "HTML-Fragmente wie '<p>Stra&szlig;e</p>' oder Sonderzeichen wie '|' in Labels führen bei Screenreadern und Sprachausgaben zu fehlerhaften Aussprachen.",
+      "rationale": "HTML-Fragmente wie '<p>Straße</p>' oder Sonderzeichen wie '|' in Labels führen bei Screenreadern und Sprachausgaben zu fehlerhaften Aussprachen.",
       "specification": {
         "target": "field_labels",
         "check": "Keine HTML-Tags (<p>, <br>), keine Entities (&szlig;, &ouml;) und keine technischen Trenner (|) im sichtbaren Text."
@@ -90,7 +90,7 @@
       "id": "HWG-STAMM-01",
       "name": "Einheitliche Abfolge persönlicher Stammdaten",
       "category": "master_data",
-      "evaluation_type": "semantic",
+      "evaluation_type": "deterministic",
       "severity": "major",
       "rationale": "Erwartungskonformität nach ISO 9241-110: Natürlicher Lesefluss für Stammdaten erfordert Anrede -> Vorname -> Nachname.",
       "specification": {
@@ -99,7 +99,7 @@
           "Anrede",
           "Vorname",
           "Nachname",
-          "E-Mail"
+          "E-Mail-Adresse"
         ],
         "disallowed_sequence": [
           "Nachname vor Vorname"
@@ -109,60 +109,66 @@
     },
     {
       "id": "HWG-STAMM-02",
-      "name": "Standardisierte E-Mail-Bezeichnung",
+      "name": "Standardisierte Feldbezeichnungen für persönliche Stammdaten",
       "category": "master_data",
       "evaluation_type": "semantic",
       "severity": "minor",
-      "rationale": "Einheitliche Benennung verhindert Verwirrung über erforderliche Postfächer (z. B. Hochschul- vs. Privat-Adresse).",
+      "rationale": "Konsistente Bezeichnungen bei Stammdaten verhindern Verwirrung über erforderliche Eingaben (z. B. 'Vorname' statt 'Vorname Antragstellende/r*' und 'E-Mail-Adresse' statt technischer Kürzel).",
       "specification": {
-        "target": "email_field_label",
-        "allowed_labels": [
-          "E-Mail-Adresse",
-          "E-Mail",
-          "Hochschul-E-Mail"
-        ],
-        "disallowed_labels": [
-          "HWGLU-Email",
-          "Email",
-          "tf1"
+        "target": "master_data_labels",
+        "canonical_patterns": {
+          "salutation": ["Anrede"],
+          "first_name": ["Vorname"],
+          "last_name": ["Nachname"],
+          "email": ["E-Mail-Adresse", "Hochschul-E-Mail"],
+          "phone": ["Telefonnummer", "Mobilfunknummer"],
+          "matriculation": ["Matrikelnummer"]
+        },
+        "anti_patterns": [
+          "Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r')",
+          "Mehrdeutige Kurzbezeichnungen (z. B. nur 'Name' für Nachname)",
+          "Technische Feldbezeichner als sichtbares Label (z. B. 'tf1', 'HWGLU-Email')"
         ]
       },
-      "remediation": "Beschriften Sie das E-Mail-Feld einheitlich mit 'E-Mail' oder bei zwingender Hochschuladresse mit 'Hochschul-E-Mail'."
+      "remediation": "Nutzen Sie für persönliche Stammdaten die kanonischen Standardbezeichnungen ('Anrede', 'Vorname', 'Nachname', 'E-Mail-Adresse') ohne sperrige Sonderzusätze."
     },
     {
-      "id": "HWG-STAMM-03",
+      "id": "HWG-UI-01",
       "name": "Keine Entwickler-Notizen oder Code-Artefakte im Frontend",
-      "category": "master_data",
-      "evaluation_type": "semantic",
+      "category": "ui_quality_hygiene",
+      "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Verhindert Verunsicherung der Nutzenden und unprofessionelle Darstellung durch unbereinigte Template-Reste.",
+      "rationale": "Verhindert Verunsicherung der Nutzenden und unprofessionelle Darstellung durch unbereinigte Template-Reste in allen Bereichen des Formulars.",
       "specification": {
-        "target": "all_text_elements",
-        "check": "Texte dürfen keine technischen Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB') enthalten."
+        "target": "all_form_elements",
+        "check": "Kein sichtbares Element im gesamten Formular darf technische Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB', 'display:none') enthalten."
       },
       "remediation": "Entfernen Sie alle technischen Kommentare aus sichtbaren Textelementen. Interne Notizen gehören ausschließlich in das Entwickler-Kommentarfeld der Komponente."
     },
     {
       "id": "HWG-BTN-01",
-      "name": "Handlungsorientierte Absende-Schaltfläche (Infinitive Action)",
+      "name": "Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)",
       "category": "microcopy_buttons",
       "evaluation_type": "semantic",
       "severity": "major",
-      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Buttons müssen die resultierende Aktion unmissverständlich durch ein Vollverb im Infinitiv beschreiben.",
+      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Erwartungskonformität: Schaltflächen müssen stets eine eindeutige Handlung beschreiben ([Zielobjekt] + [Vollverb im Infinitiv]). Reine Systemzustände oder generische Ein-Wort-Labels stiften Verwirrung.",
       "specification": {
-        "target": "submit_buttons",
-        "recommended_labels": [
+        "target": "action_buttons",
+        "pattern_rule": "Muss ein konkretes Vollverb im Infinitiv enthalten, das die ausgelöste Transaktion beschreibt.",
+        "valid_examples": [
           "Antrag einreichen",
           "Bedarfsmeldung absenden",
+          "Kritischen Fall einreichen",
+          "Rückmeldung an ZFK übermitteln",
+          "Zur Präsidiumsprüfung weiterleiten",
           "Speichern und einreichen"
         ],
-        "disallowed_labels": [
-          "senden",
-          "Submit",
-          "OK"
+        "disallowed_patterns": [
+          "Reine Substantive oder Statusbezeichnungen ohne Handlungsverb (z. B. bloß 'Kritischer Fall', 'Status', 'Genehmigung')",
+          "Generische, kleingeschriebene Minimal-Labels (z. B. bloß 'senden', 'Submit', 'OK', 'Abschicken')"
         ]
       },
-      "remediation": "Beschriften Sie den primären Absende-Button mit einer konkreten Handlungsaufforderung wie 'Antrag einreichen' statt mit dem kleingeschriebenen generischen 'senden'."
+      "remediation": "Beschriften Sie jede Aktionsschaltfläche mit einer konkreten Handlung im Infinitiv (z. B. 'Antrag einreichen', 'Kritischen Fall einreichen' oder 'Rückmeldung übermitteln') anstelle von reinen Zuständen ('Kritischer Fall') oder generischen Begriffen ('senden')."
     },
     {
       "id": "HWG-BTN-02",
@@ -177,19 +183,6 @@
         "standard_back": "Zurück"
       },
       "remediation": "Verwenden Sie für die Seitennavigation einheitlich 'Weiter' und 'Zurück' anstelle von seitenbezogenen Konstrukten wie 'weiter zu Seite 2'."
-    },
-    {
-      "id": "HWG-BTN-03",
-      "name": "Rollen- und Zustands-Entkopplung bei Schaltflächen",
-      "category": "microcopy_buttons",
-      "evaluation_type": "semantic",
-      "severity": "critical",
-      "rationale": "Statusbezeichnungen wie 'Kritischer Fall' dürfen niemals als Schaltflächen-Label verwendet werden, da sie den Eindruck einer Fehlermeldung oder eines Systemabbruchs erwecken.",
-      "specification": {
-        "target": "workflow_action_buttons",
-        "check": "Ein Button darf kein Substantiv sein, das einen Fall oder Zustand beschreibt. Aktionen für interne Prüfer müssen die exakte Zielhandlung beschreiben (z. B. 'Zur Präsidiumsprüfung weiterleiten')."
-      },
-      "remediation": "Ersetzen Sie Status-Schaltflächen wie 'Kritischer Fall' durch eindeutige Handlungsverben für die jeweilige Sachbearbeiter-Rolle (z. B. 'Zur Präsidiumsprüfung weiterleiten')."
     },
     {
       "id": "HWG-DSGVO-01",
@@ -260,21 +253,11 @@
       "category": "plain_language_semantics",
       "evaluation_type": "semantic",
       "severity": "major",
-      "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich): Hochschulspezifische Fachbegriffe und Abkürzungen ohne begleitende Hilfetexte überfordern Studierende und externe Antragstellende.",
+      "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich): Hochschulspezifische Fachbegriffe, interne Organisationsabkürzungen und Amtsdeutsch ohne begleitende Hilfetexte überfordern Studierende und externe Antragstellende.",
       "specification": {
         "target": "text_and_labels",
-        "jargon_terms": [
-          "GStB",
-          "Kostenstelle",
-          "Vergabevermerk",
-          "Remonstration",
-          "Promotionsausschuss",
-          "Exmatrikulation",
-          "Shibboleth",
-          "KAP",
-          "Mittelbewirtschafter"
-        ],
-        "requirement": "Muss mit Hilfetext, Tooltip oder Glossarverweis versehen sein."
+        "detection_strategy": "Semantische Analyse durch LLM: Identifikation von bürokratischen Fachbegriffen, internen Organisationskürzeln (z. B. GStB, KAP, ZFK, Kostenstelle) oder Rechtsbegriffen (z. B. Vergabevermerk, Remonstration), für die kein Tooltip, Glossar oder Hilfetext hinterlegt ist.",
+        "requirement": "Jeder identifizierte Jargon-Begriff muss von einem verständlichen Hilfetext oder Tooltip begleitet sein."
       },
       "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen mit einem verständlichen Hilfetext (Tooltip) oder einer kurzen Begriffserklärung."
     },

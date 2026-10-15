@@ -3,12 +3,49 @@
 
 \section{Ausgangssituation und Motivation}
 \label{sec:ausgangssituation}
-[Hier wird der Text aus dem Exposé Abschnitt 1 vertieft: Übergang auf Formcycle an der HWG Ludwigshafen, bestehende Herausforderungen, heterogene Insellösungen.]
+
+Die fortschreitende Digitalisierung der öffentlichen Verwaltung stellt Hochschulen vor die Herausforderung, ehemals papierbasierte Antrags- und Verwaltungsprozesse in nutzerzentrierte, barrierefreie und medienbruchfreie Online-Dienste zu überführen. Im Kontext des Onlinezugangsgesetzes (OZG) und europäischer Barrierefreiheitsrichtlinien (EU-Richtlinie 2016/2102) kommt digitalen Formularen eine Schlüsselrolle zu: Sie bilden die primäre digitale Schnittstelle zwischen Studierenden, Lehrenden, Forschenden, Verwaltungsangestellten und externen Partnern.
+
+An der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen (HWG) wurde zur Bewältigung dieser Digitalisierungsaufgabe das Enterprise-Formular-Management-System (FMS) \textit{Formcycle} eingeführt. Formcycle ermöglicht es den einzelnen Fachbereichen und administrativen Organisationseinheiten (u.\,a. Studierendenservice, Personalabteilung, Finanzwesen sowie Zentrum für Forschung und Kooperation), Formulare dezentral im No-Code- bzw. Low-Code-Verfahren zu erstellen und zu administrieren.
+
+Diese dezentrale Autorenschaft hat in der Praxis jedoch zu einer gravierenden Zersplitterung des digitalen Formularbestands geführt. Da bislang ein verbindlicher, maschinenlesbar verankerter Gestaltungs- und Interaktionsstandard fehlt, sind im Laufe der Jahre stark heterogene Insellösungen entstanden. Formulare divergieren in elementaren Gestaltungsdimensionen:
+\begin{itemize}
+    \item \textbf{Visuelles Corporate Design:} Veraltete Desktop-Breiten (700px) wechseln unvorhersehbar mit modernen Breiten (850px); offizielle Hochschul-Header und Logos fehlen in weiten Teilen des Bestands.
+    \item \textbf{Digitale Barrierefreiheit (WCAG 2.1 / BITV 2.0):} Semantische Gruppierungen (\texttt{<fieldset>}) werden häufig durch rein optische Container ersetzt, und Pflichtfeldmarkierungen sind für Screenreader nicht maschinenlesbar hinterlegt.
+    \item \textbf{Ergonomie und Microcopy:} Die Beschriftung von Aktions-Schaltflächen reicht von generischen Minimal-Labels (\texttt{senden}) bis hin zu verwirrenden Statusbegriffen (\enquote{Kritischer Fall}), die gegen elementare Grundsätze der Dialoggestaltung (DIN EN ISO 9241-110) verstoßen.
+    \item \textbf{Rechtliche Compliance:} Bei der Erhebung hochsensibler personenbezogener Daten fehlen teilweise verbindliche Datenschutz-Hinweise gemäß Art. 13 DSGVO.
+\end{itemize}
+
+Ein manuelles Qualitätsaudit durch administrative Beauftragte ist angesichts wachsender Formularbestände und dynamischer Überarbeitungszyklen weder personell noch ökonomisch skalierbar. Hieraus erwächst die Notwendigkeit, Qualitäts-Governance automatisiert in den Erstellungsprozess zu integrieren.
 
 \section{Zielsetzung und Forschungsfragen}
 \label{sec:zielsetzung}
-[Hier wird die primäre Forschungsfrage und Zielsetzung ausgeführt.]
+
+Das übergeordnete Ziel dieser Bachelorarbeit ist die \textbf{Konzeption eines harmonisierten Formular-Standards für die HWG Ludwigshafen} sowie die \textbf{prototypische Umsetzung einer automatisierten, KI-gestützten Compliance-Prüfpipeline}, welche Formcycle-Vorlagen objektiv auditiert, Verstöße quantifiziert und handlungsorientierte Korrekturhinweise bereitstellt.
+
+Aus dieser Zielsetzung leitet sich die primäre Forschungsfrage (\textit{Main Research Question}) ab:
+\begin{quote}
+    \textit{\textbf{MRQ:} Wie kann ein einheitlicher, barrierefreier und ergonomischer Formular-Standard für die HWG Ludwigshafen konzipiert und dessen Einhaltung durch eine automatisierte Prüfpipeline in Formcycle prototypisch durchgesetzt werden?}
+\end{quote}
+
+Zur systematischen Beantwortung wird die übergeordnete Fragestellung in vier methodische Sub-Forschungsfragen (\textit{Sub-Questions}) untergliedert:
+\begin{enumerate}
+    \item[\textbf{FQ1:}] Welche empirischen Gestaltungs-, Usability- und Barrierefreiheitsdefizite kennzeichnen den bestehenden Formularbestand der HWG Ludwigshafen?
+    \item[\textbf{FQ2:}] Welche formalen, visuellen und semantischen Richtlinien müssen in einem maschinenlesbaren Formular-Standard formalisiert werden, um ISO 9241-110, BITV 2.0 und DSGVO zu genügen?
+    \item[\textbf{FQ3:}] Wie muss eine hybride Prüf-Architektur aus deterministischer Struktur-Validierung und semantischem LLM-Context-Engineering aufgebaut sein, um Formcycle-Vorlagen verlässlich zu analysieren?
+    \item[\textbf{FQ4:}] Mit welcher Genauigkeit, Robustheit und Latenz erkennt die prototypische Pipeline Regelverstöße im Vergleich zu synthetischen Referenzmustern und realen Anträgen?
+\end{enumerate}
 
 \section{Methodischer Gang der Arbeit}
 \label{sec:aufbau}
-[Struktur der Arbeit nach dem Design Science Research (DSR) Ansatz: Ist-Analyse, Standardkonzeption, Prototyping, Evaluation.]
+
+Die wissenschaftliche Vorgehensweise orientiert sich am methodologischen Leitfaden des \textbf{Design Science Research (DSR)} nach \textcite{duan2024generating} und Hevner. Der DSR-Ansatz zielt auf die theoriegeleitete Entwicklung und rigorose Evaluation von IT-Artefakten zur Lösung praxisrelevanter Problemstellungen ab. Die Arbeit gliedert sich in folgende Schritte:
+
+\begin{enumerate}
+    \item \textbf{Kapitel 2 (Theoretischer Hintergrund):} Erarbeitung der ergonomischen Normen (DIN EN ISO 9241-110), gesetzlichen Barrierefreiheitsvorgaben (WCAG 2.1, BITV 2.0) sowie des aktuellen Forschungsstands zu automatisierten Usability-Audits und Design-System-Compliance mittels Large Language Models.
+    \item \textbf{Kapitel 3 (Empirische Ist-Analyse):} Systematische Vollerhebung und Komponenten-Analyse von 34 realen HWG-Formularen aus Formcycle sowie detaillierte DOM-Untersuchung gerenderter Einstiegsansichten zur Identifikation der Kerndefizite.
+    \item \textbf{Kapitel 4 (Konzeption des Formular-Standards):} Formalisierung der Governance-Vorgaben in einer maschinenlesbaren Komponenten- und Regel-Registry (\texttt{rules\_registry.json}) mit mathematischem Penalty-Scoring-Modell.
+    \item \textbf{Kapitel 5 (Prototypische Implementierung):} Technische Realisierung der zweistufigen Middleware (deterministischer Python-Parser + LLM-Context-Engineering) zur automatisierten Analyse von Formcycle-Exporten (\texttt{.xfp}).
+    \item \textbf{Kapitel 6 (Empirische Evaluation):} Quantitative Validierung der Prüfpipeline anhand synthetischer Ground-Truth-Formulare sowie repräsentativer Anträge aus dem Produktiv- und Testsystem; Diskussion von Systemgrenzen und Architekturvarianten.
+    \item \textbf{Kapitel 7 (Fazit und Ausblick):} Zusammenfassung der Beantwortung aller Forschungsfragen, praktische Handlungsempfehlungen für den Hochschulbetrieb und Skizzierung zukünftiger Forschungsperspektiven.
+\end{enumerate}

@@ -1,0 +1,290 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{cha2026design}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=0ec900b968105848385388c5beedff2c}{%
+           family={Cha},
+           familyi={C\bibinitperiod},
+           given={Seungeon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=4ec41100449a0e2edd4b2cd6bb902d25}{%
+           family={Jo},
+           familyi={J\bibinitperiod},
+           given={Sunghyun},
+           giveni={S\bibinitperiod}}}%
+        {{hash=094af118e2f7f891fd345978d3235788}{%
+           family={Shin},
+           familyi={S\bibinitperiod},
+           given={Jongho},
+           giveni={J\bibinitperiod}}}%
+        {{hash=90d20dadc377f13a4e3d93db8513877c}{%
+           family={Seo},
+           familyi={S\bibinitperiod},
+           given={Kyoungwon},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{a7cbdd122fa638420906ab28da7ebb66}
+      \strng{fullhash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{fullhashraw}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{bibnamehash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{authorbibnamehash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{authornamehash}{a7cbdd122fa638420906ab28da7ebb66}
+      \strng{authorfullhash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{authorfullhashraw}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (CHI EA '26)}
+      \field{title}{Design System-Compliant User Interface Generation with LLM Agents: A Comparative Study of Context Engineering Strategies}
+      \field{year}{2026}
+      \verb{doi}
+      \verb 10.1145/3772363.3798616
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3772363.3798616
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3772363.3798616
+      \endverb
+    \endentry
+    \entry{duan2024generating}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=3bdad033764ca89e1171a430a36ed028}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Peitong},
+           giveni={P\bibinitperiod}}}%
+        {{hash=6ca7213b846f4f84a1cb05364c4a9a6b}{%
+           family={Warner},
+           familyi={W\bibinitperiod},
+           given={Jeremy},
+           giveni={J\bibinitperiod}}}%
+        {{hash=2af761d9bef859ea29248418adce0dd7}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=6b511e44380adfd5f04a45542be3dd42}{%
+           family={Hartmann},
+           familyi={H\bibinitperiod},
+           given={Bjoern},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{7e8f8987326e48dbb8b530f4b34925f9}
+      \strng{fullhash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{fullhashraw}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{bibnamehash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{authorbibnamehash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{authornamehash}{7e8f8987326e48dbb8b530f4b34925f9}
+      \strng{authorfullhash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{authorfullhashraw}{ee7d2377bf130d5af1f470f8816374f0}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems (CHI '24)}
+      \field{title}{Generating Automatic Feedback on UI Mockups with Large Language Models}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1145/3613904.3642782
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3613904.3642782
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3613904.3642782
+      \endverb
+    \endentry
+    \entry{guerino2025gpt4o}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{hash=a797c098d9443952d9714d6800b1bddf}{%
+           family={Guerino},
+           familyi={G\bibinitperiod},
+           given={Guilherme\bibnamedelima Corredato},
+           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=3f105dafcb527a1bda80744570b7351a}{%
+           family={Rodrigues},
+           familyi={R\bibinitperiod},
+           given={Luiz},
+           giveni={L\bibinitperiod}}}%
+        {{hash=2be55363aefa535134f1a3bc21011444}{%
+           family={Capeleti},
+           familyi={C\bibinitperiod},
+           given={Bruna},
+           giveni={B\bibinitperiod}}}%
+        {{hash=6fd29e863a542484c48c14f47f5c4a32}{%
+           family={Mello},
+           familyi={M\bibinitperiod},
+           given={Rafael\bibnamedelima Ferreira},
+           giveni={R\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=882b2e9190eb81fc820ab2cb7bad2e3b}{%
+           family={Freire},
+           familyi={F\bibinitperiod},
+           given={André},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c75092efd0b57390dce2b2a9b55eca0e}{%
+           family={Zaina},
+           familyi={Z\bibinitperiod},
+           given={Luciana},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{f5815b93a9530d704201aa7a5b4040b7}
+      \strng{fullhash}{19d5825528083553b78996f58a821e4e}
+      \strng{fullhashraw}{19d5825528083553b78996f58a821e4e}
+      \strng{bibnamehash}{19d5825528083553b78996f58a821e4e}
+      \strng{authorbibnamehash}{19d5825528083553b78996f58a821e4e}
+      \strng{authornamehash}{f5815b93a9530d704201aa7a5b4040b7}
+      \strng{authorfullhash}{19d5825528083553b78996f58a821e4e}
+      \strng{authorfullhashraw}{19d5825528083553b78996f58a821e4e}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Human-Computer Interaction -- INTERACT 2025}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Can GPT-4o Evaluate Usability Like Human Experts? A Comparative Study on Issue Identification in Heuristic Evaluation}
+      \field{volume}{15286}
+      \field{year}{2025}
+      \field{pages}{381\bibrangedash 402}
+      \range{pages}{22}
+      \verb{doi}
+      \verb 10.1007/978-3-032-05005-2_20
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2506.16345
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2506.16345
+      \endverb
+    \endentry
+    \entry{wang2025aiheureval}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=504859bd7823bfc1ce4fac621e3312da}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yuekai},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e0058f0ded861efba24f480c1e8e6f9b}{%
+           family={Xhakaj},
+           familyi={X\bibinitperiod},
+           given={Franceska},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{fullhash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{fullhashraw}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{bibnamehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authorbibnamehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authornamehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authorfullhash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authorfullhashraw}{945ad4ee220d8e73f6f4f6033862b997}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{HCI International 2025 Posters}
+      \field{series}{Communications in Computer and Information Science}
+      \field{title}{AIHeurEval: Generating Heuristic Evaluations on Multiple UI Screens with Multimodal Large Language Models}
+      \field{volume}{1528}
+      \field{year}{2025}
+      \field{pages}{228\bibrangedash 237}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1007/978-3-031-94168-9_22
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/978-3-031-94168-9_22
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/978-3-031-94168-9_22
+      \endverb
+    \endentry
+    \entry{zhong2025synthetic}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=fb6f572b268cd1cb07b3842ac1200e28}{%
+           family={Zhong},
+           familyi={Z\bibinitperiod},
+           given={Ruican},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4da2be0f9b963f0b6bdddc8e349ca4da}{%
+           family={McDonald},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima W.},
+           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=ef7a2e85e7ed8015aa09a687998f9124}{%
+           family={Hsieh},
+           familyi={H\bibinitperiod},
+           given={Gary},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{86c54614e2252b321be94922e559e759}
+      \strng{fullhash}{5239142cff74124913914ab458767912}
+      \strng{fullhashraw}{5239142cff74124913914ab458767912}
+      \strng{bibnamehash}{5239142cff74124913914ab458767912}
+      \strng{authorbibnamehash}{5239142cff74124913914ab458767912}
+      \strng{authornamehash}{86c54614e2252b321be94922e559e759}
+      \strng{authorfullhash}{5239142cff74124913914ab458767912}
+      \strng{authorfullhashraw}{5239142cff74124913914ab458767912}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2507.02306}
+      \field{title}{Synthetic Heuristic Evaluation: A Comparison between AI- and Human-Powered Usability Evaluation}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.48550/arXiv.2507.02306
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2507.02306
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2507.02306
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

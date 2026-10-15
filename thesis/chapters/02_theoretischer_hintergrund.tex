@@ -1,18 +1,69 @@
 \chapter{Theoretischer Hintergrund und Stand der Forschung}
 \label{chap:theorie}
 
+Dieses Kapitel spannt den theoretischen Bogen von den ergonomischen und gesetzlichen Grundlagen der Formulagestaltung über die Prinzipien digitaler Barrierefreiheit bis hin zum aktuellen Stand der Forschung im Bereich automatisierter Usability-Audits und Design-System-Governance mittels Large Language Models (LLMs).
+
 \section{Grundlagen der Formular-Governance und Usability-Standards}
 \label{sec:usability_standards}
-[ISO 9241-110 Grundsätze der Dialoggestaltung, Barrierefreiheit nach WCAG 2.1 und BITV 2.0.]
+
+Digitale Formulare stellen komplexe Dialogsysteme dar, bei denen Nutzende zielgerichtet Informationen strukturieren und übermitteln. Die Qualität dieser Mensch-Computer-Interaktion bemisst sich an etablierten Normen der Software-Ergonomie sowie rechtlichen Barrierefreiheitsstandards.
+
+\subsection{Ergonomie nach DIN EN ISO 9241-110}
+Die internationale Norm \textbf{DIN EN ISO 9241-110} (Grundsätze der Dialoggestaltung) formuliert fundamentale Kriterien für ergonomische interaktive Systeme, die unmittelbar auf Webformulare anzuwenden sind:
+\begin{itemize}
+    \item \textbf{Aufgabenangemessenheit:} Ein Dialog ist aufgabenangemessen, wenn er die Nutzenden unterstützt, ihre Arbeitsaufgabe effektiv und effizient zu erledigen, ohne unnötigen kognitiven Ballast (z.\,B. durch unklare Schrittabfolgen oder redundante Abfragen) aufzubürden.
+    \item \textbf{Selbstbeschreibungsfähigkeit:} Jeder Dialogschritt muss für die Nutzenden unmittelbar verständlich sein. Für Formulare bedeutet dies, dass Eingabefelder über eindeutige Beschriftungen verfügen müssen und Schaltflächen die ausgelöste Aktion unmissverständlich durch Handlungsverben im Infinitiv beschreiben müssen.
+    \item \textbf{Erwartungskonformität:} Das Systemverhalten muss den Vorkenntnissen und gesellschaftlich etablierten Konventionen entsprechen. Im Kontext von Formularen betrifft dies insbesondere die gewohnte Leserichtung und Sequenz von Stammdaten (Anrede $\rightarrow$ Vorname $\rightarrow$ Nachname) sowie die räumliche Affordanz (die visuelle Breite eines Feldes muss mit der erwarteten Eingabelänge korrespondieren).
+    \item \textbf{Fehlertoleranz und Benutzerführung:} Strukturierte Eingaben (z.\,B. IBAN, Postleitzahlen, Datumsangaben) müssen durch automatisierte Maskierungen und Validierungsmuster vor Fehlern geschützt werden. Tritt dennoch ein Eingabefehler auf, muss dieser am betroffenen Feld mit einer konkreten Korrekturhilfe ausgewiesen werden.
+\end{itemize}
+
+\subsection{Barrierefreiheit nach WCAG 2.1 und BITV 2.0}
+Für öffentliche Stellen, zu denen Hochschulen gemäß §\,1 Abs.\,1 des Landesgesetzes zur Gleichstellung von Menschen mit Behinderungen zählen, ist die Einhaltung der \textbf{Barrierefreie-Informationstechnik-Verordnung (BITV 2.0)} gesetzlich verpflichtend. Die BITV 2.0 referenziert die europäischen Normen der EN 301 549, welche ihrerseits auf den internationalen \textbf{Web Content Accessibility Guidelines (WCAG 2.1)} aufbauen.
+
+Für Webformulare sind insbesondere die Kriterien der Konformitätsstufe AA von zentraler Bedeutung:
+\begin{itemize}
+    \item \textbf{WCAG 1.1.1 (Nicht-Text-Inhalt):} Sämtliche grafischen Steuerelemente und institutionellen Bildbanner (z.\,B. das Logo der HWG Ludwigshafen) müssen über äquivalente, informative Alternativtexte (\texttt{alt}-Attribute) verfügen.
+    \item \textbf{WCAG 1.3.1 (Info und Beziehungen):} Visuell wahrnehmbare Strukturen müssen auch programmatisch für assistierende Technologien (Screenreader) ermittelbar sein. Logisch zusammenhängende Eingabefelder (z.\,B. persönliche Angaben, Anschrift, Zahlungsdaten) müssen daher in semantischen \texttt{<fieldset>}-Containern zusammengefasst und mit einer lesbaren Legende (\texttt{<legend>}) versehen werden. Reine visuelle \texttt{<div>}-Wrapper verletzen dieses Kriterium.
+    \item \textbf{WCAG 3.3.2 (Beschriftungen oder Anweisungen):} Pflichtfelder müssen sowohl für sehende Nutzende visuell eindeutig gekennzeichnet sein (z.\,B. durch einen Pflichtfeldstern) als auch im Document Object Model (DOM) über das Attribut \texttt{aria-required="true"} für Screenreader deklariert werden.
+    \item \textbf{WCAG 3.1 (Verständlichkeit):} Texte müssen sprachlich verständlich sein. Hochschulspezifischer Amts- und Behördenjargon stellt für Studieninteressierte oder internationale Antragsstellende eine Barriere dar, weshalb Fachtermini zwingend durch Hilfetexte oder Glossare erläutert werden müssen.
+\end{itemize}
 
 \section{Automatisierte Heuristische Evaluation mit Large Language Models}
 \label{sec:llm_evaluation}
-[Grenzen naiver Prompts nach \textcite{guerino2025gpt4o}; synthetische Heuristiken nach \textcite{zhong2025synthetic}.]
+
+Die klassische Usability-Evaluation stützt sich historisch auf manuelle Inspektionen durch Fachexperten (Cognitive Walkthrough, Heuristische Evaluation nach Nielsen). Diese Verfahren sind jedoch zeitintensiv, kostenaufwendig und skalieren nicht für kontinuierliche Release-Zyklen in dezentralen Content-Management-Systemen.
+
+Mit dem Aufkommen von Large Language Models (LLMs) untersucht die jüngere Forschung die Automatisierung heuristischer UI-Audits:
+\begin{itemize}
+    \item \textbf{Grenzen unstrukturierter Prompts:} \textcite{guerino2025gpt4o} untersuchten die Fähigkeit fortschrittlicher LLMs (GPT-4o), Usability-Probleme wie menschliche Experten zu identifizieren. Sie wiesen nach, dass naive Prompts ohne strikte Domänenführung zu einer hohen Streuung, unpräzisen Heuristik-Zuordnungen und einem Übersehen subtiler Kontextfehler führen.
+    \item \textbf{Synthetische Heuristiken:} \textcite{zhong2025synthetic} zeigten, dass die Kombination aus strukturierten Prüfregeln und LLM-gestützter Auswertung die Entdeckungsrate bei Usability-Problemen signifikant steigert und eine mit menschlichen Experten vergleichbare Abdeckung erreicht, sofern die Bewertungskriterien formal vorstrukturiert sind.
+    \item \textbf{Multimodale UI-Analyse:} \textcite{wang2025aiheureval} demonstrierten anhand des Frameworks \textit{AIHeurEval}, dass LLMs bei der Analyse von Benutzerschnittstellen besonders dann verlässliche Urteile fällen, wenn sie sowohl die strukturelle Repräsentation (DOM / Komponentenbaum) als auch sprachliche Microcopy-Elemente ganzheitlich evaluieren.
+\end{itemize}
 
 \section{Registry-basierte Context-Engineering-Strategien}
 \label{sec:context_engineering}
-[Design-System-Compliance von über 95\% nach \textcite{cha2026design}.]
 
-\section{Feedback-Integration in Autorenumgebungen}
+Ein zentrales Problem beim Einsatz generativer Sprachmodelle für Compliance-Prüfungen ist das Risiko von Halluzinationen sowie das Abweichen von institutionellen Gestaltungsrichtlinien. Um dies zu verhindern, bedarf es ausgereifter Context-Engineering-Strategien.
+
+\textcite{cha2026design} untersuchten in einer vergleichenden Studie Strategien zur Durchsetzung von Design-Systemen durch LLM-Agenten. Sie stellten fest, dass das Einbetten formaler, maschinenlesbarer Komponenten- und Regel-Registries (bestehend aus klaren Spezifikationen, Positiv-/Negativmustern und Handlungsanleitungen) die \textbf{Design-System-Compliance auf über 95\,\%} steigert. 
+
+Im Gegensatz zu monolithischen Prompts ermöglicht eine modulare Registry:
+\begin{enumerate}
+    \item \textbf{Deterministische Vorfilterung:} Regeln mit mathematisch oder strukturell eindeutigen Kriterien (z.\,B. Layoutbreite exakt 850px, Vorhandensein bestimmter HTML-Tags, Regex-Validierung) werden ohne KI-Latenz und ohne Tokenkosten direkt im Code ausgewertet.
+    \item \textbf{Fokussierte semantische Injektion:} Nur diejenigen Textelemente und Labels, die semantische Ambiguitäten aufweisen (z.\,B. Verständlichkeit von Microcopy, Erkennung von bürokratischem Jargon), werden gemeinsam mit den relevanten Registry-Regeln an das Sprachmodell übergeben.
+    \item \textbf{Deterministische Punkteaggregation:} Der Compliance-Score wird mathematisch anhand vordefinierter Strafgewichte berechnet, anstatt die Benotung der stochastischen Schätzung des Modells zu überlassen.
+\end{enumerate}
+
+\section{Feedback-Integration in No-Code-Autorenumgebungen}
 \label{sec:feedback_integration}
-[Iteratives, autorenzentriertes Feedback-Design nach \textcite{duan2024generating}.]
+
+Die Governance eines dezentralen Formularbestands kann nur gelingen, wenn das Prüfwerkzeug von den Erstellenden akzeptiert und verstanden wird. Formularautorinnen und -autoren in Fachbereichen und Verwaltung verfügen in der Regel über kein tiefes informatische oder barrierefreiheitstechnisches Spezialwissen.
+
+\textcite{duan2024generating} betonen, dass automatisiertes UI-Feedback drei fundamentale Anforderungen erfüllen muss, um wirksam zu sein:
+\begin{itemize}
+    \item \textbf{Aktionsorientierung (\textit{Actionability}):} Anstelle abstrakter Normverweise (z.\,B. \enquote{Verletzung von WCAG 1.3.1}) muss das System eine konkrete Handlungsanweisung liefern (\enquote{Fügen Sie ein XFieldSet mit Legende 'Persönliche Angaben' ein}).
+    \item \textbf{Lokalisierbarkeit:} Der Verstoß muss eindeutig dem betroffenen Element im Formcycle-Designer zugeordnet werden (unter Angabe des Komponenten-Namens und Feld-Labels).
+    \item \textbf{Positive Bestärkung:} Das Feedback darf nicht ausschließlich Mängel rügen, sondern muss auch regelkonforme Gestaltungsaspekte positiv hervorheben, um den Lerneffekt der Autoren nachhaltig zu fördern.
+\end{itemize}
+
+Diese theoretischen und empirischen Erkenntnisse bilden das Fundament für die Konzeption des Formular-Standards und der zweistufigen Prüfpipeline in den folgenden Kapiteln.
