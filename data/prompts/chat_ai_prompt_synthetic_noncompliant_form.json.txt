@@ -1,0 +1,111 @@
+Du bist ein wissenschaftlicher Usability- und Compliance-Auditor für digitale Hochschulformulare (XIMA Formcycle) an der HWG Ludwigshafen.
+Prüfe das nachfolgende extrahierte Formular-JSON strikt anhand der folgenden 0 semantischen Governance-Regeln aus der HWG-Compliance-Registry (v1.3.0):
+
+=== SEMANTISCHE PRÜFREGELN ===
+[]
+
+=== ZU PRÜFENDES FORMULAR (KOMPAKTER EXTRAKT) ===
+{
+  "form_name": "synthetic_noncompliant_form.json",
+  "metrics": {
+    "page_count": 0,
+    "input_field_count": 8
+  },
+  "ui_elements": [
+    {
+      "className": "XContainer",
+      "name": "contHeaderTitle",
+      "label_or_text": "Antrag auf Sondergenehmigung",
+      "help": ""
+    },
+    {
+      "className": "XSelect",
+      "name": "selAnrede",
+      "label_or_text": "<p>Anrede</p>",
+      "help": ""
+    },
+    {
+      "className": "XTextField",
+      "name": "tfNachname",
+      "label_or_text": "Nachname",
+      "help": ""
+    },
+    {
+      "className": "XTextField",
+      "name": "tfVorname",
+      "label_or_text": "Vorname",
+      "help": ""
+    },
+    {
+      "className": "XTextField",
+      "name": "tfEmail",
+      "label_or_text": "HWGLU-Email",
+      "help": ""
+    },
+    {
+      "className": "XText",
+      "name": "txtDevNote",
+      "label_or_text": "Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert.",
+      "help": ""
+    },
+    {
+      "className": "XTextField",
+      "name": "tfPLZ",
+      "label_or_text": "<p>PLZ &szlig; Wohnort</p>",
+      "help": ""
+    },
+    {
+      "className": "XTextField",
+      "name": "tfIBAN",
+      "label_or_text": "IBAN",
+      "help": ""
+    },
+    {
+      "className": "XTextField",
+      "name": "tfKostenstelle",
+      "label_or_text": "Kostenstelle",
+      "help": ""
+    },
+    {
+      "className": "XUpload",
+      "name": "uplDateien",
+      "label_or_text": "Belege hochladen",
+      "help": ""
+    },
+    {
+      "className": "XButton",
+      "name": "btnSubmit",
+      "label_or_text": "senden",
+      "help": ""
+    },
+    {
+      "className": "XButton",
+      "name": "btnKritisch",
+      "label_or_text": "Kritischer Fall",
+      "help": ""
+    },
+    {
+      "className": "XFooter",
+      "name": "footer1",
+      "label_or_text": "",
+      "help": ""
+    }
+  ],
+  "workflow_emails": []
+}
+
+=== AUFGABE ===
+Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt im folgenden Schema:
+{
+  "form_name": "synthetic_noncompliant_form.json",
+  "evaluated_rules": [
+    {
+      "rule_id": "HWG-...",
+      "status": "PASS | VIOLATION | RECOMMENDATION",
+      "severity": "critical | major | minor | recommendation",
+      "affected_elements": ["Elementname"],
+      "finding": "Kurze Begründung des Befunds",
+      "remediation_suggestion": "Konkreter Korrekturvorschlag für den Formcycle-Designer"
+    }
+  ]
+}
