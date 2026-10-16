@@ -135,6 +135,21 @@
         "text": "Antrag einreichen",
         "type": "submit"
       }
+    },
+    {
+      "className": "XFooter",
+      "properties": {
+        "name": "footer1",
+        "showlogo": "0",
+        "privacyPolicyShow": "1"
+      }
+    }
+  ],
+  "workflow_emails": [
+    {
+      "node_name": "E-Mail Eingangsbestätigung",
+      "subject": "Eingangsbestätigung Ihres Antrags (Vorgangsnummer [%$PROJECT_ALIAS%])",
+      "body": "Vielen Dank für Ihren Antrag. Ihr Antrag wird nun durch die zuständige Abteilung geprüft. Über die weiteren Folgeschritte und die Entscheidung werden Sie per E-Mail informiert."
     }
   ]
 }

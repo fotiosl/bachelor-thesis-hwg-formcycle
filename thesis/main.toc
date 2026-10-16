@@ -24,34 +24,34 @@
 \contentsline {chapter}{\numberline {4}Konzeption des Formular-Standards und der Prüf-Registry}{16}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Struktur-, Navigations- und Informationsarchitektur}{16}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Corporate Design, Barrierefreiheit und Stammdaten-Muster}{17}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Corporate Identity und Header-Struktur}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.1}Corporate Identity, Header- und Footer-Struktur}{17}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Semantische Gruppierung und Pflichtfeld-Indikation}{17}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Das normierte HWG-Stammdaten-Muster}{17}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.3}Das normierte HWG-Stammdaten-Muster}{18}{subsection.4.2.3}%
 \contentsline {section}{\numberline {4.3}Datenschutz, Eingabevalidierung und Schaltflächen-Semantik}{18}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Datenschutz-Transparenz (Art. 13 DSGVO)}{18}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Strukturierte Validierung und Dateiuploads}{18}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Schaltflächen-Semantik und Prozess-Entkopplung}{19}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}{19}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Mathematisches Bewertungsmodell}{19}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.3.2}Strukturierte Validierung, Dateiuploads und Zwischenspeichern-Empfehlung}{19}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Schaltflächen-Semantik und Workflow-E-Mail-Transparenz}{19}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}{20}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Mathematisches Bewertungsmodell}{20}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}Katalog der formalisierten Governance-Regeln}{20}{subsection.4.4.2}%
-\contentsline {chapter}{\numberline {5}Prototypische Implementierung der Compliance-Prüfpipeline}{21}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Systemarchitektur und Datenfluss der Prüfpipeline}{21}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Datenextraktion aus Formcycle-Strukturen}{22}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Context-Engineering und semantische LLM-Integration}{22}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Deterministische Berechnung des Compliance-Scores}{23}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Empirische Evaluation und Diskussion}{24}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Evaluationsdesign und Benchmark-Metriken}{24}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Quantitative Benchmark-Ergebnisse}{25}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Analyse der Erkennungsleistung}{25}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Ergebnisse am realen HWG-Bestand}{26}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Qualitative Nutzer- und Expertenrückmeldung}{26}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Kritische Würdigung und Validitätsbedrohungen}{26}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{28}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Zusammenfassung der Kernergebnisse}{28}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}{29}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Zukünftige Forschungs- und Entwicklungsperspektiven}{29}{section.7.3}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{31}{chapter*.11}%
+\contentsline {chapter}{\numberline {5}Prototypische Implementierung der Compliance-Prüfpipeline}{22}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Systemarchitektur und Datenfluss der Prüfpipeline}{22}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Datenextraktion aus Formcycle-Strukturen}{23}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Context-Engineering und semantische LLM-Integration}{23}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Deterministische Berechnung des Compliance-Scores}{24}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Empirische Evaluation und Diskussion}{25}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Evaluationsdesign und Benchmark-Metriken}{25}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Quantitative Benchmark-Ergebnisse}{26}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Analyse der Erkennungsleistung}{28}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Ergebnisse am realen HWG-Bestand}{28}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Qualitative Nutzer- und Expertenrückmeldung}{29}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Kritische Würdigung und Validitätsbedrohungen}{29}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{30}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Zusammenfassung der Kernergebnisse}{30}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}{31}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Zukünftige Forschungs- und Entwicklungsperspektiven}{31}{section.7.3}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{33}{chapter*.11}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Reflexionsbericht zur Nutzung von KI-Tools}{32}{appendix.A}%
-\contentsline {chapter}{Eidesstattliche Erklärung}{34}{chapter*.12}%
+\contentsline {chapter}{\numberline {A}Reflexionsbericht zur Nutzung von KI-Tools}{34}{appendix.A}%
+\contentsline {chapter}{Eidesstattliche Erklärung}{36}{chapter*.12}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

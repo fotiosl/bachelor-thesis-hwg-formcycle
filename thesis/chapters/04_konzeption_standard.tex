@@ -19,20 +19,22 @@ Eine verlässliche Formular-Governance bedarf klar definierter architektonischer
 
 Die visuelle und programmatische Gestaltung bildet das Bindeglied zwischen institutioneller Wiedererkennung und digitaler Barrierefreiheit.
 
-\subsection{Corporate Identity und Header-Struktur}
+\subsection{Corporate Identity, Header- und Footer-Struktur}
 Jedes Formular muss im Kopfbereich über das offizielle Bildbanner der Hochschule (\texttt{XImage}) verfügen. Zur Wahrung der Barrierefreiheit (WCAG 2.1 Erfolgskriterium 1.1.1) ist ein textueller Alternativtext zwingend vorgeschrieben (\enquote{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}).
 
-\subsection{Semantische Gruppierung und Pflichtfeld-Indikation}
-Gemäß WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) dürfen Container nicht ausschließlich über visuelle \texttt{<div>}-Tags realisiert werden. Jeder logische Block (z.\,B. persönliche Angaben, Anschrift, Bankdaten) muss als semantisches \texttt{<fieldset>} mit einer lesbaren Legende (\texttt{<legend>}) ausgezeichnet werden. 
+Darüber hinaus muss im Fußbereich (\texttt{XFooter}) der herstellerseitige Werbehinweis \textit{\enquote{Powered by XIMA Formcycle}} deaktiviert werden, indem im Formcycle-Designer die Eigenschaft \textit{\enquote{Logo anzeigen}} (\texttt{properties.showlogo = "0"}) abgewählt wird (\texttt{HWG-CD-03}). Dies verhindert fremdes Software-Branding und stärkt die institutionelle Seriosität.
 
-Zur Wahrung des Erfolgskriteriums 3.3.2 (Beschriftungen) muss jedes Pflichtfeld sowohl optisch über einen konsistenten Pflichtfeld-Stern (\texttt{showrequiredhint="1"}) als auch maschinenlesbar im DOM über \texttt{aria-required="true"} deklariert sein.
+\subsection{Semantische Gruppierung und Pflichtfeld-Indikation}
+Gemäß WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) dürfen Container nicht ausschließlich über visuelle \texttt{<div>}-Tags realisiert werden. Jeder logische Block (z.\,B. persönliche Angaben, Anschrift, Bankdaten) muss als semantisches \texttt{<fieldset>} mit einer lesbaren Legende (\texttt{<legend>}) ausgezeichnet werden (\texttt{HWG-A11Y-01}). 
+
+Zur Wahrung des Erfolgskriteriums 3.3.2 (Beschriftungen) muss jedes Pflichtfeld sowohl optisch über einen konsistenten Pflichtfeld-Stern (\texttt{showrequiredhint="1"}) als auch maschinenlesbar im DOM über \texttt{aria-required="true"} deklariert sein (\texttt{HWG-A11Y-02}). Technisch erzeugt Formcycle das HTML-Attribut \texttt{aria-required="true"} automatisch im gerenderten DOM, sobald im Formcycle-Designer unter \textit{Einschränkungen} das Kontrollkästchen \textit{\enquote{Pflichtfeld}} (\texttt{required="1"}) gemeinsam mit \textit{\enquote{Pflichtfeldhinweis anzeigen}} (\texttt{showrequiredhint="1"}) aktiviert wird. Wird ein Feld hingegen lediglich dynamisch per Bedingung (\texttt{requiredif}) als erforderlich geschaltet, muss \texttt{aria-required="true"} explizit im Designer-Reiter \textit{Erweitert $\rightarrow$ HTML-Attribute} (\texttt{properties.attributes}) hinterlegt werden.
 
 \subsection{Das normierte HWG-Stammdaten-Muster}
 Um die im Bestand identifizierten Copy-Paste-Abweichungen zu eliminieren, wird die Erfassung persönlicher Angaben standardisiert:
 \begin{enumerate}
-    \item \textbf{Feste Sequenz:} Die Erfassung folgt dem natürlichen Lesefluss: $\text{Anrede} \rightarrow \text{Vorname} \rightarrow \text{Nachname} \rightarrow \text{E-Mail-Adresse}$. Eine Voranstellung des Nachnamens ist nur in behördlichen Spezialregistern gestattet.
-    \item \textbf{Einheitliche E-Mail-Semantik:} Das Postfach wird einheitlich als \textit{\enquote{E-Mail-Adresse}} bezeichnet; bei zwingend erforderlicher Hochschul-Kennung als \textit{\enquote{Hochschul-E-Mail}}.
-    \item \textbf{Bereinigung von Entwickler-Rückständen:} Sichtbare technische Implementierungs-Notizen (z.\,B. Verweise auf JavaScript, Shibboleth-Gruppen oder LDAP) sind im Produktivzustand strikt untersagt.
+    \item \textbf{Feste Sequenz (\texttt{HWG-STAMM-01}):} Die Erfassung folgt dem natürlichen Lesefluss: $\text{Anrede} \rightarrow \text{Vorname} \rightarrow \text{Nachname} \rightarrow \text{E-Mail-Adresse}$. Eine Voranstellung des Nachnamens ist nur in behördlichen Spezialregistern gestattet.
+    \item \textbf{Kanonische Stammdaten-Bezeichnungen (\texttt{HWG-STAMM-02}):} Sämtliche Stammdatenfelder folgen einer einheitlichen Terminologie (\textit{\enquote{Anrede}}, \textit{\enquote{Vorname}}, \textit{\enquote{Nachname}}, \textit{\enquote{E-Mail-Adresse}} bzw. \textit{\enquote{Hochschul-E-Mail}}, \textit{\enquote{Matrikelnummer}}, \textit{\enquote{Postleitzahl}}, \textit{\enquote{Wohnort}}, \textit{\enquote{IBAN}}). Redundante Rollenzusätze im Label (wie \enquote{Name Antragstellende/r}) oder unorthodoxe Schreibweisen (\enquote{HWGLU-Email}) sind unzulässig.
+    \item \textbf{Bereinigung von Entwickler-Rückständen (\texttt{HWG-UI-01}):} Sichtbare technische Implementierungs-Notizen (z.\,B. Verweise auf JavaScript, Shibboleth-Gruppen oder LDAP) sind im Produktivzustand strikt untersagt.
 \end{enumerate}
 
 \section{Datenschutz, Eingabevalidierung und Schaltflächen-Semantik}
@@ -41,22 +43,24 @@ Um die im Bestand identifizierten Copy-Paste-Abweichungen zu eliminieren, wird d
 Über das Layout hinaus werden zentrale funktionale Anforderungen definiert:
 
 \subsection{Datenschutz-Transparenz (Art. 13 DSGVO)}
-Sobald ein Formular personenbezogene Daten verarbeitet, muss unmittelbar vor der Absende-Schaltfläche ein verständlicher Hinweis auf den Verarbeitungszweck sowie ein klickbarer Hyperlink auf die zentrale Datenschutzerklärung der HWG Ludwigshafen hinterlegt sein.
+Sobald ein Formular personenbezogene Daten verarbeitet, muss vor der Absende-Schaltfläche oder im aktivierten Datenschutz-Bereich des Footers (\texttt{privacyPolicyShow="1"}) ein verständlicher Hinweis auf den Verarbeitungszweck sowie ein klickbarer Hyperlink auf die zentrale Datenschutzerklärung der HWG Ludwigshafen hinterlegt sein (\texttt{HWG-DSGVO-01}).
 
-\subsection{Strukturierte Validierung und Dateiuploads}
-Eingabefelder für strukturierte Datenformate (IBAN, Postleitzahl, Telefonnummer, Datum) dürfen nicht als unvalidierte Freitexte verbleiben. Es sind formale Validierungsmuster (Regex) oder Formcycle-Presets zu hinterlegen. Kurze Felder wie die fünfstellige Postleitzahl oder Hausnummern dürfen nicht auf 100\,\% Zeilenbreite gestreckt werden, um dem Nutzenden die erwartete Inhaltslänge visuell zu signalisieren (Affordanz nach Nielsen Norman Group).
+\subsection{Strukturierte Validierung, Dateiuploads und Zwischenspeichern-Empfehlung}
+Eingabefelder für strukturierte Datenformate (IBAN, Postleitzahl, Telefonnummer, Datum) dürfen nicht als unvalidierte Freitexte verbleiben (\texttt{HWG-VAL-01}). Es sind formale Validierungsmuster (Regex) oder Formcycle-Presets zu hinterlegen. Kurze Felder wie die fünfstellige Postleitzahl oder Hausnummern dürfen nicht auf 100\,\% Zeilenbreite gestreckt werden, um dem Nutzenden die erwartete Inhaltslänge visuell zu signalisieren (\texttt{HWG-UX-01}, Affordanz nach Nielsen Norman Group).
 
-Für Dateiuploads (\texttt{XUpload}, \texttt{XFile}) gilt: Das Label oder der Hilfetext muss die akzeptierten Dateiformate (z.\,B. \enquote{Nur PDF, JPG}) sowie die maximale Dateigröße (z.\,B. \enquote{max. 10 MB}) transparent ausweisen.
+Für Dateiuploads (\texttt{XUpload}, \texttt{XFile}) gilt (\texttt{HWG-UPLOAD-01}): Das Label oder der Hilfetext muss die akzeptierten Dateiformate (z.\,B. \enquote{Nur PDF, JPG}) sowie die maximale Dateigröße (z.\,B. \enquote{max. 10 MB}) transparent ausweisen.
 
-\subsection{Schaltflächen-Semantik und Prozess-Entkopplung}
-Aktionsschaltflächen müssen zwingend ein Handlungsverb im Infinitiv tragen (z.\,B. \textit{\enquote{Antrag einreichen}} statt dem kleingeschriebenen generischen \textit{\enquote{senden}}). 
+Überschreitet ein Formular eine kritische Komplexitätsschwelle ($\ge 3$ Formularseiten \texttt{XPage} oder $\ge 25$ Eingabefelder), spricht der Standard eine unverbindliche Gestaltungsempfehlung (\texttt{HWG-UX-02}) ohne Punktabzug aus: Es sollte eine \textit{\enquote{Zwischenspeichern}}-Schaltfläche angeboten werden, die den Bearbeitungsstand sichert und den Nutzenden automatisch einen personalisierten Fortsetzungs-Link per E-Mail zusendet.
 
-Zustandsbezeichnungen und fachliche Ausnahme-Workflows (wie die Fallstudie \textit{\enquote{Kritischer Fall}}) dürfen niemals als Schaltflächentext genutzt werden. Ausnahmerouten müssen organisatorisch und rollenspezifisch in die nachgelagerte Sachbearbeitung verlagert werden (z.\,B. \textit{\enquote{Zur Präsidiumsprüfung weiterleiten}}).
+\subsection{Schaltflächen-Semantik und Workflow-E-Mail-Transparenz}
+Aktionsschaltflächen müssen zwingend dem \textit{Action-Verb-Muster} folgen, also eine Kombination aus Zielobjekt und Handlungsverb im Infinitiv aufweisen (z.\,B. \textit{\enquote{Antrag einreichen}} oder \textit{\enquote{Anfrage absenden}} statt dem kleingeschriebenen generischen \textit{\enquote{senden}}, \texttt{HWG-BTN-01}). Zustandsbezeichnungen und fachliche Ausnahme-Workflows (wie die Fallstudie \textit{\enquote{Kritischer Fall}}) dürfen niemals als bloße Substantive auf einer Schaltfläche stehen, sondern müssen die ausgelöste Aktion explizit benennen (z.\,B. \textit{\enquote{Kritischen Fall an Präsidenten weiterleiten}}).
+
+Zur Sicherstellung der Prozesstransparenz nach dem Absenden (\texttt{HWG-FEEDBACK-01}) wird nicht das statische Formular-Frontend, sondern die im Formcycle-Projektarchiv (\texttt{.fcexport}) hinterlegte Workflow-Definition geprüft: In den E-Mail-Knoten (\texttt{type="FC\_EMAIL"}) muss eine automatisierte Eingangsbestätigung an die antragstellende Person konfiguriert sein, die den Eingang bestätigt und über die weiteren Prüfschritte informiert.
 
 \section{Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}
 \label{sec:registry_definition}
 
-Um die Einhaltung dieser Vorgaben automatisiert überprüfen zu können, werden alle Kriterien in ein maschinenlesbares JSON-Schema (\texttt{rules\_registry.json}) überführt.
+Um die Einhaltung dieser Vorgaben automatisiert überprüfen zu können, werden alle Kriterien in ein maschinenlesbares JSON-Schema (\texttt{rules\_registry.json}, Version 1.3.0) überführt.
 
 \subsection{Mathematisches Bewertungsmodell}
 Das Konformitätsniveau eines Formulars wird über einen normalisierten Compliance-Score $S \in [0, 100]$ quantifiziert. Ausgehend von einem Basisscore von 100 Punkten führt jeder detektierte Verstoß zu einem fest definierten Punktabzug in Abhängigkeit von seiner Schweregrad-Klasse:
@@ -68,19 +72,20 @@ Das Konformitätsniveau eines Formulars wird über einen normalisierten Complian
 
 Hierbei bezeichnet:
 \begin{itemize}
-    \item $v(r_i) \in \{0, 1\}$ den binären Erfüllungsstatus der Regel $r_i$ ($1 = \text{Verstoß}$, $0 = \text{konform}$).
+    \item $v(r_i) \in \{0, 1\}$ den binären Auslösestatus der Regel $r_i$ ($1 = \text{Verstoß bzw. Hinweis ausgelöst}$, $0 = \text{konform}$).
     \item $w(r_i)$ das gewichtete Strafmaß der jeweiligen Schweregrad-Kategorie:
     \begin{equation}
         w(r_i) = \begin{cases}
             15 & \text{für } \textit{critical} \text{ (rechtliche/technische Blocker)} \\
             8  & \text{für } \textit{major} \text{ (schwere Usability-/CI-Verletzungen)} \\
-            3  & \text{für } \textit{minor} \text{ (visuelle oder syntaktische Mängel)}
+            3  & \text{für } \textit{minor} \text{ (visuelle oder syntaktische Mängel)} \\
+            0  & \text{für } \textit{recommendation} \text{ (unverbindliche UX-Empfehlung ohne Abzug)}
         \end{cases}
     \end{equation}
 \end{itemize}
 
 \subsection{Katalog der formalisierten Governance-Regeln}
-Tabelle~\ref{tab:rules_overview} fasst die 17 formalisierten Prüfregeln der Registry v1.2.0 zusammen:
+Tabelle~\ref{tab:rules_overview} fasst die 19 formalisierten Prüfregeln (18 bewertete Compliance-Regeln sowie 1 unverbindliche Empfehlungsregel) der Registry v1.3.0 zusammen:
 
 \begin{table}[H]
 \centering
@@ -91,24 +96,26 @@ Tabelle~\ref{tab:rules_overview} fasst die 17 formalisierten Prüfregeln der Reg
 \midrule
 \texttt{HWG-CD-01} & Standardbreite 850px & Corporate Design & Deterministisch & Major (8 Pkt): Einheitliches Raster \\
 \texttt{HWG-CD-02} & Offizieller CI-Header & Corporate Design & Deterministisch & Critical (15 Pkt): Authentizität / Logo \\
+\texttt{HWG-CD-03} & Kein XIMA-Logo im Footer & Corporate Design & Deterministisch & Major (8 Pkt): \texttt{showlogo="0"} im Footer \\
 \texttt{HWG-A11Y-01} & Fieldset-Gruppierung & Accessibility & Deterministisch & Critical (15 Pkt): WCAG 1.3.1 \\
-\texttt{HWG-A11Y-02} & Pflichtfeld-Stern/ARIA & Accessibility & Deterministisch & Major (8 Pkt): WCAG 3.3.2 \\
+\texttt{HWG-A11Y-02} & Pflichtfeld-Stern/ARIA & Accessibility & Deterministisch & Major (8 Pkt): WCAG 3.3.2 (\texttt{required="1"}) \\
 \texttt{HWG-A11Y-03} & Saubere Label-Syntax & Accessibility & Deterministisch & Minor (3 Pkt): Keine HTML-Entities \\
 \texttt{HWG-STAMM-01} & Stammdaten-Sequenz & Stammdaten & Deterministisch & Major (8 Pkt): Natürlicher Lesefluss \\
-\texttt{HWG-STAMM-02} & Standard-Stammdatenlabels & Stammdaten & Semantisch & Minor (3 Pkt): Kanonische Bezeichnungen \\
+\texttt{HWG-STAMM-02} & Kanonische Stammdaten & Stammdaten & Semantisch & Minor (3 Pkt): Einheitliche Feldlabels \\
 \texttt{HWG-UI-01} & Keine Dev-Notizen & UI-Qualität & Deterministisch & Critical (15 Pkt): Saubere UI ohne Artefakte \\
-\texttt{HWG-BTN-01} & Action-Verb-Muster Buttons & Microcopy & Semantisch & Major (8 Pkt): Vollverb im Infinitiv \\
+\texttt{HWG-BTN-01} & Action-Verb-Muster Buttons & Microcopy & Semantisch & Major (8 Pkt): Zielobjekt + Vollverb \\
 \texttt{HWG-BTN-02} & Einheitliche Pagination & Microcopy & Semantisch & Minor (3 Pkt): Weiter/Zurück \\
 \texttt{HWG-DSGVO-01} & Datenschutz-Transparenz & Datenschutz & Deterministisch & Critical (15 Pkt): Art. 13 DSGVO \\
 \texttt{HWG-UPLOAD-01} & Upload-Spezifikation & Validierung/UX & Deterministisch & Major (8 Pkt): Dateitypen \& Max-Größe \\
 \texttt{HWG-VAL-01} & Formatvalidierung & Validierung/UX & Deterministisch & Major (8 Pkt): IBAN/PLZ/Datum-Regex \\
 \texttt{HWG-UX-01} & Feldbreiten-Affordanz & Validierung/UX & Deterministisch & Minor (3 Pkt): Kompakte Breiten \\
+\texttt{HWG-UX-02} & Zwischenspeichern-Option & Validierung/UX & Semantisch & Recommendation (0 Pkt): Ab 3 S. / 25 Feldern \\
 \texttt{HWG-LANG-01} & Amtsjargon mit Erklärung & Leichte Sprache & Semantisch & Major (8 Pkt): WCAG 3.1 \\
 \texttt{HWG-LANG-02} & Barrierearme Sprache & Leichte Sprache & Semantisch & Minor (3 Pkt): Keine Schachtelsätze \\
-\texttt{HWG-FEEDBACK-01} & Prozesstransparenz & Transparenz & Semantisch & Minor (3 Pkt): Erläuterung Folgeschritte \\
+\texttt{HWG-FEEDBACK-01} & Workflow-E-Mail-Feedback & Transparenz & Semantisch & Minor (3 Pkt): \texttt{FC\_EMAIL} im Workflow \\
 \bottomrule
 \end{tabularx}
-\caption{Übersicht der formalisierten Formular-Governance-Regeln in der Registry v1.2.0}
+\caption{Übersicht der formalisierten Formular-Governance-Regeln in der Registry v1.3.0}
 \label{tab:rules_overview}
 \end{table}
 

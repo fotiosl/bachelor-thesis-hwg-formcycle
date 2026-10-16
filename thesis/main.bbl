@@ -192,6 +192,88 @@
       \verb https://arxiv.org/abs/2506.16345
       \endverb
     \endentry
+    \entry{hevner2004design}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=e054261c7f1739e1ba1db0a45e385c1b}{%
+           family={Hevner},
+           familyi={H\bibinitperiod},
+           given={Alan\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=5aec260b5b1381edc4b8ff6755f2d543}{%
+           family={March},
+           familyi={M\bibinitperiod},
+           given={Salvatore\bibnamedelima T.},
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=c518c214dc9e77148493e9ea47f505ab}{%
+           family={Park},
+           familyi={P\bibinitperiod},
+           given={Jinsoo},
+           giveni={J\bibinitperiod}}}%
+        {{hash=65565df90d4793da7a2f20e5e1b07345}{%
+           family={Ram},
+           familyi={R\bibinitperiod},
+           given={Sudha},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{77b3350005135e016e7a83431f326d8f}
+      \strng{fullhash}{b163bef761d9a2c79a3d232595321775}
+      \strng{fullhashraw}{b163bef761d9a2c79a3d232595321775}
+      \strng{bibnamehash}{b163bef761d9a2c79a3d232595321775}
+      \strng{authorbibnamehash}{b163bef761d9a2c79a3d232595321775}
+      \strng{authornamehash}{77b3350005135e016e7a83431f326d8f}
+      \strng{authorfullhash}{b163bef761d9a2c79a3d232595321775}
+      \strng{authorfullhashraw}{b163bef761d9a2c79a3d232595321775}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{MIS Quarterly}
+      \field{number}{1}
+      \field{title}{Design Science in Information Systems Research}
+      \field{volume}{28}
+      \field{year}{2004}
+      \field{pages}{75\bibrangedash 105}
+      \range{pages}{31}
+      \verb{doi}
+      \verb 10.2307/25148625
+      \endverb
+    \endentry
+    \entry{recker2013scientific}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=604e15fd1714275673736d598c9e7e89}{%
+           family={Recker},
+           familyi={R\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{fullhash}{604e15fd1714275673736d598c9e7e89}
+      \strng{fullhashraw}{604e15fd1714275673736d598c9e7e89}
+      \strng{bibnamehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authorbibnamehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authornamehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authorfullhash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authorfullhashraw}{604e15fd1714275673736d598c9e7e89}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Scientific Research in Information Systems: A Beginner's Guide}
+      \field{year}{2013}
+      \verb{doi}
+      \verb 10.1007/978-3-642-30048-6
+      \endverb
+    \endentry
     \entry{wang2025aiheureval}{inproceedings}{}{}
       \name{author}{2}{}{%
         {{hash=504859bd7823bfc1ce4fac621e3312da}{%
@@ -238,6 +320,34 @@
       \verb{url}
       \verb https://doi.org/10.1007/978-3-031-94168-9_22
       \endverb
+    \endentry
+    \entry{westermann2026ki}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=2a4da213989324b4a244a0652cbafbeb}{%
+           family={Westermann},
+           familyi={W\bibinitperiod},
+           given={Henrik},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer Gabler}%
+      }
+      \strng{namehash}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{fullhash}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{fullhashraw}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{bibnamehash}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{authorbibnamehash}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{authornamehash}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{authorfullhash}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{authorfullhashraw}{2a4da213989324b4a244a0652cbafbeb}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Wissenschaftliches Arbeiten mit KI: Ein Leitfaden für Studierende und Forschende}
+      \field{year}{2026}
     \endentry
     \entry{zhong2025synthetic}{article}{}{}
       \name{author}{3}{}{%

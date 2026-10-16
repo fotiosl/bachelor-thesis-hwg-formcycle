@@ -10,22 +10,22 @@ Die Middleware ist als leichtgewichtiger Microservice konzipiert, der Formcycle-
 
 Der Verarbeitungsprozess gliedert sich in vier sequentielle Phasen:
 \begin{enumerate}
-    \item \textbf{Ingestion \& Dekompression:} Das ZIP-basierte Formcycle-Archiv (\texttt{.xfp}) wird automatisiert entpackt und die darin enthaltene JSON-Repräsentation (\texttt{.fcp}) in den Arbeitsspeicher geladen.
-    \item \textbf{Stufe 1 (Deterministische Regelausführung):} Alle Regeln mit formalen Kriterien (z.\,B. Layout-Breite 850px, Header-Image, Fieldsets, DSGVO-Klausel, Pflichtfeld-Attribute, Formatvalidierung) werden direkt auf dem Komponentenbaum evaluiert.
-    \item \textbf{Stufe 2 (Semantische LLM-Evaluation):} Für Regeln der Kategorien Microcopy und Leichte Sprache (z.\,B. Handlungsverben auf Buttons, Jargon-Erkennung, Satzkomplexität) werden die extrahierten Textelemente gebündelt an das LLM übergeben.
-    \item \textbf{Aggregation \& Scoring:} Die Ergebnisse beider Stufen werden fusioniert, der finale Compliance-Score nach Gleichung~(\ref{eq:compliance_score}) berechnet und strukturierte Handlungsempfehlungen generiert.
+    \item \textbf{Ingestion \& Dekompression:} Das ZIP-basierte Formcycle-Archiv (\texttt{.xfp}) wird automatisiert entpackt. Dabei werden sowohl die JSON-Repräsentation des Formular-Frontends (\texttt{.fcp}) als auch die zugehörigen Workflow-Exportdateien (\texttt{.fcexport} im Unterverzeichnis \texttt{/projects/}) in den Arbeitsspeicher geladen.
+    \item \textbf{Stufe 1 (Deterministische Regelausführung):} Alle Regeln mit formalen Kriterien (z.\,B. Layout-Breite 850px, Header-Image, deaktiviertes XIMA-Footer-Logo \texttt{showlogo="0"}, Fieldsets, DSGVO-Klausel, Pflichtfeld-Attribute, Formatvalidierung) werden direkt auf dem Komponentenbaum evaluiert.
+    \item \textbf{Stufe 2 (Semantische LLM-Evaluation):} Für Regeln der Kategorien Stammdaten-Bezeichnung, Microcopy, Leichte Sprache und Workflow-Kommunikation (\texttt{HWG-STAMM-02}, \texttt{HWG-BTN-01}, \texttt{HWG-UX-02}, \texttt{HWG-LANG-01}, \texttt{HWG-LANG-02}, \texttt{HWG-FEEDBACK-01}) werden die extrahierten Oberflächentexte und Workflow-E-Mail-Inhalte (\texttt{FC\_EMAIL}) gebündelt an das Sprachmodell übergeben.
+    \item \textbf{Aggregation \& Scoring:} Die Ergebnisse beider Stufen werden fusioniert, der finale Compliance-Score nach Gleichung~(\ref{eq:compliance_score}) berechnet und strukturierte Handlungsempfehlungen (sowie unverbindliche UX-Hinweise mit 0 Punkten Abzug) generiert.
 \end{enumerate}
 
 \section{Datenextraktion aus Formcycle-Strukturen}
 \label{sec:datenextraktion}
 
-Das interne Datenmodell von Formcycle basiert auf einer hierarchischen Liste von Komponentenobjekten (\texttt{items}). Jedes Element besitzt eine eindeutige \texttt{className} (z.\,B. \texttt{XTextField}, \texttt{XFieldSet}, \texttt{XButton}) sowie ein assoziiertes Eigenschafts-Dictionary (\texttt{properties}).
+Das interne Datenmodell von Formcycle basiert auf einer hierarchischen Liste von Komponentenobjekten (\texttt{items}) in der \texttt{.fcp}-Datei sowie einer Prozessbaum-Repräsentation (\texttt{workflowVersions}) in den \texttt{.fcexport}-Projektdateien. Jedes UI-Element besitzt eine eindeutige \texttt{className} (z.\,B. \texttt{XTextField}, \texttt{XFieldSet}, \texttt{XButton}, \texttt{XFooter}) sowie ein assoziiertes Eigenschafts-Dictionary (\texttt{properties}).
 
-Der Parser traversiert diesen Komponentenbaum und extrahiert standardisierte Merkmalsvektoren:
+Der Parser traversiert beide Baumstrukturen und extrahiert standardisierte Merkmalsvektoren:
 \begin{itemize}
-    \item \textbf{Layout- und Container-Eigenschaften:} Formularbreiten (\texttt{maxwidth}), Grid-Zuordnungen (\texttt{colwidth}) und Container-Hierarchien.
-    \item \textbf{Eingabe- und Validierungsattribute:} Pflichtfeldstatus (\texttt{required}), Hilfetexte (\texttt{showrequiredhint}), Validierungsausdrücke (\texttt{validation.regex}, \texttt{pattern}) und Hilfetexte (\texttt{help}, \texttt{tooltip}).
-    \item \textbf{Textuelle Oberflächenelemente:} Labels, Platzhalter, Info-Texte und Button-Beschriftungen zur semantischen Weiterverarbeitung.
+    \item \textbf{Layout-, Container- und Footer-Eigenschaften:} Formularbreiten (\texttt{maxwidth}), Grid-Zuordnungen (\texttt{colwidth}), Seitenanzahl (\texttt{XPage}), Container-Hierarchien sowie Footer-Branding-Flags (\texttt{showlogo}, \texttt{privacyPolicyShow}).
+    \item \textbf{Eingabe- und Validierungsattribute:} Pflichtfeldstatus (\texttt{required}), Pflichtfeldhinweise (\texttt{showrequiredhint}), Validierungsausdrücke (\texttt{validation.regex}, \texttt{pattern}) und Hilfetexte (\texttt{help}, \texttt{tooltip}).
+    \item \textbf{Textuelle Oberflächenelemente und Workflow-E-Mails:} Labels, Platzhalter, Info-Texte, Button-Beschriftungen sowie Betreffzeilen (\texttt{subject}) und Textkörper (\texttt{body}) aller Workflow-E-Mail-Knoten (\texttt{type="FC\_EMAIL"}) zur semantischen Weiterverarbeitung.
 \end{itemize}
 
 \section{Context-Engineering und semantische LLM-Integration}

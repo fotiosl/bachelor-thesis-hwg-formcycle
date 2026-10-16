@@ -1,14 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "HWG Ludwigshafen Formcycle Compliance Registry",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
   "scoring": {
     "base_score": 100,
     "severity_penalties": {
       "critical": 15,
       "major": 8,
-      "minor": 3
+      "minor": 3,
+      "recommendation": 0
     },
     "score_formula": "max(0, 100 - sum(penalty_i))"
   },
@@ -42,6 +43,22 @@
       "remediation": "Fügen Sie im Kopfbereich das offizielle HWG-Logo als XImage mit barrierefreiem Alternativtext ein."
     },
     {
+      "id": "HWG-CD-03",
+      "name": "Deaktivierung des Hersteller-Brandings im Footer (Powered by XIMA Formcycle)",
+      "category": "corporate_design",
+      "evaluation_type": "deterministic",
+      "severity": "major",
+      "rationale": "Einheitliches Hochschul-Erscheinungsbild: Das externe Software-Herstellerlogo ('Powered by XIMA Formcycle') im Fußbereich stört das institutionelle Corporate Design und muss deaktiviert werden.",
+      "specification": {
+        "target": "footer_component",
+        "component": "XFooter",
+        "required_property": {
+          "showlogo": "0"
+        }
+      },
+      "remediation": "Wählen Sie im Formcycle-Designer das Footer-Element ('footer1') aus und entfernen Sie den Haken bei 'Logo anzeigen' (Eigenschaft showlogo = 0), um den Hinweis 'Powered by XIMA Formcycle' auszublenden."
+    },
+    {
       "id": "HWG-A11Y-01",
       "name": "Semantische Gruppierung mit Fieldsets",
       "category": "accessibility",
@@ -58,20 +75,21 @@
     },
     {
       "id": "HWG-A11Y-02",
-      "name": "Konsistente Pflichtfeld-Kennzeichnung (Sternchen und ARIA)",
+      "name": "Programmatische und optische Pflichtfeld-Deklaration (Sternchen & aria-required)",
       "category": "accessibility",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen): Pflichtfelder müssen sowohl optisch als auch programmatisch via aria-required deklariert sein.",
+      "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen): Pflichtfelder müssen über die native Formcycle-Eigenschaft 'Pflichtfeld' (required='1') und 'Pflichtfeldhinweis anzeigen' (showrequiredhint='1') deklariert werden, damit Formcycle automatisch das rote Sternchen sowie im HTML-DOM das Attribut aria-required='true' rendert.",
       "specification": {
         "target": "input_fields",
-        "condition": "properties.validation.required == true",
+        "condition": "Feld ist fachlich verpflichtend oder trägt manuelles Sternchen im Label",
         "required_properties": {
-          "showrequiredhint": "1",
-          "aria_required": "true"
-        }
+          "required": "1",
+          "showrequiredhint": "1"
+        },
+        "custom_attribute_fallback": "Falls das Feld nur bedingt per Skript verpflichtend ist: Unter 'Erweitert -> HTML-Attribute' (properties.attributes) explizit aria-required='true' hinterlegen."
       },
-      "remediation": "Stellen Sie sicher, dass bei allen Pflichtfeldern die Eigenschaft 'showrequiredhint' aktiviert ist, sodass das rote Sternchen angezeigt und im DOM aria-required='true' gesetzt wird."
+      "remediation": "Aktivieren Sie im Formcycle-Designer unter 'Einschränkungen' den Haken 'Pflichtfeld' (required=1) sowie 'Pflichtfeldhinweis anzeigen' (showrequiredhint=1). Dadurch setzt Formcycle automatisch das Sternchen und das DOM-Attribut aria-required='true'. Tippen Sie niemals manuelle Sternchen (*) in den Label-Text."
     },
     {
       "id": "HWG-A11Y-03",
@@ -190,17 +208,17 @@
       "category": "data_privacy_security",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Hinweis mit Link zur zentralen HWG-Datenschutzerklärung ist rechtlich zwingend.",
+      "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Hinweis mit Link zur zentralen HWG-Datenschutzerklärung (im Formular oder über die Footer-Option privacyPolicyShow) ist rechtlich zwingend.",
       "specification": {
-        "target": "privacy_section",
+        "target": "privacy_section_or_footer",
         "condition": "form_contains_personal_data",
         "required_elements": [
-          "Datenschutz-Hinweis",
+          "Datenschutz-Hinweis im Formular oder aktivierte Datenschutzerklärung im Footer (privacyPolicyShow = 1)",
           "Link zur Datenschutzerklärung der HWG Ludwigshafen"
         ],
         "keywords": ["Datenschutz", "Datenschutzerklärung", "DSGVO", "hwg-lu.de"]
       },
-      "remediation": "Fügen Sie am Ende des Formulars unmittelbar vor der Absende-Schaltfläche einen verbindlichen Hinweis auf die Datenverarbeitung mit funktionierendem Link zur Datenschutzerklärung der HWG Ludwigshafen ein."
+      "remediation": "Fügen Sie vor der Absende-Schaltfläche einen Hinweis auf die Datenverarbeitung mit Link zur HWG-Datenschutzerklärung ein oder aktivieren Sie im Footer die Option 'Datenschutzerklärung anzeigen' (privacyPolicyShow = 1)."
     },
     {
       "id": "HWG-UPLOAD-01",
@@ -248,6 +266,21 @@
       "remediation": "Begrenzen Sie die Spaltenbreite von kurzen Eingabefeldern wie Postleitzahl oder Hausnummer auf maximal 30-40% der Zeilenbreite oder platzieren Sie sie nebeneinander in einer Mehrspaltenzeile."
     },
     {
+      "id": "HWG-UX-02",
+      "name": "Empfehlung: Zwischenspeichern mit E-Mail-Link bei umfangreichen Formularen",
+      "category": "input_validation_ux",
+      "evaluation_type": "semantic",
+      "severity": "recommendation",
+      "rationale": "ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei großen Formularen (z. B. ab 3 Seiten oder vielen Eingabefeldern/Nachweis-Uploads) sollten Nutzende die Bearbeitung unterbrechen können. Ein Zwischenspeichern-Button mit E-Mail-Link-Versand speichert die bisherigen Angaben und erlaubt die nahtlose Fortsetzung zu einem späteren Zeitpunkt.",
+      "specification": {
+        "target": "form_complexity_and_buttons",
+        "trigger_condition": "Formular hat >= 3 Seiten (XPage) oder >= 25 Eingabefelder oder erfordert umfangreiche Dokumenten-Uploads",
+        "recommended_feature": "Schaltfläche 'Zwischenspeichern' mit Workflow-Aktion zum Versand eines Fortsetzungs-Links per E-Mail an die antragstellende Person.",
+        "penalty_points": 0
+      },
+      "remediation": "Empfehlung (ohne Punktabzug): Da dieses Formular einen hohen Umfang aufweist, empfiehlt sich die Integration eines 'Zwischenspeichern'-Buttons, der dem Nutzenden per E-Mail einen Link zur späteren Fortsetzung der Bearbeitung zusendet."
+    },
+    {
       "id": "HWG-LANG-01",
       "name": "Erklärung von Hochschul- und Amtsjargon",
       "category": "plain_language_semantics",
@@ -277,20 +310,21 @@
     },
     {
       "id": "HWG-FEEDBACK-01",
-      "name": "Prozesstransparenz und Erwartungsmanagement über Folgeschritte",
+      "name": "Prozesstransparenz in den Workflow-E-Mail-Bestätigungen",
       "category": "process_transparency",
       "evaluation_type": "semantic",
       "severity": "minor",
-      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende wissen, welche Folgeschritte stattfinden, wer prüft und welche Bearbeitungsdauer zu erwarten ist.",
+      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über die automatisierten Workflow-E-Mails (FC_EMAIL) transparent über den Eingang, den aktuellen Bearbeitungsstatus und die nächsten Prozessschritte informiert werden.",
       "specification": {
-        "target": "submission_feedback_section",
+        "target": "workflow_email_nodes",
+        "target_path": "workflowVersions[].mainProcess.tasks[].nodes[type='FC_EMAIL'].customParameters.body",
         "required_information": [
-          "Zuständige Abteilung / Bearbeitende Stelle",
-          "Voraussichtliche Bearbeitungsdauer oder Frist",
-          "Kommunikationsweg für Rückfragen / Bescheid"
+          "Eingangsbestätigung an die antragstellende Person nach dem Absenden",
+          "Information über die zuständige Prüfstelle (z. B. ZFK, Haushaltsabteilung) und den weiteren Prozessablauf",
+          "Status-Updates bei Genehmigung, Ablehnung oder Nachforderung von Unterlagen"
         ]
       },
-      "remediation": "Ergänzen Sie vor oder auf der Bestätigungsseite einen prägnanten Hinweis zum weiteren Ablauf (z. B. 'Ihr Antrag wird vom ZFK geprüft. Die Bearbeitungsdauer beträgt ca. 10 Werktage. Rückfragen erhalten Sie per E-Mail.')."
+      "remediation": "Hinterlegen Sie im Formcycle-Workflow einen E-Mail-Knoten (FC_EMAIL) für die antragstellende Person, dessen Text den Eingang bestätigt und transparent erläutert, welche Stelle den Antrag im nächsten Schritt prüft."
     }
   ]
 }

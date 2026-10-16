@@ -7,22 +7,52 @@ def load_rules(registry_path="data/rules/rules_registry.json"):
     with open(registry_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def extract_workflow_emails_from_fcexport(proj_data):
+    emails = []
+    def walk_nodes(obj):
+        if isinstance(obj, dict):
+            if obj.get("type") == "FC_EMAIL":
+                cp_str = obj.get("customParameters", "{}")
+                try:
+                    cp = json.loads(cp_str) if isinstance(cp_str, str) else cp_str
+                except Exception:
+                    cp = {}
+                emails.append({
+                    "node_name": obj.get("name", ""),
+                    "subject": cp.get("subject", ""),
+                    "body": cp.get("body", "")
+                })
+            for v in obj.values():
+                walk_nodes(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                walk_nodes(item)
+    walk_nodes(proj_data)
+    return emails
+
 def evaluate_form(xfp_path, registry):
     results = {
         "form": os.path.basename(xfp_path),
         "violations": [],
+        "recommendations": [],
         "passed": [],
         "score": 100
     }
     
+    workflow_emails = []
     # Load JSON directly or unpack from .xfp
     if xfp_path.endswith(".json"):
         with open(xfp_path, "r", encoding="utf-8") as f:
             form_data = json.load(f)
+        workflow_emails = form_data.get("workflow_emails", [])
     else:
         with zipfile.ZipFile(xfp_path) as z:
             fcp_name = [n for n in z.namelist() if n.endswith(".fcp")][0]
             form_data = json.loads(z.read(fcp_name).decode("utf-8", "ignore"))
+            fcexports = [n for n in z.namelist() if n.endswith(".fcexport") and "/projects/" in n]
+            for fce in fcexports:
+                proj_data = json.loads(z.read(fce).decode("utf-8", "ignore"))
+                workflow_emails.extend(extract_workflow_emails_from_fcexport(proj_data))
         
     items = form_data.get("items", [])
     form_props = form_data.get("properties", {})
@@ -32,19 +62,28 @@ def evaluate_form(xfp_path, registry):
         widths.add(str(form_props["maxwidth"]))
     has_image = False
     has_fieldset = False
+    footer_shows_logo = False
     missing_required_hints = []
     html_in_labels = []
     dev_notes = []
     button_labels = []
     
-    # New dimensions tracking
+    # Complexity & Save-Resume tracking (HWG-UX-02)
+    page_count = 0
+    input_field_count = 0
+    has_save_button = False
+    input_classes = {
+        "XTextField", "XTextArea", "XSelect", "XCheckbox", 
+        "XUpload", "XFile", "XRadio", "XDate", "XNumber"
+    }
+    
+    # Dimensions tracking
     has_personal_data = False
     has_dsgvo_notice = False
     upload_elements = []
     structured_fields_unvalidated = []
     compact_fields_unconstrained = []
     jargon_without_help = []
-    has_process_feedback = False
     
     jargon_catalog = [
         "gstb", "kostenstelle", "vergabevermerk", "remonstration", 
@@ -64,6 +103,11 @@ def evaluate_form(xfp_path, registry):
         
         all_texts_combined += f" {lbl} {help_text} "
         
+        if c == "XPage":
+            page_count += 1
+        if c in input_classes:
+            input_field_count += 1
+            
         # 1. Width
         if "maxwidth" in props and props["maxwidth"]:
             widths.add(str(props["maxwidth"]))
@@ -71,6 +115,11 @@ def evaluate_form(xfp_path, registry):
         # 2. CD-02: Header Image
         if c == "XImage":
             has_image = True
+            
+        # 2b. CD-03: Footer XIMA Logo
+        if c == "XFooter":
+            if str(props.get("showlogo", "0")) == "1":
+                footer_shows_logo = True
             
         # 3. A11Y-01: Fieldsets
         if c == "XFieldSet":
@@ -99,12 +148,19 @@ def evaluate_form(xfp_path, registry):
                         button_labels.append(b["text"])
             if btn_lbl:
                 button_labels.append(btn_lbl)
+            for bl in button_labels:
+                if any(s in bl.lower() for s in ["zwischenspeichern", "speichern", "fortsetzen"]):
+                    has_save_button = True
+                if str(props.get("type", "")).lower() == "save":
+                    has_save_button = True
                 
         # 7. Personal Data & DSGVO detection
         if any(term in name or term in lbl_lower for term in ["vorname", "nachname", "name", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift"]):
             has_personal_data = True
             
         if any(term in lbl_lower or term in help_text for term in ["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"]):
+            has_dsgvo_notice = True
+        if c == "XFooter" and str(props.get("privacyPolicyShow", "0")) == "1":
             has_dsgvo_notice = True
 
         # 8. Upload specification
@@ -137,9 +193,16 @@ def evaluate_form(xfp_path, registry):
                 if not help_text or len(help_text.strip()) < 5:
                     jargon_without_help.append((jg, props.get("name", lbl[:15])))
 
-    # 12. Process / Feedback transparency
-    if any(term in all_texts_combined.lower() for term in ["bearbeitungsdauer", "bearbeitungszeit", "folgeschritte", "prüfungsphase", "nach dem absenden", "weiterer ablauf"]):
-        has_process_feedback = True
+    # 12. Process / Feedback transparency via Workflow E-Mails (HWG-FEEDBACK-01)
+    has_workflow_feedback = False
+    for em in workflow_emails:
+        em_text = f"{em.get('subject', '')} {em.get('body', '')}".lower()
+        if any(term in em_text for term in [
+            "vielen dank", "eingegangen", "geprüft", "prüfung", "entscheidung", 
+            "folgeschritte", "bearbeit", "rückmeldung", "vorgangsnummer", "project_alias"
+        ]):
+            has_workflow_feedback = True
+            break
 
     # Scoring calculation
     penalties = registry["scoring"]["severity_penalties"]
@@ -165,6 +228,17 @@ def evaluate_form(xfp_path, registry):
         results["score"] -= penalties["critical"]
     else:
         results["passed"].append("HWG-CD-02 (Header-Logo vorhanden)")
+
+    # 2b. HWG-CD-03 (XIMA Footer Logo)
+    if footer_shows_logo:
+        results["violations"].append({
+            "rule": "HWG-CD-03",
+            "severity": "major",
+            "message": "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle')."
+        })
+        results["score"] -= penalties["major"]
+    else:
+        results["passed"].append("HWG-CD-03 (XIMA-Logo im Footer deaktiviert)")
 
     # 3. HWG-A11Y-01
     if not has_fieldset and len(items) > 20:
@@ -203,12 +277,13 @@ def evaluate_form(xfp_path, registry):
     non_canonical_master_labels = []
     for it in items:
         props = it.get("properties", {})
-        lbl = str(props.get("label", "") or "").strip()
+        raw_lbl = str(props.get("label", "") or "").strip()
+        lbl = re.sub(r"<[^>]+>", "", raw_lbl).strip()
         name = str(props.get("name", "")).lower()
         if "email" in name or "mail" in name:
             if lbl and lbl not in ["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"]:
                 non_canonical_master_labels.append((lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"))
-        if "nachname" in name or ("name" in name and "vorname" not in name and "antrag" not in name):
+        if "nachname" in name or ("name" in name and "vorname" not in name and "antrag" not in name and "bank" not in name and "kredit" not in name):
             if "antragstellende" in lbl.lower() or lbl == "Name":
                 non_canonical_master_labels.append((lbl, "Erwartet: Nachname"))
 
@@ -227,7 +302,6 @@ def evaluate_form(xfp_path, registry):
     for b in button_labels:
         b_clean = b.strip()
         b_lower = b_clean.lower()
-        # Bare state or generic minimal label
         if b_clean in ["Kritischer Fall", "Status", "Genehmigung", "Fehler"]:
             invalid_buttons.append((b_clean, "Reine Status-/Zustandsbezeichnung ohne Handlungsverb"))
         elif b_lower in ["senden", "submit", "ok", "abschicken"]:
@@ -287,6 +361,19 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-UX-01 (Affordanzgerechte Feldbreiten)")
 
+    # 11b. HWG-UX-02: Empfehlung für Zwischenspeichern-Funktion (0 Punkte Abzug!)
+    if (page_count >= 3 or input_field_count >= 25) and not has_save_button:
+        results["recommendations"].append({
+            "rule": "HWG-UX-02",
+            "severity": "recommendation",
+            "message": (
+                f"Formularumfang ({page_count} Seiten, {input_field_count} Eingabefelder) überschreitet den "
+                "Komplexitätsschwellenwert. Empfehlung (0 Pkt. Abzug): Einen 'Zwischenspeichern'-Button ergänzen, "
+                "der das Formular speichert und einen Fortsetzungs-Link per E-Mail an die Nutzenden versendet."
+            )
+        })
+        results["score"] -= penalties.get("recommendation", 0)
+
     # 12. HWG-LANG-01
     if jargon_without_help:
         results["violations"].append({
@@ -298,16 +385,16 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-LANG-01 (Verständlicher Wortschatz)")
 
-    # 13. HWG-FEEDBACK-01
-    if not has_process_feedback:
+    # 13. HWG-FEEDBACK-01 (Workflow E-Mail Check)
+    if not has_workflow_feedback:
         results["violations"].append({
             "rule": "HWG-FEEDBACK-01",
             "severity": "minor",
-            "message": "Keine transparenten Informationen über Bearbeitungszeit oder nachgelagerte Folgeschritte hinterlegt."
+            "message": "Keine Eingangsbestätigungs-E-Mail mit Prozess-/Bearbeitungsinformationen in den Workflow-E-Mail-Knoten (FC_EMAIL) gefunden."
         })
         results["score"] -= penalties["minor"]
     else:
-        results["passed"].append("HWG-FEEDBACK-01 (Prozesstransparenz vorhanden)")
+        results["passed"].append(f"HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in {len(workflow_emails)} FC_EMAIL-Knoten bestätigt)")
 
     results["score"] = max(0, results["score"])
     return results
@@ -334,3 +421,7 @@ if __name__ == "__main__":
         print(f"Gefundene Verstöße:   {len(res['violations'])}")
         for v in res['violations']:
             print(f"  [X] [{v['severity'].upper():8}] {v['rule']}: {v['message']}")
+        if res["recommendations"]:
+            print(f"Unverbindliche Empfehlungen ({len(res['recommendations'])}, 0 Punkte Abzug):")
+            for r in res["recommendations"]:
+                print(f"  [i] [{r['severity'].upper():14}] {r['rule']}: {r['message']}")

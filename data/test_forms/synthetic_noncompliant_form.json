@@ -108,6 +108,15 @@
         "text": "Kritischer Fall",
         "type": "button"
       }
+    },
+    {
+      "className": "XFooter",
+      "properties": {
+        "name": "footer1",
+        "showlogo": "1",
+        "privacyPolicyShow": "0"
+      }
     }
-  ]
+  ],
+  "workflow_emails": []
 }
