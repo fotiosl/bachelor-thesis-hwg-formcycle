@@ -151,5 +151,12 @@
       "subject": "Eingangsbestätigung Ihres Antrags (Vorgangsnummer [%$PROJECT_ALIAS%])",
       "body": "Vielen Dank für Ihren Antrag. Ihr Antrag wird nun durch die zuständige Abteilung geprüft. Über die weiteren Folgeschritte und die Entscheidung werden Sie per E-Mail informiert."
     }
+  ],
+  "workflow_states": [
+    "Eingegangen",
+    "In Prüfung",
+    "Genehmigt",
+    "Abgelehnt",
+    "Archiviert"
   ]
 }

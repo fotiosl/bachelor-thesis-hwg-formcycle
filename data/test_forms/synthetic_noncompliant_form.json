@@ -118,5 +118,6 @@
       }
     }
   ],
-  "workflow_emails": []
+  "workflow_emails": [],
+  "workflow_states": []
 }

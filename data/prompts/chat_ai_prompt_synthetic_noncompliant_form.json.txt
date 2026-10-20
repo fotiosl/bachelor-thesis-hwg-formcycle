@@ -1,8 +1,148 @@
 Du bist ein wissenschaftlicher Usability- und Compliance-Auditor für digitale Hochschulformulare (XIMA Formcycle) an der HWG Ludwigshafen.
-Prüfe das nachfolgende extrahierte Formular-JSON strikt anhand der folgenden 0 semantischen Governance-Regeln aus der HWG-Compliance-Registry (v1.3.0):
+Prüfe das nachfolgende extrahierte Formular-JSON strikt anhand der folgenden 7 semantischen Governance-Regeln aus der HWG-Compliance-Registry (v1.3.0):
 
 === SEMANTISCHE PRÜFREGELN ===
-[]
+[
+  {
+    "id": "HWG-STAMM-02",
+    "name": "Standardisierte Feldbezeichnungen für persönliche Stammdaten",
+    "category": "master_data",
+    "evaluation_type": "semantic",
+    "severity": "minor",
+    "rationale": "Konsistente Bezeichnungen bei Stammdaten verhindern Verwirrung über erforderliche Eingaben (z. B. 'Vorname' statt 'Vorname Antragstellende/r*' und 'E-Mail-Adresse' statt technischer Kürzel).",
+    "specification": {
+      "target": "master_data_labels",
+      "canonical_patterns": {
+        "salutation": [
+          "Anrede"
+        ],
+        "first_name": [
+          "Vorname"
+        ],
+        "last_name": [
+          "Nachname"
+        ],
+        "email": [
+          "E-Mail-Adresse",
+          "Hochschul-E-Mail"
+        ],
+        "phone": [
+          "Telefonnummer",
+          "Mobilfunknummer"
+        ],
+        "matriculation": [
+          "Matrikelnummer"
+        ]
+      },
+      "anti_patterns": [
+        "Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r')",
+        "Mehrdeutige Kurzbezeichnungen (z. B. nur 'Name' für Nachname)",
+        "Technische Feldbezeichner als sichtbares Label (z. B. 'tf1', 'HWGLU-Email')"
+      ]
+    },
+    "remediation": "Nutzen Sie für persönliche Stammdaten die kanonischen Standardbezeichnungen ('Anrede', 'Vorname', 'Nachname', 'E-Mail-Adresse') ohne sperrige Sonderzusätze."
+  },
+  {
+    "id": "HWG-BTN-01",
+    "name": "Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)",
+    "category": "microcopy_buttons",
+    "evaluation_type": "semantic",
+    "severity": "major",
+    "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Erwartungskonformität: Schaltflächen müssen stets eine eindeutige Handlung beschreiben ([Zielobjekt] + [Vollverb im Infinitiv]). Reine Systemzustände oder generische Ein-Wort-Labels stiften Verwirrung.",
+    "specification": {
+      "target": "action_buttons",
+      "pattern_rule": "Muss ein konkretes Vollverb im Infinitiv enthalten, das die ausgelöste Transaktion beschreibt.",
+      "valid_examples": [
+        "Antrag einreichen",
+        "Bedarfsmeldung absenden",
+        "Kritischen Fall einreichen",
+        "Rückmeldung an ZFK übermitteln",
+        "Zur Präsidiumsprüfung weiterleiten",
+        "Speichern und einreichen"
+      ],
+      "disallowed_patterns": [
+        "Reine Substantive oder Statusbezeichnungen ohne Handlungsverb (z. B. bloß 'Kritischer Fall', 'Status', 'Genehmigung')",
+        "Generische, kleingeschriebene Minimal-Labels (z. B. bloß 'senden', 'Submit', 'OK', 'Abschicken')"
+      ]
+    },
+    "remediation": "Beschriften Sie jede Aktionsschaltfläche mit einer konkreten Handlung im Infinitiv (z. B. 'Antrag einreichen', 'Kritischen Fall einreichen' oder 'Rückmeldung übermitteln') anstelle von reinen Zuständen ('Kritischer Fall') oder generischen Begriffen ('senden')."
+  },
+  {
+    "id": "HWG-BTN-02",
+    "name": "Einheitliche Navigations-Schaltflächen (Mehrseitige Formulare)",
+    "category": "microcopy_buttons",
+    "evaluation_type": "semantic",
+    "severity": "minor",
+    "rationale": "Konsistente Bezeichnungen bei Pagination verringern die kognitive Belastung.",
+    "specification": {
+      "target": "navigation_buttons",
+      "standard_next": "Weiter",
+      "standard_back": "Zurück"
+    },
+    "remediation": "Verwenden Sie für die Seitennavigation einheitlich 'Weiter' und 'Zurück' anstelle von seitenbezogenen Konstrukten wie 'weiter zu Seite 2'."
+  },
+  {
+    "id": "HWG-UX-02",
+    "name": "Empfehlung: Zwischenspeichern mit E-Mail-Link bei umfangreichen Formularen",
+    "category": "input_validation_ux",
+    "evaluation_type": "semantic",
+    "severity": "recommendation",
+    "rationale": "ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei großen Formularen (z. B. ab 3 Seiten oder vielen Eingabefeldern/Nachweis-Uploads) sollten Nutzende die Bearbeitung unterbrechen können. Ein Zwischenspeichern-Button mit E-Mail-Link-Versand speichert die bisherigen Angaben und erlaubt die nahtlose Fortsetzung zu einem späteren Zeitpunkt.",
+    "specification": {
+      "target": "form_complexity_and_buttons",
+      "trigger_condition": "Formular hat >= 3 Seiten (XPage) oder >= 25 Eingabefelder oder erfordert umfangreiche Dokumenten-Uploads",
+      "recommended_feature": "Schaltfläche 'Zwischenspeichern' mit Workflow-Aktion zum Versand eines Fortsetzungs-Links per E-Mail an die antragstellende Person.",
+      "penalty_points": 0
+    },
+    "remediation": "Empfehlung (ohne Punktabzug): Da dieses Formular einen hohen Umfang aufweist, empfiehlt sich die Integration eines 'Zwischenspeichern'-Buttons, der dem Nutzenden per E-Mail einen Link zur späteren Fortsetzung der Bearbeitung zusendet."
+  },
+  {
+    "id": "HWG-LANG-01",
+    "name": "Erklärung von Hochschul- und Amtsjargon",
+    "category": "plain_language_semantics",
+    "evaluation_type": "semantic",
+    "severity": "major",
+    "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich): Hochschulspezifische Fachbegriffe, interne Organisationsabkürzungen und Amtsdeutsch ohne begleitende Hilfetexte überfordern Studierende und externe Antragstellende.",
+    "specification": {
+      "target": "text_and_labels",
+      "detection_strategy": "Semantische Analyse durch LLM: Identifikation von bürokratischen Fachbegriffen, internen Organisationskürzeln (z. B. GStB, KAP, ZFK, Kostenstelle) oder Rechtsbegriffen (z. B. Vergabevermerk, Remonstration), für die kein Tooltip, Glossar oder Hilfetext hinterlegt ist.",
+      "requirement": "Jeder identifizierte Jargon-Begriff muss von einem verständlichen Hilfetext oder Tooltip begleitet sein."
+    },
+    "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen mit einem verständlichen Hilfetext (Tooltip) oder einer kurzen Begriffserklärung."
+  },
+  {
+    "id": "HWG-LANG-02",
+    "name": "Prägnante und barrierearme Formulierung (Vermeidung von Schachtelsätzen)",
+    "category": "plain_language_semantics",
+    "evaluation_type": "semantic",
+    "severity": "minor",
+    "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte und Hinweise müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das kognitive Verständnis.",
+    "specification": {
+      "target": "instructions_and_descriptions",
+      "max_sentence_length_words": 25,
+      "style_criteria": "Aktivformulierungen, keine verschachtelten Passivkonstruktionen, klare Handlungsanweisungen."
+    },
+    "remediation": "Kürzen Sie überlange Schachtelsätze in Anleitungen und Hilfetexten auf maximal 20-25 Wörter pro Satz und nutzen Sie handlungsorientierte Aktivsätze."
+  },
+  {
+    "id": "HWG-FEEDBACK-01",
+    "name": "Prozesstransparenz in den Workflow-E-Mail-Bestätigungen",
+    "category": "process_transparency",
+    "evaluation_type": "semantic",
+    "severity": "minor",
+    "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über die automatisierten Workflow-E-Mails (FC_EMAIL) transparent über den Eingang, den aktuellen Bearbeitungsstatus und die nächsten Prozessschritte informiert werden.",
+    "specification": {
+      "target": "workflow_email_nodes",
+      "target_path": "workflowVersions[].mainProcess.tasks[].nodes[type='FC_EMAIL'].customParameters.body",
+      "required_information": [
+        "Eingangsbestätigung an die antragstellende Person nach dem Absenden",
+        "Information über die zuständige Prüfstelle (z. B. ZFK, Haushaltsabteilung) und den weiteren Prozessablauf",
+        "Status-Updates bei Genehmigung, Ablehnung oder Nachforderung von Unterlagen"
+      ]
+    },
+    "remediation": "Hinterlegen Sie im Formcycle-Workflow einen E-Mail-Knoten (FC_EMAIL) für die antragstellende Person, dessen Text den Eingang bestätigt und transparent erläutert, welche Stelle den Antrag im nächsten Schritt prüft."
+  }
+]
 
 === ZU PRÜFENDES FORMULAR (KOMPAKTER EXTRAKT) ===
 {

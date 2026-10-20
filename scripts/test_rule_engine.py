@@ -7,8 +7,9 @@ def load_rules(registry_path="data/rules/rules_registry.json"):
     with open(registry_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def extract_workflow_emails_from_fcexport(proj_data):
+def extract_workflow_emails_and_states_from_fcexport(proj_data):
     emails = []
+    states = []
     def walk_nodes(obj):
         if isinstance(obj, dict):
             if obj.get("type") == "FC_EMAIL":
@@ -22,13 +23,17 @@ def extract_workflow_emails_from_fcexport(proj_data):
                     "subject": cp.get("subject", ""),
                     "body": cp.get("body", "")
                 })
+            elif obj.get("type") in ["FC_CHANGE_STATE", "CUSTOM", "RECEIVED"]:
+                st_name = obj.get("name", "")
+                if st_name:
+                    states.append(st_name)
             for v in obj.values():
                 walk_nodes(v)
         elif isinstance(obj, list):
             for item in obj:
                 walk_nodes(item)
     walk_nodes(proj_data)
-    return emails
+    return emails, states
 
 def evaluate_form(xfp_path, registry):
     results = {
@@ -40,11 +45,13 @@ def evaluate_form(xfp_path, registry):
     }
     
     workflow_emails = []
+    workflow_states = []
     # Load JSON directly or unpack from .xfp
     if xfp_path.endswith(".json"):
         with open(xfp_path, "r", encoding="utf-8") as f:
             form_data = json.load(f)
         workflow_emails = form_data.get("workflow_emails", [])
+        workflow_states = form_data.get("workflow_states", [])
     else:
         with zipfile.ZipFile(xfp_path) as z:
             fcp_name = [n for n in z.namelist() if n.endswith(".fcp")][0]
@@ -52,7 +59,9 @@ def evaluate_form(xfp_path, registry):
             fcexports = [n for n in z.namelist() if n.endswith(".fcexport") and "/projects/" in n]
             for fce in fcexports:
                 proj_data = json.loads(z.read(fce).decode("utf-8", "ignore"))
-                workflow_emails.extend(extract_workflow_emails_from_fcexport(proj_data))
+                ems, sts = extract_workflow_emails_and_states_from_fcexport(proj_data)
+                workflow_emails.extend(ems)
+                workflow_states.extend(sts)
         
     items = form_data.get("items", [])
     form_props = form_data.get("properties", {})
@@ -395,6 +404,32 @@ def evaluate_form(xfp_path, registry):
         results["score"] -= penalties["minor"]
     else:
         results["passed"].append(f"HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in {len(workflow_emails)} FC_EMAIL-Knoten bestätigt)")
+
+    # 14. HWG-WF-01 (Workflow-Governance: Strukturierte Status-Knoten und Vorgangs-Referenz)
+    has_project_alias = False
+    for em in workflow_emails:
+        subj = str(em.get("subject", "")).lower()
+        body = str(em.get("body", "")).lower()
+        if "%$project_alias%" in subj or "%$project_alias%" in body or "vorgangsnummer" in subj or "vorgang" in subj:
+            has_project_alias = True
+            break
+            
+    has_structured_states = len(workflow_states) > 0
+    
+    if not has_structured_states or not has_project_alias:
+        missing_aspects = []
+        if not has_structured_states:
+            missing_aspects.append("Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow")
+        if not has_project_alias:
+            missing_aspects.append("Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen")
+        results["violations"].append({
+            "rule": "HWG-WF-01",
+            "severity": "minor",
+            "message": f"Workflow-Governance-Mängel: {'; '.join(missing_aspects)}. Standard-Lebenszyklus und Vorgangs-ID erforderlich."
+        })
+        results["score"] -= penalties["minor"]
+    else:
+        results["passed"].append(f"HWG-WF-01 (Workflow-Governance: {len(workflow_states)} Status-Knoten & Vorgangsnummern-Referenz vorhanden)")
 
     results["score"] = max(0, results["score"])
     return results
