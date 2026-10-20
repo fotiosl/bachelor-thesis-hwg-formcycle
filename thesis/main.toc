@@ -24,46 +24,48 @@
 \contentsline {subsection}{\numberline {2.4.4}Modell-Agnostik, Open Source und universitäre Datensouveränität}{13}{subsection.2.4.4}%
 \contentsline {chapter}{\numberline {3}Empirische Ist-Analyse des HWG-Formularbestands}{14}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Erhebungsmethodik und Charakterisierung des Formular-Korpus}{14}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Identifikation zentraler Problemfelder und Heuristik-Audit}{15}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Problemfeld 1: Layout-Inkonsistenzen und starre Breitenbrüche}{15}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Problemfeld 2: Uneinheitliche Corporate Identity und Header-Strukturen}{16}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Problemfeld 3: Heterogene Stammdaten-Muster und Copy-Paste-Risiken}{16}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote {Kritischer Fall}}{17}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Problemfeld 5: Defizite bei digitaler Barrierefreiheit (WCAG 2.1 / BITV 2.0)}{19}{subsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.2.6}Problemfeld 6: Workflow-Fragmentierung und vertikale Abteilungssilos}{19}{subsection.3.2.6}%
-\contentsline {section}{\numberline {3.3}Ableitung der Kernanforderungen an den Formular-Standard}{20}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Konzeption des Formular-Standards und der Prüf-Registry}{22}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Struktur-, Navigations- und Informationsarchitektur}{22}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Corporate Design, Barrierefreiheit und Stammdaten-Muster}{23}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Corporate Identity, Header- und Footer-Struktur}{23}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Semantische Gruppierung und Pflichtfeld-Indikation}{23}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Das normierte HWG-Stammdaten-Muster}{24}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Datenschutz, Eingabevalidierung und Schaltflächen-Semantik}{24}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Datenschutz-Transparenz (Art. 13 DSGVO)}{24}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Strukturierte Validierung, Dateiuploads und Zwischenspeichern-Empfehlung}{25}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Schaltflächen-Semantik und Workflow-E-Mail-Transparenz}{25}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}{26}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Mathematisches Bewertungsmodell}{26}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Katalog der formalisierten Governance-Regeln}{26}{subsection.4.4.2}%
-\contentsline {chapter}{\numberline {5}Prototypische Implementierung der Compliance-Prüfpipeline}{28}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Systemarchitektur und Datenfluss der Prüfpipeline}{28}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Datenextraktion aus Formcycle-Strukturen}{29}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Context-Engineering und semantische LLM-Integration}{29}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Deterministische Berechnung des Compliance-Scores}{30}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Empirische Evaluation und Diskussion}{31}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Evaluationsdesign und Benchmark-Metriken}{31}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Quantitative Benchmark-Ergebnisse}{32}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Analyse der Erkennungsleistung}{34}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Ergebnisse am realen HWG-Bestand}{34}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Validierung der Modell-Agnostik und Open-Source-Evaluation (Academic Cloud)}{35}{subsection.6.2.3}%
-\contentsline {section}{\numberline {6.3}Qualitative Nutzer- und Expertenrückmeldung}{35}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Kritische Würdigung und Validitätsbedrohungen}{35}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{37}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Zusammenfassung der Kernergebnisse}{37}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}{38}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Zukünftige Forschungs- und Entwicklungsperspektiven}{38}{section.7.3}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{40}{chapter*.12}%
+\contentsline {subsection}{\numberline {3.1.1}Klassifikation in funktionale Archetypen}{14}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Empirisches Profil dreier repräsentativer Kernanträge}{15}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Identifikation zentraler Problemfelder und Heuristik-Audit}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Problemfeld 1: Layout-Inkonsistenzen und starre Breitenbrüche}{16}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Problemfeld 2: Uneinheitliche Corporate Identity und Header-Strukturen}{17}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Problemfeld 3: Heterogene Stammdaten-Muster und Copy-Paste-Risiken}{18}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote {Kritischer Fall}}{19}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Problemfeld 5: Defizite bei digitaler Barrierefreiheit (WCAG 2.1 / BITV 2.0)}{20}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Problemfeld 6: Workflow-Fragmentierung und vertikale Abteilungssilos}{21}{subsection.3.2.6}%
+\contentsline {section}{\numberline {3.3}Ableitung der Kernanforderungen an den Formular-Standard}{22}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Konzeption des Formular-Standards und der Prüf-Registry}{23}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Struktur-, Navigations- und Informationsarchitektur}{23}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Corporate Design, Barrierefreiheit und Stammdaten-Muster}{24}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Corporate Identity, Header- und Footer-Struktur}{24}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Semantische Gruppierung und Pflichtfeld-Indikation}{24}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Das normierte HWG-Stammdaten-Muster}{25}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Datenschutz, Eingabevalidierung und Schaltflächen-Semantik}{25}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Datenschutz-Transparenz (Art. 13 DSGVO)}{25}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Strukturierte Validierung, Dateiuploads und Zwischenspeichern-Empfehlung}{26}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Schaltflächen-Semantik und Workflow-E-Mail-Transparenz}{26}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}{27}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Mathematisches Bewertungsmodell}{27}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Katalog der formalisierten Governance-Regeln}{27}{subsection.4.4.2}%
+\contentsline {chapter}{\numberline {5}Prototypische Implementierung der Compliance-Prüfpipeline}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Systemarchitektur und Datenfluss der Prüfpipeline}{29}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Datenextraktion aus Formcycle-Strukturen}{30}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Context-Engineering und semantische LLM-Integration}{30}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Deterministische Berechnung des Compliance-Scores}{31}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Empirische Evaluation und Diskussion}{32}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Evaluationsdesign und Benchmark-Metriken}{32}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Quantitative Benchmark-Ergebnisse}{33}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Analyse der Erkennungsleistung}{35}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Ergebnisse am realen HWG-Bestand}{35}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Validierung der Modell-Agnostik und Open-Source-Evaluation (Academic Cloud)}{36}{subsection.6.2.3}%
+\contentsline {section}{\numberline {6.3}Qualitative Nutzer- und Expertenrückmeldung}{36}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Kritische Würdigung und Validitätsbedrohungen}{36}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{38}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Zusammenfassung der Kernergebnisse}{38}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}{39}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Zukünftige Forschungs- und Entwicklungsperspektiven}{39}{section.7.3}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{41}{chapter*.12}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Reflexionsbericht zur Nutzung von KI-Tools}{42}{appendix.A}%
-\contentsline {chapter}{Eidesstattliche Erklärung}{44}{chapter*.13}%
+\contentsline {chapter}{\numberline {A}Reflexionsbericht zur Nutzung von KI-Tools}{43}{appendix.A}%
+\contentsline {chapter}{Eidesstattliche Erklärung}{45}{chapter*.13}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

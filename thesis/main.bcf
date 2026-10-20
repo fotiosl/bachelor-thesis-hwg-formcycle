@@ -2391,8 +2391,12 @@
     <bcf:citekey order="14" intorder="1">cha2026design</bcf:citekey>
     <bcf:citekey order="15" intorder="1">nielsen1994severity</bcf:citekey>
     <bcf:citekey order="16" intorder="1">duan2024generating</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">cha2026design</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">westermann2026ki</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">bargas2010usable</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">bargas2010usable</bcf:citekey>
+    <bcf:citekey order="18" intorder="2">wroblewski2008web</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">wroblewski2008web</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">cha2026design</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">westermann2026ki</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">
