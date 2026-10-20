@@ -9,10 +9,10 @@ Zur wissenschaftlichen Überprüfung der entwickelten Compliance-Pipeline wird i
 Das Evaluationsdesign stützt sich auf einen Methoden-Mix aus kontrolliertem Benchmark-Testing und empirischer Fallstudien-Validierung:
 
 \begin{enumerate}
-    \item \textbf{Synthetisches Kontrollkorpus (Ground Truth):\footnote{Hinweis zur Datenherkunft gemäß Betreuungsrichtlinien (Abschnitt 6.2.1): Die beiden synthetischen Referenzdatensätze (\texttt{synthetic\_compliant\_form.json} und \texttt{synthetic\_noncompliant\_form.json}) wurden KI-gestützt (Google Gemini) auf Basis des Formcycle-\texttt{.fcp}-Schemas generiert und manuell validiert. Verwendeter Generierungs-Prompt: \textit{\enquote{Erzeuge zwei synthetische Formcycle-JSON-Testformulare (.fcp-Struktur mit items, properties und workflow\_emails) zur Evaluation der HWG-Compliance-Registry v1.3.0: (1) Ein vollkonformes Referenzformular (Ground Truth: 100 Punkte), das alle 18 bewerteten Regeln einhält (850px, XImage-Logo, XFooter mit showlogo=0, XFieldSet-Gruppierung, kanonische Stammdaten, Regex-Validierung für PLZ/IBAN, DSGVO-Hinweis, spezifizierter Upload, Action-Verb-Button sowie FC\_EMAIL-Eingangsbestätigung). (2) Ein fehlerinjiziertes Referenzformular (Ground Truth: 0 Punkte) mit exakt 13 gezielten Regelverstößen über alle Schweregrade hinweg.}}}} Um Sensitivität und Spezifität der Pipeline exakt zu messen, wurden zwei synthetische Referenzformulare modelliert:
+    \item \textbf{Synthetisches Kontrollkorpus (Ground Truth):\footnote{Hinweis zur Datenherkunft gemäß Betreuungsrichtlinien (Abschnitt 6.2.1): Die beiden synthetischen Referenzdatensätze (\texttt{synthetic\_compliant\_form.json} und \texttt{synthetic\_noncompliant\_form.json}) wurden KI-gestützt (Google Gemini) auf Basis des Formcycle-\texttt{.fcp}-Schemas generiert und manuell validiert. Verwendeter Generierungs-Prompt: \textit{\enquote{Erzeuge zwei synthetische Formcycle-JSON-Testformulare (.fcp-Struktur mit items, properties und workflow\_emails) zur Evaluation der HWG-Compliance-Registry v1.5.0: (1) Ein vollkonformes Referenzformular (Ground Truth: 100 Punkte), das alle 20 bewerteten Regeln einhält (850px, XImage-Logo, XFooter mit showlogo=0, XFieldSet-Gruppierung, kanonische Stammdaten, Regex-Validierung für PLZ/IBAN, DSGVO-Hinweis, spezifizierter Upload, Action-Verb-Button sowie FC\_EMAIL-Eingangsbestätigung). (2) Ein fehlerinjiziertes Referenzformular (Ground Truth: 0 Punkte) mit exakt 13 gezielten Regelverstößen über alle Schweregrade hinweg.}}}} Um Sensitivität und Spezifität der Pipeline exakt zu messen, wurden zwei synthetische Referenzformulare modelliert:
     \begin{itemize}
-        \item \textit{Referenzformular A (Vollkonform):} Erfüllt nachweislich alle bewerteten Regeln der Registry v1.3.0 (Ground Truth: 100 Punkte).
-        \item \textit{Referenzformular B (Fehlerinjiziert):} Beinhaltet bewusst 13 definierte Regelverstöße über alle Schweregrade hinweg (Ground Truth: 0 Punkte).
+        \item \textit{Referenzformular A (Vollkonform):} Erfüllt nachweislich alle bewerteten Regeln der Registry v1.5.0 (Ground Truth: 100 Punkte).
+        \item \textit{Referenzformular B (Fehlerinjiziert):} Beinhaltet bewusst 15 definierte Regelverstöße über alle Schweregrade hinweg (Ground Truth: 0 Punkte).
     \end{itemize}
     \item \textbf{Reales Evaluierungskorpus:} Drei repräsentative Formulare der HWG Ludwigshafen aus unterschiedlichen Domänen (\textit{Auslagenerstattung}, \textit{Antrag-Sprints Drittmittelförderung}, \textit{Master-Formular Stammdaten}).
     \item \textbf{Evaluationsmetriken:} Zuverlässigkeit der Verstoßerkennung (Precision und Recall), korrekte Trennung zwischen strafbewehrten Verstößen und abzugsfreien Empfehlungen (\texttt{HWG-UX-02}) sowie Plausibilität der Handlungsempfehlungen.
@@ -21,7 +21,7 @@ Das Evaluationsdesign stützt sich auf einen Methoden-Mix aus kontrolliertem Ben
 \section{Quantitative Benchmark-Ergebnisse}
 \label{sec:benchmark_ergebnisse}
 
-Tabelle~\ref{tab:eval_results} fasst die Ergebnisse der automatisierten Compliance-Prüfung (Registry v1.4.0) über alle Testinstanzen zusammen:
+Tabelle~\ref{tab:eval_results} fasst die Ergebnisse der automatisierten Compliance-Prüfung (Registry v1.5.0) über alle Testinstanzen zusammen:
 
 \begin{table}[H]
 \centering
@@ -30,31 +30,31 @@ Tabelle~\ref{tab:eval_results} fasst die Ergebnisse der automatisierten Complian
 \toprule
 \textbf{Formular-Instanz} & \textbf{Typ} & \textbf{Score} & \textbf{Bestanden} & \textbf{Verstöße} & \textbf{Zentrale Befunde \& Empfehlungen} \\
 \midrule
-\textit{Synthetisch Konform} & Benchmark & 100 / 100 & 15 & 0 & Perfektes Referenzmuster \\
-\textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 1 & 14 & Alle 14 Injektionen erkannt \\
+\textit{Synthetisch Konform} & Benchmark & 100 / 100 & 16 & 0 & Perfektes Referenzmuster \\
+\textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 1 & 15 & Alle 15 Injektionen erkannt \\
 \midrule
-\textit{Auslagenerstattung} & Real (Prod) & 41 / 100 & 6 & 9 & DSGVO, Uploads, IBAN unvalidiert, Workflow-Ref fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
-\textit{Antrag-Sprints ZFK} & Real (Test) & 30 / 100 & 7 & 8 & Kein Logo, XIMA-Footer aktiv, keine Fieldsets, DSGVO, Workflow-Ref fehlt \\
-\textit{Master-Formular} & Real (Admin) & 72 / 100 & 9 & 6 & 700px, HTML-Entities, PLZ gestreckt, Workflow-Ref fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
+\textit{Auslagenerstattung} & Real (Prod) & 41 / 100 & 7 & 9 & DSGVO, Uploads, IBAN unvalidiert, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
+\textit{Antrag-Sprints ZFK} & Real (Test) & 30 / 100 & 8 & 8 & Kein Logo, XIMA-Footer aktiv, keine Fieldsets, DSGVO, Vorgangs-ID fehlt \\
+\textit{Master-Formular} & Real (Admin) & 72 / 100 & 10 & 6 & 700px, HTML-Entities, PLZ gestreckt, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
 \bottomrule
 \end{tabularx}
-\caption{Quantitative Evaluationsergebnisse der Compliance-Pipeline (Registry v1.4.0)}
+\caption{Quantitative Evaluationsergebnisse der Compliance-Pipeline (Registry v1.5.0)}
 \label{tab:eval_results}
 \end{table}
 
 \subsection{Analyse der Erkennungsleistung}
 Am synthetischen Kontrollkorpus erreichte die Pipeline eine Erkennungsgenauigkeit (\textit{Accuracy}) von 100\,\%:
 \begin{itemize}
-    \item Beim fehlerhaften Referenzformular wurden sämtliche 14 injizierten Mängel (von der veralteten 700px-Breite und dem aktivierten XIMA-Footer-Logo über fehlende Datenschutz-Klauseln und unzulässige Button-Labels bis hin zu Workflow-Governance-Defiziten) lückenlos identifiziert.
+    \item Beim fehlerhaften Referenzformular wurden sämtliche 15 injizierten Mängel (von der veralteten 700px-Breite und dem aktivierten XIMA-Footer-Logo über fehlende Datenschutz-Klauseln und unzulässige Button-Labels bis hin zu fehlenden Status-Knoten und fehlenden Vorgangsnummern) lückenlos identifiziert.
     \item Beim vollkonformen Formular traten keinerlei Fehlalarme (\textit{False Positives}) auf.
 \end{itemize}
 
 \subsection{Ergebnisse am realen HWG-Bestand}
-Die Auswertung der realen Bestandsformulare unterstreicht die hohe diagnostische Trennschärfe der erweiterten Registry v1.4.0:
+Die Auswertung der realen Bestandsformulare unterstreicht die hohe diagnostische Trennschärfe der erweiterten Registry v1.5.0:
 \begin{itemize}
-    \item Das Produktivformular \textit{Auslagenerstattung} erreicht einen Score von 41 Punkten. Positiv hervorzuheben ist, dass das XIMA-Logo im Footer deaktiviert wurde (\texttt{HWG-CD-03} bestanden) und im hinterlegten Workflow eine ausführliche Eingangsbestätigungs-E-Mail existiert (\texttt{HWG-FEEDBACK-01} bestanden). Abzüge resultieren primär aus dem Fehlen einer DSGVO-Klausel im Formular, unvollständigen Upload-Beschränkungen, unmaskierten IBAN-/PLZ-Eingaben sowie dem Fehlen der Vorgangsnummer (\texttt{[\%\$PROJECT\_ALIAS\%]}) im E-Mail-Betreff (\texttt{HWG-WF-01}). Zudem löst die hohe Komplexität (3 Seiten, 49 Eingabefelder) die abzugsfreie Empfehlung \texttt{HWG-UX-02} zur Ergänzung einer Zwischenspeichern-Funktion aus.
-    \item Der \textit{Antrag-Sprints} des ZFK (Score: 30 Punkte) verfügt zwar über eine vorbildliche Workflow-Eingangsbestätigung per E-Mail, weist jedoch im Frontend gravierende Mängel auf (fehlendes Logo, aktives XIMA-Herstellerbranding, fehlende Fieldsets und fehlende DSGVO-Klausel).
-    \item Das interne \textit{Master-Formular} bestätigt mit 72 Punkten seine Eignung als Blaupause, offenbart jedoch bestehende Nachbesserungsbedarfe bezüglich 700px-Breite, HTML-Entities und unvalidierter PLZ-Felder.
+    \item Das Produktivformular \textit{Auslagenerstattung} erreicht einen Score von 41 Punkten. Positiv hervorzuheben ist, dass das XIMA-Logo im Footer deaktiviert wurde (\texttt{HWG-CD-03} bestanden), der Workflow strukturierte Statusknoten besitzt (\texttt{HWG-WF-01} bestanden) und eine ausführliche Eingangsbestätigungs-E-Mail existiert (\texttt{HWG-FEEDBACK-01} bestanden). Abzüge resultieren primär aus dem Fehlen einer DSGVO-Klausel im Formular, unvollständigen Upload-Beschränkungen, unmaskierten IBAN-/PLZ-Eingaben sowie dem Fehlen der Vorgangsnummer (\texttt{[\%\$PROJECT\_ALIAS\%]}) im E-Mail-Betreff (\texttt{HWG-WF-02}). Zudem löst die hohe Komplexität (3 Seiten, 49 Eingabefelder) die abzugsfreie Empfehlung \texttt{HWG-UX-02} zur Ergänzung einer Zwischenspeichern-Funktion aus.
+    \item Der \textit{Antrag-Sprints} des ZFK (Score: 30 Punkte) verfügt zwar über funktionierende Statusknoten (\texttt{HWG-WF-01}) und eine Bestätigungs-E-Mail, weist jedoch im Frontend gravierende Mängel auf (fehlendes Logo, aktives XIMA-Herstellerbranding, fehlende Fieldsets und fehlende DSGVO-Klausel) und lässt die Vorgangs-ID in E-Mails vermissen (\texttt{HWG-WF-02}).
+    \item Das interne \textit{Master-Formular} bestätigt mit 72 Punkten seine Eignung als Blaupause, offenbart jedoch bestehende Nachbesserungsbedarfe bezüglich 700px-Breite, HTML-Entities, unvalidierter PLZ-Felder und fehlender Vorgangsnummern-Referenz.
 \end{itemize}
 
 \subsection{Validierung der Modell-Agnostik und Open-Source-Evaluation (Academic Cloud)}

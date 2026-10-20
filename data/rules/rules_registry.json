@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "HWG Ludwigshafen Formcycle Compliance Registry",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
   "scoring": {
     "base_score": 100,
@@ -328,13 +328,13 @@
     },
     {
       "id": "HWG-WF-01",
-      "name": "Standardisierte Workflow-Statusnomenklatur und Referenztransparenz",
+      "name": "Standardisierte Workflow-Statusnomenklatur und Lebenszyklus",
       "category": "workflow_governance",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "Verhindert organisatorische Insellösungen und unklare Prozessphasen in der Sachbearbeitung. Formulare mit nachgelagerter Bearbeitung müssen strukturierte Status-Übergänge (Eingegangen, In Prüfung, Genehmigt/Abgelehnt) definieren und in Workflow-E-Mails die Vorgangsnummer ([%$PROJECT_ALIAS%]) referenzieren.",
+      "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen in der Verwaltung. Mehrstufige Formulare müssen den Lebenszyklus des Antrags über formale Statusübergänge (FC_CHANGE_STATE) abbilden und kanonische Bezeichnungen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') anstelle willkürlicher Ad-hoc-Zustände nutzen.",
       "specification": {
-        "target": "workflow_nodes",
+        "target": "workflow_state_nodes",
         "canonical_lifecycle": [
           "Eingegangen",
           "In Prüfung",
@@ -343,14 +343,29 @@
           "Abgelehnt",
           "Archiviert"
         ],
-        "email_reference_variable": "[%$PROJECT_ALIAS%]",
         "disallowed_patterns": [
-          "Fehlende Status-Aktualisierung (Workflow ohne FC_CHANGE_STATE)",
-          "Ad-hoc-Zustände ohne Prozessbedeutung (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')",
-          "E-Mails ohne Vorgangsnummern-Referenz"
+          "Workflow ohne Status-Knoten (FC_CHANGE_STATE)",
+          "Willkürliche Ad-hoc-Zustände ohne Prozessbedeutung (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')"
         ]
       },
-      "remediation": "Nutzen Sie im Formcycle-Workflow für Statusänderungen (FC_CHANGE_STATE) die standardisierten Bezeichnungen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') und binden Sie in den Betreff der Workflow-E-Mails stets die Vorgangsnummer ([%$PROJECT_ALIAS%]) ein."
+      "remediation": "Definieren Sie im Workflow strukturierte Statusänderungen (FC_CHANGE_STATE) und nutzen Sie die kanonischen Bezeichnungen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') anstelle von Ad-hoc-Statusnamen."
+    },
+    {
+      "id": "HWG-WF-02",
+      "name": "Eindeutige Vorgangsreferenz in automatisierter Prozesskommunikation",
+      "category": "workflow_governance",
+      "evaluation_type": "deterministic",
+      "severity": "minor",
+      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Prozesskontrolle: Sämtliche automatisierte E-Mails an Antragstellende und Sachbearbeitende müssen eine eindeutige Vorgangsnummer führen, um Rückfragen, Statusverfolgung und Aktenablage fehlerfrei zu ermöglichen.",
+      "specification": {
+        "target": "workflow_email_nodes",
+        "target_field": "subject_and_body",
+        "required_variable": "[%$PROJECT_ALIAS%]",
+        "disallowed_patterns": [
+          "E-Mail-Benachrichtigungen ohne Vorgangsnummer ([%$PROJECT_ALIAS%]) im Betreff oder Textkörper"
+        ]
+      },
+      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff aller E-Mail-Knoten (FC_EMAIL) die Systemvariable [%$PROJECT_ALIAS%] als eindeutige Vorgangsnummer ein."
     }
   ]
 }

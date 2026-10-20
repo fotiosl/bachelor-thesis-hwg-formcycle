@@ -405,7 +405,19 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append(f"HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in {len(workflow_emails)} FC_EMAIL-Knoten bestätigt)")
 
-    # 14. HWG-WF-01 (Workflow-Governance: Strukturierte Status-Knoten und Vorgangs-Referenz)
+    # 14. HWG-WF-01 (Workflow-Governance: Strukturierte Status-Knoten und Lebenszyklus)
+    has_structured_states = len(workflow_states) > 0
+    if not has_structured_states:
+        results["violations"].append({
+            "rule": "HWG-WF-01",
+            "severity": "minor",
+            "message": "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt. Kanonischer Lebenszyklus erforderlich."
+        })
+        results["score"] -= penalties["minor"]
+    else:
+        results["passed"].append(f"HWG-WF-01 (Workflow-Status: {len(workflow_states)} Status-Knoten vorhanden)")
+
+    # 15. HWG-WF-02 (Vorgangsnummern-Referenz in automatisierter Kommunikation)
     has_project_alias = False
     for em in workflow_emails:
         subj = str(em.get("subject", "")).lower()
@@ -413,23 +425,16 @@ def evaluate_form(xfp_path, registry):
         if "%$project_alias%" in subj or "%$project_alias%" in body or "vorgangsnummer" in subj or "vorgang" in subj:
             has_project_alias = True
             break
-            
-    has_structured_states = len(workflow_states) > 0
-    
-    if not has_structured_states or not has_project_alias:
-        missing_aspects = []
-        if not has_structured_states:
-            missing_aspects.append("Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow")
-        if not has_project_alias:
-            missing_aspects.append("Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen")
+
+    if not has_project_alias:
         results["violations"].append({
-            "rule": "HWG-WF-01",
+            "rule": "HWG-WF-02",
             "severity": "minor",
-            "message": f"Workflow-Governance-Mängel: {'; '.join(missing_aspects)}. Standard-Lebenszyklus und Vorgangs-ID erforderlich."
+            "message": "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen."
         })
         results["score"] -= penalties["minor"]
     else:
-        results["passed"].append(f"HWG-WF-01 (Workflow-Governance: {len(workflow_states)} Status-Knoten & Vorgangsnummern-Referenz vorhanden)")
+        results["passed"].append("HWG-WF-02 (Vorgangsnummern-Referenz in Workflow-E-Mail vorhanden)")
 
     results["score"] = max(0, results["score"])
     return results

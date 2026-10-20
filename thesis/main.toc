@@ -36,36 +36,45 @@
 \contentsline {section}{\numberline {3.3}Ableitung der Kernanforderungen an den Formular-Standard}{22}{section.3.3}%
 \contentsline {chapter}{\numberline {4}Konzeption des Formular-Standards und der Prüf-Registry}{23}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Struktur-, Navigations- und Informationsarchitektur}{23}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Responsives Desktop-Raster (850px-Norm)}{23}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Seitenstrukturierung und Pagination (Chunking)}{24}{subsection.4.1.2}%
 \contentsline {section}{\numberline {4.2}Corporate Design, Barrierefreiheit und Stammdaten-Muster}{24}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Corporate Identity, Header- und Footer-Struktur}{24}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Semantische Gruppierung und Pflichtfeld-Indikation}{24}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Das normierte HWG-Stammdaten-Muster}{25}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Datenschutz, Eingabevalidierung und Schaltflächen-Semantik}{25}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Datenschutz-Transparenz (Art. 13 DSGVO)}{25}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Strukturierte Validierung, Dateiuploads und Zwischenspeichern-Empfehlung}{26}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Schaltflächen-Semantik und Workflow-E-Mail-Transparenz}{26}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}{27}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Mathematisches Bewertungsmodell}{27}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Katalog der formalisierten Governance-Regeln}{27}{subsection.4.4.2}%
-\contentsline {chapter}{\numberline {5}Prototypische Implementierung der Compliance-Prüfpipeline}{29}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Systemarchitektur und Datenfluss der Prüfpipeline}{29}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Datenextraktion aus Formcycle-Strukturen}{30}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Context-Engineering und semantische LLM-Integration}{30}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Deterministische Berechnung des Compliance-Scores}{31}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Empirische Evaluation und Diskussion}{32}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Evaluationsdesign und Benchmark-Metriken}{32}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Quantitative Benchmark-Ergebnisse}{33}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Analyse der Erkennungsleistung}{35}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Ergebnisse am realen HWG-Bestand}{35}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Validierung der Modell-Agnostik und Open-Source-Evaluation (Academic Cloud)}{36}{subsection.6.2.3}%
-\contentsline {section}{\numberline {6.3}Qualitative Nutzer- und Expertenrückmeldung}{36}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Kritische Würdigung und Validitätsbedrohungen}{36}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{38}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Zusammenfassung der Kernergebnisse}{38}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}{39}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Zukünftige Forschungs- und Entwicklungsperspektiven}{39}{section.7.3}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{41}{chapter*.12}%
+\contentsline {subsection}{\numberline {4.2.1}Corporate Identity, Header- und Footer-Struktur}{25}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Semantische Gruppierung und Pflichtfeld-Indikation}{25}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Das normierte HWG-Stammdaten-Muster}{26}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Datenschutz, Eingabevalidierung und Microcopy}{27}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Datenschutz-Transparenz nach Art. 13 DSGVO (\texttt {HWG-DSGVO-01})}{27}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Strukturierte Formatvalidierung (\texttt {HWG-VAL-01})}{27}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Affordanzgerechte Feldbreiten (\texttt {HWG-UX-01})}{27}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Transparente Dateiupload-Spezifikationen (\texttt {HWG-UPLOAD-01})}{28}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Schaltflächen-Semantik nach dem Action-Verb-Muster (\texttt {HWG-BTN-01})}{28}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Verständliche Verwaltungssprache und Jargon-Erklärung (\texttt {HWG-LANG-01}, \texttt {HWG-LANG-02})}{28}{subsection.4.3.6}%
+\contentsline {section}{\numberline {4.4}Workflow-Governance und Prozess-Harmonisierung}{29}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Standardisierte Workflow-Statusnomenklatur (\texttt {HWG-WF-01})}{29}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Eindeutige Vorgangsreferenz in Prozess-E-Mails (\texttt {HWG-WF-02})}{29}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Prozesstransparenz und Zwischenspeicher-Empfehlung (\texttt {HWG-FEEDBACK-01}, \texttt {HWG-UX-02})}{29}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Formalisierung als maschinenlesbare Komponenten- und Regel-Registry}{30}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Mathematisches Bewertungsmodell}{30}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Katalog der formalisierten Governance-Regeln}{31}{subsection.4.5.2}%
+\contentsline {chapter}{\numberline {5}Prototypische Implementierung der Compliance-Prüfpipeline}{33}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Systemarchitektur und Datenfluss der Prüfpipeline}{33}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Datenextraktion aus Formcycle-Strukturen}{34}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Context-Engineering und semantische LLM-Integration}{34}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Deterministische Berechnung des Compliance-Scores}{35}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Empirische Evaluation und Diskussion}{36}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Evaluationsdesign und Benchmark-Metriken}{36}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Quantitative Benchmark-Ergebnisse}{37}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Analyse der Erkennungsleistung}{39}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Ergebnisse am realen HWG-Bestand}{39}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Validierung der Modell-Agnostik und Open-Source-Evaluation (Academic Cloud)}{40}{subsection.6.2.3}%
+\contentsline {section}{\numberline {6.3}Qualitative Nutzer- und Expertenrückmeldung}{40}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Kritische Würdigung und Validitätsbedrohungen}{40}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{42}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Zusammenfassung der Kernergebnisse}{42}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Handlungsempfehlungen für die Praxis der HWG Ludwigshafen}{43}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Zukünftige Forschungs- und Entwicklungsperspektiven}{43}{section.7.3}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{45}{chapter*.12}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Reflexionsbericht zur Nutzung von KI-Tools}{43}{appendix.A}%
-\contentsline {chapter}{Eidesstattliche Erklärung}{45}{chapter*.13}%
+\contentsline {chapter}{\numberline {A}Reflexionsbericht zur Nutzung von KI-Tools}{47}{appendix.A}%
+\contentsline {chapter}{Eidesstattliche Erklärung}{49}{chapter*.13}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
