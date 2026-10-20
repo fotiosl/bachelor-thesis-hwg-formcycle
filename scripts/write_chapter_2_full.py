@@ -1,0 +1,182 @@
+import os
+
+chapter2_content = r"""\chapter{Theoretischer Hintergrund und Stand der Forschung}
+\label{chap:theorie}
+
+Dieses Kapitel spannt den theoretischen Bogen von den ergonomischen und gesetzlichen Grundlagen der Formulargestaltung über die Prinzipien digitaler Barrierefreiheit bis hin zum aktuellen Stand der Forschung im Bereich automatisierter Usability-Audits und Design-System-Governance mittels Large Language Models (LLMs). Abschließend wird das methodologische Fundament des Design Science Research (DSR) dargelegt, welches den roten Faden der gesamten Arbeit bildet.
+
+\section{Ergonomie und Usability von Webformularen}
+\label{sec:usability_standards}
+
+Digitale Formulare stellen interaktive Dialogsysteme dar, bei denen Nutzende zielgerichtet strukturierte Informationen erfassen, validieren und an administrative Folgesysteme übermitteln. Die Qualität dieser Mensch-Computer-Interaktion bemisst sich an etablierten Normen der Software-Ergonomie, empirischen Befunden der Usability-Forschung sowie theoretisch fundierten Fehler- und Schweregradmodellen.
+
+\subsection{Die Dialoggrundsätze der DIN EN ISO 9241-110:2020}
+\label{subsec:iso_norm}
+
+Die internationale Ergonomie-Norm \textbf{DIN EN ISO 9241-110:2020} (\textit{Ergonomie der Mensch-System-Interaktion -- Teil 110: Interaktionsprinzipien}) formuliert fundamentale Anforderungen an die Gestaltung von Benutzungsschnittstellen \cite{iso9241110}. Für digitale Webformulare lassen sich hieraus konkrete Gestaltungsleitlinien ableiten:
+
+\begin{enumerate}
+    \item \textbf{Aufgabenangemessenheit (\textit{Suitability for the task}):} Ein Formular ist aufgabenangemessen, wenn es Nutzende dabei unterstützt, ihr Anliegen effektiv und effizient zu vollenden, ohne unnötigen kognitiven Ballast aufzubürden. Dies erfordert die strikte Begrenzung auf zwingend erforderliche Datenerhebungen (Datenminimierung), das logische Aufteilen komplexer Formulare in zusammenhängende Bearbeitungsschritte (\textit{Chunking} bzw. Pagination) und die Vermeidung redundanter Mehrfacheingaben.
+    \item \textbf{Selbstbeschreibungsfähigkeit (\textit{Self-descriptiveness}):} Jeder Dialogschritt muss für die Nutzenden unmittelbar transparent und verständlich sein. Formularfelder müssen eindeutige, prägnante Labels tragen, strukturierte Formate müssen durch sichtbare Formatbeispiele oder Maskierungen erläutert werden, und hochschulspezifischer Fachjargon muss durch kontextuelle Hilfetexte (Tooltips) verständlich gemacht werden. Schaltflächen müssen die jeweils ausgelöste Systemtransaktion unmissverständlich benennen.
+    \item \textbf{Erwartungskonformität (\textit{Conformity with user expectations}):} Das Verhalten und die visuelle Struktur des Formulars müssen etablierten gesellschaftlichen und kulturellen Gewohnheiten entsprechen. Bei Stammdaten erfordert dies das Einhalten der natürlichen Abfolge ($\text{Anrede} \rightarrow \text{Vorname} \rightarrow \text{Nachname} \rightarrow \text{E-Mail-Adresse}$). Zudem umfasst die Erwartungskonformität die visuelle \textit{Affordanz}: Die Breite eines Eingabefeldes signalisiert die erwartete Inhaltslänge (z.\,B. kompakte Felder für fünfstellige Postleitzahlen statt seitenbreiter Freitextfelder).
+    \item \textbf{Fehlertoleranz und Fehlerhandhabung (\textit{Error tolerance}):} Ein ergonomisches Formular muss Eingabefehler aktiv antizipieren und abfangen. Dies geschieht durch automatisierte Client-Validierungen (Regex-Muster für IBAN, PLZ und E-Mail). Scheitert eine Validierung, muss das System die Fehlerursache am auslösenden Element präzise und konstruktiv erklären, anstatt unspezifische Fehlermeldungen am Seitenanfang auszugeben. Bereits eingegebene Daten dürfen bei Fehlern keinesfalls gelöscht werden.
+    \item \textbf{Steuerbarkeit (\textit{Controllability}):} Nutzende müssen das Formular im eigenen Tempo bearbeiten und den Prozess aktiv steuern können. In mehrseitigen Formularen erfordert dies klare Navigationspfade (\textit{Weiter} / \textit{Zurück}). Bei zeitaufwendigen Prozessen verlangt die Steuerbarkeit eine Möglichkeit zum Zwischenspeichern und späteren Fortsetzen (\textit{Save \& Resume}).
+    \item \textbf{Lernförderlichkeit (\textit{Suitability for learning}):} Die Interaktionsmuster müssen organisationsweit so konsistent implementiert sein, dass Nutzende einmal erlerntes Wissen (z.\,B. über Identifikationsmechanismen, Validierungsstile oder Freigabe-Schaltflächen) mühelos auf sämtliche anderen Dienste der Hochschule übertragen können.
+    \item \textbf{Individualisierbarkeit (\textit{Suitability for individualization}):} Formulare müssen sich an unterschiedliche Endgeräte und Benutzerbedürfnisse anpassen (vollständig responsives Verhalten für mobile Endgeräte, Zoomfähigkeit und Kompatibilität mit assistiven Hilfsmitteln).
+\end{enumerate}
+
+\subsection{Empirische Formular-Ergonomieforschung}
+\label{subsec:empirische_ergonomie}
+
+Dass die Einhaltung formaler Gestaltungsregeln direkte, messbare Auswirkungen auf den Prozesserfolg digitaler Formulare hat, ist durch bahnbrechende empirische Usability-Studien belegt.
+
+\textcite{bargas2010usable} untersuchten in einer groß angelegten empirischen Versuchsreihe mit 130 Teilnehmenden die Wirksamkeit von 20 etablierten Formularrichtlinien. Ihre Ergebnisse belegen, dass die formale Standardisierung von Formularen (insbesondere konsistente Pflichtfeldindikatoren, klare Gruppierungen und eindeutige Sequenzen) die \textbf{Fehlerrate der Nutzenden um bis zu 48\,\% senkt} und gleichzeitig die durchschnittliche Bearbeitungszeit um über 22\,\% reduziert. Sie wiesen nach, dass Formularmängel nicht isoliert wahrgenommen werden, sondern kumulativ wirken und die kognitive Belastung drastisch erhöhen.
+
+Aufbauend darauf führten \textcite{seckler2014validation} detaillierte Eyetracking- und Abbruch-Experimente durch. Sie wiesen nach, dass unstrukturierte Formulare ohne semantische Gruppierungen (\texttt{<fieldset>}) zu unruhigem, erratischem Blickverhalten führen, während visuell sauber gechunkte Abschnitte einen kontinuierlichen Lesefluss (\textit{Cognitive Flow}) ermöglichen. Unklare Fehlermeldungen und mehrdeutige Schaltflächenbeschriftungen wurden als Hauptursachen für Formularabbrüche (\textit{Form Abandonment}) identifiziert.
+
+Aus gestalterischer Sicht liefert \textcite{wroblewski2008web} das Standardwerk des modernen Formular-Designs. Wroblewski prägte das Konzept des \textit{\enquote{Path to Completion}}: Ein Formular muss so strukturiert sein, dass der Blickpfad der Nutzenden geradlinig von oben nach unten verläuft. Dies begründet die Bevorzugung einspaltiger Layouts gegenüber mehrspaltigen Rastern sowie die klare Hierarchisierung von Schaltflächen: Die primäre Absende-Aktion muss visuell dominieren und zwingend dem \textbf{Action-Verb-Muster} folgen (\textit{[Zielobjekt] + [Vollverb im Infinitiv]}, z.\,B. \textit{\enquote{Antrag einreichen}}), während sekundäre Aktionen visuell untergeordnet werden müssen, um Fehlklicks zu vermeiden.
+
+\subsection{Usability-Schweregradmodelle nach Nielsen}
+\label{subsec:nielsen_severity}
+
+Bei der Konzeption eines automatisierten Compliance-Audits stellt sich die fundamentale Frage, wie detektierte Regelverstöße gewichtet werden müssen. In der Usability-Theorie ist anerkannt, dass Mängel nicht als binäre Gleichheiten behandelt werden dürfen.
+
+\textcite{nielsen1994severity} entwickelte hierzu das bis heute maßgebliche \textbf{Usability Severity Rating}, welches die Schwere eines Problems anhand von drei Dimensionen klassifiziert:
+\begin{itemize}
+    \item \textbf{Häufigkeit (\textit{Frequency}):} Tritt das Problem ubiquitär oder nur selten auf?
+    \item \textbf{Auswirkung (\textit{Impact}):} Können Nutzende das Problem eigenständig überwinden oder führt es zum vollständigen Scheitern der Interaktion?
+    \item \textbf{Persistenz (\textit{Persistence}):} Handelt es sich um eine einmalige Irritation oder ein dauerhaftes Hindernis bei jeder Benutzung?
+\end{itemize}
+
+Nielsen definiert eine vierstufige Skala von 1 (kosmetischer Mangel) über 2 (geringfügig), 3 (schwerwiegend) bis 4 (katastrophaler Blocker). Auf dieser theoretischen Taxonomie baut das in Kapitel~\ref{sec:registry_definition} entwickelte mathematische Bewertungsmodell auf:
+\begin{itemize}
+    \item \textbf{Critical (Strafmaß 15 Punkte):} Rechtliche oder technische Blocker, die das Absenden verhindern oder gegen zwingendes Recht verstoßen (z.\,B. fehlende DSGVO-Klausel, Verstoß gegen WCAG-Kriterien der Stufe A).
+    \item \textbf{Major (Strafmaß 8 Punkte):} Schwere Usability- und CI-Mängel, die nachweislich die Fehlerrate steigern oder den Interaktionsfluss massiv stören (z.\,B. irreführende Button-Bezeichnungen, fehlende Regex-Validierung, abweichende Breitenraster).
+    \item \textbf{Minor (Strafmaß 3 Punkte):} Syntaktische Unsauberkeiten oder geringe Irritationen (z.\,B. unmaskierte HTML-Fragmente in Labels, suboptimale Feldlängen).
+    \item \textbf{Recommendation (Strafmaß 0 Punkte):} Konstruktive architektonische Verbesserungsvorschläge ohne Punktabzug (z.\,B. Ergänzung eines Zwischenspeichern-Buttons ab 3 Seiten).
+\end{itemize}
+
+\section{Rechtliche Rahmenbedingungen und Barrierefreiheit im E-Government}
+\label{sec:rechtliche_grundlagen}
+
+Neben ergonomischen Prinzipien unterliegt die digitale Formularlandschaft einer öffentlichen Hochschule strengen gesetzlichen Verpflichtungen, die sich aus dem E-Government-Recht, Barrierefreiheitsrichtlinien und dem Datenschutzrecht ergeben.
+
+\subsection{Das Onlinezugangsgesetz (OZG) im Hochschulkontext}
+\label{subsec:ozg_kontext}
+
+Das Gesetz zur Verbesserung des Onlinezugangs zu Verwaltungsleistungen (\textbf{Onlinezugangsgesetz -- OZG}) verpflichtet Bund, Länder und Kommunen, sämtliche Verwaltungsleistungen elektronisch über Verwaltungsportale bereitzustellen. Als Körperschaften des öffentlichen Rechts fallen Hochschulen unmittelbar in den Geltungsbereich des E-Governments. Anträge von Studierenden (z.\,B. Exmatrikulation, Urlaubssemester, Praxisphasen) sowie Prozesse der Hochschulverwaltung (z.\,B. Beschaffungsanträge, Stellenausschreibungen, Drittmittelanzeigen) stellen im rechtlichen Sinne \textbf{digitale Verwaltungsakte} dar.
+
+Zur Vermeidung bundesweiter Mehrfachentwicklungen koordiniert die \textit{Föderale IT-Kooperation (FITKO)} Standards für einheitliche Benutzungsschnittstellen (\textit{Föderales Design System}). Während Großbehörden auf zentralisierte Portale zurückgreifen können, stehen Hochschulen vor der Herausforderung, ihre traditionell historisch gewachsene, dezentrale Fachbereichsautonomie mit den verbindlichen Qualitäts- und Barrierefreiheitsstandards des OZG in Einklang zu bringen.
+
+\subsection{Digitale Barrierefreiheit (WCAG 2.1 und BITV 2.0)}
+\label{subsec:barrierefreiheit_bitv}
+
+Gemäß §\,1 Abs.\,1 des Landesgesetzes zur Gleichstellung von Menschen mit Behinderungen (L-BGG RLP) in Verbindung mit der \textbf{Barrierefreie-Informationstechnik-Verordnung (BITV 2.0)} sind Hochschulen verpflichtet, ihre Webauftritte und Online-Formulare barrierefrei zu gestalten. Die BITV 2.0 adaptiert die europäische Norm \textbf{EN 301 549}, welche auf den internationalen \textbf{Web Content Accessibility Guidelines (WCAG 2.1)} der Konformitätsstufe AA basiert.
+
+Für Webformulare sind folgende Erfolgskriterien zwingend einzuhalten:
+\begin{itemize}
+    \item \textbf{WCAG 1.1.1 (Nicht-Text-Inhalt):} Sämtliche grafischen Steuerelemente, Symbole und institutionellen Bildbanner (z.\,B. das Logo der HWG Ludwigshafen) müssen über programmgestützt ermittelbare Alternativtexte (\texttt{alt}-Attribute) verfügen.
+    \item \textbf{WCAG 1.3.1 (Info und Beziehungen):} Informationen und Beziehungen, die visuell vermittelt werden, müssen auch durch Software lesbar sein. Für Formulare bedeutet dies zwingend: Thematisch zusammengehörige Felder (z.\,B. Stammdaten oder Bankverbindungen) dürfen nicht ausschließlich in rein optischen \texttt{<div>}-Containern liegen, sondern müssen als semantisches \texttt{<fieldset>} mit einer lesbaren \texttt{<legend>} ausgezeichnet werden. Nur so können Screenreader den Kontext eines Feldes beim Hineintabben vorlesen.
+    \item \textbf{WCAG 2.4.6 (Überschriften und Beschriftungen):} Labels müssen den Inhalt und Zweck eines Eingabeelements präzise beschreiben, ohne verwirrende technische Platzhalter oder kryptische Kürzel zu verwenden.
+    \item \textbf{WCAG 3.3.2 (Beschriftungen oder Anweisungen):} Wenn ein Eingabefeld erforderlich ist, muss dieser Pflichtfeldstatus nicht nur visuell (z.\,B. durch ein rotes Sternchen), sondern auch maschinenlesbar im DOM über das standardisierte ARIA-Attribut \texttt{aria-required="true"} hinterlegt sein.
+    \item \textbf{WCAG 4.1.2 (Name, Rolle, Wert):} Für alle Oberflächenelemente müssen Name und Rolle programmtechnisch ermittelbar sein; Zustandsänderungen müssen assistierenden Technologien direkt signalisiert werden.
+\end{itemize}
+
+Dass Hochschulen in der Praxis erhebliche Defizite bei der Erfüllung dieser Standards aufweisen, belegen \textcite{inal2020web} in ihrer systematischen Übersichtsarbeit zur Web-Accessibility im Hochschulbereich: Über 80\,\% aller untersuchten Hochschulformulare wiesen schwerwiegende Mängel bei semantischen Feldauszeichnungen und ARIA-Attributen auf.
+
+\subsection{Datenschutz-Transparenz nach Art. 13 DSGVO}
+\label{subsec:dsgvo_transparenz}
+
+Da Hochschulformulare regelmäßig hochsensible Daten verarbeiten (z.\,B. Matrikelnummern, Personaldaten, Bankverbindungen zur Auslagenerstattung oder Beurteilungen), unterliegen sie den strengen Vorgaben der Datenschutz-Grundverordnung (\textbf{DSGVO}). 
+
+Gemäß \textbf{Art. 13 DSGVO} besteht bei der Erhebung personenbezogener Daten eine transparente Informationspflicht: Nutzende müssen zum Erhebungszeitpunkt unmissverständlich über den Verarbeitungszweck, die Rechtsgrundlage, die Speicherdauer sowie ihre Betroffenenrechte belehrt werden. Dies erfordert, dass Formulare vor dem Absenden eine verständliche Datenschutzklausel sowie einen direkten Hyperlink auf die Datenschutzerklärung der Hochschule bereitstellen.
+
+\section{Methodologischer Rahmen: Design Science Research (DSR)}
+\label{sec:dsr_methodik}
+
+Die wissenschaftliche Vorgehensweise dieser Arbeit folgt dem Paradigma des \textbf{Design Science Research (DSR)} in der Wirtschaftsinformatik \cite{hevner2004design, recker2013scientific}. Während verhaltenswissenschaftliche Ansätze bestehende Phänomene beschreiben und erklären, zielt DSR auf die theoriegeleitete Entwicklung und rigorose Evaluation nützlicher \textbf{IT-Artefakte} ab, um praxisrelevante Probleme zu lösen.
+
+\subsection{Der DSR-Prozesszyklus nach Peffers et al. (2007)}
+\label{subsec:peffers_zyklus}
+
+Die Arbeit gliedert sich exakt entlang des international etablierten DSR-Prozessmodells nach \textcite{peffers2007design}, welches sechs iterative Phasen umfasst (siehe Tabelle~\ref{tab:dsr_mapping}):
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{DSR-Phase nach Peffers} & \textbf{Kapitel} & \textbf{Konkrete methodische Umsetzung in dieser Arbeit} \\
+\midrule
+1. Problem Identification & Kap. 1 \& 3 & Empirische Vollerhebung von 34 bzw. 49 HWG-Formularen; Identifikation von 6 Problemfeldern (DOM-Analyse). \\
+2. Define Objectives & Kap. 1 \& 3 & Ableitung der 5 Kernanforderungen; Definition der Main Research Question (MRQ) und Sub-Questions (FQ1--FQ4). \\
+3. Design \& Development & Kap. 4 & Formalisierung des Formular-Standards und der maschinenlesbaren Compliance-Registry v1.4.0 (20 Regeln). \\
+4. Demonstration & Kap. 5 & Technische Umsetzung der zweistufigen Prüfpipeline (Deterministischer Python-AST-Parser + LLM-Modul). \\
+5. Evaluation & Kap. 6 & Quantitative Benchmark-Prüfung an synthetischen Ground-Truth-Formularen und realen Bestandsanträgen. \\
+6. Communication & Kap. 7 & Diskussion der Ergebnisse, Ableitung von Handlungsempfehlungen für das Hochschulmanagement und Ausblick. \\
+\bottomrule
+\end{tabularx}
+\caption{Zuordnung der Arbeitsschritte zum DSR-Prozessmodell nach Peffers et al. (2007)}
+\label{tab:dsr_mapping}
+\end{table}
+
+\subsection{Wissensbeitrag des Artefakts}
+\label{subsec:dsr_contribution}
+
+Im \textit{DSR Knowledge Contribution Framework} nach Gregor und Hevner lässt sich der Beitrag dieser Arbeit als \textbf{Level-2-Beitrag (\textit{Nascent Design Theory / Operational Standard})} einordnen: Bestehendes, abstraktes Wissen (ISO 9241-110, WCAG 2.1, Art. 13 DSGVO) wird durch die Konstruktion einer maschinenlesbaren Registry und einer zweistufigen Prüf-Middleware in ein operationalisierbares, automatisiert auditierbares Qualitäts-Governance-Artefakt für das Enterprise-FMS Formcycle überführt.
+
+\section{Automatisierte Heuristische Evaluation mit Large Language Models}
+\label{sec:llm_evaluation}
+
+Die klassische Usability-Evaluation stützt sich historisch auf manuelle Inspektionen durch Fachexperten (Heuristische Evaluation nach Nielsen, Cognitive Walkthrough). Diese Verfahren sind jedoch personell und ökonomisch aufwendig und skalieren nicht für dynamische No-Code-Formularplattformen mit dezentralen Autoren.
+
+\subsection{Stand der Forschung: LLM-gestützte Usability-Audits}
+\label{subsec:llm_usability_forschung}
+
+Mit dem Aufkommen leistungsfähiger generativer Sprachmodelle (LLMs) untersucht die jüngste Human-Computer-Interaction-Forschung die Automatisierung heuristischer UI-Prüfungen:
+\begin{itemize}
+    \item \textbf{Modell-Leistung und Grenzen unstrukturierter Prompts:} \textcite{guerino2025gpt4o} untersuchten auf der Konferenz \textit{INTERACT 2025}, ob moderne LLMs (GPT-4o) Usability-Probleme wie menschliche Evaluatoren identifizieren können. Ihre Ergebnisse zeigen, dass LLMs zwar eine hohe Sensitivität für visuelle und textuelle Mängel besitzen, naive Freitext-Prompts jedoch zu unpräzisen Heuristik-Zuordnungen, Halluzinationen und inkonsistenten Bewertungen führen.
+    \item \textbf{Synthetische Heuristische Evaluation:} \textcite{zhong2025synthetic} wiesen nach, dass die Kombination aus formal strukturierten Prüfregeln und LLM-Inferenz die Entdeckungsrate von Usability-Problemen signifikant steigert und eine mit menschlichen Experten vergleichbare Abdeckung erreicht, sofern dem Modell klare Beurteilungsheuristiken vorgegeben werden.
+    \item \textbf{Multimodale UI-Prüfung:} \textcite{wang2025aiheureval} demonstrierten anhand des Frameworks \textit{AIHeurEval}, dass Sprachmodelle bei der Analyse von Benutzerschnittstellen besonders robuste Ergebnisse liefern, wenn strukturelle DOM-Informationen und textuelle Microcopy gemeinsam in einem kohärenten Schema analysiert werden.
+\end{itemize}
+
+\subsection{Context Engineering und Registry-basierte Governance}
+\label{subsec:context_engineering}
+
+Ein fundamentales Risiko beim Einsatz von LLMs für Governance- und Compliance-Prüfungen ist der sogenannte \textit{Prompt Drift} sowie das Auftreten von Halluzinationen. Um deterministische Reproduzierbarkeit zu gewährleisten, bedarf es ausgereifter Context-Engineering-Strategien.
+
+\textcite{cha2026design} untersuchten auf der \textit{CHI 2026} verschiedene Context-Engineering-Architekturen zur Durchsetzung von Design-Systemen durch KI-Agenten. Sie wiesen empirisch nach, dass die Injektion modularer, maschinenlesbarer Komponenten-Registries (bestehend aus formalen Spezifikationen, Positiv-/Negativmustern und klaren Korrekturanweisungen) die \textbf{Design-System-Compliance auf über 95\,\%} steigert und unstrukturierte Baseline-Prompts drastisch übertrifft.
+
+Dieser wissenschaftliche Befund begründet die zweistufige hybride Architektur der in dieser Arbeit entwickelten Pipeline:
+\begin{enumerate}
+    \item \textbf{Deterministische Stufe (Python-AST-Parser):} Regeln mit formal eindeutigen Kriterien (z.\,B. Layoutbreite exakt 850px, Footer-Logo-Flag \texttt{showlogo="0"}, Fieldset-Tags, Regex-Muster) werden deterministisch ohne KI-Latenz und ohne Tokenkosten geprüft.
+    \item \textbf{Semantische Stufe (LLM-Inferenz):} Nur sprachliche und pragmatische Regeln (kanonische Stammdaten, Action-Verb-Muster auf Schaltflächen, bürokratischer Jargon und Workflow-E-Mail-Transparenz) werden gemeinsam mit den zugehörigen Registry-Regeln an das Modell übergeben.
+    \item \textbf{Deterministische Punkteaggregation:} Die Berechnung des Compliance-Scores erfolgt strikt deterministisch nach Gleichung~(\ref{eq:compliance_score}) anhand der vordefinierten Schweregrade nach \textcite{nielsen1994severity}.
+\end{enumerate}
+
+\subsection{Aktionsorientiertes Feedback (\textit{Remediation}) in No-Code-Umgebungen}
+\label{subsec:remediation_feedback}
+
+Formularautorinnen und -autoren in Fachbereichen und dezentralen Organisationseinheiten verfügen meist über kein informatisches Spezialwissen. Rein technische Fehlermeldungen (z.\,B. \enquote{WCAG 1.3.1 verletzt}) führen in der Praxis zu Frustration und Ablehnung.
+
+\textcite{duan2024generating} zeigten auf der \textit{CHI 2024}, dass automatisiertes UI-Feedback drei Bedingungen erfüllen muss, um wirksam zu sein:
+\begin{itemize}
+    \item \textbf{Aktionsorientierung (\textit{Actionability}):} Das System muss konkrete, schrittweise Korrekturanweisungen für den Editor liefern (z.\,B. \enquote{Wählen Sie im Formcycle-Designer unter Einschränkungen die Option 'Pflichtfeldhinweis anzeigen'}).
+    \item \textbf{Lokalisierbarkeit:} Betroffene UI-Elemente müssen anhand ihrer ID und ihres sichtbaren Labels eindeutig referenziert werden.
+    \item \textbf{Positive Bestärkung:} Konforme Aspekte müssen im Bericht explizit als bestanden ausgewiesen werden, um Motivation und Lerneffekte zu sichern.
+\end{itemize}
+
+\subsection{Modell-Agnostik, Open Source und universitäre Datensouveränität}
+\label{subsec:datensouveraenitaet}
+
+Ein kritischer Aspekt für den praktischen Einsatz an Hochschulen ist der Datenschutz und die digitale Souveränität. Gemäß Art.\,44 ff. DSGVO ist die Übermittlung von Verwaltungs- und Personaldaten an kommerzielle US-Cloud-Anbieter rechtlich bedenklich. 
+
+Um einen dauerhaften, unabhängigen Einsatz an der HWG Ludwigshafen zu gewährleisten, muss die entwickelte Prüfpipeline \textbf{modell-agnostisch} konzipiert sein. Wie in Kapitel~\ref{subsec:opensource_eval} demonstriert wird, kann die semantische Auswertung über standardisierte JSON-Schnittstellen vollständig auf selbst gehosteten oder universitären Open-Source-Modellen (z.\,B. \textit{Llama-3.3-70B} im Rahmen der Academic Cloud der GWDG) betrieben werden.
+
+Zusammenfassend liefert die Verknüpfung aus ISO-Dialogergonomie, barrierefreiem E-Government-Recht, DSR-Methodik und LLM-Context-Engineering ein solides theoretisches Fundament für die Konzeption des HWG-Formular-Standards.
+"""
+
+with open('thesis/chapters/02_theoretischer_hintergrund.tex', 'w', encoding='utf-8') as f:
+    f.write(chapter2_content)
+
+print(f"SUCCESS: Chapter 2 written ({len(chapter2_content)} characters)")

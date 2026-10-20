@@ -19,6 +19,64 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global/global}
+    \entry{bargas2010usable}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=bdf6d4f2cf774f7ff872823acaf143c7}{%
+           family={Bargas-Avila},
+           familyi={B\bibinithyphendelim A\bibinitperiod},
+           given={Javier\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=36fac2fc97a0c56e67a4755d544ab402}{%
+           family={Brenzikofer},
+           familyi={B\bibinitperiod},
+           given={Olivier},
+           giveni={O\bibinitperiod}}}%
+        {{hash=fe3b15a601b05512f1a5d63345c0d16b}{%
+           family={Roth},
+           familyi={R\bibinitperiod},
+           given={Sandra\bibnamedelima P.},
+           giveni={S\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=20a458a05e810dd849fa017198a43aaa}{%
+           family={Tuch},
+           familyi={T\bibinitperiod},
+           given={Alexandre\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=fd53a63a14c384d869569560c9a2da82}{%
+           family={Orsini},
+           familyi={O\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d24973a4ced64e06ab547ff1b0c12887}{%
+           family={Opwis},
+           familyi={O\bibinitperiod},
+           given={Klaus},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{249c757a8c8d688e56ddf9c61b7f43a6}
+      \strng{fullhash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{fullhashraw}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{bibnamehash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{authorbibnamehash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{authornamehash}{249c757a8c8d688e56ddf9c61b7f43a6}
+      \strng{authorfullhash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{authorfullhashraw}{3add050456a4deab99e0b1a0c94b6fc2}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers in Human Behavior}
+      \field{number}{4}
+      \field{title}{Usable forms on the web: An evaluation of web form design guidelines}
+      \field{volume}{26}
+      \field{year}{2010}
+      \field{pages}{841\bibrangedash 851}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.chb.2010.01.017
+      \endverb
+    \endentry
     \entry{cha2026design}{inproceedings}{}{}
       \name{author}{4}{}{%
         {{hash=0ec900b968105848385388c5beedff2c}{%
@@ -71,6 +129,23 @@
       \verb{url}
       \verb https://doi.org/10.1145/3772363.3798616
       \endverb
+    \endentry
+    \entry{iso9241110}{standard}{}{}
+      \list{location}{1}{%
+        {Berlin}%
+      }
+      \list{publisher}{1}{%
+        {Deutsches Institut für Normung e.\,V. / Beuth Verlag}%
+      }
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{number}{DIN EN ISO 9241-110:2020-10}
+      \field{title}{Ergonomie der Mensch-System-Interaktion -- Teil 110: Interaktionsprinzipien}
+      \field{type}{Norm}
+      \field{year}{2020}
     \endentry
     \entry{duan2024generating}{inproceedings}{}{}
       \name{author}{4}{}{%
@@ -240,6 +315,127 @@
       \verb 10.2307/25148625
       \endverb
     \endentry
+    \entry{inal2020web}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=ab5910e4c8394c1bdda8982b62081e37}{%
+           family={Inal},
+           familyi={I\bibinitperiod},
+           given={Yavuz},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=f14fc11bbe2cc4341ccdf736152f1b07}{%
+           family={Gurcan},
+           familyi={G\bibinitperiod},
+           given={Fatih},
+           giveni={F\bibinitperiod}}}%
+        {{hash=f956c397321cf16b330d741652ea4fa4}{%
+           family={Cagiltay},
+           familyi={C\bibinitperiod},
+           given={Kursat},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{359ef2be31c7e43f9bfb9c71f8e60e83}
+      \strng{fullhash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{fullhashraw}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{bibnamehash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{authorbibnamehash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{authornamehash}{359ef2be31c7e43f9bfb9c71f8e60e83}
+      \strng{authorfullhash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{authorfullhashraw}{54f15e5434ce55fea455dcab2894bd62}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{title}{Web Accessibility in Higher Education: A Systematic Literature Review}
+      \field{volume}{8}
+      \field{year}{2020}
+      \field{pages}{162489\bibrangedash 162500}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/ACCESS.2020.3021950
+      \endverb
+    \endentry
+    \entry{nielsen1994severity}{incollection}{}{}
+      \name{author}{1}{}{%
+        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           familyi={N\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Morgan Kaufmann}%
+      }
+      \strng{namehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorbibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authornamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorfullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorfullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Usability Engineering}
+      \field{title}{Severity Ratings for Usability Problems}
+      \field{year}{1994}
+      \field{pages}{102\bibrangedash 107}
+      \range{pages}{6}
+    \endentry
+    \entry{peffers2007design}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=3127efe8cdd4557b7228a8724f568529}{%
+           family={Peffers},
+           familyi={P\bibinitperiod},
+           given={Ken},
+           giveni={K\bibinitperiod}}}%
+        {{hash=8b17b21a3e4c61d1302f46cba38c6e50}{%
+           family={Tuunanen},
+           familyi={T\bibinitperiod},
+           given={Tuure},
+           giveni={T\bibinitperiod}}}%
+        {{hash=33ad207ea3031c6d744a31f5bc43c547}{%
+           family={Rothenberger},
+           familyi={R\bibinitperiod},
+           given={Marcus\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=edf3e165ce4429b30d49e353a7d1417a}{%
+           family={Chatterjee},
+           familyi={C\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{4ccaed1d47a4875e5f027cdf2d20bbca}
+      \strng{fullhash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{fullhashraw}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{bibnamehash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{authorbibnamehash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{authornamehash}{4ccaed1d47a4875e5f027cdf2d20bbca}
+      \strng{authorfullhash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{authorfullhashraw}{0d82c455b50c2b184d97697dac2e8660}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Management Information Systems}
+      \field{number}{3}
+      \field{title}{A Design Science Research Methodology for Information Systems Research}
+      \field{volume}{24}
+      \field{year}{2007}
+      \field{pages}{45\bibrangedash 77}
+      \range{pages}{33}
+      \verb{doi}
+      \verb 10.2753/MIS0742-1222240302
+      \endverb
+    \endentry
     \entry{recker2013scientific}{book}{}{}
       \name{author}{1}{}{%
         {{hash=604e15fd1714275673736d598c9e7e89}{%
@@ -272,6 +468,58 @@
       \field{year}{2013}
       \verb{doi}
       \verb 10.1007/978-3-642-30048-6
+      \endverb
+    \endentry
+    \entry{seckler2014validation}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=e41dbe3f200ffd7f5eda5cb732b90aca}{%
+           family={Seckler},
+           familyi={S\bibinitperiod},
+           given={Mirjam},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f23eab73c98ba2070857455cc1330837}{%
+           family={Heinz},
+           familyi={H\bibinitperiod},
+           given={Silvia},
+           giveni={S\bibinitperiod}}}%
+        {{hash=e4a053eead8ccfc8d3eef8ae96e7fb74}{%
+           family={Forde},
+           familyi={F\bibinitperiod},
+           given={Seán},
+           giveni={S\bibinitperiod}}}%
+        {{hash=20a458a05e810dd849fa017198a43aaa}{%
+           family={Tuch},
+           familyi={T\bibinitperiod},
+           given={Alexandre\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=d24973a4ced64e06ab547ff1b0c12887}{%
+           family={Opwis},
+           familyi={O\bibinitperiod},
+           given={Klaus},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{f059784f0ed6dadc349ae8e2d287fe5a}
+      \strng{fullhash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{fullhashraw}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{bibnamehash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{authorbibnamehash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{authornamehash}{f059784f0ed6dadc349ae8e2d287fe5a}
+      \strng{authorfullhash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{authorfullhashraw}{ceb8af2d969c5c434418d525557bf57d}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers in Human Behavior}
+      \field{title}{Before the click: Flow in web form completion and its impact on user experience}
+      \field{volume}{41}
+      \field{year}{2014}
+      \field{pages}{156\bibrangedash 166}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.chb.2014.09.022
       \endverb
     \endentry
     \entry{wang2025aiheureval}{inproceedings}{}{}
@@ -348,6 +596,38 @@
       \field{labeltitlesource}{title}
       \field{title}{Wissenschaftliches Arbeiten mit KI: Ein Leitfaden für Studierende und Forschende}
       \field{year}{2026}
+    \endentry
+    \entry{wroblewski2008web}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=ec5019c09be82a8904485615239ef96f}{%
+           family={Wroblewski},
+           familyi={W\bibinitperiod},
+           given={Luke},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Brooklyn, New York}%
+      }
+      \list{publisher}{1}{%
+        {Rosenfeld Media}%
+      }
+      \strng{namehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{fullhash}{ec5019c09be82a8904485615239ef96f}
+      \strng{fullhashraw}{ec5019c09be82a8904485615239ef96f}
+      \strng{bibnamehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authorbibnamehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authornamehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authorfullhash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authorfullhashraw}{ec5019c09be82a8904485615239ef96f}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-933820-24-8}
+      \field{title}{Web Form Design: Filling in the Blanks}
+      \field{year}{2008}
     \endentry
     \entry{zhong2025synthetic}{article}{}{}
       \name{author}{3}{}{%
