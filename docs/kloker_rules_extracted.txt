@@ -1,0 +1,222 @@
+
+Hinweise zur Abschlussarbeit
+Table of contents
+1
+ Ziel der Abschlussarbeit
+1.1
+ Bachelor
+1.2
+ Master
+2
+ Relevante Regelungen
+2.1
+ Zeit
+2.2
+ Deliverables
+2.3
+ Formale Vorgaben für die schriftliche Thesis
+3
+ Themenfindung
+4
+ Modus der Betreuung
+4.1
+ Milestone-Meetings
+4.2
+ Status- und Problemloesungstermine
+4.3
+ Erwartung an Fragen
+5
+ Exposé
+6
+ Gute Wissenschaftliche Praxis + Nutzung von KI
+6.1
+ Gute Wissenschaftliche Praxis
+6.2
+ Nutzung von KI
+7
+ Get Set Up
+8
+ Publikation und Verwertung
+9
+ Weitere Hinweise
+Hinweise zur Abschlussarbeit
+Author
+Simon Kloker 
+Warning
+Hinweis
+Dieses Dokument gibt Hinweise in von mir (Simon Kloker) betreuten Abschlussarbeiten. Es ersetzt nicht die offiziellen Vorgaben der Hochschule, insbesondere die jeweils aktuelle Prüfungsordnung, Modulbeschreibung und die Vorgaben des Prüfungsamts. Bitte informieren Sie sich rechtzeitig über die aktuellen Vorgaben und halten Sie diese ein. Es ist auch nicht zwangsläufig 1:1 auf andere Betreuer oder Betreuerinnen übertragbar. Bitte klären Sie im Zweifel mit Ihrer Betreuung, welche Vorgaben für Ihre Arbeit gelten.
+1
+ Ziel der Abschlussarbeit
+1.1
+ Bachelor
+Die Bachelorarbeit zeigt, dass Studierende ein klar abgegrenztes Problem aus ihrem Fachgebiet innerhalb der vorgegebenen Frist selbstständig, methodisch sauber und nachvollziehbar bearbeiten können.
+Im Fokus stehen:
+fundierte Problemdefinition und Forschungsfrage
+korrekte Nutzung wissenschaftlicher Methoden
+strukturierte Auswertung und belastbare Schlussfolgerungen
+formal saubere und fristgerechte Dokumentation
+Es lohnt sich ein Blick in die Beschreibung im Modulhandbuch. Dort sind die Kriterien und Anforderungen sehr konkret beschrieben. Das hilft dabei, ein Gefühl dafür zu entwickeln, was eine gute Bachelorarbeit ausmacht und Ihrem eigenen Ergebnis daran zu messen.
+1.2
+ Master
+Die Masterarbeit zeigt, dass Studierende ein komplexeres wissenschaftliches oder praxisnahes Problem eigenständig konzipieren, methodisch reflektiert bearbeiten und kritisch einordnen können.
+Im Fokus stehen:
+eigenständige Herleitung einer relevanten Forschungsfrage
+begründete Methodenwahl auf aktuellem Stand der Forschung
+kritische Reflexion der Ergebnisse und Grenzen
+professioneller Beitrag fuer Wissenschaft und/oder Praxis
+2
+ Relevante Regelungen
+Es gelten stets die jeweils aktuelle Prüfungsordnung, Modulbeschreibung sowie die Vorgaben des Prüfungsamts der Hochschule.
+Bitte auch die Regelung der SPO zur Ausarbeitungssprache beachten: In der Regel ist die Bachelorarbeit in deutscher Sprache zu verfassen. Ausnahmen sind 
+vorab
+ zu beantragen. Masterarbeiten koennen in deutscher oder englischer Sprache verfasst werden, je nach Absprache mit der Betreuung.
+2.1
+ Zeit
+Bearbeitungszeit richtet sich nach der gültigen SPO des jeweiligen Studiengangs.
+Bachelor: 10 Wochen
+Master: 6 Monate
+Fristen sind verbindlich; Verlängerungen nur nach den offiziellen Verfahren.
+2.2
+ Deliverables
+Die verpflichtenden Abgaben sind in der Regel:
+Exposé
+Abschlussarbeit (schriftliche Thesis)
+ggf. Artefakt(e) wie Software, Datensatz, Leitfaden oder technische Dokumentation
+Insbesondere bei Arbeiten in Kooperation mit Praxispartnern können weitere Deliverables vereinbart werden, z.B. Projektbericht, Präsentation oder Workshop.
+2.3
+ Formale Vorgaben für die schriftliche Thesis
+Zitierweise: APA 7th Edition (inkl. Literaturverzeichnis)
+Layout: DIN A4
+Umfang:
+Bachelor: max. 8.000 Wörter (ohne Anhang und Verzeichnisse)
+Master: max. 12.000 Wörter (ohne Anhang und Verzeichnisse)
+3
+ Themenfindung
+Die Themenfindung erfolgt gemeinsam in der Betreuung. Eigene Vorschläge sind ausdrücklich willkommen (insbesondere bei Projekten in Kooperation mit Praxispartnern), müssen aber fachlich relevant, machbar und in der vorgesehenen Zeit umsetzbar sein.
+Leitfragen fuer die Themenwahl:
+Ist das Thema für Studium, Praxis oder Forschung relevant?
+Ist der Scope realistisch für die Bearbeitungszeit?
+Sind Daten, Zugang und Methoden verfügbar?
+Ist eine klare Forschungsfrage ableitbar?
+4
+ Modus der Betreuung
+4.1
+ Milestone-Meetings
+Wir treffen uns mindestens 3 Mal während der Bearbeitung der Arbeit. Die Termine werden gemeinsam abgestimmt und können auch online stattfinden.
+Besprechung Exposé
+Besprechung der Datenbasis und Methodik (vor der Datenerhebung/Analyse/…)
+Besprechung der Ergebnisse und Schlussfolgerungen (nach der initialen Analyse)
+4.2
+ Status- und Problemloesungstermine
+Zudem ist es je nach Thema und Bedarf möglich, kurze Status- und Problemlösungstermine in einem etwa zweiwöchigen Rhythmus zu vereinbaren.
+4.3
+ Erwartung an Fragen
+Fragen sind willkommen und helfen, die Arbeit zu verbessern. Bitte beachten Sie aber:
+Fragen frühzeitig stellen.
+Nach Möglichkeit bereits 1-2 begründete Lösungsoptionen mitbringen. Diese müssen nicht perfekt sein, zeigen aber, dass Sie sich bereits mit dem Problem auseinandergesetzt haben.
+5
+ Exposé
+Das Exposé dient als verbindliche Arbeitsgrundlage und wird früh im Prozess abgestimmt.
+Empfohlener Umfang: max. 5 Seiten (inkl. vorläufiger Literatur und Anhang).
+Empfohlene Struktur:
+Seite 1 - 2:
+Problemstellung und Motivation (ca. 5 Sätze): Was ist das Problem? Warum ist es relevant? Wer ist betroffen?
+Stand der Literatur und Forschungslücke (ca. 10-15 Sätze, inkl. 3-5 relevante Quellen): Was wurde bereits gemacht? Demonstrieren Sie, dass genau dieses Problem mit genau diesem Ansatz noch nicht bearbeitet wurde. Wie grenzen Ergebnisse anderer Ihren Lösungsraum ein?
+Forschungsfrage(n), Zielsetzung und Beitrag (ca. 5 Sätze): Basierend auf dem Problem und den Ergebnissen der Literatursuche: Was genau wollen Sie herausfinden? Was ist Ihr Ziel? Was ist der Beitrag Ihrer Arbeit? → Ihre Forschungsfrage(n)
+Seite 3 - 4:
+Methodisches Vorgehen und Datenbasis (ca. 10-15 Sätze): Wie wollen Sie vorgehen, um Ihre Forschungsfrage zu beantworten? Welche Methoden wollen Sie nutzen? Welche Daten brauchen Sie? Wie kommen Sie an die Daten? Wie werden Sie die Daten analysieren?
+Zeitplan und vorläufige Gliederung
+Verwertungsstrategie (ca. 5 Sätze): Wie wollen Sie die Ergebnisse Ihrer Arbeit verwerten? Wer ist der Adressat? Welche Form der Verwertung ist geeignet (z.B. wissenschaftliche Publikation, Praxisbericht, Software, Leitfaden, Workshop)?
+Seite 5:
+Literatur
+6
+ Gute Wissenschaftliche Praxis + Nutzung von KI
+6.1
+ Gute Wissenschaftliche Praxis
+Es gilt die Richtlinie der Hochschule zur guten wissenschaftlichen Praxis.
+Verbindliche Grundsätze:
+keine Plagiate, sauberes Zitieren aller Quellen
+transparente Kennzeichnung übernommener Inhalte
+eigenstaendige wissenschaftliche Leistung
+KI-Tools nur im Rahmen der geltenden Hochschulrichtlinie
+Weitere Grundsätze der guten wissenschaftlichen Praxis finden sich hier: 
+https://www.hwg-lu.de/fileadmin/Archiv/hochschule/publikationen/hs_anzeiger/HAZ_2022/Ausgabe_15_-_13.07.2022_Regeln_guter_wissenschaftlicher_Praxis.pdf
+Zu guter wissenschaftlicher Praxis gehört auch das konsequente Einhalten von wissenschaftlichen Standards und Methoden, die in der jeweiligen Disziplin anerkannt sind. Zwei gute Quellen, die einen Überblick über die Grundsätze der wissenschaftlichen Praxis geben, sind:
+Recker (
+2013
+)
+Cochrane (
+2005
+)
+6.2
+ Nutzung von KI
+Für die KI Nutzung gelten die Richtlinien der Hochschule (
+https://www.hwg-lu.de/studium/ki-hwg-lu
+) sowie folgende Regeln, die wir im Rahmen der Betruung bilateral vereinbaren:
+6.2.1
+ Dokumentationspflichten
+Nutzung ohne Dokumentation:
+Rechtschreibprüfung, Grammatikprüfung, Formatierungshilfe
+Nutzung mit Dokumentation durch Quellenhinweis und Promptangabe im Text:
+Erstellung von Bildmaterialien, z.B. Diagramme, Illustrationen, Infografiken
+Generierung von Daten, z.B. synthetische Datensets, Testdaten, Simulationen
+Nutzung mit Dokumentation durch einen Reflexionsbericht (siehe 
+6.2.2
+) im Anhang der Arbeit:
+Initielle Ideenfindung, z.B. Brainstorming von Themen, Forschungsfragen
+Recherche zu Methoden oder Literatur
+Erstellung oder Überarbeitung von Softwarecode oder Artefakten
+Nutzung zur Analyse und Interpretation von Daten und Ergebnissen
+6.2.2
+ Reflexionsbericht
+Der Reflexionsbericht ist ein ca. 2 Seiten umfassender Bericht, der die Nutzung von KI-Tools in der Arbeit dokumentiert und reflektiert. Er sollte eine kritische Auseinandersetzung mit mindestens vier der folgenden Punkten enthalten:
+Auswahl der KI-Tools: Welche Kriterien haben Ihre Entscheidung bei der Auswahl geeigneter KI-gestützter Werkzeuge und Hilfsmittel beeinflusst? Wie sind Sie dabei vorgegangen?
+Häufigkeit und Nutzen: Welche KI-Tools und Hilfsmittel haben Sie am häufigsten verwendet? Warum erwiesen sich bestimmte Werkzeuge als besonders hilfreich oder ungeeignet?
+Anwendungsbereiche: In welchen Teilen Ihrer wissenschaftlichen Arbeit war der Einsatz von KI besonders unterstützend oder problematisch? Welche Faktoren waren dafür ausschlaggebend?
+Validierung der KI-generierten Inhalte: Wie haben Sie die Zuverlässigkeit und wissenschaftliche Fundierung der von KI bereitgestellten Informationen überprüft? Welche Herausforderungen sind dabei aufgetreten?
+Erforderliche Kompetenzen: Welche Kenntnisse und Fähigkeiten waren notwendig, um KI-Tools effektiv und kritisch zu nutzen?
+Auswirkungen auf den Schreibprozess: Inwiefern hat der Einsatz von KI Ihr wissenschaftliches Arbeiten beeinflusst? Welche Aspekte empfanden Sie als besonders förderlich oder hinderlich?
+Schlussfolgerungen für zukünftige Arbeiten: Welche Erkenntnisse ziehen Sie aus dieser Erfahrung für künftige wissenschaftliche Arbeiten? Welche Anpassungen oder Verbesserungen planen Sie für Ihren weiteren Umgang mit KI-gestützten Werkzeugen?
+(Quellenhinweis: 
+Westermann (
+2026
+)
+)
+6.2.3
+ Eidesstattliche Erklärung entsprechend den Hochschulvorgaben
+Bitte nutzen Sie die Vorlage der Hochschule, die Sie hier finden: 
+https://www.hwg-lu.de/service/studierendenservicecenter-ssc/fuer-studierende/
+7
+ Get Set Up
+Sie machen sich das Leben leichter, wenn Sie von Anfang an eine klare Struktur und Organisation für Ihre Arbeit schaffen. Dazu gehoeren:
+Versionsverwaltung (z.B. GitHub-Repository) sowie eine Backup-Strategie für alle relevanten Dateien
+Literaturverwaltung (z.B. Zotero oder Mendeley)
+8
+ Publikation und Verwertung
+Im Exposé sollte bereits eine Verwertungsstrategie skizziert werden.
+Wenn Sie eine wissenschaftliche Publikation anstreben, sollten Sie sich frühzeitig in Abstimmung ein geeignets Outlet identifizieren und sich mit den Anforderungen vertraut machen. Dies betrifft insbesondere:
+klare wissenschaftliche Neuheit oder hoher Praxisbeitrag
+methodisch belastbare Ergebnisse
+sorgfaeltige Dokumentation waehrend der gesamten Bearbeitung
+9
+ Weitere Hinweise
+Prüfen Sie früh, welche Risiken für die erfolgreiche Bearbeitung Ihrer Arbeit bestehen und wie Sie diese minimieren können. (z.B., Sind die Daten vorhanden? Ist ein Softwarezugang notwendig? Gibt es ethische oder rechtliche Aspekte, die berücksichtigt werden müssen?)
+Kommunizieren Sie frühzeitig mit Ihrer Betreuung, wenn Risiken auftreten oder sich Änderungen im Projekt ergeben. So können wir gemeinsam Lösungen finden.
+Dokumentieren Sie Ihre Arbeit kontinuierlich, nicht erst am Ende. Dies erleichtert die Erstellung der Abschlussarbeit und hilft, den Überblick zu behalten.
+Dokumentieren Sie auch Ihre Entscheidungen während des Projetks, damit Sie später nachvollziehen können, warum bestimmte Wege eingeschlagen wurden.
+Abgesehen von den in diesem Dokument genannten Punkten, gelten die jeweils aktuellen Regelungen, Fristen und Vorgaben der Hochschule ausnahmslos. Bitte informieren Sie sich rechtzeitig über die aktuellen Vorgaben und halten Sie diese ein.
+References
+Cochrane, John H. 2005. 
+“Writing Tips for 
+Ph.D.
+ Students.”
+https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
+.
+Recker, Jan. 2013. 
+Scientific Research in Information Systems: A Beginner’s Guide
+. 1st ed. Springer-Verlag. 
+https://doi.org/10.1007/978-3-642-30048-6
+.
+Westermann, Anja. 2026. 
+KI in Seminar- und Abschlussarbeiten – Eine Handreichung für Lehrende
+. Universität Paderborn, Stabsstelle Bildungsinnovationen und Hochschuldidaktik; Handreichung, lizenziert unter CC BY 4.0.

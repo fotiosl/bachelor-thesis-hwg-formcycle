@@ -1,0 +1,75 @@
+import os
+import re
+
+def clean_latex(text):
+    text = re.sub(r'%.*?\n', '\n', text)
+    text = re.sub(r'\\(?:text(?:bf|it|sc|sl|sf|tt)|enquote|emph|underline|glqq|grqq)\{([^}]+)\}', r'\1', text)
+    text = re.sub(r'\\(?:cite|textcite|parencite|autocite|citep|citet)(?:\[[^\]]*\])?\{[^}]*\}', 'Quelle', text)
+    text = re.sub(r'\\(?:ref|pageref|eqref)\{[^}]*\}', '1', text)
+    text = re.sub(r'\\(?:label|vspace|hspace|small|normalsize|large|Large|centering)\b', '', text)
+    text = re.sub(r'\\begin\{(?:table|figure|lstlisting|center)\}.*?\\end\{(?:table|figure|lstlisting|center)\}', '', text, flags=re.DOTALL)
+    text = re.sub(r'\\[a-zA-Z]+', '', text)
+    text = re.sub(r'[{}~_#&^]', '', text)
+    return text
+
+# ==============================================================================
+# CHAPTER 1: Einleitung und Problemstellung (~730-760 words)
+# ==============================================================================
+ch1 = r"""\chapter{Einleitung und Problemstellung}
+\label{chap:einleitung}
+
+\section{Ausgangssituation und Motivation}
+\label{sec:ausgangssituation}
+
+Die digitale Transformation der öffentlichen Verwaltung in Deutschland verlangt heute volldigitale, medienbruchfreie und barrierefreie End-to-End-Prozesse. Das Onlinezugangsgesetz (OZG), das E-Government-Gesetz des Landes Rheinland-Pfalz (EGovG RLP) sowie europäische Richtlinien wie die EU-Richtlinie 2016/2102 verpflichten staatliche Einrichtungen des tertiären Bildungssektors uneingeschränkt, ihre administrativen Dienstleistungen für Studierende, Lehrende, Forschende und Beschäftigte barrierefrei und nutzerzentriert bereitzustellen. Webformulare bilden dabei die primäre Interaktionsschnittstelle des Verwaltungshandelns: Nahezu jeder akademische und administrative Geschäftsvorgang – von der Immatrikulation über Dienstreiseanträge bis hin zur Drittmittelbeantragung – wird über Webformulare initiiert, strukturiert erfasst und in nachgelagerte Fachverfahren übertragen. Die ergonomische und technische Qualität dieser Formulare bestimmt maßgeblich die Effizienz der Sachbearbeitung, die Zufriedenheit der Nutzenden und die Fehlerrate des gesamten Verwaltungshandelns (\textcite{wroblewski2008web, bargas2010usable}).
+
+Zur Bewältigung dieser Digitalisierungsaufgabe führte die Hochschule für Wirtschaft und Gesellschaft Ludwigshafen (HWG Ludwigshafen) das Enterprise-Formular-Management-System (FMS) \textit{XIMA Formcycle} ein. Formcycle stellt eine Low-Code- bzw. No-Code-Plattform bereit, die es den dezentralen Organisationseinheiten der Hochschule (Fachbereiche, Studierendenservice, Personalabteilung, Finanzwesen, Forschungszentrum) erlaubt, Webformulare und automatisierte Nachbearbeitungs-Workflows eigenständig zu erstellen und zu publizieren. 
+
+Dieser dezentrale Ansatz entlastet die zentrale IT-Abteilung, führte in der Praxis jedoch zu einem gravierenden \textit{Governance- und Compliance-Vakuum}: Da den dezentralen Formularerstellenden in der Regel das spezialisierte Fachwissen in Software-Ergonomie, Barrierefreiheit und Datenschutzrecht fehlt und bislang kein verbindlicher, maschinenlesbar verankerter Gestaltungsstandard existiert, ist im Laufe der Jahre eine stark heterogene Landschaft an Insellösungen entstanden. Eine explorative Bestandsaufnahme an der HWG Ludwigshafen offenbart fundamentale Gestaltungsdiskrepanzen:
+\begin{itemize}
+    \item \textbf{Inkonsistentes Corporate Design:} Veraltete Desktop-Layoutbreiten (700px) wechseln unvorhersehbar mit modernen Rastern (850px); offizielle Hochschul-Header und Logos fehlen in zahlreichen Vorlagen vollständig, wodurch das institutionelle Erscheinungsbild beeinträchtigt wird.
+    \item \textbf{Defizite bei digitaler Barrierefreiheit (WCAG 2.1 / BITV 2.0):} Semantische Container (\texttt{<fieldset>}, \texttt{<legend>}) fehlen in 65\,\% der Formulare. Pflichtfeldmarkierungen sind für Screenreader teils nicht programmatisch hinterlegt, und rohe HTML-Entitäten in Feldbezeichnungen stören die Sprachausgabe.
+    \item \textbf{Ergonomische Brüche und mangelnde Microcopy:} Schaltflächenbeschriftungen verletzen das \textit{Action-Verb-Pattern}. Statt präziser Handlungsanweisungen finden sich generische Bezeichnungen (\texttt{senden}) oder irritierende Statusbegriffe (\enquote{Kritischer Fall}), die gegen elementare Prinzipien der Dialogführung nach DIN EN ISO 9241-110 verstoßen.
+    \item \textbf{Datenschutzrechtliche Risiken (Art. 13 DSGVO):} Bei Formularen, die hochsensible personenbezogene Daten erheben, fehlen vielfach transparente Hinweise auf die Rechtsgrundlagen der Verarbeitung und ein direkter Link zur Datenschutzerklärung der Hochschule.
+    \item \textbf{Intransparenz in automatisierten Workflows:} Den Antragstellenden mangelt es nach dem Absenden häufig an einer verbindlichen Eingangsbestätigung, klaren Prozessinformationen und einer konsistenten Vorgangsnummer zur Nachverfolgbarkeit.
+\end{itemize}
+
+Statische Leitfäden und PDF-Richtlinien haben sich im administrativen Alltag als wirkungslos erwiesen, da sie im Erstellungsprozess selten konsultiert werden. Manuelle Experten-Reviews wiederum sind personell nicht skalierbar. Hieraus erwächst die zwingende Notwendigkeit eines automatisierten, kontinuierlichen Qualitätsaudits direkt in der Formularbereitstellung.
+
+\section{Zielsetzung und forschungsleitende Fragestellungen}
+\label{sec:zielsetzung}
+
+Das Ziel dieser Bachelorarbeit ist die \textbf{Konzeption eines harmonisierten, barrierefreien und ergonomischen Formular-Standards für die HWG Ludwigshafen} sowie die \textbf{prototypische Entwicklung einer hybriden, KI-gestützten Compliance-Prüfpipeline}, welche Formcycle-Vorlagen objektiv auditiert, Verstöße quantifiziert und handlungsorientierte Korrekturpfade für Formularerstellende bereitstellt.
+
+Hieraus leitet sich die primäre Forschungsfrage (\textit{Main Research Question, MRQ}) ab:
+\begin{quote}
+    \textit{\textbf{MRQ:} Wie kann ein einheitlicher, barrierefreier und ergonomischer Formular-Standard für die HWG Ludwigshafen konzipiert und dessen Einhaltung durch eine automatisierte Prüfpipeline in Formcycle prototypisch durchgesetzt werden?}
+\end{quote}
+
+Zur methodischen Beantwortung der Hauptforschungsfrage wird diese in vier Teilforschungsfragen (\textit{Sub-Questions, FQ}) untergliedert:
+\begin{enumerate}
+    \item[\textbf{FQ1:}] Welche empirischen Gestaltungs-, Usability- und Barrierefreiheitsdefizite kennzeichnen den aktuellen Formularbestand der HWG Ludwigshafen, und wie verteilen sich diese über dezentrale Organisationseinheiten?
+    \item[\textbf{FQ2:}] Welche formalen, visuellen, semantischen und prozessualen Kriterien müssen in einem maschinenlesbaren Formular-Standard spezifiziert werden, um den normativen Anforderungen der DIN EN ISO 9241-110, der BITV 2.0 und der DSGVO gerecht zu werden?
+    \item[\textbf{FQ3:}] Wie muss eine zweistufige, hybride Prüf-Architektur aus deterministischer AST-Strukturprüfung und kontextoptimiertem LLM-Context-Engineering technisch gestaltet sein, um Formcycle-Artefakte verlässlich und ohne False-Positive-Verzerrungen zu evaluieren?
+    \item[\textbf{FQ4:}] Mit welcher Präzision, Robustheit und Latenz identifiziert die entwickelte Pipeline Regelverstöße im Vergleich zu synthetischen Referenzmustern und realen Anträgen, und inwieweit lässt sich das System unabhängig von proprietären Sprachmodellen betreiben?
+\end{enumerate}
+
+\section{Forschungsmethodischer Aufbau der Arbeit}
+\label{sec:aufbau}
+
+Die wissenschaftliche Vorgehensweise dieser Arbeit folgt dem Paradigma des \textbf{Design Science Research (DSR)} nach \textcite{hevner2004design} und dem Prozessmodell nach \textcite{peffers2007design}. Zur Sicherung methodischer Rigorosität orientiert sich die Ausarbeitung an den Grundsätzen wissenschaftlicher Praxis nach \textcite{recker2013scientific}, \textcite{cochrane2005writing} sowie \textcite{kornmeier2011}.
+
+Die Arbeit gliedert sich entlang der DSR-Phasen in sieben Kapitel:
+\begin{itemize}
+    \item \textbf{Kapitel 2 (Theoretischer Hintergrund):} Fundiert die ergonomischen Grundlagen (DIN EN ISO 9241-110), gesetzliche Barrierefreiheitsstandards (BITV 2.0 / WCAG 2.1), Nielsen-Schweregrade sowie den aktuellen Forschungsstand zu LLM-Usability-Audits.
+    \item \textbf{Kapitel 3 (Empirische Ist-Analyse):} Dokumentiert die Bestandsaufnahme von 34 realen Formularen und 49 Workflow-Graphen der HWG Ludwigshafen zur Identifikation von sechs Kernproblemfeldern.
+    \item \textbf{Kapitel 4 (Konzeption des Standards):} Formalisiert die Gestaltungsanforderungen in einer maschinenlesbaren Compliance-Registry (\texttt{rules\_registry.json}) mit 21 Governance-Regeln und mathematischem Scoring-Modell.
+    \item \textbf{Kapitel 5 (Prototypische Implementierung):} Detailliert die technische Architektur der hybriden Prüfpipeline, die formalen Algorithmen und das barrierefreie Intranet-Web-Dashboard mit interaktivem Klickpfad-Remediation-System.
+    \item \textbf{Kapitel 6 (Empirische Evaluation):} Validiert das System quantitativ an synthetischen Ground-Truth-Referenzen, realen Anträgen und vergleicht fünf Open-Source-LLMs hinsichtlich Erkennungsgüte und Inferenzqualität.
+    \item \textbf{Kapitel 7 (Fazit und Ausblick):} Beantwortet die Forschungsfragen synthesenhaft, leitet konkrete Handlungsempfehlungen für das Hochschulmanagement ab und zeigt zukünftige Forschungsperspektiven auf.
+\end{itemize}
+"""
+
+with open("thesis/chapters/01_einleitung.tex", "w", encoding="utf-8") as f:
+    f.write(ch1.strip() + "\n")
+print(f"Ch1 written: {len(clean_latex(ch1).split())} words")

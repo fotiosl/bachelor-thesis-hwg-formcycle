@@ -130,6 +130,38 @@
       \verb https://doi.org/10.1145/3772363.3798616
       \endverb
     \endentry
+    \entry{cochrane2005writing}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=5216f32f51594226af2f7becb287a5d1}{%
+           family={Cochrane},
+           familyi={C\bibinitperiod},
+           given={John\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{fullhash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{fullhashraw}{5216f32f51594226af2f7becb287a5d1}
+      \strng{bibnamehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authorbibnamehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authornamehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authorfullhash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authorfullhashraw}{5216f32f51594226af2f7becb287a5d1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Graduate School of Business, University of Chicago}
+      \field{title}{Writing Tips for Ph.D. Students}
+      \field{year}{2005}
+      \verb{urlraw}
+      \verb https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
+      \endverb
+      \verb{url}
+      \verb https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
+      \endverb
+    \endentry
     \entry{iso9241110}{standard}{}{}
       \list{location}{1}{%
         {Berlin}%
@@ -356,6 +388,38 @@
       \verb{doi}
       \verb 10.1109/ACCESS.2020.3021950
       \endverb
+    \endentry
+    \entry{kornmeier2011}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=6b1d267ded98253901436199cf4533e6}{%
+           family={Kornmeier},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Bern, Stuttgart, Wien}%
+      }
+      \list{publisher}{1}{%
+        {Haupt Verlag / UTB}%
+      }
+      \strng{namehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{fullhash}{6b1d267ded98253901436199cf4533e6}
+      \strng{fullhashraw}{6b1d267ded98253901436199cf4533e6}
+      \strng{bibnamehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authorbibnamehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authornamehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authorfullhash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authorfullhashraw}{6b1d267ded98253901436199cf4533e6}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{4}
+      \field{title}{Wissenschaftlich schreiben leicht gemacht: für Bachelor, Master und Dissertation}
+      \field{year}{2011}
     \endentry
     \entry{nielsen1994severity}{incollection}{}{}
       \name{author}{1}{}{%

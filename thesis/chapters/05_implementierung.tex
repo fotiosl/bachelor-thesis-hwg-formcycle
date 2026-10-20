@@ -1,99 +1,60 @@
-\chapter{Prototypische Implementierung der Compliance-Prüfpipeline}
+\chapter{Prototypische Implementierung der Compliance-Pipeline}
 \label{chap:implementierung}
 
-Dieses Kapitel beschreibt die technische Konzeption und Realisierung der prototypischen Compliance-Prüfpipeline. Im Sinne des gestaltungsorientierten Forschungsparadigmas (\textcite{peffers2007design, hevner2004design}) überführt das Artefakt die im vorherigen Kapitel hergeleitete Governance-Registry in ein voll funktionsfähiges, praxistaugliches Softwaresystem. Besondere Beachtung gilt dabei der organisatorischen Realität einer Hochschule: Formularverantwortliche in Dekanaten, Prüfungsämtern und Stabsabteilungen verfügen in der Regel über tiefgehendes Fachwissen zu Verwaltungsprozessen, besitzen jedoch selten softwaretechnische Vorkenntnisse oder Erfahrung im Umgang mit Befehlszeilenwerkzeugen. Die Implementierung muss daher nicht nur mathematisch präzise und deterministisch nachvollziehbar agieren, sondern auch eine intuitive, barrierearme Interaktionsschnittstelle mit konkreten Handlungsanweisungen bereitstellen.
+Dieses Kapitel beschreibt die technische Realisierung der hybriden Prüfpipeline und des barrierefreien Intranet-Dashboards zur automatisierten Compliance-Prüfung von Formcycle-Vorlagen.
 
 \section{Architektur und Paradigmenentscheidung: Das Intranet-Web-Dashboard}
 \label{sec:architektur_entscheidung}
 
-Bei der Konzeption der Systemarchitektur wurden drei grundlegende Integrationsszenarien für die HWG Ludwigshafen evaluiert:
-
+Bei der Konzeption der Systemarchitektur wurden drei Integrationsszenarien für die HWG Ludwigshafen evaluiert:
 \begin{enumerate}
-    \item \textbf{Szenario A: Proprietäres Formcycle-Server-Plugin:} Eine direkte Integration über die Java-basierte Plugin-Schnittstelle von Formcycle (\textit{Plugin-Architektur}). Dieser Ansatz böte den Vorteil einer nahtlosen Einbettung in die Redaktionsumgebung. Allerdings weist er gravierende Nachteile bezüglich Wartbarkeit und Systemstabilität auf: Formcycle unterliegt regelmäßigen Versionsaktualisierungen (z.\,B. von Version 7.x auf 8.x), bei denen herstellerspezifische Schnittstellen häufig modifiziert oder als veraltet eingestuft werden (\textit{Vendor-Lock-In}). Zudem würde ein Fehler in der Prüflogik potenziell die gesamte Formularplattform der Hochschule destabilisieren, und automatisierte Tests außerhalb der Produktionsumgebung wären nur unter erheblichem Konfigurationsaufwand möglich.
-    \item \textbf{Szenario B: Lokales Terminal- und CLI-Werkzeug:} Die Bereitstellung als reines Befehlszeilenprogramm (\textit{Command Line Interface}). Dieser Ansatz bietet zwar für Softwareentwickelnde maximale Flexibilität im Rahmen von Continuous-Integration-Pipelines, stellt jedoch für administrative Sachbearbeitende eine unüberwindbare kognitive Barriere dar. Das manuelle Ausführen von Konsolenbefehlen, das Setzen von Umgebungsvariablen oder das Interpretieren von Terminalausgaben widerspricht den Prinzipien der Barrierefreiheit und Aufgabenangemessenheit (ISO 9241-110).
-    \item \textbf{Szenario C: Entkoppelte Intranet-Web-Applikation (\textit{Gewählte Architektur}):} Die Realisierung als eigenständiger, leichtgewichtiger Webdienst im Hochschul-Intranet (z.\,B. unter \texttt{compliance.hwg-lu.de}). Dieser Ansatz vereint die Vorteile beider Welten: Das Prüfsystem agiert vollkommen unabhängig von der Formcycle-Kernsoftware und bleibt immun gegen Versionsupgrades des Herstellers. Gleichzeitig bietet die browserbasierte Oberfläche eine hürdenfreie Nutzung: Sachbearbeitende können exportierte Formulararchive (\texttt{.xfp}) oder JSON-Exzerpte per einfacher Drag-and-Drop-Geste analysieren lassen, ohne Software lokal installieren zu müssen.
+    \item \textbf{Szenario A: Proprietäres Formcycle-Server-Plugin:} Eine direkte Integration über die Java-basierte Plugin-Schnittstelle von Formcycle. Dieser Ansatz böte eine nahtlose Einbettung in die Redaktionsumgebung, birgt jedoch gravierende Nachteile: Formcycle unterliegt regelmäßigen Versionsaktualisierungen (z.\,B. von Version 7.x auf 8.x), bei denen herstellerspezifische Schnittstellen häufig modifiziert werden (\textit{Vendor-Lock-In}). Zudem würde ein Fehler in der Prüflogik potenziell die gesamte Formularplattform destabilisieren.
+    \item \textbf{Szenario B: Lokales Terminal- und CLI-Werkzeug:} Eine Bereitstellung als reines Befehlszeilenprogramm. Dieser Ansatz ist für die Zielgruppe der dezentralen Sachbearbeitenden ohne IT-Hintergrund gänzlich ungeeignet, da das manuelle Ausführen von Konsolenbefehlen eine unüberwindbare Barriere darstellt.
+    \item \textbf{Szenario C: Entkoppelte Intranet-Web-Applikation (\textit{Gewählte Architektur}):} Die Realisierung als eigenständiger Webdienst im Hochschul-Intranet (z.\,B. unter \texttt{compliance.hwg-lu.de}). Das Prüfsystem agiert vollkommen unabhängig von der Formcycle-Kernsoftware und bleibt immun gegen Versionsupgrades. Sachbearbeitende können Formulararchive (\texttt{.xfp}) per einfacher Drag-and-Drop-Geste analysieren lassen, ohne Software lokal installieren zu müssen.
 \end{enumerate}
 
-Die gewählte Architektur folgt dem Entwurfsmuster der \textit{Separation of Concerns} (SoC): Die Governance- und Prüflogik ist strikt vom Formularerstellungssystem entkoppelt. Das System gliedert sich in ein modulares Python-Backend, das die Parsing-, Validierungs- und Aggregationslogik kapselt, sowie ein responsives, barrierefreies Frontend auf Basis standardisierter Webtechnologien (HTML5, modernem CSS und JavaScript).
+Die gewählte Architektur folgt dem Entwurfsmuster der \textit{Separation of Concerns} (SoC): Die Governance- und Prüflogik ist strikt vom Formularerstellungssystem entkoppelt und gliedert sich in ein modulares Python-Backend sowie ein responsives Frontend auf Basis moderner Webstandards (HTML5, CSS3, ES6 JavaScript).
 
 \section{Vierstufige Verarbeitungs-Pipeline und Datenfluss}
 \label{sec:verarbeitungspipeline}
 
-Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes geprüfte Formular eine deterministisch definierte, vierstufige Verarbeitungs-Pipeline. Abbildung~\ref{fig:pipeline_datenfluss} visualisiert den Datenfluss von der Bereitstellung der Rohdaten bis zur Generierung des interaktiven Prüfberichts.
-
-\begin{figure}[htbp]
-    \centering
-    \begin{tabularx}{\textwidth}{|X|}
-        \hline
-        \textbf{1. Ingestion \& Dekompression (\texttt{.xfp} / JSON)} \tabularnewline
-        Automatisches Entpacken des ZIP-Archivs, Laden des Frontend-Baums (\texttt{.fcp}) und aller Workflow-Prozessbäume (\texttt{/projects/*.fcexport}) in den flüchtigen Speicher. \tabularnewline
-        \hline
-        \hfil $\Downarrow$ \tabularnewline
-        \hline
-        \textbf{2. Stufe 1: Deterministische AST-Traversierung \& Merkmalsextraktion} \tabularnewline
-        Traversierung der \texttt{items}-Hierarchie; Extraktion von Komponenten-Typen, Breitenattributen (\texttt{maxwidth}), Pflichtfeld-Deklarationen (\texttt{showrequiredhint}), HTML-Entitäten, DSGVO-Containern und Workflow-Knoten (\texttt{FC\_EMAIL}, \texttt{FC\_CHANGE\_STATE}). \tabularnewline
-        \hline
-        \hfil $\Downarrow$ \tabularnewline
-        \hline
-        \textbf{3. Stufe 2: Kontextoptimierte semantische LLM-Injektion} \tabularnewline
-        Filterung der UI-Texte; Reduktion von Layout-Ballast (>90\,\% Token-Ersparnis); strukturierter System-Prompt mit Governance-Registry; strikte JSON-Schema-Validierung zur Vermeidung von Syntaxbrüchen und Halluzinationen. \tabularnewline
-        \hline
-        \hfil $\Downarrow$ \tabularnewline
-        \hline
-        \textbf{4. Mathematische Fusion, Scoring \& Remediation-Synthese} \tabularnewline
-        Fusion beider Prüfströme; Berechnung des aggregierten Compliance-Scores nach Gleichung~(\ref{eq:compliance_score}); Ableitung konkreter Klickpfade im Formcycle-Designer; Ausweisung unverbindlicher UX-Empfehlungen (0 Punkte Abzug). \tabularnewline
-        \hline
-    \end{tabularx}
-    \caption{Vierstufige Architektur der hybriden Compliance-Prüfpipeline}
-    \label{fig:pipeline_datenfluss}
-\end{figure}
+Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes geprüfte Formular eine deterministisch definierte, vierstufige Verarbeitungs-Pipeline.
 
 \subsection{Phase 1: Ingestion und Archiv-Dekompression}
-Formcycle speichert vollständige Formularprojekte im herstellereigenen Dateiformat \texttt{.xfp} ab. Hierbei handelt es sich um eine ZIP-komprimierte Container-Struktur. Die Pipeline liest diese Archive im Arbeitsspeicher ein, ohne temporäre Artefakte auf dem Dateisystem zu persistieren. Aus dem Archiv werden zwei elementare Datenstrukturen extrahiert:
-\begin{itemize}
-    \item Die Frontend-Modelldatei (\texttt{form.fcp} bzw. \texttt{*.fcp}): Sie enthält den hierarchischen Komponentenbaum der Benutzeroberfläche inklusive aller Layout-, Container- und Eingabeelemente.
-    \item Die Workflow-Exportdateien (\texttt{*.fcexport} im Unterverzeichnis \texttt{/projects/}): Sie bilden den vollständigen Prozessgraphen ab, einschließlich der Zustandsübergänge (\texttt{FC\_CHANGE\_STATE}) und der automatisierten E-Mail-Kommunikationsknoten (\texttt{FC\_EMAIL}).
-\end{itemize}
+Formcycle speichert vollständige Formularprojekte im Format \texttt{.xfp} ab (ZIP-komprimierte Container-Struktur). Die Pipeline liest diese Archive im Arbeitsspeicher ein, ohne temporäre Dateien auf dem Dateisystem zu hinterlassen. Aus dem Archiv werden die Frontend-Modelldatei (\texttt{form.fcp}) und die Workflow-Exportdateien (\texttt{*.fcexport}) extrahiert.
 
 \subsection{Phase 2: Deterministische AST-Traversierung und Merkmalsextraktion}
-Der Komponentenbaum von Formcycle folgt dem Konzept eines \textit{Abstract Syntax Tree} (AST), in dem UI-Elemente als verschachtelte Objekte abgebildet sind. Jedes Element verfügt über eine Klassendeklaration (\texttt{className}, z.\,B. \texttt{XTextField}, \texttt{XFieldSet}, \texttt{XFooter}) und ein Dictionary zugehöriger Eigenschaften (\texttt{properties}).
+Der Komponentenbaum von Formcycle folgt dem Konzept eines \textit{Abstract Syntax Tree} (AST), in dem UI-Elemente als verschachtelte Objekte abgebildet sind. Jedes Element verfügt über eine Klassendeklaration (\texttt{className}) und ein Eigenschafts-Dictionary (\texttt{properties}).
 
-Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle 15 deterministischen Regeln der Registry. Dabei werden unter anderem folgende Kriterien geprüft:
+Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle 15 deterministischen Regeln der Registry:
 \begin{itemize}
     \item \textbf{Layout- und Container-Dimensionen:} Auslesen der Formularbreite (\texttt{maxwidth}). Liegt diese bei 700px statt der standardisierten 850px, wird ein Major-Verstoß für \texttt{HWG-CD-01} registriert.
-    \item \textbf{Hersteller-Branding im Footer:} Prüfung des \texttt{XFooter}-Elements auf das Attribut \texttt{showlogo}. Ein gesetzter Wert von \texttt{"1"} triggert einen Major-Verstoß gegen \texttt{HWG-CD-03}.
-    \item \textbf{Barrierefreie Pflichtfeld-Kennzeichnung:} Identifikation aller Eingabefelder mit \texttt{required="1"}. Fehlt die optische Kennzeichnung (\texttt{showrequiredhint="0"}), wird ein Verstoß gegen \texttt{HWG-A11Y-02} dokumentiert.
-    \item \textbf{Syntaxprüfung der Labels:} Suche nach rohen HTML-Tags (z.\,B. \texttt{<p>}, \texttt{<br>}) oder Entitäten (z.\,B. \texttt{\&szlig;}, \texttt{\&ouml;}) in Textattributen (\texttt{HWG-A11Y-03}).
-    \item \textbf{Validierungsmuster:} Abgleich, ob strukturierte Eingabeelemente (wie IBAN, PLZ oder Datum) mit regulären Ausdrücken (\texttt{pattern} oder \texttt{validation.regex}) abgesichert sind (\texttt{HWG-VAL-01}).
+    \item \textbf{Hersteller-Branding im Footer:} Prüfung des \texttt{XFooter}-Elements auf das Attribut \texttt{showlogo}. Ein Wert von \texttt{"1"} triggert einen Verstoß gegen \texttt{HWG-CD-03}.
+    \item \textbf{Pflichtfeld-Kennzeichnung:} Fehlt bei Pflichtfeldern (\texttt{required="1"}) die optische Kennzeichnung (\texttt{showrequiredhint="0"}), wird ein Verstoß gegen \texttt{HWG-A11Y-02} dokumentiert.
+    \item \textbf{Syntaxprüfung der Labels:} Suche nach rohen HTML-Tags (z.\,B. \texttt{<p>}, \texttt{<br>}) oder Entitäten (z.\,B. \texttt{\&szlig;}) in Textattributen (\texttt{HWG-A11Y-03}).
+    \item \textbf{Validierungsmuster:} Abgleich, ob strukturierte Eingabeelemente mit regulären Ausdrücken abgesichert sind (\texttt{HWG-VAL-01}).
 \end{itemize}
 
 \subsection{Phase 3: Kontextoptimiertes Context-Engineering für das LLM}
-Für sprachliche und ergonomische Nuancen, die sich einer starren Regex-Prüfung entziehen, schaltet die Pipeline das semantische LLM-Modul zu. Eine unbereinigte Übergabe des vollständigen JSON-Baums an ein Sprachmodell würde zu massiver Token-Verschwendung führen und die Gefahr von Aufmerksamkeitsverlust (\textit{Lost in the Middle}) sowie Halluzinationen drastisch erhöhen (\textcite{duan2024generating, cha2026design}). 
+Für sprachliche und ergonomische Nuancen schaltet die Pipeline das semantische LLM-Modul zu. Eine unbereinigte Übergabe des vollständigen JSON-Baums würde zu massiver Token-Verschwendung führen und die Gefahr von Aufmerksamkeitsverlust (\textit{Lost in the Middle}) sowie Halluzinationen drastisch erhöhen (\textcite{duan2024generating, cha2026design}).
 
 Aus diesem Grund führt die Pipeline vor der Modellinjektion eine gezielte Textabstraktion durch:
 \begin{enumerate}
-    \item Sämtliche rein technischen Attribute (wie GUIDs, relative Koordinaten, CSS-Style-Definitionen) werden verworfen.
-    \item Es wird ein kompakter Extrakt erzeugt, der ausschließlich funktionale Feldbezeichner, sichtbare Labels, Hilfetexte, Schaltflächenbeschriftungen sowie die Betreffzeilen und Textkörper aller Workflow-E-Mails enthält. Dadurch sinkt der Token-Bedarf um über 90\,\%.
-    \item Der System-Prompt definiert die Rolle des Modells als unparteiischer Usability- und Compliance-Auditor der Hochschule. Die formalen Definitionen der semantischen Regeln (\texttt{HWG-BTN-01}, \texttt{HWG-LANG-01}, \texttt{HWG-LANG-02}, \texttt{HWG-FEEDBACK-01}) werden als deterministischer Kontext injiziert.
-    \item Das Modell wird durch ein striktes JSON-Schema verpflichtet, ausschließlich valide strukturierte Ergebnisse zurückzuliefern. Jede festgestellte Regelverletzung muss die betroffene Regel-ID, die fehlerhafte Textstelle, eine wissenschaftlich fundierte Begründung und einen konkreten Umformulierungsvorschlag enthalten.
+    \item Sämtliche rein technischen Attribute (GUIDs, relative Koordinaten, CSS-Style-Definitionen) werden verworfen.
+    \item Es wird ein kompakter Extrakt erzeugt, der ausschließlich funktionale Feldbezeichner, sichtbare Labels, Hilfetexte, Schaltflächenbeschriftungen sowie Workflow-E-Mails enthält. Dadurch sinkt der Token-Bedarf um über 90\,\%.
+    \item Der System-Prompt definiert die Rolle des Modells als Usability-Auditor. Die Definitionen der semantischen Regeln (\texttt{HWG-BTN-01}, \texttt{HWG-LANG-01}, \texttt{HWG-STAMM-02}) werden als deterministischer Kontext injiziert.
+    \item Das Modell wird durch ein striktes JSON-Schema verpflichtet, ausschließlich valide strukturierte Ergebnisse zurückzuliefern. Jede festgestellte Regelverletzung enthält die Regel-ID, die fehlerhafte Textstelle, eine Begründung und einen konkreten Umformulierungsvorschlag.
 \end{enumerate}
 
 \subsection{Phase 4: Mathematische Fusion, Scoring und Remediation}
-In der finalen Phase fusioniert das System die Ergebnisse aus beiden Prüfströmen. Die mathematische Berechnung des Gesamt-Scores erfolgt deterministisch nach der in Kapitel~\ref{sec:registry_definition} definierten Berechnungsformel:
-\begin{equation}
-    S = \max\left(0, 100 - \sum_{i=1}^{m} p(v_i)\right)
-\end{equation}
-Für jeden gefundenen Verstoß wird ein strukturierter Berichtseintrag generiert. Ein entscheidender Pfeiler des Artefakts ist dabei das \textit{Remediation-Konzept}: Abstrakte Fehlermeldungen führen in der Verwaltungspraxis häufig zu Frustration und Fehlkonfigurationen. Aus diesem Grund verknüpft die Pipeline jede verletzte Regel mit einem präzisen, klickbasierten Lösungspfad für den XIMA Formcycle Designer (z.\,B. \textit{„Designer $\rightarrow$ Element footer1 auswählen $\rightarrow$ Eigenschaften $\rightarrow$ Haken bei 'Logo anzeigen' entfernen“}).
+In der finalen Phase fusioniert das System die Ergebnisse aus beiden Prüfströmen. Die mathematische Berechnung des Gesamt-Scores erfolgt deterministisch nach Gl.~(\ref{eq:compliance_score}). Für jeden gefundenen Verstoß wird ein strukturierter Berichtseintrag generiert. Ein entscheidender Pfeiler ist das \textit{Remediation-Konzept}: Die Pipeline verknüpft jede verletzte Regel mit einem präzisen, klickbasierten Lösungspfad für den Formcycle-Designer (z.\,B. \textit{„Designer $\rightarrow$ Element footer1 auswählen $\rightarrow$ Eigenschaften $\rightarrow$ Haken bei 'Logo anzeigen' entfernen“}).
 
-Darüber hinaus berücksichtigt die Pipeline die Komplexitätsmetrik nach \texttt{HWG-UX-02}: Übersteigt ein Formular drei Seiten oder 25 Eingabefelder ohne implementierte Speicherfunktion, wird eine prominente Empfehlung zur Aktivierung der Zwischenspeicherung ausgegeben. Im Einklang mit der Governance-Spezifikation führt diese Empfehlung zu keinem Punktabzug ($p = 0$), schützt aber umfangreiche Antragsverfahren vor hohen Abbruchquoten.
+Übersteigt ein Formular drei Seiten oder 25 Eingabefelder ohne Speicherfunktion, wird eine prominente Empfehlung zur Aktivierung der Zwischenspeicherung ausgegeben (\texttt{HWG-UX-02}, 0 Punkte Abzug).
 
 \section{Formale Algorithmen der Prüf-Engine}
 \label{sec:algorithmen}
 
-Zur Gewährleistung der wissenschaftlichen Reproduzierbarkeit sind die Kernprozesse der Prüf-Engine nachfolgend in strukturierter algorithmischer Form dokumentiert.
-
-\subsection{Algorithmus zur AST-Traversierung und Merkmalsextraktion}
-Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Extraktion der Formular- und Workflow-Merkmale aus dem unbereinigten Komponentenbaum.
+Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Extraktion der Formular- und Workflow-Merkmale aus dem Komponentenbaum:
 
 \begin{table}[htbp]
 \centering
@@ -103,7 +64,7 @@ Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Ext
 \textbf{Schritt} & \textbf{Operation / Logische Instruktion} \\
 \midrule
 1 & \textbf{Funktion} \texttt{TraverseAST}(\textit{node}, \textit{features}) \\
-2 & \textbf{Eingabe:} Beliebiger Knoten \textit{node} (Objekt oder Liste) des Komponentenbaums; Referenz \textit{features} \\
+2 & \textbf{Eingabe:} Beliebiger Knoten \textit{node} des Komponentenbaums; Referenz \textit{features} \\
 3 & \textbf{Wenn} \textit{node} ein Dictionary ist: \\
 4 & \quad \textbf{Lese} \texttt{className} $\leftarrow$ \textit{node.className}, \texttt{props} $\leftarrow$ \textit{node.properties} \\
 5 & \quad \textbf{Wenn} \texttt{className} == \texttt{"XPage"}: Erhöhe \textit{features.page\_count} um 1 \\
@@ -120,91 +81,22 @@ Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Ext
 16 & \textbf{Rückgabe:} Aggregierter Merkmalsvektor \textit{features} \\
 \bottomrule
 \end{tabularx}
-\caption{Algorithmus 1: Rekursive AST-Traversierung und Merkmalsextraktion}
+\caption{Rekursiver Algorithmus zur AST-Traversierung und Merkmalsextraktion}
 \label{tab:algo_traversal}
-\end{table}
-
-\subsection{Algorithmus zur Workflow- und Governance-Evaluation}
-Tabelle~\ref{tab:algo_scoring} beschreibt die Prüfung der Workflow-Lebenszyklen (\texttt{HWG-WF-01}), der Transaktionsreferenzierung (\texttt{HWG-WF-02}) sowie die anschließende mathematische Score-Kalkulation.
-
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabularx}{\textwidth}{lX}
-\toprule
-\textbf{Schritt} & \textbf{Operation / Logische Instruktion} \\
-\midrule
-1 & \textbf{Funktion} \texttt{EvaluateWorkflowAndScore}(\textit{features}, \textit{registry}) \\
-2 & \textbf{Initialisierung:} $\text{Score} \leftarrow 100$; $\text{Violations} \leftarrow [\,]$; $\text{Recommendations} \leftarrow [\,]$ \\
-3 & \textbf{Prüfung HWG-WF-01 (Statusknoten):} \\
-4 & \quad \textbf{Wenn} Anzahl der Statusknoten (\texttt{FC\_CHANGE\_STATE}) == 0: \\
-5 & \quad \quad Füge Verstoß \texttt{HWG-WF-01} hinzu ($\text{Schweregrad: Minor}, -3\,\text{Punkte}$); $\text{Score} \leftarrow \text{Score} - 3$ \\
-6 & \textbf{Prüfung HWG-WF-02 (Vorgangsnummer in Prozess-Kommunikation):} \\
-7 & \quad \textit{has\_alias} $\leftarrow$ \texttt{False} \\
-8 & \quad \textbf{Für jede} E-Mail \textit{em} in \textit{features.workflow\_emails}: \\
-9 & \quad \quad \textbf{Wenn} Platzhalter \texttt{[\%\$PROJECT\_ALIAS\%]} in \textit{em.subject} oder \textit{em.body}: \textit{has\_alias} $\leftarrow$ \texttt{True} \\
-10 & \quad \textbf{Wenn} nicht \textit{has\_alias}: \\
-11 & \quad \quad Füge Verstoß \texttt{HWG-WF-02} hinzu ($\text{Schweregrad: Minor}, -3\,\text{Punkte}$); $\text{Score} \leftarrow \text{Score} - 3$ \\
-12 & \textbf{Prüfung HWG-UX-02 (Save \& Resume Schwellenwert):} \\
-13 & \quad \textbf{Wenn} (\textit{features.page\_count} $\ge 3$ oder \textit{features.input\_count} $\ge 25$) und nicht \textit{features.has\_save\_button}: \\
-14 & \quad \quad Füge Empfehlung \texttt{HWG-UX-02} hinzu ($\text{Schweregrad: Recommendation}, -0\,\text{Punkte}$) \\
-15 & \textbf{Finalisierung:} $\text{Score} \leftarrow \max(0, \text{Score})$ \\
-16 & \textbf{Rückgabe:} Strukturiertes Ergebnis-Dictionary mit Score, Verstößen, Empfehlungen und Klickpfaden \\
-\bottomrule
-\end{tabularx}
-\caption{Algorithmus 2: Workflow-Evaluation und deterministische Score-Kalkulation}
-\label{tab:algo_scoring}
 \end{table}
 
 \section{Konzeption und Gestaltung des Intranet-Dashboards}
 \label{sec:dashboard_gestaltung}
 
-Die Benutzeroberfläche des Prototyps wurde als barrierefreies Single-Page-Dashboard (\texttt{compliance\_dashboard.html}) realisiert. Ihr Aufbau orientiert sich strikt an den Prinzipien der software-ergonomischen Dialoggestaltung (ISO 9241-110) sowie am Corporate Design der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen.
-
-\subsection{Visuelle Hierarchie und UI-Komponenten}
-Das Dashboard gliedert sich in vier funktionale Bereiche:
-\begin{enumerate}
-    \item \textbf{Kopfbereich (Branding \& Aktionen):} Primärfarbton HWG-Blau (\texttt{\#003366}) mit akzentuierender Unterkante im CI-Rot (\texttt{\#B41414}). Bietet Schnellzugriff auf den PDF-Druckexport sowie den Download des maschinenlesbaren JSON-Audit-Reports.
-    \item \textbf{Ingestion- und Benchmark-Bereich:} Sachbearbeitende können entweder eine beliebige exportierte Formcycle-Datei (\texttt{.xfp} oder JSON) per Drag-and-Drop in die Upload-Zone ziehen oder per Mausklick eines der fünf integrierten Referenz-Formulare auswählen. Dies ermöglicht sofortiges Benchmarking ohne Vorbereitung eigener Testdateien.
-    \item \textbf{Echtzeit-Score-Visualisierung (\textit{Gauge Meter}):} Der aggregierte Score wird über ein animiertes Kreisdiagramm dargestellt. Je nach erreichter Punktzahl ändert sich die Farbcodierung dynamisch:
-    \begin{itemize}
-        \item \textbf{Grün ($\ge 80$ Punkte):} Hohe Compliance; Formular ist freigabefähig.
-        \item \textbf{Orange ($50 - 79$ Punkte):} Eingeschränkte Konformität; Nachbesserung erforderlich.
-        \item \textbf{Rot ($< 50$ Punkte):} Kritisch unzureichend; Formular besitzt schwerwiegende Mängel und wird für den Produktiveinsatz gesperrt.
-    \end{itemize}
-    Flankiert wird das Gauge-Meter von vier Kennzahlen-Karten, die die Anzahl der kritischen, mittleren und leichten Mängel sowie die Quote der bestandenen Prüfungen auf einen Blick ausweisen.
-    \item \textbf{Interaktive Regelliste mit Filterung:} Die 21 Prüfkriterien können über Filter-Pills nach Schweregrad selektiert werden. Jede Regel wird als eigenständige Karte visualisiert, die den genauen Befund, die theoretische Begründung und die konkrete Schritt-für-Schritt-Anleitung für Formcycle enthält.
-\end{enumerate}
-
-\subsection{Das Remediation-System: Klickpfade für die Praxis}
-Eine zentrale Innovation des Dashboards liegt in der Überwindung rein deskriptiver Fehlerberichte. In herkömmlichen Audit-Tools werden Verstöße häufig mit abstrakten Meldungen wie \textit{„WCAG 1.3.1 verletzt“} oder \textit{„Attribut ungültig“} quittiert. Für nicht-technische Verwaltungsangestellte bietet dies keinen Mehrwert, da unklar bleibt, an welcher Stelle im Formcycle-Designer eingegriffen werden muss.
-
-Das implementierte Dashboard weist daher für jede verletzte Regel einen expliziten Klickpfad aus. Beispielsweise lautet die Handlungsanweisung für die Deaktivierung des Fußzeilen-Logos (\texttt{HWG-CD-03}):
-\begin{quote}
-    \textit{„Wählen Sie im Formcycle-Designer das Footer-Element ('footer1') aus und entfernen Sie den Haken bei 'Logo anzeigen' (Eigenschaft showlogo = 0), um den Hinweis 'Powered by XIMA Formcycle' auszublenden.“}
-\end{quote}
-Für unzureichend spezifizierte Dateiuploads (\texttt{HWG-UPLOAD-01}) weist das System an:
-\begin{quote}
-    \textit{„Öffnen Sie die Eigenschaften des Upload-Elements und tragen Sie im Hilfetext die erlaubten Dateiformate (z.\,B. 'Nur PDF-Dateien') sowie die maximale Dateigröße (z.\,B. 'Maximal 10 MB') verbindlich ein.“}
-\end{quote}
-Durch diese direkte Verknüpfung von Audit-Befund und Korrekturhandlung fungiert das System nicht nur als Kontrollinstanz, sondern als didaktisches Werkzeug, das die Formularerstellenden kontinuierlich weiterbildet.
-
-\subsection{Audit-Trail und Druckoptimierung}
-Für universitäre Qualitätssicherungs- und Freigabeprozesse bietet das Dashboard ein dediziertes Print-Stylesheet (\texttt{@media print}). Bei Betätigung des Druck-Buttons werden interaktive Bedienelemente (wie Upload-Boxen oder Filter-Buttons) ausgeblendet. Es wird ein formeller, zweiseitiger Prüfbericht mit offiziellem Hochschul-Briefkopf, Prüfdatum, Formularbezeichnung, Score-Aufschlüsselung und detaillierter Mängelliste im DIN-A4-Format erzeugt. Dieser Bericht kann digital als PDF archiviert oder Beschlussvorlagen von Gremien beigelegt werden.
+Das Intranet-Dashboard wurde in den offiziellen Hochschulfarben (\texttt{\#003366} HWG-Blau, \texttt{\#b41414} HWG-Rot) gestaltet. Es bietet folgende Kernkomponenten:
+\begin{itemize}
+    \item \textbf{Score-Messanzeige (Gauge):} Eine dynamische SVG-Tacho-Anzeige visualisiert den Compliance-Score von 0 bis 100 mit intuitiver Farbcodierung (Grün $\ge 85$, Gelb 60--84, Rot $<60$).
+    \item \textbf{Benchmark-Presets:} Formularerstellende können fünf vorgefertigte Formularprofile mit einem Klick testen, um das Prüfsystem ohne eigene Dateien kennenzulernen.
+    \item \textbf{Klickpfad-Remediation-Karten:} Jeder Regelverstoß wird mit einem klaren Badge (Critical, Major, Minor), einer verständlichen Fehlerbeschreibung und dem exakten Klickpfad für den visuellen Formcycle Designer dargestellt.
+    \item \textbf{Druckoptimierung und Audit-Export:} Ein dediziertes Print-Stylesheet blendet interaktive Bedienelemente aus und generiert einen formalen Audit-Bericht für Qualitätszirkel.
+\end{itemize}
 
 \section{Technologie-Stack und Skalierbarkeit}
 \label{sec:technologie_stack}
 
-Der technologische Aufbau des Gesamtsystems wurde bewusst auf Schlankheit, Ausfallsicherheit und Wartungsarmut optimiert:
-
-\begin{itemize}
-    \item \textbf{Backend-Engine (Python 3.10+):} Realisierung der Parsing- und Prüf-Engine mittels nativer Standardbibliotheken (\texttt{zipfile}, \texttt{json}, \texttt{re}). Dadurch entfallen komplexe externe Abhängigkeiten, was Sicherheitsrisiken minimiert und die Installation in geschützten Hochschul-Serverumgebungen drastisch erleichtert.
-    \item \textbf{Schnittstellen-Architektur (REST-API):} Über den integrierten HTTP-Microservice (\texttt{web/server.py}) stellt das System zwei Endpunkte bereit:
-    \begin{itemize}
-        \item \texttt{GET /api/rules}: Liefert die aktuelle Konfiguration der 21 Governance-Regeln im JSON-Format aus.
-        \item \texttt{POST /api/evaluate}: Nimmt binäre \texttt{.xfp}-Dateien oder extrahierte JSON-Strukturen entgegen und liefert das vollumfängliche Prüfergebnis inklusive aller Klickpfade in Millisekunden zurück.
-    \end{itemize}
-    \item \textbf{Frontend-Architektur (Vanilla Web Standards):} Das Web-Dashboard verzichtet auf schwergewichtige JavaScript-Frameworks (wie React, Angular oder Vue.js). Dies garantiert minimale Ladezeiten, vollständige Kompatibilität mit allen modernen Webbrowsern und schließt Sicherheitslücken durch veraltete Third-Party-Node-Module von vornherein aus.
-\end{itemize}
-
-Durch diese Konzeption lässt sich das System flexibel betreiben: Als lokale Standalone-Anwendung für einzelne Redakteurinnen und Redakteure, als zentraler Intranet-Dienst für die gesamte Hochschule oder als Headless-Prüfmodul in zukünftigen automatisierten Veröffentlichungs-Workflows.
+Das Backend ist als schlanker Python-3-Microservice (\texttt{server.py}) ohne externe Framework-Abhängigkeiten realisiert. Die deterministische AST-Prüfung erfolgt in unter 20\,ms pro Formular, was eine hervorragende Skalierbarkeit für den hochschulweiten Intranetbetrieb gewährleistet.
