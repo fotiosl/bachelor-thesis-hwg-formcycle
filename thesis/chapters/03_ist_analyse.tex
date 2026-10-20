@@ -106,6 +106,25 @@ Darüber hinaus divergiert die Anordnung grundlegender Eingabefelder: Während i
 \label{subsec:problem_stammdaten}
 
 An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiederverwendbares Komponenten-Snippet zur Erfassung persönlicher Angaben konzipiert wurde. Da dieses Snippet jedoch nicht zentral als versionierte Bibliothek eingebunden, sondern von Erstellenden manuell kopiert und im Designer modifiziert wird, entstehen gravierende Inkonsistenzen:
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{figures/Master_Formular_Persoenliche_Angaben.png}
+        \caption{Master-Formular (Vorlage)}
+        \label{fig:master_pers}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{figures/FB1_Praktikum_Persoenliche_Angaben.png}
+        \caption{FB1-Praktikumsantrag (Abwandlung)}
+        \label{fig:praktikum_pers}
+    \end{subfigure}
+    \caption{Inkonsistenzen bei der Erfassung persönlicher Stammdaten}
+    \label{fig:vergleich_stammdaten}
+\end{figure}
+
+Wie der Vergleich in Abbildung~\ref{fig:vergleich_stammdaten} belegt:
 \begin{itemize}
     \item Im \textit{Master-Formular} sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} als Pflichtfelder markiert; die \textit{Matrikelnummer} ist optional.
     \item Im \textit{FB1-Praktikum} fehlen die Pflichtfeldsterne bei Name und E-Mail im DOM vollständig, während die \textit{Matrikelnummer*} zwingend gefordert wird.
@@ -116,7 +135,24 @@ An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiede
 \subsection{Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote{Kritischer Fall}}
 \label{subsec:problem_buttons}
 
-Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}). Ein besonders aufschlussreiches Usability-Phänomen offenbart die Fallstudie des Buttons \textit{\enquote{Kritischer Fall}}:
+Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}, siehe Abbildung~\ref{fig:buttons_beispiele}).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{figures/Antrag_Sprints_Button.png}
+        \caption{Antrag-Sprints (Minimal-Label \& Weiche)}
+        \label{fig:btn_sprints}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{figures/KI-Beschaffung_Button.png}
+        \caption{KI-Beschaffung (Navigation)}
+        \label{fig:btn_praktikum}
+    \end{subfigure}
+    \caption{Heterogene Schaltflächen-Gestaltung im HWG-Bestand}
+    \label{fig:buttons_beispiele}
+\end{figure} Ein besonders aufschlussreiches Usability-Phänomen offenbart die Fallstudie des Buttons \textit{\enquote{Kritischer Fall}}:
 
 \textbf{Fachlicher Hintergrund \& Problemursache:} Im Zentrum für Forschung und Kooperation (ZFK) bestand die Anforderung, bei Förderanträgen mit außergewöhnlicher Tragweite eine gesonderte Prüfschleife unter Beteiligung des Hochschulpräsidenten einzuschalten. Anstatt diese Ausnahmeverzweigung organisatorisch in den nachgelagerten Prüf-Workflow einzubetten, verlagerten die Formularautoren die Weiche direkt in das Antragsformular: Sobald Antragstellende eine Checkbox aktivieren, wird der reguläre Absende-Button durch einen Button namens \textit{\enquote{Kritischer Fall}} ersetzt.
 
