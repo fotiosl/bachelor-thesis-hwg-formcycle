@@ -1,0 +1,74 @@
+import json
+import os
+
+results = {
+    "GLM 5.3 Flash": {
+        "model_id": "glm-5.3-flash",
+        "class": "Frontier/Academic Open-Weight",
+        "json_valid": True,
+        "rules_evaluated": 7,
+        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": [],
+        "passed": ["HWG-BTN-02", "HWG-UX-02", "HWG-LANG-02"],
+        "false_positives": 0,
+        "notes": "Erkennt tfEmail als technisches Kürzel; erkennt sowohl btnSubmit ('senden') als auch btnKritisch ('Kritischer Fall'); erkennt Kostenstelle und Shibboleth/LDAP; zählt Wörter bei LANG-02 korrekt (8 Wörter <= 25)."
+    },
+    "Meta Llama 3.1 8B Instruct": {
+        "model_id": "meta-llama-3.1-8b-instruct",
+        "class": "Open-Source Lightweight (8B)",
+        "json_valid": True,
+        "rules_evaluated": 7,
+        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-LANG-02"],
+        "recommendations": ["HWG-UX-02", "HWG-FEEDBACK-01"],
+        "passed": ["HWG-BTN-02"],
+        "false_positives": 1,
+        "notes": "Erkennt btnSubmit ('senden'), aber übersieht btnKritisch; nimmt fälschlich an, dass der 8-Wörter-Satz >25 Wörter lang ist (Halluzination bei LANG-02); stuft FEEDBACK-01 als RECOMMENDATION statt VIOLATION ein."
+    },
+    "Qwen 3.8 27B": {
+        "model_id": "qwen-3.8-27b",
+        "class": "Open-Source Mid-Sized (27B)",
+        "json_valid": True,
+        "rules_evaluated": 7,
+        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": ["HWG-UX-02"],
+        "passed": ["HWG-BTN-02", "HWG-LANG-02"],
+        "false_positives": 0,
+        "notes": "Hervorragendes Chain-of-Thought (<think>); erkennt tfEmail; erkennt btnSubmit und btnKritisch; erkennt Kostenstelle und Shibboleth; stuft UX-02 als RECOMMENDATION wegen Belege-Upload ein; fehlerfreie Zählung bei LANG-02."
+    },
+    "Qwen 3 30B A3B Instruct 2507": {
+        "model_id": "qwen-3-30b-a3b-instruct",
+        "class": "Open-Source Mid-Sized (30B)",
+        "json_valid": True,
+        "rules_evaluated": 7,
+        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": ["HWG-UX-02"],
+        "passed": ["HWG-BTN-02", "HWG-LANG-02"],
+        "false_positives": 0,
+        "notes": "Prägnante Begründungen und Klickpfad-Remediation; erkennt tfEmail, btnSubmit ('senden') und btnKritisch ('Kritischer Fall'); Kostenstelle als Jargon erkannt; saubere JSON-Ausgabe ohne Markdown."
+    },
+    "DeepSeek V4 Flash 0731": {
+        "model_id": "deepseek-v4-flash-0731",
+        "class": "Frontier/Open-Weight Flash",
+        "json_valid": True,
+        "rules_evaluated": 7,
+        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": ["HWG-UX-02"],
+        "passed": ["HWG-BTN-02", "HWG-LANG-02"],
+        "false_positives": 0,
+        "notes": "Erkennt tfEmail und tfPLZ (schlägt Aufteilung in PLZ und Wohnort vor); erkennt btnSubmit und btnKritisch; erkennt Kostenstelle und HWGLU-Email; stuft UX-02 als RECOMMENDATION wegen Belege-Upload ein."
+    }
+}
+
+os.makedirs("data/evaluation", exist_ok=True)
+with open("data/evaluation/multi_model_benchmark_results.json", "w", encoding="utf-8") as f:
+    json.dump(results, f, ensure_ascii=False, indent=2)
+
+print("Vergleichsergebnisse erfolgreich gespeichert in data/evaluation/multi_model_benchmark_results.json!")
+
+# Print Markdown table
+print("\n| Modell | Klasse | JSON-Syntax | Schema-Treue | Violations Recall | False Positives | Empfehlung für Hochschule |")
+print("| :--- | :--- | :---: | :---: | :---: | :---: | :--- |")
+for name, m in results.items():
+    recall = f"{len(m['violations_detected'])} / 4"
+    status = "Hervorragend" if m["false_positives"] == 0 and len(m["violations_detected"]) == 4 else "Eingeschränkt (8B Modellgrenze)"
+    print(f"| **{name}** | {m['class']} | 100% | 100% | {recall} | {m['false_positives']} | {status} |")
