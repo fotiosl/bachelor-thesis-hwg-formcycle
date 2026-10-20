@@ -53,3 +53,17 @@ desktop.ini
 scratch/
 tmp/
 *.log
+
+# LaTeX Auxiliary Files
+*.aux
+*.bcf
+*.blg
+*.bbl
+*.lof
+*.lot
+*.toc
+*.run.xml
+*.out
+*.synctex.gz
+thesis/*.aux
+thesis/*/*.aux

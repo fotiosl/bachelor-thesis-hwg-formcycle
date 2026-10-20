@@ -1,0 +1,67 @@
+import os
+
+chapter_7_content = r"""\chapter{Fazit und Ausblick}
+\label{chap:fazit}
+
+Das abschließende Kapitel fasst die wesentlichen wissenschaftlichen und praktischen Erkenntnisse der vorliegenden Bachelorarbeit zusammen, beantwortet die forschungsleitenden Fragen thesenartig, leitet konkrete strategische und operative Handlungsempfehlungen für die Praxis der HWG Ludwigshafen ab und skizziert vielversprechende Perspektiven für zukünftige Forschungsarbeiten.
+
+\section{Synthese und Beantwortung der Forschungsfragen}
+\label{sec:fazit_ergebnisse}
+
+Ausgangspunkt dieser Arbeit war die Beobachtung, dass dezentrale Low-Code-Formularplattformen wie XIMA Formcycle zwar die Erstellung digitaler Verwaltungsprozesse demokratisieren, ohne verbindliche Governance-Mechanismen jedoch unweigerlich zu einer starken Heterogenität, Barrierefreiheitsdefiziten und ergonomischen Brüchen führen. Im Rahmen des durchgeführten Design-Science-Research-Projekts (\textcite{peffers2007design}) wurden ein maschinenlesbarer Formular-Standard konzipiert, eine zweistufige hybride Prüfpipeline realisiert und ein interaktives Intranet-Dashboard prototypisch bereitgestellt.
+
+Die Ergebnisse der Arbeit lassen sich anhand der vier forschungsleitenden Teilfragen sowie der Hauptforschungsfrage synthetisieren:
+
+\begin{enumerate}
+    \item[\textbf{FQ1:}] \textit{Welche empirischen Gestaltungs-, Usability- und Barrierefreiheitsdefizite kennzeichnen den aktuellen Formularbestand der HWG Ludwigshafen?} \\
+    Die Vollerhebung von 34 Formcycle-Formularen, die DOM-Analyse gerenderter Einstiegsansichten und die Prozessanalyse von 49 Workflow-Definitionen offenbarten sechs fundamentale Problemfelder: Veraltete Layoutbreiten (700px statt zeitgemäßer 850px), fehlende Corporate-Design-Header, unzureichende semantische Strukturierung mittels Fieldsets, mangelhafte maschinenlesbare Pflichtfeld-Kennzeichnungen, rohe HTML-Entitäten in Textlabels, unvalidierte strukturierte Eingaben (IBAN, PLZ), fehlende DSGVO-Hinweise sowie verwirrende, nicht-aktionsorientierte Schaltflächen (z.\,B. der Statusbutton \enquote{Kritischer Fall}). Zudem zeigte die Prozessanalyse, dass 71\,\% aller Formulare isolierte Einzelaufgaben sind und universitätsweite Workflows in vertikalen Abteilungssilos operieren, wodurch einheitliche Statusdefinitionen und Vorgangsnummern in der Kommunikation bislang fehlen.
+    
+    \item[\textbf{FQ2:}] \textit{Welche Kriterien müssen in einem maschinenlesbaren Formular-Standard spezifiziert werden, um ISO 9241-110, BITV 2.0 und DSGVO zu genügen?} \\
+    Im Rahmen der Soll-Konzeption wurde die \textit{HWG Ludwigshafen Formcycle Compliance Registry} (v1.5.0) mit 21 Governance-Regeln formalisiert. Diese gliedern sich in Corporate Design, Barrierefreiheit, Stammdaten-Harmonisierung, UI-Bereinigung, Aktions-Semantik, Datenschutz, Validierung, Ergonomie und Workflow-Governance. Durch die Zuordnung von Strafabzügen nach Nielsen-Schweregraden (Critical: -15, Major: -8, Minor: -3) sowie die Einführung einer abzugsfreien Empfehlung für Zwischenspeichern (\texttt{HWG-UX-02}) wurde ein objektives, mathematisch fundiertes Bewertungsmodell ($S \in [0, 100]$) geschaffen.
+    
+    \item[\textbf{FQ3:}] \textit{Wie muss eine zweistufige, hybride Prüf-Architektur aus deterministischer AST-Strukturprüfung und kontextoptimiertem LLM-Context-Engineering technisch gestaltet sein?} \\
+    Die technische Realisierung bewies die Überlegenheit einer hybriden Architektur: Deterministische Heuristiken evaluieren formale AST-Eigenschaften (Breite, IDs, Pflichtfeld-Flags, Regex-Muster, Footer-Logos) in unter $20\,\text{ms}$ mit absoluter Verlässlichkeit. Sprachliche Nuancen (Microcopy, Jargon, Aktionsverben, E-Mail-Transparenz) werden an ein LLM übergeben. Durch die gezielte Reduktion irrelevanter Layout-Tokens um über 90\,\%, ein klares System-Prompting und strikte JSON-Schema-Validierung konnte eine exakte logische Constraint-Führung ohne Halluzinationen erreicht werden.
+    
+    \item[\textbf{FQ4:}] \textit{Mit welcher Präzision, Robustheit und Latenz identifiziert die Pipeline Regelverstöße, und inwieweit lässt sich das System unabhängig von proprietären Sprachmodellen betreiben?} \\
+    Am synthetischen Kontrollkorpus erzielte die Pipeline eine Erkennungsgenauigkeit von 100\,\% ($P = 1{,}0; R = 1{,}0$) ohne False Positives. Am realen Bestand wies das System bestehende Defizite präzise aus (Ist-Scores zwischen 30 und 72 Punkten). Die Evaluation in der \textit{Academic Cloud} (GWDG) belegte zudem, dass Open-Source-Modelle (Llama-3.3-70B und Qwen-2.5-72B) eine mit kommerziellen SOTA-Modellen vergleichbare Schema-Treue und Erkennungsleistung erreichen. Die HWG Ludwigshafen kann das System somit vollständig datensouverän und DSGVO-konform auf universitärer Infrastruktur betreiben.
+\end{enumerate}
+
+Aus der Beantwortung dieser Teilfragen ergibt sich die Synthese der primären Forschungsfrage (\textbf{MRQ}): \textit{Ein einheitlicher Formular-Standard lässt sich erfolgreich etablieren, indem normative Anforderungen in einer maschinenlesbaren Registry formalisiert und über eine entkoppelte Intranet-Web-Applikation durchgesetzt werden, die deterministisches AST-Parsing mit semantischem Context-Engineering verbindet und den Erstellenden konkrete Klickpfade zur Fehlerbehebung im Designer an die Hand gibt.}
+
+\section{Strategische und operative Handlungsempfehlungen}
+\label{sec:handlungsempfehlungen}
+
+Für das Qualitätsmanagement und die IT-Leitung der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen lassen sich aus den Forschungsergebnissen folgende praxisnahe Handlungsempfehlungen ableiten:
+
+\begin{enumerate}
+    \item \textbf{Etablierung verbindlicher Freigabe-Gates im Intranet:} Das entwickelte Dashboard (\texttt{compliance.hwg-lu.de}) sollte als verbindlicher Qualitäts-Gatekeeper im Veröffentlichungs-Workflow institutionalisiert werden. Bevor ein neues oder überarbeitetes Formular im Produktivsystem freigeschaltet wird, muss der Export (\texttt{.xfp}) das Dashboard durchlaufen und einen Mindest-Compliance-Score von mindestens 80 Punkten (\textit{Freigabefähig}) nachweisen.
+    \item \textbf{Generalüberholung des internen Master-Formulars:} Das im Testsystem hinterlegte \textit{Master-Formular} dient vielen Fachbereichen als inoffizielle Kopiervorlage. Es sollte unverzüglich anhand der Klickpfade der Registry saniert werden: Umstellung auf 850px Breite, Bereinigung aller 29 HTML-Fragmente in den Labels, Hinterlegung valider PLZ-Regex-Muster, standardisierte DSGVO-Klausel und Verknüpfung der Vorgangsnummer \texttt{[\%\$PROJECT\_ALIAS\%]} im Workflow.
+    \item \textbf{Durchsetzung des kanonischen Statuslebenszyklus:} In den Workflow-Prozessen ist die Nomenklatur der Statusknoten (\texttt{Eingegangen} $\rightarrow$ \texttt{In Prüfung} $\rightarrow$ \texttt{Genehmigt} bzw. \texttt{Abgelehnt}) hochschulweit verbindlich vorzuschreiben (\texttt{HWG-WF-01}). Sonderprüfungen (wie das ZFK-Präsidiumsverfahren) dürfen nicht als verwirrende Buttons im Frontend für Antragstellende sichtbar sein, sondern müssen rein intern über Rollenberechtigungen gesteuert werden.
+    \item \textbf{Aktivierung von Save \& Resume bei Großanträgen:} Bei umfangreichen Formularen mit mehr als 25 Eingabefeldern (wie der Auslagenerstattung oder Drittmittelanträgen) sollte die empfohlene Zwischenspeicher-Funktion (\texttt{HWG-UX-02}) aktiviert werden, um Frustration und Antragsabbrüche bei Unterbrechungen zu verhindern.
+    \item \textbf{Nutzung universitärer Open-Source-Infrastruktur:} Zur Gewährleistung des Datenschutzes sollte die semantische Inferenzstufe über die \textit{Academic Cloud} (GWDG) betrieben werden. Dies schließt den Abfluss personenbezogener Antragsinhalte an außereuropäische Cloud-Anbieter verlässlich aus und sichert die digitale Souveränität der Hochschule.
+\end{enumerate}
+
+\section{Wissenschaftlicher Beitrag und methodische Reflexion}
+\label{sec:wissenschaftlicher_beitrag}
+
+Die vorliegende Arbeit leistet einen doppelten wissenschaftlichen Beitrag zur gestaltungsorientierten Wirtschaftsinformatik und Human-Computer-Interaction-Forschung:
+\begin{itemize}
+    \item \textbf{Theoretisch-konzeptioneller Beitrag:} Die Arbeit schließt die Lücke zwischen abstrakten ergonomischen Richtlinien (ISO 9241-110, BITV 2.0) und deren technischer Operationalisierung in No-Code-Enterprise-Plattformen. Das entwickelte mathematische Scoring-Modell überführt die qualitative Schweregradtheorie von \textcite{nielsen1994severity} in eine deterministisch quantifizierbare Governance-Metrik.
+    \item \textbf{Praktisch-konstruktiver Beitrag:} Mit der zweistufigen Prüfpipeline wurde ein generalisierbares Architekturmuster geschaffen, das demonstriert, wie LLMs im Zusammenspiel mit deterministischen AST-Parsern als objektive Usability-Auditoren fungieren können (\textcite{wang2025aiheureval, guerino2025gpt4o}), ohne die bei reinen Prompt-Lösungen typischen Halluzinations- und Kostenrisiken einzugehen.
+\end{itemize}
+
+\section{Zukünftige Forschungs- und Entwicklungsperspektiven}
+\label{sec:ausblick}
+
+Aufbauend auf den Ergebnissen dieser Thesis eröffnen sich vielversprechende Perspektiven für anschließende Forschungs- und Entwicklungsvorhaben:
+\begin{itemize}
+    \item \textbf{Multimodale Layout- und Kontrastprüfung (Vision-LLMs):} Eine sinnvolle funktionale Erweiterung besteht in der Einbindung multimodaler Vision-Language-Modelle. Durch die automatisierte Generierung von Screenshots der gerenderten Formularansichten könnten Farbkontraste, Schriftgrößenhierarchien und visuelle Weißraumverteilungen direkt auf Pixelebene evaluiert werden.
+    \item \textbf{Automatisierte Auto-Remediation (Self-Healing-Formulare):} Während der aktuelle Prototyp präzise Handlungsanleitungen für den Menschen generiert, könnte eine zukünftige Ausbaustufe einfache Fehler direkt im \texttt{.xfp}-Archiv automatisiert beheben (z.\,B. automatische Breitenanpassung auf 850px, Entfernen von \texttt{showlogo="1"} oder Injektion von Standard-Datenschutzerklärungen).
+    \item \textbf{Echtzeit-Co-Pilot im Formcycle-Designer:} Als weiterführende Forschungsinitiative könnte die entwickelte Prüflogik über ein browserbasiertes Userscript oder eine leichtgewichtige Web-Extension direkt als interaktiver Assistent in den Formcycle-Designer eingebettet werden, der Redakteurinnen und Redakteure bereits während des Drag-and-Drop-Designs proaktiv berät.
+\end{itemize}
+"""
+
+with open("thesis/chapters/07_fazit.tex", "w", encoding="utf-8") as f:
+    f.write(chapter_7_content.strip() + "\n")
+
+print("Kapitel 7 erfolgreich neu geschrieben!")
