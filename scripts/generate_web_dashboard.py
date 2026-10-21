@@ -1,5 +1,8 @@
 import json
 import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 def generate_dashboard():
     with open("data/rules/rules_registry.json", "r", encoding="utf-8") as f:
@@ -586,6 +589,8 @@ def generate_dashboard():
         .remediation-text {{
             font-size: 13px;
             color: var(--slate-700);
+            white-space: pre-line;
+            line-height: 1.5;
         }}
 
         .rationale-text {{
@@ -734,14 +739,14 @@ def generate_dashboard():
                         <div class="stat-icon icon-passed">✓</div>
                     </div>
                     <div class="stat-value" id="countPassed" style="color: var(--hwg-green);">0</div>
-                    <div class="stat-sub" id="passRateSub">von 21 Kriterien</div>
+                    <div class="stat-sub" id="passRateSub">von 22 Kriterien</div>
                 </div>
             </div>
         </div>
 
         <!-- Filter Bar -->
         <div class="filter-bar" id="filterBar">
-            <button class="filter-pill active" onclick="setFilter('all')">Alle Kriterien (<span id="pillAll">21</span>)</button>
+            <button class="filter-pill active" onclick="setFilter('all')">Alle Kriterien (<span id="pillAll">22</span>)</button>
             <button class="filter-pill" onclick="setFilter('critical')">Kritisch (<span id="pillCritical">0</span>)</button>
             <button class="filter-pill" onclick="setFilter('major')">Major (<span id="pillMajor">0</span>)</button>
             <button class="filter-pill" onclick="setFilter('minor')">Minor (<span id="pillMinor">0</span>)</button>
@@ -779,10 +784,10 @@ def generate_dashboard():
 
                 btn.innerHTML = `
                     <div class="preset-btn-title">
-                        <span>${{p.name.split(':')[1] || p.name}}</span>
+                        <span>${{escapeHtml(p.name.split(':')[1] || p.name)}}</span>
                         <span class="preset-score-pill ${{scoreClass}}">${{score}} P</span>
                     </div>
-                    <div class="preset-btn-desc">${{p.eval.form}}</div>
+                    <div class="preset-btn-desc">${{escapeHtml(p.eval.form)}}</div>
                 `;
                 btn.onclick = () => selectPreset(key);
                 grid.appendChild(btn);
@@ -862,6 +867,16 @@ def generate_dashboard():
             renderRuleCards();
         }}
 
+        function escapeHtml(str) {{
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }}
+
         function renderRuleCards() {{
             const container = document.getElementById('rulesList');
             container.innerHTML = '';
@@ -895,12 +910,12 @@ def generate_dashboard():
                     cardClass += ` violation-${{v.severity}}`;
                     const pts = v.severity === 'critical' ? '-15P' : (v.severity === 'major' ? '-8P' : '-3P');
                     badgeHtml = `<span class="badge badge-${{v.severity}}">${{v.severity.toUpperCase()}} (${{pts}})</span>`;
-                    messageHtml = `<div class="rule-message"><strong>Befund:</strong> ${{v.message}}</div>`;
+                    messageHtml = `<div class="rule-message"><strong>Befund:</strong> ${{escapeHtml(v.message)}}</div>`;
                 }} else if (isRec) {{
                     const r = recMap[rule.id];
                     cardClass += ' violation-recommendation';
                     badgeHtml = `<span class="badge badge-recommendation">EMPFEHLUNG (0P)</span>`;
-                    messageHtml = `<div class="rule-message"><strong>Empfehlung:</strong> ${{r.message}}</div>`;
+                    messageHtml = `<div class="rule-message"><strong>Empfehlung:</strong> ${{escapeHtml(r.message)}}</div>`;
                 }} else if (isPassed) {{
                     cardClass += ' rule-passed';
                     badgeHtml = `<span class="badge badge-passed">BESTANDEN (OK)</span>`;
@@ -915,8 +930,8 @@ def generate_dashboard():
                 card.innerHTML = `
                     <div class="rule-top">
                         <div class="rule-id-name">
-                            <span class="rule-id">${{rule.id}}</span>
-                            <span class="rule-name">${{rule.name}}</span>
+                            <span class="rule-id">${{escapeHtml(rule.id)}}</span>
+                            <span class="rule-name">${{escapeHtml(rule.name)}}</span>
                         </div>
                         ${{badgeHtml}}
                     </div>
@@ -926,9 +941,9 @@ def generate_dashboard():
                             <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5v-4A.5.5 0 0 1 8 4z"/></svg>
                             Klickpfad im XIMA Formcycle Designer (Remediation):
                         </div>
-                        <div class="remediation-text">${{rule.remediation}}</div>
+                        <div class="remediation-text">${{escapeHtml(rule.remediation)}}</div>
                     </div>
-                    <div class="rationale-text">Theoretische & regulatorische Fundierung: ${{rule.rationale}}</div>
+                    <div class="rationale-text">Theoretische & regulatorische Fundierung: ${{escapeHtml(rule.rationale)}}</div>
                 `;
                 container.appendChild(card);
             }});

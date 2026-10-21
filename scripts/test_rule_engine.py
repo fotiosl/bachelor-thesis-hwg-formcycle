@@ -163,10 +163,11 @@ def evaluate_form(xfp_path, registry):
         for lk in ["label", "text", "heading"]:
             if lk in props and props[lk]:
                 val = str(props[lk])
+                clean_val = " ".join(val.split())
                 if "<p>" in val or "&szlig;" in val or "&ouml;" in val or "|" in val:
-                    html_in_labels.append((props.get("name"), val[:30]))
+                    html_in_labels.append((props.get("name", "unnamed"), clean_val[:30]))
                 if any(tech in val for tech in ["JavaScript", "Shibboleth", "LDAP-Member", "Postfach-SB"]):
-                    dev_notes.append((props.get("name"), val[:40]))
+                    dev_notes.append((props.get("name", "unnamed"), clean_val[:40]))
                     
         # 6. Buttons
         if "Button" in c or c == "XButtonList":
