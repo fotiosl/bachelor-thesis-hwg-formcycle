@@ -57,6 +57,7 @@ def generate_dashboard():
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         :root {{
             --hwg-blue: #003366;
@@ -752,6 +753,7 @@ def generate_dashboard():
             <button class="filter-pill" onclick="setFilter('minor')">Minor (<span id="pillMinor">0</span>)</button>
             <button class="filter-pill" onclick="setFilter('recommendation')">Empfehlungen (<span id="pillRec">0</span>)</button>
             <button class="filter-pill" onclick="setFilter('passed')">Bestanden (<span id="pillPassed">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('na')">Nicht zutreffend (<span id="pillNA">0</span>)</button>
         </div>
 
         <!-- Rule Details List -->
@@ -845,6 +847,7 @@ def generate_dashboard():
             }});
 
             const passedCount = (e.passed || []).length;
+            const naCount = Object.keys(e.not_applicable || {{}}).length;
             document.getElementById('countCritical').innerText = criticals;
             document.getElementById('countMajor').innerText = majors;
             document.getElementById('countMinor').innerText = minors;
@@ -856,6 +859,8 @@ def generate_dashboard():
             document.getElementById('pillMinor').innerText = minors;
             document.getElementById('pillRec').innerText = recs;
             document.getElementById('pillPassed').innerText = passedCount;
+            const pillNA = document.getElementById('pillNA');
+            if (pillNA) pillNA.innerText = naCount;
 
             renderRuleCards();
         }}
@@ -863,7 +868,7 @@ def generate_dashboard():
         function setFilter(filter) {{
             currentFilter = filter;
             document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) event.target.classList.add('active');
             renderRuleCards();
         }}
 
@@ -892,6 +897,7 @@ def generate_dashboard():
                 const isViolation = !!violationsMap[rule.id];
                 const isRec = !!recMap[rule.id];
                 const isPassed = passedSet.has(rule.id);
+                const isNotApplicable = !isViolation && !isRec && !isPassed;
 
                 // Filter check
                 if (currentFilter === 'critical' && (!isViolation || violationsMap[rule.id].severity !== 'critical')) return;
@@ -899,6 +905,7 @@ def generate_dashboard():
                 if (currentFilter === 'minor' && (!isViolation || violationsMap[rule.id].severity !== 'minor')) return;
                 if (currentFilter === 'recommendation' && !isRec) return;
                 if (currentFilter === 'passed' && !isPassed) return;
+                if (currentFilter === 'na' && !isNotApplicable) return;
 
                 const card = document.createElement('div');
                 let cardClass = 'rule-card';
@@ -921,9 +928,12 @@ def generate_dashboard():
                     badgeHtml = `<span class="badge badge-passed">BESTANDEN (OK)</span>`;
                     messageHtml = `<div class="rule-message" style="color: var(--hwg-green);">✓ Vorgaben erfolgreich eingehalten.</div>`;
                 }} else {{
-                    cardClass += ' rule-passed';
-                    badgeHtml = `<span class="badge" style="background: var(--slate-100); color: var(--slate-600);">NICHT ZUTREFFEND</span>`;
-                    messageHtml = `<div class="rule-message" style="color: var(--slate-600);">Kriterium auf diesen Formularkontext nicht anwendbar.</div>`;
+                    cardClass += ' rule-na';
+                    badgeHtml = `<span class="badge" style="background: var(--slate-100); color: var(--slate-600); border: 1px solid var(--slate-300);">NICHT ZUTREFFEND</span>`;
+                    const naReason = (currentEval.not_applicable && currentEval.not_applicable[rule.id])
+                        ? currentEval.not_applicable[rule.id]
+                        : 'Kriterium auf diesen Formularkontext nicht anwendbar.';
+                    messageHtml = `<div class="rule-message" style="color: var(--slate-600);">${{escapeHtml(naReason)}}</div>`;
                 }}
 
                 card.className = cardClass;
@@ -959,6 +969,538 @@ def generate_dashboard():
             dlAnchor.remove();
         }}
 
+        function extractWorkflowClient(obj, emails, states) {{
+            if (!obj) return;
+            if (Array.isArray(obj)) {{
+                obj.forEach(item => extractWorkflowClient(item, emails, states));
+            }} else if (typeof obj === 'object') {{
+                if (obj.type === 'FC_EMAIL') {{
+                    let cp = {{}};
+                    try {{
+                        cp = typeof obj.customParameters === 'string' ? JSON.parse(obj.customParameters) : (obj.customParameters || {{}});
+                    }} catch (e) {{}}
+                    emails.push({{
+                        name: obj.name || '',
+                        subject: cp.subject || '',
+                        body: cp.body || ''
+                    }});
+                }} else if (['FC_CHANGE_STATE', 'CUSTOM', 'RECEIVED'].includes(obj.type)) {{
+                    const st = obj.name || '';
+                    if (st && st !== 'FC_CHANGE_STATE' && !states.includes(st)) {{
+                        states.push(st);
+                    }}
+                }}
+                for (const k in obj) {{
+                    extractWorkflowClient(obj[k], emails, states);
+                }}
+            }}
+        }}
+
+        function evaluateFormDataClient(formData, filename, workflowEmails, workflowStates) {{
+            const results = {{
+                form: filename,
+                violations: [],
+                recommendations: [],
+                passed: [],
+                not_applicable: {{}},
+                score: 100
+            }};
+
+            const items = formData.items || [];
+            const formProps = formData.properties || {{}};
+            const penalties = registry.scoring.severity_penalties;
+
+            const widths = new Set();
+            if (formProps.maxwidth) widths.add(String(formProps.maxwidth));
+
+            let hasImage = false;
+            let imageProps = {{}};
+            let hasHeaderTitleH1 = false;
+            let headerTitleDetails = null;
+            let hasFieldset = false;
+            let footerShowsLogo = false;
+
+            let requiredFieldsTotal = 0;
+            const missingRequiredHints = [];
+            const manualAsterisksInLabels = [];
+            const htmlInLabels = [];
+            const devNotes = [];
+            const buttonLabels = [];
+            const navButtonLabels = [];
+            let hasSaveButton = false;
+
+            let pageCount = 0;
+            let inputFieldCount = 0;
+            const inputClasses = new Set([
+                "XTextField", "XTextArea", "XSelect", "XCheckbox", 
+                "XUpload", "XFile", "XRadio", "XDate", "XNumber"
+            ]);
+
+            const personalFieldsSequence = [];
+            let hasPersonalData = false;
+            let hasDsgvoNotice = false;
+            const uploadElements = [];
+            let hasUploadElements = false;
+            const structuredFieldsUnvalidated = [];
+            const compactFieldsUnconstrained = [];
+            let hasCompactFields = false;
+            const jargonWithoutHelp = [];
+            const longSentences = [];
+
+            const jargonCatalog = [
+                "gstb", "kostenstelle", "vergabevermerk", "remonstration", 
+                "promotionsausschuss", "exmatrikulation", "shibboleth", "ldap",
+                "kap", "mittelbewirtschafter", "mittelgeber", "verausgabt", 
+                "verausgabung", "zfk", "haushaltsstelle", "bewilligungszeitraum", 
+                "titelgruppe", "drittmittel"
+            ];
+
+            items.forEach(it => {{
+                const c = it.className || "";
+                const props = it.properties || {{}};
+                const name = String(props.name || "").toLowerCase();
+                const rawLbl = String(props.label || props.text || props.heading || "");
+                const lblClean = rawLbl.replace(/<[^>]+>/g, " ").trim();
+                const lblLower = lblClean.toLowerCase();
+                const helpText = String(props.help || props.tooltip || props.description || "").toLowerCase();
+
+                if (c === "XPage") pageCount++;
+                if (inputClasses.has(c)) inputFieldCount++;
+
+                if (props.maxwidth) widths.add(String(props.maxwidth));
+
+                if (c === "XImage") {{
+                    hasImage = true;
+                    imageProps = props;
+                }}
+
+                const parentId = String(props.parentid || "").toLowerCase();
+                const rte = String(props.rtevalue || "");
+                const heading = String(props.heading || "");
+                const label = String(props.label || "");
+                const text = String(props.text || "");
+                const lvl = String(props.headinglevel || "");
+                const isHeader = parentId.includes("header") || c === "XHeader" || name.includes("header");
+                const allHeading = `${{rte}} ${{heading}} ${{label}} ${{text}}`.toLowerCase();
+
+                if (isHeader || name.includes("header") || name.includes("titel") || name.includes("title")) {{
+                    if (allHeading.includes("<h1") || lvl === "1") {{
+                        hasHeaderTitleH1 = true;
+                    }} else if (allHeading.includes("<h2") || allHeading.includes("<h3") || allHeading.includes("antrag") || name.includes("title") || name.includes("titel")) {{
+                        if (!hasHeaderTitleH1) headerTitleDetails = "h2_or_text";
+                    }}
+                }}
+
+                if (c === "XFooter") {{
+                    if (String(props.showlogo || "0") === "1") footerShowsLogo = true;
+                }}
+
+                if (c === "XFieldSet") hasFieldset = true;
+
+                if (inputClasses.has(c)) {{
+                    const isReq = String(props.required || "0") === "1";
+                    const showHint = String(props.showrequiredhint || "1");
+                    if (isReq) {{
+                        requiredFieldsTotal++;
+                        if (showHint === "0") missingRequiredHints.push(props.name || "unnamed");
+                    }} else if (lblClean.includes("*")) {{
+                        manualAsterisksInLabels.push(props.name || "unnamed");
+                    }}
+                }}
+
+                ["label", "text", "heading"].forEach(lk => {{
+                    if (props[lk]) {{
+                        const val = String(props[lk]);
+                        const cleanVal = val.replace(/\\s+/g, " ").trim();
+                        if (/<[^>]+>/.test(val) || /&[a-zA-Z0-9#]+;/.test(val) || val.includes("|")) {{
+                            htmlInLabels.push([props.name || "unnamed", cleanVal.slice(0, 35)]);
+                        }}
+                        if (["JavaScript", "Shibboleth", "LDAP-Member", "Postfach-SB"].some(t => val.includes(t))) {{
+                            devNotes.push([props.name || "unnamed", cleanVal.slice(0, 40)]);
+                        }}
+                    }}
+                }});
+
+                if (c.includes("Button") || c === "XButtonList") {{
+                    if (Array.isArray(props.buttons)) {{
+                        props.buttons.forEach(b => {{
+                            const val = b.value || b.text || b.title || "";
+                            if (val) {{
+                                buttonLabels.push([props.name || "btn", val]);
+                                if ((b.action && ["next", "prev"].includes(b.action.page)) || ["weiter", "zurück", "zurueck"].some(s => val.toLowerCase().includes(s))) {{
+                                    navButtonLabels.push(val);
+                                }}
+                            }}
+                        }});
+                    }}
+                    const btnLbl = props.text || props.label || props.value || "";
+                    if (btnLbl) {{
+                        buttonLabels.push([props.name || "btn", btnLbl]);
+                        if (["weiter", "zurück", "zurueck"].some(s => btnLbl.toLowerCase().includes(s))) {{
+                            navButtonLabels.push(btnLbl);
+                        }}
+                    }}
+                    if (Array.isArray(props.items)) {{
+                        props.items.forEach(b => {{
+                            const val = (typeof b === "object" ? (b.text || b.value || b.title) : b) || "";
+                            if (val) buttonLabels.push([props.name || "btn", val]);
+                        }});
+                    }}
+                }}
+
+                if (inputClasses.has(c)) {{
+                    const elemName = props.name || "unnamed";
+                    if (["anrede", "salutation"].some(t => name.includes(t) || lblLower.includes(t))) {{
+                        personalFieldsSequence.push(["anrede", elemName, lblClean || "Anrede", 1]);
+                    }} else if (name.includes("vorname") || lblLower.includes("vorname")) {{
+                        personalFieldsSequence.push(["vorname", elemName, lblClean || "Vorname", 2]);
+                    }} else if (name.includes("nachname") || lblLower.includes("nachname") || (name.includes("name") && !["vorname", "antrag", "bank", "kredit", "projekt", "programm", "foerder", "titel", "datei"].some(t => name.includes(t)))) {{
+                        personalFieldsSequence.push(["nachname", elemName, lblClean || "Nachname", 3]);
+                    }} else if (lblClean.toLowerCase() === "name" || lblLower.includes("name antragstellende") || lblLower.includes("name antragsteller")) {{
+                        personalFieldsSequence.push(["nachname", elemName, lblClean || "Nachname", 3]);
+                    }} else if (["email", "e-mail", "mail"].some(t => name.includes(t) || lblLower.includes(t))) {{
+                        personalFieldsSequence.push(["email", elemName, lblClean || "E-Mail-Adresse", 4]);
+                    }} else if (["telefon", "telefonnummer", "phone", "mobil"].some(t => name.includes(t) || lblLower.includes(t))) {{
+                        personalFieldsSequence.push(["telefon", elemName, lblClean || "Telefonnummer", 5]);
+                    }}
+                }}
+
+                if (["vorname", "nachname", "name", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift"].some(t => name.includes(t) || lblLower.includes(t))) {{
+                    hasPersonalData = true;
+                }}
+                if (["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"].some(t => lblLower.includes(t) || helpText.includes(t))) {{
+                    hasDsgvoNotice = true;
+                }}
+                if (c === "XFooter" && String(props.privacyPolicyShow || "0") === "1") {{
+                    hasDsgvoNotice = true;
+                }}
+
+                if (["XUpload", "XFile", "XUploadButton"].includes(c) || name.includes("upload")) {{
+                    hasUploadElements = true;
+                    const hasFormats = ["pdf", "jpg", "png", "zip", "format", "dateiformat"].some(fmt => lblLower.includes(fmt) || helpText.includes(fmt));
+                    const hasSize = ["mb", "kb", "maximal", "größe", "dateigröße"].some(sz => lblLower.includes(sz) || helpText.includes(sz));
+                    if (!hasFormats || !hasSize) {{
+                        uploadElements.push({{ name: props.name || "upload", hasFormats, hasSize }});
+                    }}
+                }}
+
+                if (["iban", "plz", "postleitzahl", "telefon", "geburtsdatum"].some(t => name.includes(t) || lblLower.includes(t))) {{
+                    const valRule = props.validation || {{}};
+                    const hasRegex = Boolean(props.pattern || valRule.regex || valRule.type);
+                    if (!hasRegex) structuredFieldsUnvalidated.push(props.name || lblClean.slice(0, 15));
+                }}
+
+                if (["plz", "postleitzahl", "hausnummer", "hnr"].some(t => name.includes(t) || lblLower.includes(t))) {{
+                    hasCompactFields = true;
+                    const colWidth = props.colwidth || props.width;
+                    if (["100%", "12", undefined, null].includes(colWidth) && !props.maxwidth) {{
+                        compactFieldsUnconstrained.push(props.name || lblClean.slice(0, 15));
+                    }}
+                }}
+
+                jargonCatalog.forEach(jg => {{
+                    if (lblLower.includes(jg) && (!helpText || helpText.trim().length < 5)) {{
+                        jargonWithoutHelp.push([jg, props.name || lblClean.slice(0, 15)]);
+                    }}
+                }});
+
+                ["text", "help", "tooltip", "description", "rtevalue"].forEach(k => {{
+                    const val = String(props[k] || "");
+                    if (val) {{
+                        const cleanT = val.replace(/<[^>]+>/g, " ");
+                        cleanT.split(/[.!?]+/).forEach(sent => {{
+                            const words = sent.trim().split(/\\s+/).filter(w => w.length > 1);
+                            if (words.length > 25) {{
+                                longSentences.push([props.name || "unnamed", words.length, words.slice(0, 8).join(" ") + "..."]);
+                            }}
+                        }});
+                    }}
+                }});
+            }});
+
+            buttonLabels.forEach(([bSource, bl]) => {{
+                const lower = bl.toLowerCase();
+                if (["zwischenspeichern", "speichern", "fortsetzen"].some(s => lower.includes(s))) {{
+                    hasSaveButton = true;
+                }}
+            }});
+
+            let hasWorkflowFeedback = false;
+            (workflowEmails || []).forEach(em => {{
+                const text = `${{em.subject || ""}} ${{em.body || ""}}`.toLowerCase();
+                if (["vielen dank", "eingegangen", "geprüft", "prüfung", "entscheidung", "folgeschritte", "bearbeit", "rückmeldung", "vorgangsnummer", "project_alias"].some(t => text.includes(t))) {{
+                    hasWorkflowFeedback = true;
+                }}
+            }});
+
+            // 1. HWG-CD-01
+            if (widths.has("700px") && !widths.has("850px")) {{
+                results.violations.push({{ rule: "HWG-CD-01", severity: "major", message: "Formular verwendet veraltete 700px-Breite statt dem 850px-Standard." }});
+                results.score -= penalties.major;
+            }} else {{
+                results.passed.push("HWG-CD-01 (Breite 850px eingehalten)");
+            }}
+
+            // 2. HWG-CD-02
+            if (!hasImage) {{
+                results.violations.push({{ rule: "HWG-CD-02", severity: "critical", message: "Kein offizielles HWG-Header-Banner (XImage) im Kopfbereich vorhanden." }});
+                results.score -= penalties.critical;
+            }} else {{
+                const imgH = String(imageProps.imageheight || imageProps.height || "").trim().toLowerCase();
+                const imgAlign = String(imageProps.textalign || imageProps.align || "").trim().toLowerCase();
+                const isHeight60 = imgH === "60" || imgH === "60px";
+                const isRight = imgAlign === "right" || imgAlign === "2";
+                if (!isHeight60 || !isRight) {{
+                    const issues = [];
+                    if (!isHeight60) issues.push(`Höhe (in px) ist '${{imgH || "undefiniert"}}' statt 60px`);
+                    if (!isRight) issues.push(`Ausrichtung ist '${{imgAlign || "links"}}' statt rechtsbündig`);
+                    results.violations.push({{ rule: "HWG-CD-02", severity: "major", message: `HWG-Header-Logo weicht von den Formatvorgaben ab: ${{issues.join(", ")}}.` }});
+                    results.score -= penalties.major;
+                }} else {{
+                    results.passed.push("HWG-CD-02 (Header-Logo mit 60px Höhe, rechtsbündig vorhanden)");
+                }}
+            }}
+
+            // 3. HWG-CD-03
+            if (footerShowsLogo) {{
+                results.violations.push({{ rule: "HWG-CD-03", severity: "major", message: "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle')." }});
+                results.score -= penalties.major;
+            }} else {{
+                results.passed.push("HWG-CD-03 (XIMA-Logo im Footer deaktiviert)");
+            }}
+
+            // 4. HWG-CD-04
+            if (hasHeaderTitleH1) {{
+                results.passed.push("HWG-CD-04 (Formulartitel im Header als H1 vorhanden)");
+            }} else {{
+                const msg = headerTitleDetails === "h2_or_text"
+                    ? "Formulartitel im Header ist nicht als Überschrift erster Ordnung (H1) ausgezeichnet (gefunden: H2 oder Fließtext statt <h1>)."
+                    : "Kein Formulartitel im Kopfbereich (Header) vorhanden. Der Antragstitel muss im Header als H1 deklariert werden.";
+                results.violations.push({{ rule: "HWG-CD-04", severity: "major", message: msg }});
+                results.score -= penalties.major;
+            }}
+
+            // 5. HWG-A11Y-01
+            if (!hasFieldset && items.length > 20) {{
+                results.violations.push({{ rule: "HWG-A11Y-01", severity: "critical", message: "Keine semantischen XFieldSet-Gruppierungen für Formularabschnitte vorhanden." }});
+                results.score -= penalties.critical;
+            }} else {{
+                results.passed.push("HWG-A11Y-01 (Fieldsets vorhanden)");
+            }}
+
+            // 6. HWG-A11Y-02
+            if (missingRequiredHints.length > 0 || manualAsterisksInLabels.length > 0) {{
+                const issues = [];
+                if (missingRequiredHints.length > 0) issues.push(`Optischer Hinweis deaktiviert (showrequiredhint='0') in [${{missingRequiredHints.join(", ")}}]`);
+                if (manualAsterisksInLabels.length > 0) issues.push(`Manuelles Sternchen (*) im Label ohne native Pflichtfeldfunktion in [${{manualAsterisksInLabels.join(", ")}}]`);
+                results.violations.push({{ rule: "HWG-A11Y-02", severity: "major", message: `Pflichtfeld-Deklaration verletzt: ${{issues.join("; ")}}.` }});
+                results.score -= penalties.major;
+            }} else if (requiredFieldsTotal > 0) {{
+                results.passed.push(`HWG-A11Y-02 (Pflichtfeld-Deklaration: ${{requiredFieldsTotal}} Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)`);
+            }} else {{
+                results.not_applicable["HWG-A11Y-02"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Pflichtfelder im Formular deklariert.";
+            }}
+
+            // 7. HWG-A11Y-03
+            if (htmlInLabels.length > 0) {{
+                const affected = htmlInLabels.map(h => h[0]);
+                const preview = affected.slice(0, 6).join(", ") + (affected.length > 6 ? ` und ${{affected.length - 6}} weitere` : "");
+                results.violations.push({{ rule: "HWG-A11Y-03", severity: "minor", message: `HTML-Fragmente oder Entities in ${{htmlInLabels.length}} Label(s) gefunden: [${{preview}}].` }});
+                results.score -= penalties.minor;
+            }} else {{
+                results.passed.push("HWG-A11Y-03 (Saubere Labels ohne HTML-Fragmente und Entities)");
+            }}
+
+            // 8. HWG-STAMM-01
+            if (personalFieldsSequence.length >= 2) {{
+                const outOfOrder = [];
+                for (let i = 0; i < personalFieldsSequence.length - 1; i++) {{
+                    const curr = personalFieldsSequence[i];
+                    const nxt = personalFieldsSequence[i + 1];
+                    if (curr[3] > nxt[3]) {{
+                        outOfOrder.push(`'${{curr[2]}}' (${{curr[0]}}) vor '${{nxt[2]}}' (${{nxt[0]}})`);
+                    }}
+                }}
+                if (outOfOrder.length > 0) {{
+                    results.violations.push({{ rule: "HWG-STAMM-01", severity: "major", message: `Inkonsistente Abfolge persönlicher Stammdaten: ${{outOfOrder.join(", ")}}. Erwartete Reihenfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.` }});
+                    results.score -= penalties.major;
+                }} else {{
+                    results.passed.push("HWG-STAMM-01 (Kanonische Stammdaten-Abfolge eingehalten)");
+                }}
+            }} else {{
+                results.not_applicable["HWG-STAMM-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine oder weniger als 2 persönliche Stammdatenfelder vorhanden. Hinweis: Achten Sie bei der Erhebung von Stammdaten stets auf die kanonische Abfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.";
+            }}
+
+            // 9. HWG-STAMM-02
+            const nonCanonical = [];
+            items.forEach(it => {{
+                const props = it.properties || {{}};
+                const rawLbl = String(props.label || "").trim();
+                const lbl = rawLbl.replace(/<[^>]+>/g, "").trim();
+                const name = String(props.name || "").toLowerCase();
+                if ((name.includes("email") || name.includes("mail")) && lbl && !["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"].includes(lbl)) {{
+                    nonCanonical.push([lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"]);
+                }}
+                if (name.includes("nachname") || (name.includes("name") && !["vorname", "antrag", "bank", "kredit", "projekt", "programm", "foerder"].some(t => name.includes(t)))) {{
+                    if (lbl.toLowerCase().includes("antragstellende") || lbl === "Name") {{
+                        nonCanonical.push([lbl, "Erwartet: Nachname"]);
+                    }}
+                }}
+            }});
+            if (nonCanonical.length > 0) {{
+                results.violations.push({{ rule: "HWG-STAMM-02", severity: "minor", message: `Nicht-standardisierte Stammdaten-Bezeichnungen gefunden: ${{nonCanonical.map(nc => `['${{nc[0]}}', '${{nc[1]}}']`).slice(0, 2).join(", ")}}` }});
+                results.score -= penalties.minor;
+            }} else {{
+                results.passed.push("HWG-STAMM-02 (Kanonische Stammdaten-Labels)");
+            }}
+
+            // 10. HWG-UI-01
+            if (devNotes.length > 0) {{
+                results.violations.push({{ rule: "HWG-UI-01", severity: "critical", message: `Sichtbare Entwickler-Notizen / Skript-Reste im Frontend: ${{devNotes.map(dn => `['${{dn[0]}}', '${{dn[1]}}']`).join(", ")}}` }});
+                results.score -= penalties.critical;
+            }} else {{
+                results.passed.push("HWG-UI-01 (Keine Entwickler-Notizen)");
+            }}
+
+            // 11. HWG-BTN-01
+            const invalidButtons = [];
+            buttonLabels.forEach(([bSource, b]) => {{
+                const bClean = b.trim();
+                const bLower = bClean.toLowerCase();
+                if (["Kritischer Fall", "Status", "Genehmigung", "Fehler", "Rückmeldung", "Abgelehnt", "Angenommen"].includes(bClean)) {{
+                    invalidButtons.push(`'${{bClean}}' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb)`);
+                }} else if (["senden", "submit", "ok", "abschicken"].includes(bLower)) {{
+                    invalidButtons.push(`'${{bClean}}' (Generisches Minimal-Label ohne Zielobjekt)`);
+                }}
+            }});
+            if (invalidButtons.length > 0) {{
+                const dedup = Array.from(new Set(invalidButtons));
+                results.violations.push({{ rule: "HWG-BTN-01", severity: "major", message: `Schaltflächen verletzen das Action-Verb-Muster: ${{dedup.join(", ")}}` }});
+                results.score -= penalties.major;
+            }} else if (buttonLabels.length > 0) {{
+                results.passed.push("HWG-BTN-01 (Aktionsorientierte Schaltflächen: Action-Verb-Muster erfüllt)");
+            }} else {{
+                results.not_applicable["HWG-BTN-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Aktionsschaltflächen im Formular vorhanden.";
+            }}
+
+            // 12. HWG-BTN-02
+            if (pageCount > 1) {{
+                const invalidNav = navButtonLabels.filter(nb => !["weiter", "zurück", "zurueck"].includes(nb.trim().toLowerCase()));
+                if (invalidNav.length > 0) {{
+                    results.violations.push({{ rule: "HWG-BTN-02", severity: "minor", message: `Nicht-standardisierte Navigations-Schaltflächen in mehrseitigem Formular gefunden: [${{invalidNav.join(", ")}}]. Erwartet: 'Weiter' und 'Zurück'.` }});
+                    results.score -= penalties.minor;
+                }} else {{
+                    results.passed.push("HWG-BTN-02 (Einheitliche Navigations-Schaltflächen 'Weiter'/'Zurück' vorhanden)");
+                }}
+            }} else {{
+                results.not_applicable["HWG-BTN-02"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich).";
+            }}
+
+            // 13. HWG-DSGVO-01
+            if (hasPersonalData && !hasDsgvoNotice) {{
+                results.violations.push({{ rule: "HWG-DSGVO-01", severity: "critical", message: "Personenbezogene Daten werden erhoben, aber es fehlt ein Datenschutz-Hinweis / DSGVO-Link." }});
+                results.score -= penalties.critical;
+            }} else {{
+                results.passed.push("HWG-DSGVO-01 (Datenschutz-Hinweis vorhanden oder keine Personendaten)");
+            }}
+
+            // 14. HWG-UPLOAD-01
+            if (!hasUploadElements) {{
+                results.not_applicable["HWG-UPLOAD-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Dateiupload-Elemente im Formular vorhanden.";
+            }} else if (uploadElements.length > 0) {{
+                results.violations.push({{ rule: "HWG-UPLOAD-01", severity: "major", message: `${{uploadElements.length}} Dateiupload-Element(e) ohne transparente Angabe von Dateiformat und/oder Maximalgröße.` }});
+                results.score -= penalties.major;
+            }} else {{
+                results.passed.push("HWG-UPLOAD-01 (Dateiuploads mit Formaten und Maximalgröße spezifiziert)");
+            }}
+
+            // 15. HWG-VAL-01
+            if (structuredFieldsUnvalidated.length > 0) {{
+                results.violations.push({{ rule: "HWG-VAL-01", severity: "major", message: `Strukturierte Felder ohne Validierungsregel gefunden: [${{structuredFieldsUnvalidated.slice(0, 3).join(", ")}}]` }});
+                results.score -= penalties.major;
+            }} else {{
+                results.passed.push("HWG-VAL-01 (Strukturierte Felder validiert)");
+            }}
+
+            // 16. HWG-UX-01
+            if (!hasCompactFields) {{
+                results.not_applicable["HWG-UX-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine typischen Kompaktfelder (wie PLZ oder Hausnummer) vorhanden.";
+            }} else if (compactFieldsUnconstrained.length > 0) {{
+                results.violations.push({{ rule: "HWG-UX-01", severity: "minor", message: `Kompakte Felder (PLZ/Hausnummer) ohne Breitenbegrenzung über volle Breite gestreckt: [${{compactFieldsUnconstrained.slice(0, 2).join(", ")}}]` }});
+                results.score -= penalties.minor;
+            }} else {{
+                results.passed.push("HWG-UX-01 (Affordanzgerechte Feldbreiten für Kompaktfelder eingehalten)");
+            }}
+
+            // 17. HWG-UX-02
+            if ((pageCount >= 3 || inputFieldCount >= 25) && !hasSaveButton) {{
+                results.recommendations.push({{
+                    rule: "HWG-UX-02",
+                    severity: "recommendation",
+                    message: `Formularumfang (${{pageCount}} Seiten, ${{inputFieldCount}} Eingabefelder) überschreitet den Komplexitätsschwellenwert. Empfehlung (0 Pkt. Abzug): Einen 'Zwischenspeichern'-Button ergänzen, der das Formular speichert und einen Fortsetzungs-Link per E-Mail an die Nutzenden versendet.`
+                }});
+            }}
+
+            // 18. HWG-LANG-01
+            if (jargonWithoutHelp.length > 0) {{
+                const dedupJargon = Array.from(new Set(jargonWithoutHelp.map(j => `'${{j[0]}}' in ${{j[1]}}`)));
+                results.violations.push({{ rule: "HWG-LANG-01", severity: "major", message: `Hochschul- und Verwaltungs-Jargon ohne erläuternden Hilfetext gefunden: ${{dedupJargon.slice(0, 3).join(", ")}}` }});
+                results.score -= penalties.major;
+            }} else {{
+                results.passed.push("HWG-LANG-01 (Verständlicher Wortschatz: Kein unerklärter Jargon)");
+            }}
+
+            // 19. HWG-LANG-02
+            if (longSentences.length > 0) {{
+                results.violations.push({{ rule: "HWG-LANG-02", severity: "minor", message: `Überlange Schachtelsätze (> 25 Wörter) gefunden: [${{longSentences.map(ls => `['${{ls[0]}}', ${{ls[1]}}, '${{ls[2]}}']`).slice(0, 2).join(", ")}}].` }});
+                results.score -= penalties.minor;
+            }} else {{
+                results.passed.push("HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)");
+            }}
+
+            // 20. HWG-FEEDBACK-01
+            if (!hasWorkflowFeedback) {{
+                results.violations.push({{ rule: "HWG-FEEDBACK-01", severity: "minor", message: "Keine Eingangsbestätigungs-E-Mail mit Prozess-/Bearbeitungsinformationen in den Workflow-E-Mail-Knoten (FC_EMAIL) gefunden." }});
+                results.score -= penalties.minor;
+            }} else {{
+                results.passed.push(`HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in ${{workflowEmails.length}} FC_EMAIL-Knoten bestätigt)`);
+            }}
+
+            // 21. HWG-WF-01
+            if (!workflowStates || workflowStates.length === 0) {{
+                results.violations.push({{ rule: "HWG-WF-01", severity: "minor", message: "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt. Kanonischer Lebenszyklus erforderlich." }});
+                results.score -= penalties.minor;
+            }} else {{
+                const canonicalStates = new Set(["eingegangen", "in prüfung", "in bearbeitung", "nachforderung ausstehend", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"]);
+                const nonCanonical = workflowStates.filter(s => !canonicalStates.has(s.toLowerCase()));
+                if (nonCanonical.length > 0) {{
+                    results.violations.push({{ rule: "HWG-WF-01", severity: "minor", message: `Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: [${{nonCanonical.join(", ")}}]. Erwartet: kanonische Zustände ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt').` }});
+                    results.score -= penalties.minor;
+                }} else {{
+                    results.passed.push(`HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: ${{workflowStates.join(", ")}})`);
+                }}
+            }}
+
+            // 22. HWG-WF-02
+            let hasProjectAlias = false;
+            (workflowEmails || []).forEach(em => {{
+                const s = String(em.subject || "").toLowerCase();
+                const b = String(em.body || "").toLowerCase();
+                if (s.includes("%$project_alias%") || b.includes("%$project_alias%") || s.includes("vorgangsnummer") || s.includes("vorgang")) {{
+                    hasProjectAlias = true;
+                }}
+            }});
+            if (!hasProjectAlias) {{
+                results.violations.push({{ rule: "HWG-WF-02", severity: "minor", message: "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen." }});
+                results.score -= penalties.minor;
+            }} else {{
+                results.passed.push("HWG-WF-02 (Vorgangsnummern-Referenz in Workflow-E-Mail vorhanden)");
+            }}
+
+            results.score = Math.max(0, results.score);
+            return results;
+        }}
+
         async function handleFileUpload(event) {{
             const file = event.target.files[0];
             if (!file) return;
@@ -983,25 +1525,48 @@ def generate_dashboard():
                 console.log("Backend API not reachable, falling back to local client parsing:", netErr);
             }}
 
-            // Fallback for standalone file:// mode
-            const reader = new FileReader();
-            reader.onload = function(e) {{
-                try {{
-                    const parsed = JSON.parse(e.target.result);
-                    currentEval = {{
-                        form: file.name,
-                        violations: [],
-                        recommendations: [],
-                        passed: ["HWG-CD-01 (Breite 850px eingehalten)"],
-                        score: 85
-                    }};
+            // Client-side fallback (runs in browser on Vercel or local file://)
+            try {{
+                if (file.name.endsWith('.xfp')) {{
+                    if (typeof JSZip !== 'undefined') {{
+                        const zip = await JSZip.loadAsync(file);
+                        let fcpData = null;
+                        const emails = [];
+                        const states = [];
+                        for (const [relPath, zipEntry] of Object.entries(zip.files)) {{
+                            if (relPath.endsWith('.fcp')) {{
+                                const text = await zipEntry.async('string');
+                                fcpData = JSON.parse(text);
+                            }} else if (relPath.endsWith('.fcexport') && relPath.includes('/projects/') && !relPath.includes('idcheck') && !relPath.includes('versions')) {{
+                                const text = await zipEntry.async('string');
+                                try {{
+                                    const proj = JSON.parse(text);
+                                    extractWorkflowClient(proj, emails, states);
+                                }} catch (e) {{}}
+                            }}
+                        }}
+                        if (fcpData) {{
+                            currentEval = evaluateFormDataClient(fcpData, file.name, emails, states);
+                            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                            renderEvaluation();
+                            return;
+                        }}
+                    }} else {{
+                        alert("JSZip-Bibliothek wird geladen... Bitte versuchen Sie es in wenigen Sekunden erneut.");
+                        return;
+                    }}
+                }} else if (file.name.endsWith('.json')) {{
+                    const text = await file.text();
+                    const data = JSON.parse(text);
+                    currentEval = evaluateFormDataClient(data, file.name, data.workflow_emails || [], data.workflow_states || []);
                     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
                     renderEvaluation();
-                }} catch (err) {{
-                    alert("Konnte Datei nicht verarbeiten: " + err.message);
+                    return;
                 }}
-            }};
-            reader.readAsText(file);
+            }} catch (err) {{
+                console.error("Client parsing error:", err);
+                alert("Konnte Datei im Browser nicht verarbeiten: " + err.message);
+            }}
         }}
 
         // Initialize on load

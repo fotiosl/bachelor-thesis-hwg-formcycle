@@ -25,7 +25,7 @@ def extract_workflow_emails_and_states_from_fcexport(proj_data):
                 })
             elif obj.get("type") in ["FC_CHANGE_STATE", "CUSTOM", "RECEIVED"]:
                 st_name = obj.get("name", "")
-                if st_name:
+                if st_name and st_name != "FC_CHANGE_STATE":
                     states.append(st_name)
             for v in obj.values():
                 walk_nodes(v)
@@ -33,7 +33,13 @@ def extract_workflow_emails_and_states_from_fcexport(proj_data):
             for item in obj:
                 walk_nodes(item)
     walk_nodes(proj_data)
-    return emails, states
+    
+    # Deduplicate states preserving order
+    dedup_states = []
+    for s in states:
+        if s not in dedup_states:
+            dedup_states.append(s)
+    return emails, dedup_states
 
 def evaluate_form(xfp_path, registry):
     results = {
@@ -41,6 +47,7 @@ def evaluate_form(xfp_path, registry):
         "violations": [],
         "recommendations": [],
         "passed": [],
+        "not_applicable": {},
         "score": 100
     }
     
@@ -56,7 +63,7 @@ def evaluate_form(xfp_path, registry):
         with zipfile.ZipFile(xfp_path) as z:
             fcp_name = [n for n in z.namelist() if n.endswith(".fcp")][0]
             form_data = json.loads(z.read(fcp_name).decode("utf-8", "ignore"))
-            fcexports = [n for n in z.namelist() if n.endswith(".fcexport") and "/projects/" in n]
+            fcexports = [n for n in z.namelist() if n.endswith(".fcexport") and "/projects/" in n and "idcheck" not in n and "versions" not in n]
             for fce in fcexports:
                 proj_data = json.loads(z.read(fce).decode("utf-8", "ignore"))
                 ems, sts = extract_workflow_emails_and_states_from_fcexport(proj_data)
@@ -75,45 +82,59 @@ def evaluate_form(xfp_path, registry):
     header_title_details = None
     has_fieldset = False
     footer_shows_logo = False
+    
+    # Required fields (HWG-A11Y-02)
+    required_fields_total = 0
     missing_required_hints = []
+    manual_asterisks_in_labels = []
+    
+    # HTML in labels & Dev Notes (HWG-A11Y-03, HWG-UI-01)
     html_in_labels = []
     dev_notes = []
-    button_labels = []
     
-    # Complexity & Save-Resume tracking (HWG-UX-02)
+    # Buttons (HWG-BTN-01, HWG-BTN-02, HWG-UX-02)
+    button_labels = []
+    nav_button_labels = []
+    has_save_button = False
+    
+    # Complexity tracking (HWG-UX-02)
     page_count = 0
     input_field_count = 0
-    has_save_button = False
     input_classes = {
         "XTextField", "XTextArea", "XSelect", "XCheckbox", 
         "XUpload", "XFile", "XRadio", "XDate", "XNumber"
     }
     
+    # Master data sequence tracking (HWG-STAMM-01)
+    personal_fields_sequence = []
+    
     # Dimensions tracking
     has_personal_data = False
     has_dsgvo_notice = False
     upload_elements = []
+    has_upload_elements = False
     structured_fields_unvalidated = []
     compact_fields_unconstrained = []
+    has_compact_fields = False
     jargon_without_help = []
+    long_sentences = []
     
     jargon_catalog = [
         "gstb", "kostenstelle", "vergabevermerk", "remonstration", 
-        "promotionsausschuss", "exmatrikulation", "shibboleth", 
-        "kap", "mittelbewirtschafter"
+        "promotionsausschuss", "exmatrikulation", "shibboleth", "ldap",
+        "kap", "mittelbewirtschafter", "mittelgeber", "verausgabt", 
+        "verausgabung", "zfk", "haushaltsstelle", "bewilligungszeitraum", 
+        "titelgruppe", "drittmittel"
     ]
-    
-    all_texts_combined = ""
 
     for it in items:
         c = it.get("className", "")
         props = it.get("properties", {})
         name = str(props.get("name", "")).lower()
         lbl = str(props.get("label", "") or props.get("text", "") or props.get("heading", ""))
-        lbl_lower = lbl.lower()
+        lbl_clean = re.sub(r"<[^>]+>", " ", lbl).strip()
+        lbl_lower = lbl_clean.lower()
         help_text = str(props.get("help", "") or props.get("tooltip", "") or props.get("description", "")).lower()
-        
-        all_texts_combined += f" {lbl} {help_text} "
         
         if c == "XPage":
             page_count += 1
@@ -155,36 +176,77 @@ def evaluate_form(xfp_path, registry):
         if c == "XFieldSet":
             has_fieldset = True
             
-        # 4. A11Y-02: Required hints
-        if props.get("showrequiredhint") == "0" and props.get("required") == "1":
-            missing_required_hints.append(props.get("name", "unnamed"))
+        # 4. A11Y-02: Required fields
+        if c in input_classes:
+            is_req = str(props.get("required", "0")) == "1"
+            show_hint = str(props.get("showrequiredhint", "1"))
+            if is_req:
+                required_fields_total += 1
+                if show_hint == "0":
+                    missing_required_hints.append(props.get("name", "unnamed"))
+            elif "*" in lbl_clean:
+                manual_asterisks_in_labels.append(props.get("name", "unnamed"))
             
         # 5. A11Y-03: HTML in labels & Dev Notes
         for lk in ["label", "text", "heading"]:
             if lk in props and props[lk]:
                 val = str(props[lk])
                 clean_val = " ".join(val.split())
-                if "<p>" in val or "&szlig;" in val or "&ouml;" in val or "|" in val:
-                    html_in_labels.append((props.get("name", "unnamed"), clean_val[:30]))
+                if re.search(r"<[^>]+>", val) or re.search(r"&[a-zA-Z0-9#]+;", val) or "|" in val:
+                    html_in_labels.append((props.get("name", "unnamed"), clean_val[:35]))
                 if any(tech in val for tech in ["JavaScript", "Shibboleth", "LDAP-Member", "Postfach-SB"]):
                     dev_notes.append((props.get("name", "unnamed"), clean_val[:40]))
                     
         # 6. Buttons
         if "Button" in c or c == "XButtonList":
-            btn_lbl = props.get("label") or props.get("text") or props.get("heading") or ""
+            # XButtonList buttons property
+            b_list = props.get("buttons", [])
+            if isinstance(b_list, list) and b_list:
+                for b in b_list:
+                    val = b.get("value") or b.get("text") or b.get("title") or ""
+                    if val:
+                        button_labels.append((props.get("name", "btn"), val))
+                        if b.get("action", {}).get("page") in ["next", "prev"] or "weiter" in val.lower() or "zurück" in val.lower() or "zurueck" in val.lower():
+                            nav_button_labels.append(val)
+            # Standalone button properties
+            btn_lbl = props.get("text") or props.get("label") or props.get("value") or ""
+            if btn_lbl:
+                button_labels.append((props.get("name", "btn"), btn_lbl))
+                if "weiter" in btn_lbl.lower() or "zurück" in btn_lbl.lower() or "zurueck" in btn_lbl.lower():
+                    nav_button_labels.append(btn_lbl)
             btn_items = props.get("items", [])
             if isinstance(btn_items, list):
                 for b in btn_items:
-                    if isinstance(b, dict) and "text" in b:
-                        button_labels.append(b["text"])
-            if btn_lbl:
-                button_labels.append(btn_lbl)
-            for bl in button_labels:
+                    if isinstance(b, dict):
+                        val = b.get("text") or b.get("value") or b.get("title") or ""
+                        if val:
+                            button_labels.append((props.get("name", "btn"), val))
+                    elif isinstance(b, str) and b:
+                        button_labels.append((props.get("name", "btn"), b))
+                        
+            for _, bl in button_labels:
                 if any(s in bl.lower() for s in ["zwischenspeichern", "speichern", "fortsetzen"]):
                     has_save_button = True
                 if str(props.get("type", "")).lower() == "save":
                     has_save_button = True
-                
+
+        # Master Data Sequence (HWG-STAMM-01)
+        if c in input_classes:
+            elem_name = props.get("name", "unnamed")
+            # Only classify personal identity fields
+            if any(term in name or term in lbl_lower for term in ["anrede", "salutation"]):
+                personal_fields_sequence.append(("anrede", elem_name, lbl_clean or "Anrede", 1))
+            elif "vorname" in name or "vorname" in lbl_lower:
+                personal_fields_sequence.append(("vorname", elem_name, lbl_clean or "Vorname", 2))
+            elif "nachname" in name or "nachname" in lbl_lower or ("name" in name and not any(t in name for t in ["vorname", "antrag", "bank", "kredit", "projekt", "programm", "foerder", "titel", "datei"])):
+                personal_fields_sequence.append(("nachname", elem_name, lbl_clean or "Nachname", 3))
+            elif lbl_clean.lower() == "name" or "name antragstellende" in lbl_lower or "name antragsteller" in lbl_lower:
+                personal_fields_sequence.append(("nachname", elem_name, lbl_clean or "Nachname", 3))
+            elif any(term in name or term in lbl_lower for term in ["email", "e-mail", "mail"]):
+                personal_fields_sequence.append(("email", elem_name, lbl_clean or "E-Mail-Adresse", 4))
+            elif any(term in name or term in lbl_lower for term in ["telefon", "telefonnummer", "phone", "mobil"]):
+                personal_fields_sequence.append(("telefon", elem_name, lbl_clean or "Telefonnummer", 5))
+
         # 7. Personal Data & DSGVO detection
         if any(term in name or term in lbl_lower for term in ["vorname", "nachname", "name", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift"]):
             has_personal_data = True
@@ -196,6 +258,7 @@ def evaluate_form(xfp_path, registry):
 
         # 8. Upload specification
         if c in ["XUpload", "XFile", "XUploadButton"] or "upload" in name:
+            has_upload_elements = True
             has_formats = any(fmt in lbl_lower or fmt in help_text for fmt in ["pdf", "jpg", "png", "zip", "format", "dateiformat"])
             has_size = any(sz in lbl_lower or sz in help_text for sz in ["mb", "kb", "maximal", "größe", "dateigröße"])
             if not (has_formats and has_size):
@@ -214,6 +277,7 @@ def evaluate_form(xfp_path, registry):
 
         # 10. Compact fields width UX (e.g. PLZ, Hausnummer)
         if any(term in name or term in lbl_lower for term in ["plz", "postleitzahl", "hausnummer", "hnr"]):
+            has_compact_fields = True
             col_width = props.get("colwidth") or props.get("width")
             if col_width in ["100%", "12", None] and "maxwidth" not in props:
                 compact_fields_unconstrained.append(props.get("name", lbl[:15]))
@@ -224,7 +288,17 @@ def evaluate_form(xfp_path, registry):
                 if not help_text or len(help_text.strip()) < 5:
                     jargon_without_help.append((jg, props.get("name", lbl[:15])))
 
-    # 12. Process / Feedback transparency via Workflow E-Mails (HWG-FEEDBACK-01)
+        # 12. Sentence length (HWG-LANG-02)
+        for k in ["text", "help", "tooltip", "description", "rtevalue"]:
+            val = str(props.get(k) or "")
+            if val:
+                clean_t = re.sub(r"<[^>]+>", " ", val)
+                for sent in re.split(r"[.!?]+", clean_t):
+                    words = [w for w in sent.strip().split() if len(w) > 1]
+                    if len(words) > 25:
+                        long_sentences.append((props.get("name", "unnamed"), len(words), " ".join(words[:8]) + "..."))
+
+    # Process / Feedback transparency via Workflow E-Mails (HWG-FEEDBACK-01)
     has_workflow_feedback = False
     for em in workflow_emails:
         em_text = f"{em.get('subject', '')} {em.get('body', '')}".lower()
@@ -304,7 +378,7 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["major"]
 
-    # 3. HWG-A11Y-01
+    # 3. HWG-A11Y-01 (Fieldsets)
     if not has_fieldset and len(items) > 20:
         results["violations"].append({
             "rule": "HWG-A11Y-01",
@@ -315,29 +389,61 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-A11Y-01 (Fieldsets vorhanden)")
 
-    # 4. HWG-A11Y-03
+    # 4. HWG-A11Y-02 (Pflichtfeld-Deklaration mit Sternchen & aria-required)
+    if missing_required_hints or manual_asterisks_in_labels:
+        issues = []
+        if missing_required_hints:
+            issues.append(f"Optischer Hinweis deaktiviert (showrequiredhint='0') in {missing_required_hints}")
+        if manual_asterisks_in_labels:
+            issues.append(f"Manuelles Sternchen (*) im Label ohne native Pflichtfeldfunktion in {manual_asterisks_in_labels}")
+        results["violations"].append({
+            "rule": "HWG-A11Y-02",
+            "severity": "major",
+            "message": f"Pflichtfeld-Deklaration verletzt: {'; '.join(issues)}."
+        })
+        results["score"] -= penalties["major"]
+    elif required_fields_total > 0:
+        results["passed"].append(f"HWG-A11Y-02 (Pflichtfeld-Deklaration: {required_fields_total} Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)")
+    else:
+        results["not_applicable"]["HWG-A11Y-02"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Pflichtfelder im Formular deklariert."
+
+    # 5. HWG-A11Y-03 (HTML in Labels)
     if html_in_labels:
+        affected_fields = [h[0] for h in html_in_labels]
+        names_preview = ", ".join(affected_fields[:6]) + (f" und {len(affected_fields)-6} weitere" if len(affected_fields) > 6 else "")
         results["violations"].append({
             "rule": "HWG-A11Y-03",
             "severity": "minor",
-            "message": f"HTML-Fragmente oder Entities in {len(html_in_labels)} Label(s) gefunden: {html_in_labels[:2]}"
+            "message": f"HTML-Fragmente oder Entities in {len(html_in_labels)} Label(s) gefunden: [{names_preview}]."
         })
         results["score"] -= penalties["minor"]
     else:
-        results["passed"].append("HWG-A11Y-03 (Saubere Labels)")
+        results["passed"].append("HWG-A11Y-03 (Saubere Labels ohne HTML-Fragmente und Entities)")
 
-    # 5. HWG-UI-01: Keine Entwickler-Notizen
-    if dev_notes:
-        results["violations"].append({
-            "rule": "HWG-UI-01",
-            "severity": "critical",
-            "message": f"Sichtbare Entwickler-Notizen / Skript-Reste im Frontend: {dev_notes}"
-        })
-        results["score"] -= penalties["critical"]
+    # 6. HWG-STAMM-01 (Einheitliche Abfolge persönlicher Stammdaten)
+    if len(personal_fields_sequence) >= 2:
+        out_of_order = []
+        for i in range(len(personal_fields_sequence) - 1):
+            curr = personal_fields_sequence[i]
+            nxt = personal_fields_sequence[i+1]
+            if curr[3] > nxt[3]: # e.g. Nachname (3) before Vorname (2)
+                out_of_order.append(f"'{curr[2]}' ({curr[0]}) vor '{nxt[2]}' ({nxt[0]})")
+        if out_of_order:
+            results["violations"].append({
+                "rule": "HWG-STAMM-01",
+                "severity": "major",
+                "message": f"Inkonsistente Abfolge persönlicher Stammdaten: {', '.join(out_of_order)}. Erwartete Reihenfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer."
+            })
+            results["score"] -= penalties["major"]
+        else:
+            results["passed"].append("HWG-STAMM-01 (Kanonische Stammdaten-Abfolge eingehalten)")
     else:
-        results["passed"].append("HWG-UI-01 (Keine Entwickler-Notizen)")
+        results["not_applicable"]["HWG-STAMM-01"] = (
+            "Kriterium auf diesen Formularkontext nicht anwendbar: Keine oder weniger als 2 persönliche Stammdatenfelder vorhanden. "
+            "Hinweis: Achten Sie bei der Erhebung von Stammdaten stets auf die kanonische Abfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer."
+        )
 
-    # 6. HWG-STAMM-02: Standardisierte Stammdaten-Bezeichnungen
+    # 7. HWG-STAMM-02: Standardisierte Stammdaten-Bezeichnungen
     non_canonical_master_labels = []
     for it in items:
         props = it.get("properties", {})
@@ -347,7 +453,7 @@ def evaluate_form(xfp_path, registry):
         if "email" in name or "mail" in name:
             if lbl and lbl not in ["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"]:
                 non_canonical_master_labels.append((lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"))
-        if "nachname" in name or ("name" in name and "vorname" not in name and "antrag" not in name and "bank" not in name and "kredit" not in name):
+        if "nachname" in name or ("name" in name and "vorname" not in name and "antrag" not in name and "bank" not in name and "kredit" not in name and "projekt" not in name and "programm" not in name and "foerder" not in name):
             if "antragstellende" in lbl.lower() or lbl == "Name":
                 non_canonical_master_labels.append((lbl, "Erwartet: Nachname"))
 
@@ -361,27 +467,61 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-STAMM-02 (Kanonische Stammdaten-Labels)")
 
-    # 7. HWG-BTN-01: Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)
+    # 8. HWG-UI-01: Keine Entwickler-Notizen
+    if dev_notes:
+        results["violations"].append({
+            "rule": "HWG-UI-01",
+            "severity": "critical",
+            "message": f"Sichtbare Entwickler-Notizen / Skript-Reste im Frontend: {dev_notes}"
+        })
+        results["score"] -= penalties["critical"]
+    else:
+        results["passed"].append("HWG-UI-01 (Keine Entwickler-Notizen)")
+
+    # 9. HWG-BTN-01: Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)
     invalid_buttons = []
-    for b in button_labels:
+    for btn_source, b in button_labels:
         b_clean = b.strip()
         b_lower = b_clean.lower()
-        if b_clean in ["Kritischer Fall", "Status", "Genehmigung", "Fehler"]:
+        if b_clean in ["Kritischer Fall", "Status", "Genehmigung", "Fehler", "Rückmeldung", "Abgelehnt", "Angenommen"]:
             invalid_buttons.append((b_clean, "Reine Status-/Zustandsbezeichnung ohne Handlungsverb"))
         elif b_lower in ["senden", "submit", "ok", "abschicken"]:
             invalid_buttons.append((b_clean, "Generisches Minimal-Label ohne Zielobjekt"))
 
     if invalid_buttons:
+        # Deduplicate invalid buttons
+        dedup_btn = list(dict.fromkeys([f"'{ib[0]}' ({ib[1]})" for ib in invalid_buttons]))
         results["violations"].append({
             "rule": "HWG-BTN-01",
             "severity": "major",
-            "message": f"Schaltflächen verletzen das Action-Verb-Muster: {invalid_buttons}"
+            "message": f"Schaltflächen verletzen das Action-Verb-Muster: {', '.join(dedup_btn)}"
         })
         results["score"] -= penalties["major"]
+    elif button_labels:
+        results["passed"].append("HWG-BTN-01 (Aktionsorientierte Schaltflächen: Action-Verb-Muster erfüllt)")
     else:
-        results["passed"].append("HWG-BTN-01 (Aktionsorientierte Schaltflächen)")
+        results["not_applicable"]["HWG-BTN-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Aktionsschaltflächen im Formular vorhanden."
 
-    # 8. HWG-DSGVO-01
+    # 10. HWG-BTN-02: Einheitliche Navigations-Schaltflächen (Mehrseitige Formulare)
+    if page_count > 1:
+        invalid_nav = []
+        for nb in nav_button_labels:
+            nb_lower = nb.strip().lower()
+            if nb_lower not in ["weiter", "zurück", "zurueck"]:
+                invalid_nav.append(nb)
+        if invalid_nav:
+            results["violations"].append({
+                "rule": "HWG-BTN-02",
+                "severity": "minor",
+                "message": f"Nicht-standardisierte Navigations-Schaltflächen in mehrseitigem Formular gefunden: {invalid_nav}. Erwartet: 'Weiter' und 'Zurück'."
+            })
+            results["score"] -= penalties["minor"]
+        else:
+            results["passed"].append("HWG-BTN-02 (Einheitliche Navigations-Schaltflächen 'Weiter'/'Zurück' vorhanden)")
+    else:
+        results["not_applicable"]["HWG-BTN-02"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich)."
+
+    # 11. HWG-DSGVO-01
     if has_personal_data and not has_dsgvo_notice:
         results["violations"].append({
             "rule": "HWG-DSGVO-01",
@@ -392,8 +532,10 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-DSGVO-01 (Datenschutz-Hinweis vorhanden oder keine Personendaten)")
 
-    # 9. HWG-UPLOAD-01
-    if upload_elements:
+    # 12. HWG-UPLOAD-01
+    if not has_upload_elements:
+        results["not_applicable"]["HWG-UPLOAD-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Dateiupload-Elemente im Formular vorhanden."
+    elif upload_elements:
         results["violations"].append({
             "rule": "HWG-UPLOAD-01",
             "severity": "major",
@@ -401,9 +543,9 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["major"]
     else:
-        results["passed"].append("HWG-UPLOAD-01 (Uploads spezifiziert oder keine Uploads)")
+        results["passed"].append("HWG-UPLOAD-01 (Dateiuploads mit Formaten und Maximalgröße spezifiziert)")
 
-    # 10. HWG-VAL-01
+    # 13. HWG-VAL-01
     if structured_fields_unvalidated:
         results["violations"].append({
             "rule": "HWG-VAL-01",
@@ -414,8 +556,10 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-VAL-01 (Strukturierte Felder validiert)")
 
-    # 11. HWG-UX-01
-    if compact_fields_unconstrained:
+    # 14. HWG-UX-01
+    if not has_compact_fields:
+        results["not_applicable"]["HWG-UX-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine typischen Kompaktfelder (wie PLZ oder Hausnummer) vorhanden."
+    elif compact_fields_unconstrained:
         results["violations"].append({
             "rule": "HWG-UX-01",
             "severity": "minor",
@@ -423,9 +567,9 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["minor"]
     else:
-        results["passed"].append("HWG-UX-01 (Affordanzgerechte Feldbreiten)")
+        results["passed"].append("HWG-UX-01 (Affordanzgerechte Feldbreiten für Kompaktfelder eingehalten)")
 
-    # 11b. HWG-UX-02: Empfehlung für Zwischenspeichern-Funktion (0 Punkte Abzug!)
+    # 15. HWG-UX-02: Empfehlung für Zwischenspeichern-Funktion (0 Punkte Abzug!)
     if (page_count >= 3 or input_field_count >= 25) and not has_save_button:
         results["recommendations"].append({
             "rule": "HWG-UX-02",
@@ -438,18 +582,30 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties.get("recommendation", 0)
 
-    # 12. HWG-LANG-01
+    # 16. HWG-LANG-01
     if jargon_without_help:
+        dedup_jargon = list(dict.fromkeys([f"'{j[0]}' in {j[1]}" for j in jargon_without_help]))
         results["violations"].append({
             "rule": "HWG-LANG-01",
             "severity": "major",
-            "message": f"Hochschul-Jargon ohne erläuternden Hilfetext gefunden: {[f'{j[0]} in {j[1]}' for j in jargon_without_help[:2]]}"
+            "message": f"Hochschul- und Verwaltungs-Jargon ohne erläuternden Hilfetext gefunden: {', '.join(dedup_jargon[:3])}"
         })
         results["score"] -= penalties["major"]
     else:
-        results["passed"].append("HWG-LANG-01 (Verständlicher Wortschatz)")
+        results["passed"].append("HWG-LANG-01 (Verständlicher Wortschatz: Kein unerklärter Jargon)")
 
-    # 13. HWG-FEEDBACK-01 (Workflow E-Mail Check)
+    # 17. HWG-LANG-02 (Prägnante Formulierung / Vermeidung von Schachtelsätzen)
+    if long_sentences:
+        results["violations"].append({
+            "rule": "HWG-LANG-02",
+            "severity": "minor",
+            "message": f"Überlange Schachtelsätze (> 25 Wörter) gefunden: {long_sentences[:2]}."
+        })
+        results["score"] -= penalties["minor"]
+    else:
+        results["passed"].append("HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)")
+
+    # 18. HWG-FEEDBACK-01 (Workflow E-Mail Check)
     if not has_workflow_feedback:
         results["violations"].append({
             "rule": "HWG-FEEDBACK-01",
@@ -460,9 +616,8 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append(f"HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in {len(workflow_emails)} FC_EMAIL-Knoten bestätigt)")
 
-    # 14. HWG-WF-01 (Workflow-Governance: Strukturierte Status-Knoten und Lebenszyklus)
-    has_structured_states = len(workflow_states) > 0
-    if not has_structured_states:
+    # 19. HWG-WF-01 (Workflow-Governance: Strukturierte Status-Knoten und Lebenszyklus)
+    if not workflow_states:
         results["violations"].append({
             "rule": "HWG-WF-01",
             "severity": "minor",
@@ -470,9 +625,19 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["minor"]
     else:
-        results["passed"].append(f"HWG-WF-01 (Workflow-Status: {len(workflow_states)} Status-Knoten vorhanden)")
+        canonical_states = {"eingegangen", "in prüfung", "in bearbeitung", "nachforderung ausstehend", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"}
+        non_canonical_states = [s for s in workflow_states if s.lower() not in canonical_states]
+        if non_canonical_states:
+            results["violations"].append({
+                "rule": "HWG-WF-01",
+                "severity": "minor",
+                "message": f"Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: {non_canonical_states}. Erwartet: kanonische Zustände ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt')."
+            })
+            results["score"] -= penalties["minor"]
+        else:
+            results["passed"].append(f"HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: {', '.join(workflow_states)})")
 
-    # 15. HWG-WF-02 (Vorgangsnummern-Referenz in automatisierter Kommunikation)
+    # 20. HWG-WF-02 (Vorgangsnummern-Referenz in automatisierter Kommunikation)
     has_project_alias = False
     for em in workflow_emails:
         subj = str(em.get("subject", "")).lower()
@@ -496,7 +661,6 @@ def evaluate_form(xfp_path, registry):
 
 if __name__ == "__main__":
     reg = load_rules()
-    
     test_forms = [
         "data/test_forms/synthetic_compliant_form.json",
         "data/test_forms/synthetic_noncompliant_form.json",
@@ -514,8 +678,11 @@ if __name__ == "__main__":
         print(f"Compliance-Score: {res['score']} / 100 Punkte")
         print(f"Bestandene Prüfungen: {len(res['passed'])}")
         print(f"Gefundene Verstöße:   {len(res['violations'])}")
+        print(f"Nicht zutreffend:     {len(res['not_applicable'])}")
         for v in res['violations']:
             print(f"  [X] [{v['severity'].upper():8}] {v['rule']}: {v['message']}")
+        for na_k, na_v in res['not_applicable'].items():
+            print(f"  [-] [N/A     ] {na_k}: {na_v}")
         if res["recommendations"]:
             print(f"Unverbindliche Empfehlungen ({len(res['recommendations'])}, 0 Punkte Abzug):")
             for r in res["recommendations"]:
