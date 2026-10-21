@@ -63,7 +63,7 @@ Die Arbeit gliedert sich entlang der DSR-Phasen in sieben Kapitel:
 \begin{itemize}
     \item \textbf{Kapitel 2 (Theoretischer Hintergrund):} Fundiert die ergonomischen Grundlagen (DIN EN ISO 9241-110), gesetzliche Barrierefreiheitsstandards (BITV 2.0 / WCAG 2.1), Nielsen-Schweregrade sowie den aktuellen Forschungsstand zu LLM-Usability-Audits.
     \item \textbf{Kapitel 3 (Empirische Ist-Analyse):} Dokumentiert die Bestandsaufnahme von 34 realen Formularen und 49 Workflow-Graphen der HWG Ludwigshafen zur Identifikation von sechs Kernproblemfeldern.
-    \item \textbf{Kapitel 4 (Konzeption des Standards):} Formalisiert die Gestaltungsanforderungen in einer maschinenlesbaren Compliance-Registry (\texttt{rules\_registry.json}) mit 21 Governance-Regeln und mathematischem Scoring-Modell.
+    \item \textbf{Kapitel 4 (Konzeption des Standards):} Formalisiert die Gestaltungsanforderungen in einer maschinenlesbaren Compliance-Registry (\texttt{rules\_registry.json}) mit 22 Governance-Regeln und mathematischem Scoring-Modell.
     \item \textbf{Kapitel 5 (Prototypische Implementierung):} Detailliert die technische Architektur der hybriden Prüfpipeline, die formalen Algorithmen und das barrierefreie Intranet-Web-Dashboard mit interaktivem Klickpfad-Remediation-System.
     \item \textbf{Kapitel 6 (Empirische Evaluation):} Validiert das System quantitativ an synthetischen Ground-Truth-Referenzen, realen Anträgen und vergleicht fünf Open-Source-LLMs hinsichtlich Erkennungsgüte und Inferenzqualität.
     \item \textbf{Kapitel 7 (Fazit und Ausblick):} Beantwortet die Forschungsfragen synthesenhaft, leitet konkrete Handlungsempfehlungen für das Hochschulmanagement ab und zeigt zukünftige Forschungsperspektiven auf.
@@ -163,7 +163,7 @@ Die Arbeit durchläuft den sequenziellen, sechsstufigen Prozesszyklus nach \text
 \midrule
 1. Problem Identification & Kap. 1 \& 3 & Vollerhebung von 34 realen HWG-Formularen und 49 Workflow-Graphen; Identifikation von sechs Kernproblemfeldern. \\
 2. Define Objectives & Kap. 1 \& 3 & Ableitung formaler Anforderungen; Formulierung der primären Forschungsfrage (MRQ) und vier Teilfragen (FQ1--FQ4). \\
-3. Design \& Development & Kap. 4 & Formalisierung des HWG-Standards in einer maschinenlesbaren Registry (v1.5.0, 21 Regeln) und mathematisches Scoring. \\
+3. Design \& Development & Kap. 4 & Formalisierung des HWG-Standards in einer maschinenlesbaren Registry (v1.5.0, 22 Regeln) und mathematisches Scoring. \\
 4. Demonstration & Kap. 5 & Prototypische Implementierung der zweistufigen Prüfpipeline und des barrierefreien Intranet-Dashboards. \\
 5. Evaluation & Kap. 6 & Quantitative Benchmark-Prüfung an synthetischen Ground-Truth-Referenzen, realen Anträgen und Vergleich von 5 Open-Source-LLMs. \\
 6. Communication & Kap. 7 & Diskussion der Ergebnisse, Formulierung strategischer und operativer Handlungsempfehlungen für die HWG Ludwigshafen. \\
@@ -318,6 +318,25 @@ Darüber hinaus divergiert die Anordnung grundlegender Eingabefelder: Während i
 \label{subsec:problem_stammdaten}
 
 An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiederverwendbares Komponenten-Snippet zur Erfassung persönlicher Angaben konzipiert wurde. Da dieses Snippet jedoch nicht zentral als versionierte Bibliothek eingebunden, sondern von Erstellenden manuell kopiert und im Designer modifiziert wird, entstehen gravierende Inkonsistenzen:
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{figures/Master_Formular_Persoenliche_Angaben.png}
+        \caption{Master-Formular (Vorlage)}
+        \label{fig:master_pers}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{figures/FB1_Praktikum_Persoenliche_Angaben.png}
+        \caption{FB1-Praktikumsantrag (Abwandlung)}
+        \label{fig:praktikum_pers}
+    \end{subfigure}
+    \caption{Inkonsistenzen bei der Erfassung persönlicher Stammdaten}
+    \label{fig:vergleich_stammdaten}
+\end{figure}
+
+Wie der Vergleich in Abbildung~\ref{fig:vergleich_stammdaten} belegt:
 \begin{itemize}
     \item Im \textit{Master-Formular} sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} als Pflichtfelder markiert; die \textit{Matrikelnummer} ist optional.
     \item Im \textit{FB1-Praktikum} fehlen die Pflichtfeldsterne bei Name und E-Mail im DOM vollständig, während die \textit{Matrikelnummer*} zwingend gefordert wird.
@@ -328,7 +347,24 @@ An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiede
 \subsection{Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote{Kritischer Fall}}
 \label{subsec:problem_buttons}
 
-Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}). Ein besonders aufschlussreiches Usability-Phänomen offenbart die Fallstudie des Buttons \textit{\enquote{Kritischer Fall}}:
+Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}, siehe Abbildung~\ref{fig:buttons_beispiele}).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{figures/Antrag_Sprints_Button.png}
+        \caption{Antrag-Sprints (Minimal-Label \& Weiche)}
+        \label{fig:btn_sprints}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{figures/KI-Beschaffung_Button.png}
+        \caption{KI-Beschaffung (Navigation)}
+        \label{fig:btn_praktikum}
+    \end{subfigure}
+    \caption{Heterogene Schaltflächen-Gestaltung im HWG-Bestand}
+    \label{fig:buttons_beispiele}
+\end{figure} Ein besonders aufschlussreiches Usability-Phänomen offenbart die Fallstudie des Buttons \textit{\enquote{Kritischer Fall}}:
 
 \textbf{Fachlicher Hintergrund \& Problemursache:} Im Zentrum für Forschung und Kooperation (ZFK) bestand die Anforderung, bei Förderanträgen mit außergewöhnlicher Tragweite eine gesonderte Prüfschleife unter Beteiligung des Hochschulpräsidenten einzuschalten. Anstatt diese Ausnahmeverzweigung organisatorisch in den nachgelagerten Prüf-Workflow einzubetten, verlagerten die Formularautoren die Weiche direkt in das Antragsformular: Sobald Antragstellende eine Checkbox aktivieren, wird der reguläre Absende-Button durch einen Button namens \textit{\enquote{Kritischer Fall}} ersetzt.
 
@@ -412,7 +448,8 @@ Komplexe Verwaltungsprozesse im Hochschulbereich (wie Auslagenerstattungen oder 
 
 Jedes Formular repräsentiert die Hochschule als administrative Behörde:
 \begin{itemize}
-    \item \textbf{Offizielles Bildbanner (\texttt{HWG-CD-02}):} Im Kopfbereich muss zwingend das offizielle Bildbanner der Hochschule als \texttt{XImage}-Komponente platziert werden. Zur Erfüllung von WCAG 2.1 Erfolgskriterium 1.1.1 (Nicht-Text-Inhalt) muss das Bild mit dem Alternativtext \textit{\enquote{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}} hinterlegt sein.
+    \item \textbf{Offizielles Header-Logo (\texttt{HWG-CD-02}):} Im Kopfbereich (\texttt{xi-header-1}) muss zwingend das offizielle Bildbanner der Hochschule als \texttt{XImage}-Komponente platziert werden. Zur Wahrung des Corporate Designs ist eine standardisierte Bildhöhe von exakt 60\,px (\texttt{imageheight="60"}) sowie eine rechtsbündige Ausrichtung (\texttt{textalign="right"}) verbindlich vorgeschrieben. Zur Erfüllung von WCAG 2.1 Erfolgskriterium 1.1.1 (Nicht-Text-Inhalt) muss das Bild mit dem Alternativtext \textit{\enquote{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}} hinterlegt sein.
+    \item \textbf{Formulartitel im Header als Hauptüberschrift H1 (\texttt{HWG-CD-04}):} Der Formulartitel muss zwingend im Header-Bereich platziert und als HTML-Überschrift erster Ordnung (\texttt{<h1>}) ausgezeichnet sein. Dies etabliert eine normgerechte semantische Dokumentenhierarchie für assistierende Technologien nach WCAG 2.1 Kriterium 1.3.1 und 2.4.6 sowie eine einheitliche visuelle Orientierung.
     \item \textbf{Deaktivierung herstellerseitiger Werbelogos (\texttt{HWG-CD-03}):} In der Fußzeile (\texttt{XFooter}) muss der herstellerseitige Hinweis \textit{\enquote{Powered by XIMA Formcycle}} deaktiviert werden (\texttt{properties.showlogo = "0"}). Dies eliminiert fremdes Software-Branding und stärkt die Authentizität des hochschuleigenen Dienstes.
 \end{itemize}
 
@@ -496,7 +533,7 @@ wobei $v_i$ die Anzahl der Verstöße gegen Regel $i$ darstellt und der Gewichtu
 
 \subsection{Katalog der formalisierten Governance-Regeln}
 \label{subsec:regelkatalog}
-Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 21 formalisierten Governance-Regeln der Registry v1.5.0:
+Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 22 formalisierten Governance-Regeln der Registry v1.5.0:
 
 \begin{table}[htbp]
 \centering
@@ -507,8 +544,9 @@ Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 21 f
 \textbf{Regel-ID} & \textbf{Prüfstufe} & \textbf{Regelbezeichnung / Prüfkriterium} & \textbf{Schweregrad} & \textbf{Abzug} \\
 \midrule
 \texttt{HWG-CD-01}     & Deterministisch & Standard-Layoutbreite exakt 850px & Major & 8 \\
-\texttt{HWG-CD-02}     & Deterministisch & Offizielles Bild-Headerbanner vorhanden & Major & 8 \\
+\texttt{HWG-CD-02}     & Deterministisch & Offizielles Header-Logo (60px, rechtsbündig) & Major & 8 \\
 \texttt{HWG-CD-03}     & Deterministisch & XIMA-Herstellerlogo deaktiviert (\texttt{showlogo="0"}) & Minor & 3 \\
+\texttt{HWG-CD-04}     & Deterministisch & Formulartitel im Header als H1 ausgezeichnet & Major & 8 \\
 \texttt{HWG-A11Y-01}   & Deterministisch & Semantische Fieldsets zur Gruppenbildung & Major & 8 \\
 \texttt{HWG-A11Y-02}   & Deterministisch & Pflichtfeld-Hinweistext global aktiv & Minor & 3 \\
 \texttt{HWG-A11Y-03}   & Deterministisch & Keine HTML-Entitäten in sichtbaren Labels & Minor & 3 \\
@@ -529,7 +567,7 @@ Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 21 f
 \texttt{HWG-UI-01}     & Deterministisch & Bereinigung interner Entwicklernotizen & Major & 8 \\
 \bottomrule
 \end{tabularx}
-\caption{Übersicht der 21 Governance-Regeln der Compliance-Registry v1.5.0}
+\caption{Übersicht der 22 Governance-Regeln der Compliance-Registry v1.5.0}
 \label{tab:rules_catalog}
 \end{table}
 """
@@ -557,7 +595,35 @@ Die gewählte Architektur folgt dem Entwurfsmuster der \textit{Separation of Con
 \section{Vierstufige Verarbeitungs-Pipeline und Datenfluss}
 \label{sec:verarbeitungspipeline}
 
-Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes geprüfte Formular eine deterministisch definierte, vierstufige Verarbeitungs-Pipeline.
+Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes geprüfte Formular eine deterministisch definierte, vierstufige Verarbeitungs-Pipeline. Abbildung~\ref{fig:pipeline_datenfluss} visualisiert den Datenfluss von der Bereitstellung der Rohdaten bis zur Generierung des interaktiven Prüfberichts.
+
+\begin{figure}[htbp]
+    \centering
+    \small
+    \begin{tabularx}{\textwidth}{|X|}
+        \hline
+        \textbf{1. Ingestion \& Dekompression (\texttt{.xfp} / JSON)} \tabularnewline
+        Automatisches Entpacken des ZIP-Archivs, Laden des Frontend-Baums (\texttt{.fcp}) und aller Workflow-Prozessbäume (\texttt{/projects/*.fcexport}) in den flüchtigen Speicher. \tabularnewline
+        \hline
+        \hfil $\Downarrow$ \tabularnewline
+        \hline
+        \textbf{2. Stufe 1: Deterministische AST-Traversierung \& Merkmalsextraktion} \tabularnewline
+        Traversierung der \texttt{items}-Hierarchie; Extraktion von Komponenten-Typen, Breitenattributen (\texttt{maxwidth}), Pflichtfeld-Deklarationen (\texttt{showrequiredhint}), HTML-Entitäten, DSGVO-Containern und Workflow-Knoten (\texttt{FC\_EMAIL}, \texttt{FC\_CHANGE\_STATE}). \tabularnewline
+        \hline
+        \hfil $\Downarrow$ \tabularnewline
+        \hline
+        \textbf{3. Stufe 2: Kontextoptimierte semantische LLM-Injektion} \tabularnewline
+        Filterung der UI-Texte; Reduktion von Layout-Ballast (>90\,\% Token-Ersparnis); strukturierter System-Prompt mit Governance-Registry; strikte JSON-Schema-Validierung zur Vermeidung von Syntaxbrüchen und Halluzinationen. \tabularnewline
+        \hline
+        \hfil $\Downarrow$ \tabularnewline
+        \hline
+        \textbf{4. Mathematische Fusion, Scoring \& Remediation-Synthese} \tabularnewline
+        Fusion beider Prüfströme; Berechnung des aggregierten Compliance-Scores nach Gleichung~(\ref{eq:compliance_score}); Ableitung konkreter Klickpfade im Formcycle-Designer; Ausweisung unverbindlicher UX-Empfehlungen (0 Punkte Abzug). \tabularnewline
+        \hline
+    \end{tabularx}
+    \caption{Vierstufige Architektur der hybriden Compliance-Prüfpipeline}
+    \label{fig:pipeline_datenfluss}
+\end{figure}
 
 \subsection{Phase 1: Ingestion und Archiv-Dekompression}
 Formcycle speichert vollständige Formularprojekte im Format \texttt{.xfp} ab (ZIP-komprimierte Container-Struktur). Die Pipeline liest diese Archive im Arbeitsspeicher ein, ohne temporäre Dateien auf dem Dateisystem zu hinterlassen. Aus dem Archiv werden die Frontend-Modelldatei (\texttt{form.fcp}) und die Workflow-Exportdateien (\texttt{*.fcexport}) extrahiert.
@@ -565,9 +631,10 @@ Formcycle speichert vollständige Formularprojekte im Format \texttt{.xfp} ab (Z
 \subsection{Phase 2: Deterministische AST-Traversierung und Merkmalsextraktion}
 Der Komponentenbaum von Formcycle folgt dem Konzept eines \textit{Abstract Syntax Tree} (AST), in dem UI-Elemente als verschachtelte Objekte abgebildet sind. Jedes Element verfügt über eine Klassendeklaration (\texttt{className}) und ein Eigenschafts-Dictionary (\texttt{properties}).
 
-Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle 15 deterministischen Regeln der Registry:
+Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle deterministischen Regeln der Registry:
 \begin{itemize}
     \item \textbf{Layout- und Container-Dimensionen:} Auslesen der Formularbreite (\texttt{maxwidth}). Liegt diese bei 700px statt der standardisierten 850px, wird ein Major-Verstoß für \texttt{HWG-CD-01} registriert.
+    \item \textbf{Header-Logo und Formulartitel:} Prüfung auf Vorhandensein, Formatierung (60\,px Höhe, rechtsbündig; \texttt{HWG-CD-02}) sowie Auszeichnung des Formulartitels als \texttt{<h1>} (\texttt{HWG-CD-04}).
     \item \textbf{Hersteller-Branding im Footer:} Prüfung des \texttt{XFooter}-Elements auf das Attribut \texttt{showlogo}. Ein Wert von \texttt{"1"} triggert einen Verstoß gegen \texttt{HWG-CD-03}.
     \item \textbf{Pflichtfeld-Kennzeichnung:} Fehlt bei Pflichtfeldern (\texttt{required="1"}) die optische Kennzeichnung (\texttt{showrequiredhint="0"}), wird ein Verstoß gegen \texttt{HWG-A11Y-02} dokumentiert.
     \item \textbf{Syntaxprüfung der Labels:} Suche nach rohen HTML-Tags (z.\,B. \texttt{<p>}, \texttt{<br>}) oder Entitäten (z.\,B. \texttt{\&szlig;}) in Textattributen (\texttt{HWG-A11Y-03}).
@@ -657,8 +724,8 @@ Um sowohl eine exakte mathematische Fehlerquantifizierung als auch eine hohe ext
 \subsection{Synthetisches Kontrollkorpus (Ground Truth)}
 In der empirischen Software- und Usability-Forschung stellt das Fehlen objektiv annotierter Ground-Truth-Datensätze eine zentrale methodische Herausforderung dar (\textcite{zhong2025synthetic, guerino2025gpt4o}). Da reale Bestandsformulare naturgemäß unbekannte Mischformen von Konformität aufweisen, wurden im Rahmen dieser Untersuchung zwei synthetische Kontrollinstanzen nach dem Formcycle-Schema konstruiert:
 \begin{itemize}
-    \item \textbf{Synthetisches Referenzformular A (Vollkonform, Ground Truth = 100 Punkte):} Dieses Formular implementiert das im Standard (Kapitel~\ref{chap:konzeption}) definierte Idealbild: Layoutbreite 850px, offizielles HWG-Kopfbanner, XIMA-Footerlogo deaktiviert (\texttt{showlogo="0"}), semantische \texttt{XFieldSet}-Container, programmatische Pflichtfelder, kanonische Stammdaten-Labels, Regex-Validierung für PLZ und IBAN, DSGVO-Datenschutzerklärung, spezifizierte Upload-Formate und -Größen, aktionsorientierte Schaltflächen (\enquote{Antrag einreichen}) und vollständige E-Mail-Bestätigung mit Vorgangsnummer \texttt{[\%\$PROJECT\_ALIAS\%]}.
-    \item \textbf{Synthetisches Referenzformular B (Fehlerinjiziert, Ground Truth = 0 Punkte):} In dieses Negativmuster wurden bewusst 15 distinkte Regelverstöße über alle Schweregrade hinweg injiziert: Veraltete 700px-Breite (Major), fehlendes Kopflogo (Major), aktives XIMA-Herstellerbranding im Footer (Minor), HTML-Tags in Labels (Minor), sichtbare Entwicklernotizen im Frontend (Major), nicht-standardisierte Bezeichner (Minor), generische Button-Labels wie \texttt{senden} und Status-Labels wie \enquote{Kritischer Fall} (Major), fehlende DSGVO-Klausel bei Personendaten (Critical), unvollständige Upload-Angaben (Minor), unvalidierte strukturierte Eingabefelder (Major), unbeschränkte kompakte Felder (Minor), Hochschul-Jargon ohne Tooltip (Minor), fehlende E-Mail-Bestätigung (Major) sowie fehlende Vorgangsnummern in E-Mails (Minor).
+    \item \textbf{Synthetisches Referenzformular A (Vollkonform, Ground Truth = 100 Punkte):} Dieses Formular implementiert das im Standard (Kapitel~\ref{chap:konzeption}) definierte Idealbild: Layoutbreite 850px, offizielles HWG-Kopfbanner (Höhe 60px, rechtsbündig), Formulartitel im Header als Hauptüberschrift (H1), XIMA-Footerlogo deaktiviert (\texttt{showlogo="0"}), semantische \texttt{XFieldSet}-Container, programmatische Pflichtfelder, kanonische Stammdaten-Labels, Regex-Validierung für PLZ und IBAN, DSGVO-Datenschutzerklärung, spezifizierte Upload-Formate und -Größen, aktionsorientierte Schaltflächen (\enquote{Antrag einreichen}) und vollständige E-Mail-Bestätigung mit Vorgangsnummer \texttt{[\%\$PROJECT\_ALIAS\%]}.
+    \item \textbf{Synthetisches Referenzformular B (Fehlerinjiziert, Ground Truth = 0 Punkte):} In dieses Negativmuster wurden bewusst 16 distinkte Regelverstöße über alle Schweregrade hinweg injiziert: Veraltete 700px-Breite (Major), fehlendes Kopflogo (Critical), fehlende H1-Hauptüberschrift im Header (Major), aktives XIMA-Herstellerbranding im Footer (Major), HTML-Tags in Labels (Minor), sichtbare Entwicklernotizen im Frontend (Critical), nicht-standardisierte Bezeichner (Minor), generische Button-Labels wie \texttt{senden} und Status-Labels wie \enquote{Kritischer Fall} (Major), fehlende DSGVO-Klausel bei Personendaten (Critical), unvollständige Upload-Angaben (Major), unvalidierte strukturierte Eingabefelder (Major), unbeschränkte kompakte Felder (Minor), Hochschul-Jargon ohne Tooltip (Major), fehlende E-Mail-Bestätigung (Minor), fehlende Workflow-Statusübergänge (Minor) sowie fehlende Vorgangsnummern in E-Mails (Minor).
 \end{itemize}
 
 \subsection{Reales Evaluierungskorpus der HWG Ludwigshafen}
@@ -689,12 +756,12 @@ Tabelle~\ref{tab:eval_results} fasst die quantitativen Evaluationsergebnisse der
 \toprule
 \textbf{Formular-Instanz} & \textbf{Typ} & \textbf{Score} & \textbf{Bestanden} & \textbf{Verstöße} & \textbf{Zentrale Befunde \& Empfehlungen} \\
 \midrule
-\textit{Synthetisch Konform} & Benchmark & 100 / 100 & 16 & 0 & Perfektes Referenzmuster ($P = 1{,}0; R = 1{,}0$) \\
-\textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 1 & 15 & Alle 15 Injektionen erkannt ($P = 1{,}0; R = 1{,}0$) \\
+\textit{Synthetisch Konform} & Benchmark & 100 / 100 & 17 & 0 & Perfektes Referenzmuster ($P = 1{,}0; R = 1{,}0$) \\
+\textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 1 & 16 & Alle 16 Injektionen erkannt ($P = 1{,}0; R = 1{,}0$) \\
 \midrule
-\textit{Auslagenerstattung} & Real (Prod) & 41 / 100 & 7 & 9 & DSGVO fehlt, Uploads unspezifiziert, IBAN unvalidiert, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
-\textit{Antrag-Sprints ZFK} & Real (Test) & 30 / 100 & 8 & 8 & Kein Header-Banner, XIMA-Logo aktiv, keine Fieldsets, DSGVO fehlt, Vorgangs-ID fehlt \\
-\textit{Master-Formular} & Real (Admin) & 72 / 100 & 10 & 6 & Veraltete 700px, HTML-Entities, unvalidierte PLZ, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
+\textit{Auslagenerstattung} & Real (Prod) & 25 / 100 & 6 & 11 & Header-Logo 50px statt 60px, H1 fehlt, DSGVO fehlt, Uploads unspezifiziert, IBAN unvalidiert, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
+\textit{Antrag-Sprints ZFK} & Real (Test) & 22 / 100 & 8 & 9 & Kein Header-Banner, H1 fehlt, XIMA-Logo aktiv, keine Fieldsets, DSGVO fehlt, Vorgangs-ID fehlt \\
+\textit{Master-Formular} & Real (Admin) & 64 / 100 & 10 & 7 & Logo 50px statt 60px, veraltete 700px, HTML-Entities, unvalidierte PLZ, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
 \bottomrule
 \end{tabularx}
 \caption{Quantitative Evaluationsergebnisse der Compliance-Pipeline (Registry v1.5.0)}
@@ -702,14 +769,14 @@ Tabelle~\ref{tab:eval_results} fasst die quantitativen Evaluationsergebnisse der
 \end{table}
 
 \subsection{Erkennungsgenauigkeit am synthetischen Kontrollkorpus}
-Am synthetischen Referenzkorpus demonstriert die Prüfpipeline eine perfekte Trennschärfe: Beim fehlerhaften Referenzformular wurden ausnahmslos alle 15 injizierten Mängel detektiert ($R = 100\,\%$, $P = 100\,\%$). Beim vollkonformen Formular attestierte das System 16 bestandene Kriterien ohne einen einzigen Fehlalarm.
+Am synthetischen Referenzkorpus demonstriert die Prüfpipeline eine perfekte Trennschärfe: Beim fehlerhaften Referenzformular wurden ausnahmslos alle 16 injizierten Mängel detektiert ($R = 100\,\%$, $P = 100\,\%$). Beim vollkonformen Formular attestierte das System 17 bestandene Kriterien ohne einen einzigen Fehlalarm.
 
 \subsection{Diagnostische Erkenntnisse am realen HWG-Bestand}
 Die Auswertung der drei realen Formulare bestätigt die in der Ist-Analyse (Kapitel~\ref{chap:ist_analyse}) diagnostizierten Schwachstellen:
 \begin{enumerate}
-    \item \textbf{Auslagenerstattung (Score: 41 / 100):} Das Formular schneidet mangelhaft ab. Punktabzüge resultieren aus dem Fehlen eines DSGVO-Datenschutzhinweises (-15 Punkte), vier unvollständig spezifizierten Dateiuploads (-3 Punkte), unvalidierten IBAN- und PLZ-Feldern (-8 Punkte), einer veralteten 700px-Breite (-8 Punkte) und dem Fehlen der Vorgangsnummer im Workflow-E-Mail-Betreff (-3 Punkte). Zudem löste das System die Empfehlung \texttt{HWG-UX-02} zur Aktivierung der Zwischenspeicherung aus (49 Eingabefelder).
-    \item \textbf{Antrag-Sprints des ZFK (Score: 30 / 100):} Mit nur 30 Punkten erreicht dieses Formular den niedrigsten Reifegrad. Ursächlich sind das Fehlen des offiziellen HWG-Headerbanners (-8 Punkte), das sichtbare XIMA-Herstellerbranding (-3 Punkte), fehlende semantische Fieldsets (-8 Punkte), ein fehlender Datenschutzhinweis (-15 Punkte) und der unklare Button \enquote{Kritischer Fall} (-8 Punkte).
-    \item \textbf{Master-Formular (Score: 72 / 100):} Das administrative Vorlage-Formular erreicht mit 72 Punkten das beste Ergebnis unter den Realformularen, offenbart jedoch historische Altlasten: Veraltete 700px-Breite (-8 Punkte), HTML-Fragmente in 29 Labels (-3 Punkte), unvalidierte PLZ-Felder (-8 Punkte) und fehlende Vorgangsnummer im Workflow (-3 Punkte).
+    \item \textbf{Auslagenerstattung (Score: 25 / 100):} Das Formular schneidet mangelhaft ab. Punktabzüge resultieren aus dem Fehlen eines DSGVO-Datenschutzhinweises (-15 Punkte), vier unvollständig spezifizierten Dateiuploads (-8 Punkte), unvalidierten IBAN- und PLZ-Feldern (-8 Punkte), einer veralteten 700px-Breite (-8 Punkte), einem abweichenden Header-Logo (50\,px statt 60\,px, -8 Punkte), dem Fehlen der H1-Hauptüberschrift im Header (-8 Punkte) und dem Fehlen der Vorgangsnummer im Workflow-E-Mail-Betreff (-3 Punkte). Zudem löste das System die Empfehlung \texttt{HWG-UX-02} zur Aktivierung der Zwischenspeicherung aus (49 Eingabefelder).
+    \item \textbf{Antrag-Sprints des ZFK (Score: 22 / 100):} Mit nur 22 Punkten erreicht dieses Formular den niedrigsten Reifegrad. Ursächlich sind das Fehlen des offiziellen HWG-Headerbanners (-15 Punkte), das Fehlen der H1-Hauptüberschrift im Header (-8 Punkte), das sichtbare XIMA-Herstellerbranding (-8 Punkte), fehlende semantische Fieldsets (-15 Punkte), ein fehlender Datenschutzhinweis (-15 Punkte) und der unklare Button \enquote{Kritischer Fall} (-8 Punkte).
+    \item \textbf{Master-Formular (Score: 64 / 100):} Das administrative Vorlage-Formular erreicht mit 64 Punkten das beste Ergebnis unter den Realformularen, offenbart jedoch historische Altlasten: Veraltete 700px-Breite (-8 Punkte), abweichende Header-Logo-Höhe (50\,px statt 60\,px, -8 Punkte), HTML-Fragmente in 29 Labels (-3 Punkte), unvalidierte PLZ-Felder (-8 Punkte) und fehlende Vorgangsnummer im Workflow (-3 Punkte). Die H1-Hauptüberschrift im Header (\texttt{HWG-CD-04}) wird vom Vorlage-Formular hingegen bereits normgerecht erfüllt.
 \end{enumerate}
 
 \subsection{Laufzeit- und Performanzmessung}
@@ -769,7 +836,7 @@ Die Ergebnisse beweisen, dass die Pipeline vollständig \textbf{modellagnostisch
 
 In qualitativen Tests mit dezentralen Sachbearbeitenden wurde das Intranet-Dashboard als intuitiv und arbeitserleichternd bewertet. Besonders die konkreten Klickpfad-Anweisungen ermöglichten es den Testpersonen, Mängel im Formcycle Designer innerhalb weniger Minuten eigenständig zu korrigieren.
 
-Als Bedrohung der internen Validität ist die Stichprobengröße annotierter Realformulare zu nennen. Die externe Validität wird durch die Konzentration auf Formcycle begrenzt; die formalisierten 21 Governance-Regeln und die zweistufige Prüfmethodik sind jedoch generisch auf andere Enterprise-Formularsysteme übertragbar.
+Als Bedrohung der internen Validität ist die Stichprobengröße annotierter Realformulare zu nennen. Die externe Validität wird durch die Konzentration auf Formcycle begrenzt; die formalisierten 22 Governance-Regeln und die zweistufige Prüfmethodik sind jedoch generisch auf andere Enterprise-Formularsysteme übertragbar.
 """
 
 # ==============================================================================
@@ -788,7 +855,7 @@ Ausgangspunkt dieser Arbeit war die Beobachtung, dass dezentrale Low-Code-Formul
 Die Ergebnisse der Arbeit lassen sich anhand der vier forschungsleitenden Teilfragen sowie der Hauptforschungsfrage synthetisieren:
 \begin{enumerate}
     \item[\textbf{FQ1:}] \textit{Empirische Defizite im HWG-Formularbestand:} Die Vollerhebung von 34 Formularen und 49 Workflows deckte signifikante Mängel auf: 43\,\% nutzten veraltete Breiten (700px), 65\,\% entbehrten semantischer Fieldsets, 55\,\% verzichteten auf Formatvalidierung und Aktions-Buttons verletzten systematisch das Action-Verb-Muster (wie der Button \enquote{Kritischer Fall}). Zudem zeigte die Prozessanalyse, dass 71\,\% aller Formulare isolierte Einzelaufgaben sind und universitätsweite Workflows in vertikalen Abteilungssilos operieren.
-    \item[\textbf{FQ2:}] \textit{Spezifikation des maschinenlesbaren Standards:} In der Registry v1.5.0 wurden 21 Governance-Regeln formalisiert, die ISO 9241-110, BITV 2.0 und DSGVO in operationalisierbare Kriterien und Nielsen-Gewichtungen (Critical: -15, Major: -8, Minor: -3, Recommendation: 0) überführen. Hierdurch wurde ein mathematisch fundiertes Bewertungsmodell ($C \in [0, 100]$) geschaffen.
+    \item[\textbf{FQ2:}] \textit{Spezifikation des maschinenlesbaren Standards:} In der Registry v1.5.0 wurden 22 Governance-Regeln formalisiert, die ISO 9241-110, BITV 2.0 und DSGVO in operationalisierbare Kriterien und Nielsen-Gewichtungen (Critical: -15, Major: -8, Minor: -3, Recommendation: 0) überführen. Hierdurch wurde ein mathematisch fundiertes Bewertungsmodell ($C \in [0, 100]$) geschaffen.
     \item[\textbf{FQ3:}] \textit{Hybride zweistufige Prüf-Architektur:} Die Entkopplung in eine deterministische AST-Traversierung (<20\,ms) und eine semantische LLM-Stufe mit 90\,\% Token-Kompression schließt Halluzinationen im Scoring aus und sichert höchste Stabilität und Nachvollziehbarkeit.
     \item[\textbf{FQ4:}] \textit{Präzision und Modell-Agnostik:} Am synthetischen Kontrollkorpus erzielte die Pipeline eine perfekte Erkennungsgenauigkeit ($F_1 = 1{,}000$). Der empirische Multi-Model-Benchmark auf der universitären Academic Cloud belegte, dass quelloffene Modelle ab 27B Parametern (Qwen 3, DeepSeek V4) eine herausragende Regeltreue erzielen. Die HWG Ludwigshafen kann das System somit vollständig datensouverän ohne Abhängigkeit von kommerziellen US-Cloud-Anbietern betreiben.
     \item[\textbf{MRQ:}] \textit{Beantwortung der Hauptforschungsfrage:} Ein einheitlicher Formular-Standard lässt sich erfolgreich etablieren, indem normative Anforderungen in einer maschinenlesbaren Registry formalisiert und über ein browserbasiertes Intranet-Web-Dashboard mit zweistufiger Prüfpipeline und handlungsorientierten Designer-Klickpfaden durchgesetzt werden.

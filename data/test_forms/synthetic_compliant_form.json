@@ -7,10 +7,30 @@
   },
   "items": [
     {
+      "className": "XHeader",
+      "properties": {
+        "name": "header1",
+        "id": "xi-header-1"
+      }
+    },
+    {
+      "className": "XHeading",
+      "properties": {
+        "name": "txtFormTitle",
+        "parentid": "xi-header-1",
+        "headinglevel": "1",
+        "heading": "Antrag auf Sondergenehmigung",
+        "rtevalue": "<h1>Antrag auf Sondergenehmigung</h1>"
+      }
+    },
+    {
       "className": "XImage",
       "properties": {
         "name": "imgHWGLogo",
+        "parentid": "xi-header-1",
         "alt": "Offizielles Logo der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
+        "imageheight": "60",
+        "textalign": "right",
         "url": "https://www.hwg-lu.de/typo3conf/ext/hwg_sitepackage/Resources/Public/Images/logo.svg"
       }
     },

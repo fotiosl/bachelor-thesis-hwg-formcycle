@@ -15,13 +15,13 @@ KI-Werkzeuge kamen im Rahmen iterativer Arbeitsschritte in unterschiedlicher Int
 \end{itemize}
 
 \section*{3. Anwendungsbereiche und aufgetretene Herausforderungen}
-Besonders unterstützend wirkte der KI-Einsatz bei der formalen Definition der 21 Governance-Regeln der Registry v1.5.0 sowie bei der Konzeption des interaktiven HTML5/CSS-Web-Dashboards. Eine signifikante Herausforderung trat bei der Synthese von Literaturquellen auf: Unüberwachte Sprachmodelle neigen dazu, plausible, aber gänzlich fiktive bibliografische Angaben (\textit{Phantom-Zitate}) zu erfinden. Sämtliche in der Arbeit verwendeten Quellen mussten daher manuell gegen wissenschaftliche Datenbanken (ACM Digital Library, IEEE Xplore, SpringerLink) verifiziert werden. Eine weitere Herausforderung bestand in der korrekten Interpretation negativer Constraints: Kleinere Modelle (wie Llama-3.1-8B) neigten bei Satzlängenprüfungen zu Zählfehlern, wohingegen größere Modelle ab 27B Parametern komplexe Heuristiken präzise meisterten.
+Besonders unterstützend wirkte der KI-Einsatz bei der formalen Definition der 22 Governance-Regeln der Registry v1.5.0 sowie bei der Konzeption des interaktiven HTML5/CSS-Web-Dashboards. Eine signifikante Herausforderung trat bei der Synthese von Literaturquellen auf: Unüberwachte Sprachmodelle neigen dazu, plausible, aber gänzlich fiktive bibliografische Angaben (\textit{Phantom-Zitate}) zu erfinden. Sämtliche in der Arbeit verwendeten Quellen mussten daher manuell gegen wissenschaftliche Datenbanken (ACM Digital Library, IEEE Xplore, SpringerLink) verifiziert werden. Eine weitere Herausforderung bestand in der korrekten Interpretation negativer Constraints: Kleinere Modelle (wie Llama-3.1-8B) neigten bei Satzlängenprüfungen zu Zählfehlern, wohingegen größere Modelle ab 27B Parametern komplexe Heuristiken präzise meisterten.
 
 \section*{4. Validierung der KI-generierten Inhalte}
 Alle durch KI-Interaktion entstandenen Artefakte – sei es Programmcode, Tabellenstrukturen oder Formulierungsvorschläge – wurden nach dem Vier-Augen-Prinzip einer rigorosen menschlichen Qualitätskontrolle unterzogen:
 \begin{itemize}
     \item \textbf{Code-Validierung:} Jedes Python-Skript wurde durch automatisierte Unit-Tests und Regressionstests an realen Formcycle-Exports (\texttt{.xfp}) auf Ausfallsicherheit, Typkorrektheit und Laufzeit (<20\,ms) geprüft.
-    \item \textbf{Empirische Ground-Truth-Prüfung:} Die KI-gestützt erstellten Referenzformulare wurden manuell auf DOM-Ebene durchleuchtet, um sicherzustellen, dass die 15 injizierten Fehler exakt den Spezifikationen der Registry entsprechen.
+    \item \textbf{Empirische Ground-Truth-Prüfung:} Die KI-gestützt erstellten Referenzformulare wurden manuell auf DOM-Ebene durchleuchtet, um sicherzustellen, dass die 16 injizierten Fehler exakt den Spezifikationen der Registry entsprechen.
     \item \textbf{Fachliche Normprüfung:} Gesetzliche und ergonomische Vorgaben (BITV 2.0, DIN EN ISO 9241-110, Art. 13 DSGVO) wurden originär an den Primärtexten gespiegelt.
 \end{itemize}
 

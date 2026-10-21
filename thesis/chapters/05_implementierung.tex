@@ -54,9 +54,10 @@ Formcycle speichert vollständige Formularprojekte im Format \texttt{.xfp} ab (Z
 \subsection{Phase 2: Deterministische AST-Traversierung und Merkmalsextraktion}
 Der Komponentenbaum von Formcycle folgt dem Konzept eines \textit{Abstract Syntax Tree} (AST), in dem UI-Elemente als verschachtelte Objekte abgebildet sind. Jedes Element verfügt über eine Klassendeklaration (\texttt{className}) und ein Eigenschafts-Dictionary (\texttt{properties}).
 
-Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle 15 deterministischen Regeln der Registry:
+Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle deterministischen Regeln der Registry:
 \begin{itemize}
     \item \textbf{Layout- und Container-Dimensionen:} Auslesen der Formularbreite (\texttt{maxwidth}). Liegt diese bei 700px statt der standardisierten 850px, wird ein Major-Verstoß für \texttt{HWG-CD-01} registriert.
+    \item \textbf{Header-Logo und Formulartitel:} Prüfung auf Vorhandensein, Formatierung (60\,px Höhe, rechtsbündig; \texttt{HWG-CD-02}) sowie Auszeichnung des Formulartitels als \texttt{<h1>} (\texttt{HWG-CD-04}).
     \item \textbf{Hersteller-Branding im Footer:} Prüfung des \texttt{XFooter}-Elements auf das Attribut \texttt{showlogo}. Ein Wert von \texttt{"1"} triggert einen Verstoß gegen \texttt{HWG-CD-03}.
     \item \textbf{Pflichtfeld-Kennzeichnung:} Fehlt bei Pflichtfeldern (\texttt{required="1"}) die optische Kennzeichnung (\texttt{showrequiredhint="0"}), wird ein Verstoß gegen \texttt{HWG-A11Y-02} dokumentiert.
     \item \textbf{Syntaxprüfung der Labels:} Suche nach rohen HTML-Tags (z.\,B. \texttt{<p>}, \texttt{<br>}) oder Entitäten (z.\,B. \texttt{\&szlig;}) in Textattributen (\texttt{HWG-A11Y-03}).

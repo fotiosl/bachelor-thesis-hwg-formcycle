@@ -70,6 +70,9 @@ def evaluate_form(xfp_path, registry):
     if "maxwidth" in form_props and form_props["maxwidth"]:
         widths.add(str(form_props["maxwidth"]))
     has_image = False
+    image_props = {}
+    has_header_title_h1 = False
+    header_title_details = None
     has_fieldset = False
     footer_shows_logo = False
     missing_required_hints = []
@@ -124,6 +127,24 @@ def evaluate_form(xfp_path, registry):
         # 2. CD-02: Header Image
         if c == "XImage":
             has_image = True
+            image_props = props
+
+        # 2c. CD-04: Header Title (H1)
+        parent_id = str(props.get("parentid", "")).lower()
+        rte = str(props.get("rtevalue", "") or "")
+        heading = str(props.get("heading", "") or "")
+        label = str(props.get("label", "") or "")
+        text = str(props.get("text", "") or "")
+        lvl = str(props.get("headinglevel", "") or "")
+        is_header = "header" in parent_id or c == "XHeader" or "header" in name
+        all_heading_text = f"{rte} {heading} {label} {text}"
+        
+        if is_header or "header" in name or "titel" in name or "title" in name:
+            if "<h1" in all_heading_text.lower() or lvl == "1":
+                has_header_title_h1 = True
+            elif "<h2" in all_heading_text.lower() or "<h3" in all_heading_text.lower() or "antrag" in all_heading_text.lower() or "title" in name or "titel" in name:
+                if not has_header_title_h1:
+                    header_title_details = "h2_or_text"
             
         # 2b. CD-03: Footer XIMA Logo
         if c == "XFooter":
@@ -227,7 +248,7 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-CD-01 (Breite 850px eingehalten)")
 
-    # 2. HWG-CD-02
+    # 2. HWG-CD-02 (Header-Logo mit 60px Höhe und rechtsbündig)
     if not has_image:
         results["violations"].append({
             "rule": "HWG-CD-02",
@@ -236,7 +257,25 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["critical"]
     else:
-        results["passed"].append("HWG-CD-02 (Header-Logo vorhanden)")
+        img_h = str(image_props.get("imageheight") or image_props.get("height") or "").strip().lower()
+        img_align = str(image_props.get("textalign") or image_props.get("align") or "").strip().lower()
+        is_height_60 = img_h in ["60", "60px"]
+        is_right_aligned = img_align in ["right", "2"]
+        
+        if not is_height_60 or not is_right_aligned:
+            issues = []
+            if not is_height_60:
+                issues.append(f"Höhe ist '{img_h or 'undefiniert'}' statt 60px")
+            if not is_right_aligned:
+                issues.append(f"Ausrichtung ist '{img_align or 'links'}' statt rechtsbündig")
+            results["violations"].append({
+                "rule": "HWG-CD-02",
+                "severity": "major",
+                "message": f"HWG-Header-Logo weicht von den Formatvorgaben ab: {', '.join(issues)}."
+            })
+            results["score"] -= penalties["major"]
+        else:
+            results["passed"].append("HWG-CD-02 (Header-Logo mit 60px Höhe, rechtsbündig vorhanden)")
 
     # 2b. HWG-CD-03 (XIMA Footer Logo)
     if footer_shows_logo:
@@ -248,6 +287,21 @@ def evaluate_form(xfp_path, registry):
         results["score"] -= penalties["major"]
     else:
         results["passed"].append("HWG-CD-03 (XIMA-Logo im Footer deaktiviert)")
+
+    # 2c. HWG-CD-04 (Formulartitel im Header als H1)
+    if has_header_title_h1:
+        results["passed"].append("HWG-CD-04 (Formulartitel im Header als H1 vorhanden)")
+    else:
+        if header_title_details == "h2_or_text":
+            msg = "Formulartitel im Header ist nicht als Überschrift erster Ordnung (H1) ausgezeichnet (gefunden: H2 oder Fließtext statt <h1>)."
+        else:
+            msg = "Kein Formulartitel im Kopfbereich (Header) vorhanden. Der Antragstitel muss im Header als H1 deklariert werden."
+        results["violations"].append({
+            "rule": "HWG-CD-04",
+            "severity": "major",
+            "message": msg
+        })
+        results["score"] -= penalties["major"]
 
     # 3. HWG-A11Y-01
     if not has_fieldset and len(items) > 20:

@@ -30,17 +30,19 @@
     },
     {
       "id": "HWG-CD-02",
-      "name": "Offizieller Corporate Design Header",
+      "name": "Offizielles Corporate Design Header-Logo (60px Höhe, rechtsbündig)",
       "category": "corporate_design",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Sicherstellung der institutionellen Authentizität und Wiedererkennung der HWG Ludwigshafen.",
+      "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage im Header platziert sein, eine standardisierte Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1).",
       "specification": {
         "target": "header_elements",
         "required_component": "XImage",
-        "alt_pattern": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen"
+        "alt_pattern": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
+        "required_height": "60px",
+        "required_alignment": "right"
       },
-      "remediation": "Fügen Sie im Kopfbereich das offizielle HWG-Logo als XImage mit barrierefreiem Alternativtext ein."
+      "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie die Bildhöhe auf 60px (Eigenschaft 'imageheight' = '60') und die Ausrichtung auf rechtsbündig (Eigenschaft 'textalign' = 'right'). Hinterlegen Sie unter 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'."
     },
     {
       "id": "HWG-CD-03",
@@ -57,6 +59,20 @@
         }
       },
       "remediation": "Wählen Sie im Formcycle-Designer das Footer-Element ('footer1') aus und entfernen Sie den Haken bei 'Logo anzeigen' (Eigenschaft showlogo = 0), um den Hinweis 'Powered by XIMA Formcycle' auszublenden."
+    },
+    {
+      "id": "HWG-CD-04",
+      "name": "Formulartitel im Header als Hauptüberschrift (H1)",
+      "category": "corporate_design",
+      "evaluation_type": "deterministic",
+      "severity": "major",
+      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) und 2.4.6 (Überschriften und Beschriftungen) sowie DIN EN ISO 9241-110 (Selbstbeschreibungsfähigkeit): Der Formulartitel bildet den primären Einstiegspunkt und muss sich zwingend im Kopfbereich (Header) befinden. Zur Gewährleistung einer barrierefreien Dokumentenhierarchie für Screenreader muss der Titel semantisch als Überschrift erster Ordnung (<h1>) ausgezeichnet sein.",
+      "specification": {
+        "target": "header_elements",
+        "required_location": "header",
+        "required_heading_level": "h1"
+      },
+      "remediation": "Platzieren Sie den Formulartitel im Kopfbereich (Header-Container) und formatieren Sie die Beschriftung im Rich-Text-Editor zwingend als Überschrift erster Ordnung (H1, z. B. <h1>Antrag auf ...</h1>) statt H2 oder unformatiertem Text."
     },
     {
       "id": "HWG-A11Y-01",
