@@ -265,7 +265,7 @@ def evaluate_form(xfp_path, registry):
         if not is_height_60 or not is_right_aligned:
             issues = []
             if not is_height_60:
-                issues.append(f"Höhe ist '{img_h or 'undefiniert'}' statt 60px")
+                issues.append(f"Höhe (in px) ist '{img_h or 'undefiniert'}' statt 60px")
             if not is_right_aligned:
                 issues.append(f"Ausrichtung ist '{img_align or 'links'}' statt rechtsbündig")
             results["violations"].append({

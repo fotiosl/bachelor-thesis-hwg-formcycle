@@ -42,7 +42,7 @@
         "required_height": "60px",
         "required_alignment": "right"
       },
-      "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie die Bildhöhe auf 60px (Eigenschaft 'imageheight' = '60') und die Ausrichtung auf rechtsbündig (Eigenschaft 'textalign' = 'right'). Hinterlegen Sie unter 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'."
+      "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (technisches Attribut imageheight = '60') und das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right'). Hinterlegen Sie im Feld 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'."
     },
     {
       "id": "HWG-CD-03",
