@@ -483,7 +483,14 @@ Um Copy-Paste-Abweichungen dauerhaft zu unterbinden, definiert der Standard ein 
 Werden personenbezogene Daten erfasst, muss unmittelbar vor der Absende-Schaltfläche oder über den Datenschutzbereich des Footers (\texttt{privacyPolicyShow = "1"}) ein verständlicher Datenschutzhinweis eingebunden sein, der den Zweck umreißt und einen aktiven Link auf die Datenschutzerklärung der HWG enthält.
 
 \subsection{Strukturierte Formatvalidierung (\texttt{HWG-VAL-01})}
-Eingabefelder für strukturierte Datenformate dürfen nicht als unvalidierte Freitexte verbleiben: Postleitzahlen müssen über \texttt{\^{}[0-9]\{5\}\$} validiert werden, IBAN nach SEPA-Standard (\texttt{\^{}[A-Z]\{2\}[0-9]\{20\}\$}) und Telefonnummern über standardisierte Regex-Muster.
+Eingabefelder für strukturierte Datenformate dürfen nicht als unvalidierte Freitexte verbleiben. Um dezentralen Formularerstellenden ohne Programmierkenntnisse eine barrierefreie Umsetzung zu ermöglichen, stellt die Registry standardisierte reguläre Ausdrücke (Regex) direkt als Copy-and-Paste-Vorlagen bereit:
+\begin{itemize}
+    \item \textbf{Postleitzahl (PLZ, 5 Ziffern):} \texttt{\^{}[0-9]\{5\}\$}
+    \item \textbf{IBAN (Deutschland, 22 Zeichen):} \texttt{\^{}[A-Z]\{2\}[0-9]\{20\}\$} (bzw. SEPA international: \texttt{\^{}[A-Z]\{2\}[0-9]\{2\}[A-Z0-9]\{11,28\}\$})
+    \item \textbf{Telefonnummer (Festnetz \& Mobil):} \texttt{\^{}(\textbackslash+[0-9]\{1,3\}|0)[0-9\textbackslash s\textbackslash-/]\{6,20\}\$}
+    \item \textbf{Matrikelnummer (HWG Ludwigshafen, 6--7 Ziffern):} \texttt{\^{}[0-9]\{6,7\}\$}
+\end{itemize}
+Die Formularerstellenden müssen diese Ausdrücke lediglich im Formcycle Designer unter \textit{\enquote{Eigenschaften $\rightarrow$ Validierung $\rightarrow$ Regulärer Ausdruck (Regex)}} einfügen und einen verständlichen Hinweistext hinterlegen.
 
 \subsection{Affordanzgerechte Feldbreiten (\texttt{HWG-UX-01})}
 Kurze strukturierte Eingabefelder (PLZ, Hausnummer) dürfen nicht auf 100\,\% gestreckt werden. Die visuelle Feldlänge signalisiert als nonverbale Affordanz nach \textcite{wroblewski2008web} die erwartete Zeichenanzahl und muss auf maximal \texttt{150px} begrenzt werden.
