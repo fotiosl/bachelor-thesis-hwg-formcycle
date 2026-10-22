@@ -1,26 +1,65 @@
 import os
 import subprocess
 import sys
+import shutil
+
+def find_executable(name):
+    # 1. System PATH
+    found = shutil.which(name)
+    if found:
+        return found
+    
+    # 2. Check current user LOCALAPPDATA / APPDATA
+    user_candidates = []
+    local_appdata = os.environ.get("LOCALAPPDATA")
+    if local_appdata:
+        user_candidates.append(os.path.join(local_appdata, "Programs", "MiKTeX", "miktex", "bin", "x64", f"{name}.exe"))
+    
+    home_dir = os.path.expanduser("~")
+    user_candidates.append(os.path.join(home_dir, "AppData", "Local", "Programs", "MiKTeX", "miktex", "bin", "x64", f"{name}.exe"))
+    
+    # 3. Check system-wide paths
+    system_candidates = [
+        os.path.join(r"C:\Program Files", "MiKTeX", "miktex", "bin", "x64", f"{name}.exe"),
+        os.path.join(r"C:\Program Files (x86)", "MiKTeX", "miktex", "bin", f"{name}.exe"),
+        os.path.join(r"C:\texlive", "2026", "bin", "windows", f"{name}.exe"),
+        os.path.join(r"C:\texlive", "2025", "bin", "windows", f"{name}.exe"),
+        os.path.join(r"C:\texlive", "2024", "bin", "windows", f"{name}.exe"),
+    ]
+    
+    for c in user_candidates + system_candidates:
+        if os.path.exists(c):
+            return c
+    return None
 
 def build():
-    miktex_bin = r"C:\Users\fotii\AppData\Local\Programs\MiKTeX\miktex\bin\x64"
-    pdflatex = os.path.join(miktex_bin, "pdflatex.exe")
-    biber = os.path.join(miktex_bin, "biber.exe")
+    pdflatex = find_executable("pdflatex")
+    biber = find_executable("biber")
     
+    if not pdflatex:
+        print("FEHLER: 'pdflatex' wurde weder im PATH noch in Standard-Installationspfaden (MiKTeX/TeX Live) gefunden.")
+        print("Bitte installieren Sie MiKTeX oder TeX Live oder fügen Sie das 'bin'-Verzeichnis zu den Umgebungsvariablen hinzu.")
+        sys.exit(1)
+        
+    print(f"Verwende pdflatex: {pdflatex}")
+    if biber:
+        print(f"Verwende biber:    {biber}")
+    else:
+        print("HINWEIS: 'biber' nicht gefunden. Literaturverzeichnis wird möglicherweise nicht neu generiert.")
+        
     thesis_dir = os.path.abspath("thesis")
     
-    print("=== [1/3] Erste Kompilierung mit pdflatex ===")
+    print("\n=== [1/3] Erste Kompilierung mit pdflatex ===")
     res1 = subprocess.run([pdflatex, "-interaction=nonstopmode", "-enable-installer", "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
     print("pdflatex 1 beendet, Return Code:", res1.returncode)
     
-    # Check if biber is needed
     bcf_file = os.path.join(thesis_dir, "main.bcf")
-    if os.path.exists(bcf_file):
-        print("=== [2/3] Literaturverzeichnis mit Biber verarbeiten ===")
+    if os.path.exists(bcf_file) and biber:
+        print("\n=== [2/3] Literaturverzeichnis mit Biber verarbeiten ===")
         res2 = subprocess.run([biber, "main"], cwd=thesis_dir, capture_output=True, text=True)
         print("biber beendet, Return Code:", res2.returncode)
         
-    print("=== [3/3] Finale Kompilierung mit pdflatex ===")
+    print("\n=== [3/3] Finale Kompilierung mit pdflatex ===")
     res3 = subprocess.run([pdflatex, "-interaction=nonstopmode", "-enable-installer", "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
     print("pdflatex final beendet, Return Code:", res3.returncode)
     

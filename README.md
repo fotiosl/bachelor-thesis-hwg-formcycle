@@ -1,6 +1,6 @@
 # Bachelorarbeit: Konzeption eines einheitlichen Formular-Standards & KI-gestützte Compliance-Prüfung in Formcycle
 
-[![Status](https://img.shields.io/badge/Status-In%20Progress-blue.svg)]()
+[![Status](https://img.shields.io/badge/Status-Review%20%26%20Finalization-success.svg)]()
 [![Frist](https://img.shields.io/badge/Abgabe-07.12.2026-critical.svg)]()
 [![Institution](https://img.shields.io/badge/Hochschule-HWG%20Ludwigshafen-red.svg)]()
 
@@ -27,20 +27,20 @@ Diese Arbeit verfolgt ein doppeltes Ziel nach dem **Design Science Research (DSR
 ## 📁 Projektstruktur
 
 ```text
-├── docs/
-│   ├── EXPOSE.md             # Vollständiges, abgestimmtes Exposé
-│   ├── GUIDELINES_HWG.md     # Leitfaden des Betreuers & KI-Richtlinien
-│   └── TIMELINE.md           # Detaillierter 8,5-Wochen-Zeitplan mit Meilensteinen
-├── literature/
-│   ├── references.bib        # BibTeX-Datei für Zotero / Mendeley (APA 7th)
-│   ├── pdfs/                 # Lokale Volltext-PDFs der Kernliteratur
-│   └── summaries/            # Strukturierte Zusammenfassungen & Zitate
+├── docs/                     # Exposé, Richtlinien, Zeitplan, Modulhandbuch, Ist-Analyse
+├── literature/               # BibTeX (references.bib nach APA 7th), Kernliteratur-PDFs & Zusammenfassungen
 ├── data/
-│   ├── raw_forms/            # Manuell exportierte Originalformulare der HWG
-│   ├── rules/                # Formalisierte Regeln (rules_registry.json)
-│   └── test_forms/           # Synthetische Testformulare (Ground Truth Benchmarks)
-├── src/
-│   └── middleware/           # Python-/Node.js-Prototyp der Prüfpipeline
+│   ├── raw_forms/            # Exportierte Originalformulare der HWG (.xfp) & gerenderte DOM-Snapshots
+│   ├── rules/                # Formalisierte Governance-Regeln (rules_registry.json v1.5.0)
+│   ├── test_forms/           # Synthetische Testformulare (Ground Truth Benchmarks)
+│   ├── evaluation/           # Empirische Benchmark-Ergebnisse (multi_model_benchmark_results.json)
+│   └── prompts/              # Strukturierte Prompts für Open-Source- & Frontier-Modelle
+├── scripts/                  # Prüf-Engine (test_rule_engine.py), Build- & Analysewerkzeuge
+│   └── archive/              # Archivierte Textgenerierungs- und Optimierungsskripte
+├── web/                      # Intranet-Web-Dashboard (compliance_dashboard.html & server.py)
+│   └── vendor/               # Lokale Offline-Bibliotheken (JSZip für Air-Gapped Intranet)
+├── deploy/                   # Container-Bereitstellung (Dockerfile, docker-compose.yml, nginx.conf)
+├── thesis/                   # Vollständige LaTeX-Ausarbeitung (Kapitel 1–7, Anhang, Grafiken)
 └── README.md
 ```
 

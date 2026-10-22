@@ -98,7 +98,7 @@ Hochschulspezifische Fachbegriffe (z.\,B. \enquote{Kostenstelle}, \enquote{Remon
 Die Statusbezeichnungen in Formcycle-Workflows werden universitätsweit auf vier kanonische Zustände harmonisiert: \texttt{EINGEGANGEN}, \texttt{IN\_PRUEFUNG}, \texttt{GENEHMIGT} und \texttt{ABGELEHNT}.
 
 \subsection{Eindeutige Vorgangsreferenz in Prozess-E-Mails (\texttt{HWG-WF-02})}
-Jede vom Workflow versendete E-Mail muss den Platzhalter der Vorgangsnummer (\texttt{[\%vorgangsnr\%]}) im Betreff und im Nachrichtentext führen, um Medienbrüche bei Rückfragen zu verhindern.
+Jede vom Workflow versendete E-Mail muss den Platzhalter der Vorgangsnummer (\texttt{[\%\$PROJECT\_ALIAS\%]}) im Betreff und im Nachrichtentext führen, um Medienbrüche bei Rückfragen zu verhindern.
 
 \subsection{Prozesstransparenz und Zwischenspeicher-Empfehlung}
 \label{subsec:feedback_zwischenspeicher}
@@ -138,29 +138,29 @@ Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 22 f
 \textbf{Regel-ID} & \textbf{Prüfstufe} & \textbf{Regelbezeichnung / Prüfkriterium} & \textbf{Schweregrad} & \textbf{Abzug} \\
 \midrule
 \texttt{HWG-CD-01}     & Deterministisch & Standard-Layoutbreite exakt 850px & Major & 8 \\
-\texttt{HWG-CD-02}     & Deterministisch & Offizielles Header-Logo (60px, rechtsbündig) & Major & 8 \\
-\texttt{HWG-CD-03}     & Deterministisch & XIMA-Herstellerlogo deaktiviert (\texttt{showlogo="0"}) & Minor & 3 \\
+\texttt{HWG-CD-02}     & Deterministisch & Offizielles Header-Logo (60px, rechtsbündig) & Critical* & 15 \\
+\texttt{HWG-CD-03}     & Deterministisch & XIMA-Herstellerlogo deaktiviert (\texttt{showlogo="0"}) & Major & 8 \\
 \texttt{HWG-CD-04}     & Deterministisch & Formulartitel im Header als H1 ausgezeichnet & Major & 8 \\
-\texttt{HWG-A11Y-01}   & Deterministisch & Semantische Fieldsets zur Gruppenbildung & Major & 8 \\
-\texttt{HWG-A11Y-02}   & Deterministisch & Pflichtfeld-Hinweistext global aktiv & Minor & 3 \\
+\texttt{HWG-A11Y-01}   & Deterministisch & Semantische Fieldsets zur Gruppenbildung & Critical & 15 \\
+\texttt{HWG-A11Y-02}   & Deterministisch & Pflichtfeld-Hinweistext global aktiv & Major & 8 \\
 \texttt{HWG-A11Y-03}   & Deterministisch & Keine HTML-Entitäten in sichtbaren Labels & Minor & 3 \\
-\texttt{HWG-STAMM-01}  & Deterministisch & Kanonische Stammdaten-Reihenfolge & Minor & 3 \\
+\texttt{HWG-STAMM-01}  & Deterministisch & Kanonische Stammdaten-Reihenfolge & Major & 8 \\
 \texttt{HWG-STAMM-02}  & Semantisch (LLM)& Standardisierte Stammdaten-Bezeichnungen & Minor & 3 \\
-\texttt{HWG-DSGVO-01}  & Deterministisch & DSGVO-Datenschutzklausel vorhanden & Critical & 15 \\
-\texttt{HWG-VAL-01}    & Deterministisch & Regex-Formatvalidierung (IBAN, PLZ, Tel) & Major & 8 \\
-\texttt{HWG-UX-01}     & Deterministisch & Affordanzgerechte Feldbreiten & Minor & 3 \\
-\texttt{HWG-UPLOAD-01} & Deterministisch & Dateityp- und Größenbeschränkung genannt & Minor & 3 \\
+\texttt{HWG-UI-01}     & Deterministisch & Bereinigung interner Entwicklernotizen & Critical & 15 \\
 \texttt{HWG-BTN-01}    & Semantisch (LLM)& Action-Verb-Muster für Schaltflächen & Major & 8 \\
 \texttt{HWG-BTN-02}    & Deterministisch & Einheitliche Mehrseiten-Navigation & Minor & 3 \\
-\texttt{HWG-LANG-01}   & Semantisch (LLM)& Fachjargon und Abkürzungen erläutert & Minor & 3 \\
+\texttt{HWG-DSGVO-01}  & Deterministisch & DSGVO-Datenschutzklausel vorhanden & Critical & 15 \\
+\texttt{HWG-UPLOAD-01} & Deterministisch & Dateityp- und Größenbeschränkung genannt & Major & 8 \\
+\texttt{HWG-VAL-01}    & Deterministisch & Regex-Formatvalidierung (IBAN, PLZ, Tel) & Major & 8 \\
+\texttt{HWG-UX-01}     & Deterministisch & Affordanzgerechte Feldbreiten & Minor & 3 \\
+\texttt{HWG-UX-02}     & Deterministisch & Zwischenspeicher-Empfehlung ($\ge 3$ S. / $\ge 25$ F.) & Recomm. & 0 \\
+\texttt{HWG-LANG-01}   & Semantisch (LLM)& Fachjargon und Abkürzungen erläutert & Major & 8 \\
 \texttt{HWG-LANG-02}   & Deterministisch & Satzlängenbegrenzung ($\le 25$ Wörter) & Minor & 3 \\
+\texttt{HWG-FEEDBACK-01}& Deterministisch & Automatisierte Eingangsbestätigung & Minor & 3 \\
 \texttt{HWG-WF-01}     & Deterministisch & Standardisierte Statusnomenklatur & Minor & 3 \\
 \texttt{HWG-WF-02}     & Deterministisch & Eindeutige Vorgangsreferenz in E-Mails & Minor & 3 \\
-\texttt{HWG-FEEDBACK-01}& Deterministisch & Automatisierte Eingangsbestätigung & Major & 8 \\
-\texttt{HWG-UX-02}     & Deterministisch & Zwischenspeicher-Empfehlung ($\ge 3$ S.) & Recomm. & 0 \\
-\texttt{HWG-UI-01}     & Deterministisch & Bereinigung interner Entwicklernotizen & Major & 8 \\
 \bottomrule
 \end{tabularx}
-\caption{Übersicht der 22 Governance-Regeln der Compliance-Registry v1.5.0}
+\caption{Übersicht der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8)}
 \label{tab:rules_catalog}
 \end{table}
