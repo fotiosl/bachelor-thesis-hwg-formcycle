@@ -61,9 +61,12 @@ def evaluate_form(xfp_path, registry):
         workflow_states = form_data.get("workflow_states", [])
     else:
         with zipfile.ZipFile(xfp_path) as z:
-            fcp_name = [n for n in z.namelist() if n.endswith(".fcp")][0]
+            fcp_candidates = [n for n in z.namelist() if n.endswith(".fcp")]
+            if not fcp_candidates:
+                raise ValueError(f"Keine .fcp Modelldatei im Formulararchiv '{os.path.basename(xfp_path)}' gefunden.")
+            fcp_name = fcp_candidates[0]
             form_data = json.loads(z.read(fcp_name).decode("utf-8", "ignore"))
-            fcexports = [n for n in z.namelist() if n.endswith(".fcexport") and "/projects/" in n and "idcheck" not in n and "versions" not in n]
+            fcexports = [n for n in z.namelist() if n.endswith(".fcexport") and ("/projects/" in n or "\\projects\\" in n) and "idcheck" not in n and "versions" not in n]
             for fce in fcexports:
                 proj_data = json.loads(z.read(fce).decode("utf-8", "ignore"))
                 ems, sts = extract_workflow_emails_and_states_from_fcexport(proj_data)
@@ -251,7 +254,8 @@ def evaluate_form(xfp_path, registry):
         if any(term in name or term in lbl_lower for term in ["vorname", "nachname", "name", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift"]):
             has_personal_data = True
             
-        if any(term in lbl_lower or term in help_text for term in ["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"]):
+        raw_dsgvo_ctx = f"{lbl_lower} {help_text} {str(props.get('rtevalue', '')).lower()} {str(props.get('html', '')).lower()}"
+        if any(term in raw_dsgvo_ctx for term in ["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"]):
             has_dsgvo_notice = True
         if c == "XFooter" and str(props.get("privacyPolicyShow", "0")) == "1":
             has_dsgvo_notice = True
@@ -284,7 +288,8 @@ def evaluate_form(xfp_path, registry):
 
         # 11. Jargon without help
         for jg in jargon_catalog:
-            if jg in lbl_lower:
+            matched = bool(re.search(rf"\b{re.escape(jg)}\b", lbl_lower)) if len(jg) <= 4 else (jg in lbl_lower)
+            if matched:
                 if not help_text or len(help_text.strip()) < 5:
                     jargon_without_help.append((jg, props.get("name", lbl[:15])))
 
@@ -426,6 +431,8 @@ def evaluate_form(xfp_path, registry):
         for i in range(len(personal_fields_sequence) - 1):
             curr = personal_fields_sequence[i]
             nxt = personal_fields_sequence[i+1]
+            if nxt[0] == "anrede" and curr[0] in ["email", "telefon"]:
+                continue
             if curr[3] > nxt[3]: # e.g. Nachname (3) before Vorname (2)
                 out_of_order.append(f"'{curr[2]}' ({curr[0]}) vor '{nxt[2]}' ({nxt[0]})")
         if out_of_order:

@@ -148,19 +148,19 @@ Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 22 f
 \texttt{HWG-STAMM-02}  & Semantisch (LLM)& Standardisierte Stammdaten-Bezeichnungen & Minor & 3 \\
 \texttt{HWG-UI-01}     & Deterministisch & Bereinigung interner Entwicklernotizen & Critical & 15 \\
 \texttt{HWG-BTN-01}    & Semantisch (LLM)& Action-Verb-Muster für Schaltflächen & Major & 8 \\
-\texttt{HWG-BTN-02}    & Deterministisch & Einheitliche Mehrseiten-Navigation & Minor & 3 \\
+\texttt{HWG-BTN-02}    & Semantisch (LLM)& Einheitliche Mehrseiten-Navigation & Minor & 3 \\
 \texttt{HWG-DSGVO-01}  & Deterministisch & DSGVO-Datenschutzklausel vorhanden & Critical & 15 \\
 \texttt{HWG-UPLOAD-01} & Deterministisch & Dateityp- und Größenbeschränkung genannt & Major & 8 \\
 \texttt{HWG-VAL-01}    & Deterministisch & Regex-Formatvalidierung (IBAN, PLZ, Tel) & Major & 8 \\
 \texttt{HWG-UX-01}     & Deterministisch & Affordanzgerechte Feldbreiten & Minor & 3 \\
-\texttt{HWG-UX-02}     & Deterministisch & Zwischenspeicher-Empfehlung ($\ge 3$ S. / $\ge 25$ F.) & Recomm. & 0 \\
+\texttt{HWG-UX-02}     & Hybrid (AST/LLM)& Zwischenspeicher-Empfehlung ($\ge 3$ S. / $\ge 25$ F.) & Recomm. & 0 \\
 \texttt{HWG-LANG-01}   & Semantisch (LLM)& Fachjargon und Abkürzungen erläutert & Major & 8 \\
-\texttt{HWG-LANG-02}   & Deterministisch & Satzlängenbegrenzung ($\le 25$ Wörter) & Minor & 3 \\
-\texttt{HWG-FEEDBACK-01}& Deterministisch & Automatisierte Eingangsbestätigung & Minor & 3 \\
+\texttt{HWG-LANG-02}   & Hybrid (AST/LLM)& Satzlängenbegrenzung ($\le 25$ Wörter) & Minor & 3 \\
+\texttt{HWG-FEEDBACK-01}& Hybrid (AST/LLM)& Automatisierte Eingangsbestätigung & Minor & 3 \\
 \texttt{HWG-WF-01}     & Deterministisch & Standardisierte Statusnomenklatur & Minor & 3 \\
 \texttt{HWG-WF-02}     & Deterministisch & Eindeutige Vorgangsreferenz in E-Mails & Minor & 3 \\
 \bottomrule
 \end{tabularx}
-\caption{Übersicht der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8)}
+\caption{Übersicht der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8; semantische und hybride Regeln werden zusätzlich über den LLM-Context-Prompt auditiert)}
 \label{tab:rules_catalog}
 \end{table}

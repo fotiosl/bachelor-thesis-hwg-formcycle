@@ -56,7 +56,7 @@ Tabelle~\ref{tab:eval_results} fasst die quantitativen Evaluationsergebnisse der
 \end{table}
 
 \subsection{Erkennungsgenauigkeit am synthetischen Kontrollkorpus}
-Am synthetischen Referenzkorpus demonstriert die Prüfpipeline eine perfekte Trennschärfe: Beim fehlerhaften Referenzformular wurden ausnahmslos alle 18 injizierten Mängel detektiert ($R = 100\,\%$, $P = 100\,\%$). Beim vollkonformen Formular attestierte das System 20 bestandene Kriterien (inklusive zweier nicht-anwendbarer Prüfregeln im Negativumfeld) ohne einen einzigen Fehlalarm ($P = 100\,\%$).
+Am synthetischen Referenzkorpus demonstriert die Prüfpipeline eine perfekte Trennschärfe: Beim fehlerhaften Referenzformular wurden ausnahmslos alle 18 injizierten Mängel detektiert ($R = 100\,\%$, $P = 100\,\%$). Beim vollkonformen Formular attestierte das System 20 bestandene Kriterien (sowie einer im einseitigen Kontext nicht-anwendbaren Prüfregel \texttt{HWG-BTN-02}) ohne einen einzigen Fehlalarm ($P = 100\,\%$).
 
 \subsection{Diagnostische Erkenntnisse am realen HWG-Bestand}
 Die Auswertung der drei realen Formulare bestätigt die in der Ist-Analyse (Kapitel~\ref{chap:ist_analyse}) diagnostizierten Schwachstellen unter Anwendung des formalisierten Bewertungsmodells nach Gleichung~(\ref{eq:compliance_score}):

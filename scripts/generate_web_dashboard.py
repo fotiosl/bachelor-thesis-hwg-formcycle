@@ -1173,7 +1173,8 @@ def generate_dashboard():
                 if (["vorname", "nachname", "name", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift"].some(t => name.includes(t) || lblLower.includes(t))) {{
                     hasPersonalData = true;
                 }}
-                if (["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"].some(t => lblLower.includes(t) || helpText.includes(t))) {{
+                const rawDsgvoCtx = (lblLower + " " + helpText + " " + String(props.rtevalue || "").toLowerCase() + " " + String(props.html || "").toLowerCase());
+                if (["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"].some(t => rawDsgvoCtx.includes(t))) {{
                     hasDsgvoNotice = true;
                 }}
                 if (c === "XFooter" && String(props.privacyPolicyShow || "0") === "1") {{
@@ -1204,7 +1205,8 @@ def generate_dashboard():
                 }}
 
                 jargonCatalog.forEach(jg => {{
-                    if (lblLower.includes(jg) && (!helpText || helpText.trim().length < 5)) {{
+                    const matched = (jg.length <= 4) ? new RegExp('\\\\b' + jg + '\\\\b', 'i').test(lblLower) : lblLower.includes(jg);
+                    if (matched && (!helpText || helpText.trim().length < 5)) {{
                         jargonWithoutHelp.push([jg, props.name || lblClean.slice(0, 15)]);
                     }}
                 }});
@@ -1322,6 +1324,7 @@ def generate_dashboard():
                 for (let i = 0; i < personalFieldsSequence.length - 1; i++) {{
                     const curr = personalFieldsSequence[i];
                     const nxt = personalFieldsSequence[i + 1];
+                    if (nxt[0] === "anrede" && (curr[0] === "email" || curr[0] === "telefon")) continue;
                     if (curr[3] > nxt[3]) {{
                         outOfOrder.push(`'${{curr[2]}}' (${{curr[0]}}) vor '${{nxt[2]}}' (${{nxt[0]}})`);
                     }}

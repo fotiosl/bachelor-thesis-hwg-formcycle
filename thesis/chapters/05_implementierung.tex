@@ -71,12 +71,12 @@ Aus diesem Grund führt die Pipeline vor der Modellinjektion eine gezielte Texta
 \begin{enumerate}
     \item Sämtliche rein technischen Attribute (GUIDs, relative Koordinaten, CSS-Style-Definitionen) werden verworfen.
     \item Es wird ein kompakter Extrakt erzeugt, der ausschließlich funktionale Feldbezeichner, sichtbare Labels, Hilfetexte, Schaltflächenbeschriftungen sowie Workflow-E-Mails enthält. Dadurch sinkt der Token-Bedarf um über 90\,\%.
-    \item Der System-Prompt definiert die Rolle des Modells als Usability-Auditor. Die Definitionen der semantischen Regeln (\texttt{HWG-BTN-01}, \texttt{HWG-LANG-01}, \texttt{HWG-STAMM-02}) werden als deterministischer Kontext injiziert.
+    \item Der System-Prompt definiert die Rolle des Modells als Usability-Auditor. Die Definitionen der semantischen Governance-Regeln (u.\,a. \texttt{HWG-BTN-01}, \texttt{HWG-LANG-01}, \texttt{HWG-STAMM-02}, \texttt{HWG-FEEDBACK-01}) werden als deterministischer Kontext injiziert.
     \item Das Modell wird durch ein striktes JSON-Schema verpflichtet, ausschließlich valide strukturierte Ergebnisse zurückzuliefern. Jede festgestellte Regelverletzung enthält die Regel-ID, die fehlerhafte Textstelle, eine Begründung und einen konkreten Umformulierungsvorschlag.
 \end{enumerate}
 
 \subsection{Phase 4: Mathematische Fusion, Scoring und Remediation}
-In der finalen Phase fusioniert das System die Ergebnisse aus beiden Prüfströmen. Die mathematische Berechnung des Gesamt-Scores erfolgt deterministisch nach Gl.~(\ref{eq:compliance_score}). Für jeden gefundenen Verstoß wird ein strukturierter Berichtseintrag generiert. Ein entscheidender Pfeiler ist das \textit{Remediation-Konzept}: Die Pipeline verknüpft jede verletzte Regel mit einem präzisen, klickbasierten Lösungspfad für den Formcycle-Designer (z.\,B. \textit{„Designer $\rightarrow$ Element footer1 auswählen $\rightarrow$ Eigenschaften $\rightarrow$ Haken bei 'Logo anzeigen' entfernen“}).
+In der finalen Phase fusioniert das System die Ergebnisse aus beiden Prüfströmen. Die mathematische Berechnung des Gesamt-Scores erfolgt deterministisch nach Gl.~(\ref{eq:compliance_score}). Für jeden gefundenen Verstoß wird ein strukturierter Berichtseintrag generiert. Ein entscheidender Pfeiler ist das \textit{Remediation-Konzept}: Die Pipeline verknüpft jede verletzte Regel mit einem präzisen, klickbasierten Lösungspfad für den Formcycle-Designer (z.\,B. \enquote{Designer $\rightarrow$ Element footer1 auswählen $\rightarrow$ Eigenschaften $\rightarrow$ Haken bei 'Logo anzeigen' entfernen}).
 
 Übersteigt ein Formular drei Seiten oder 25 Eingabefelder ohne Speicherfunktion, wird eine prominente Empfehlung zur Aktivierung der Zwischenspeicherung ausgegeben (\texttt{HWG-UX-02}, 0 Punkte Abzug).
 
