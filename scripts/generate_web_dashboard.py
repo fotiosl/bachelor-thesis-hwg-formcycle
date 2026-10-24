@@ -1288,11 +1288,13 @@ def generate_dashboard():
             }}
 
             // 5. HWG-A11Y-01
-            if (!hasFieldset && items.length > 20) {{
+            if (hasFieldset) {{
+                results.passed.push("HWG-A11Y-01 (Fieldsets vorhanden: Semantische Gruppenbildung erfüllt)");
+            }} else if (items.length > 20) {{
                 results.violations.push({{ rule: "HWG-A11Y-01", severity: "critical", message: "Keine semantischen XFieldSet-Gruppierungen für Formularabschnitte vorhanden." }});
                 results.score -= penalties.critical;
             }} else {{
-                results.passed.push("HWG-A11Y-01 (Fieldsets vorhanden)");
+                results.passed.push("HWG-A11Y-01 (Kompaktformular <= 20 Elemente: Keine Abschnittsbildung per Fieldset erforderlich)");
             }}
 
             // 6. HWG-A11Y-02

@@ -22,28 +22,7 @@ Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes
 
 \begin{figure}[htbp]
     \centering
-    \small
-    \begin{tabularx}{\textwidth}{|X|}
-        \hline
-        \textbf{1. Ingestion \& Dekompression (\texttt{.xfp} / JSON)} \tabularnewline
-        Automatisches Entpacken des ZIP-Archivs, Laden des Frontend-Baums (\texttt{.fcp}) und aller Workflow-Prozessbäume (\texttt{/projects/*.fcexport}) in den flüchtigen Speicher. \tabularnewline
-        \hline
-        \hfil $\Downarrow$ \tabularnewline
-        \hline
-        \textbf{2. Stufe 1: Deterministische AST-Traversierung \& Merkmalsextraktion} \tabularnewline
-        Traversierung der \texttt{items}-Hierarchie; Extraktion von Komponenten-Typen, Breitenattributen (\texttt{maxwidth}), Pflichtfeld-Deklarationen (\texttt{showrequiredhint}), HTML-Entitäten, DSGVO-Containern und Workflow-Knoten (\texttt{FC\_EMAIL}, \texttt{FC\_CHANGE\_STATE}). \tabularnewline
-        \hline
-        \hfil $\Downarrow$ \tabularnewline
-        \hline
-        \textbf{3. Stufe 2: Kontextoptimierte semantische LLM-Injektion} \tabularnewline
-        Filterung der UI-Texte; Reduktion von Layout-Ballast (>90\,\% Token-Ersparnis); strukturierter System-Prompt mit Governance-Registry; strikte JSON-Schema-Validierung zur Vermeidung von Syntaxbrüchen und Halluzinationen. \tabularnewline
-        \hline
-        \hfil $\Downarrow$ \tabularnewline
-        \hline
-        \textbf{4. Mathematische Fusion, Scoring \& Remediation-Synthese} \tabularnewline
-        Fusion beider Prüfströme; Berechnung des aggregierten Compliance-Scores nach Gleichung~(\ref{eq:compliance_score}); Ableitung konkreter Klickpfade im Formcycle-Designer; Ausweisung unverbindlicher UX-Empfehlungen (0 Punkte Abzug). \tabularnewline
-        \hline
-    \end{tabularx}
+    \includegraphics[width=0.88\textwidth]{figures/pipeline_architektur.pdf}
     \caption{Vierstufige Architektur der hybriden Compliance-Prüfpipeline}
     \label{fig:pipeline_datenfluss}
 \end{figure}
@@ -65,7 +44,7 @@ Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmals
 \end{itemize}
 
 \subsection{Phase 3: Kontextoptimiertes Context-Engineering für das LLM}
-Für sprachliche und ergonomische Nuancen schaltet die Pipeline das semantische LLM-Modul zu. Eine unbereinigte Übergabe des vollständigen JSON-Baums würde zu massiver Token-Verschwendung führen und die Gefahr von Aufmerksamkeitsverlust (\textit{Lost in the Middle}) sowie Halluzinationen drastisch erhöhen (\textcite{duan2024generating, cha2026design}).
+Für sprachliche und ergonomische Nuancen schaltet die Pipeline das semantische LLM-Modul zu. Eine unbereinigte Übergabe des vollständigen JSON-Baums würde zu massiver Token-Verschwendung führen und die Gefahr von Aufmerksamkeitsverlust (\textit{Lost in the Middle}) sowie Halluzinationen drastisch erhöhen \parencite{duan2024generating, cha2026design}.
 
 Aus diesem Grund führt die Pipeline vor der Modellinjektion eine gezielte Textabstraktion durch:
 \begin{enumerate}

@@ -21,7 +21,7 @@ Die Fragmentierung zwischen älteren 700px- und neueren 850px-Layouts wird durch
 \subsection{Seitenstrukturierung und Pagination (Chunking)}
 \label{subsec:pagination_chunking}
 
-Komplexe Verwaltungsprozesse im Hochschulbereich (wie Auslagenerstattungen oder Drittmittelanträge) umfassen häufig 50 bis über 100 Einzelfelder. Ein monolithisches Single-Page-Design überfordert Nutzende kognitiv und führt zu hohen Abbruchraten \cite{bargas2010usable, seckler2014validation}.
+Komplexe Verwaltungsprozesse im Hochschulbereich (wie Auslagenerstattungen oder Drittmittelanträge) umfassen häufig 50 bis über 100 Einzelfelder. Ein monolithisches Single-Page-Design überfordert Nutzende kognitiv und führt zu hohen Abbruchraten \parencite{bargas2010usable, seckler2014validation}.
 \begin{itemize}
     \item \textbf{Regelbasiertes Chunking:} Formulare mit mehr als 20 Einzelelementen müssen in logisch abgegrenzte Bildschirmseiten (\texttt{XPage}) unterteilt werden: (1) Persönliche Angaben / Stammdaten $\rightarrow$ (2) Sachverhalts- und Antragsdaten $\rightarrow$ (3) Finanzielle Kalkulation / Belege $\rightarrow$ (4) Bestätigung, Datenschutz und Abschluss.
     \item \textbf{Lineare Navigationssteuerung (\texttt{HWG-BTN-02}):} Zur Seitensteuerung dürfen ausschließlich standardisierte Schaltflächen mit den Beschriftungen \textit{\enquote{Weiter}} (primär, rechtsbündig) und \textit{\enquote{Zurück}} (sekundär, linksbündig) eingesetzt werden. Unpräzise Bezeichnungen wie \textit{\enquote{weiter zu Seite 2}} sind unzulässig.
@@ -80,7 +80,7 @@ Eingabefelder für strukturierte Datenformate dürfen nicht als unvalidierte Fre
 Die Formularerstellenden müssen diese Ausdrücke lediglich im Formcycle Designer unter \textit{\enquote{Eigenschaften $\rightarrow$ Validierung $\rightarrow$ Regulärer Ausdruck (Regex)}} einfügen und einen verständlichen Hinweistext hinterlegen.
 
 \subsection{Affordanzgerechte Feldbreiten (\texttt{HWG-UX-01})}
-Kurze strukturierte Eingabefelder (PLZ, Hausnummer) dürfen nicht auf 100\,\% gestreckt werden. Die visuelle Feldlänge signalisiert als nonverbale Affordanz nach \textcite{wroblewski2008web} die erwartete Zeichenanzahl und muss auf maximal \texttt{150px} begrenzt werden.
+Kurze strukturierte Eingabefelder (PLZ, Hausnummer) dürfen nicht auf 100\,\% gestreckt werden. Die visuelle Feldlänge signalisiert als nonverbale Affordanz nach \textcite{wroblewski2008web} die erwartete Zeichenanzahl und muss auf maximal 30--40\,\% der Zeilenbreite (bzw. 4 Spalten im 12er-Raster) oder eine Obergrenze von \texttt{150px} begrenzt werden.
 
 \subsection{Transparente Dateiupload-Spezifikationen (\texttt{HWG-UPLOAD-01})}
 Upload-Elemente müssen im Label oder Hilfetext die zulässigen Dateiformate (z.\,B. PDF, JPG, PNG) und die maximale Dateigröße (z.\,B. max. 10\,MB) transparent ausweisen.
@@ -95,7 +95,7 @@ Hochschulspezifische Fachbegriffe (z.\,B. \enquote{Kostenstelle}, \enquote{Remon
 \label{sec:workflow_governance}
 
 \subsection{Standardisierte Workflow-Statusnomenklatur (\texttt{HWG-WF-01})}
-Die Statusbezeichnungen in Formcycle-Workflows werden universitätsweit auf vier kanonische Zustände harmonisiert: \texttt{EINGEGANGEN}, \texttt{IN\_PRUEFUNG}, \texttt{GENEHMIGT} und \texttt{ABGELEHNT}.
+Die Statusbezeichnungen in Formcycle-Workflows werden universitätsweit auf einen kanonischen Lebenszyklus harmonisiert: \textit{\enquote{Eingegangen}}, \textit{\enquote{In Prüfung}}, \textit{\enquote{Nachforderung ausstehend}}, \textit{\enquote{Genehmigt}} und \textit{\enquote{Abgelehnt}} (sowie \textit{\enquote{Archiviert}}). Ad-hoc-Statusbezeichnungen ohne Prozessbedeutung sind unzulässig.
 
 \subsection{Eindeutige Vorgangsreferenz in Prozess-E-Mails (\texttt{HWG-WF-02})}
 Jede vom Workflow versendete E-Mail muss den Platzhalter der Vorgangsnummer (\texttt{[\%\$PROJECT\_ALIAS\%]}) im Betreff und im Nachrichtentext führen, um Medienbrüche bei Rückfragen zu verhindern.
@@ -142,7 +142,7 @@ Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 22 f
 \texttt{HWG-CD-03}     & Deterministisch & XIMA-Herstellerlogo deaktiviert (\texttt{showlogo="0"}) & Major & 8 \\
 \texttt{HWG-CD-04}     & Deterministisch & Formulartitel im Header als H1 ausgezeichnet & Major & 8 \\
 \texttt{HWG-A11Y-01}   & Deterministisch & Semantische Fieldsets zur Gruppenbildung & Critical & 15 \\
-\texttt{HWG-A11Y-02}   & Deterministisch & Pflichtfeld-Hinweistext global aktiv & Major & 8 \\
+\texttt{HWG-A11Y-02}   & Deterministisch & Programmatische \& optische Pflichtfeld-Deklaration & Major & 8 \\
 \texttt{HWG-A11Y-03}   & Deterministisch & Keine HTML-Entitäten in sichtbaren Labels & Minor & 3 \\
 \texttt{HWG-STAMM-01}  & Deterministisch & Kanonische Stammdaten-Reihenfolge & Major & 8 \\
 \texttt{HWG-STAMM-02}  & Semantisch (LLM)& Standardisierte Stammdaten-Bezeichnungen & Minor & 3 \\

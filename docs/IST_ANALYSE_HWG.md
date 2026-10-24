@@ -91,7 +91,7 @@ Die identifizierten Mängel wurden exemplarisch anhand hochauflösender Bildverg
 | :--- | :--- | :--- | :--- |
 | **Header & CI** | `Auslagenerstattung_Layout_Banner.png` | `Antrag_Sprints_Layout_Banner.png` | Fehlendes Hochschullogo, Breitenbruch 700px vs. 850px, invertierte Vorname/Nachname-Reihenfolge. |
 | **Stammdaten-Block** | `Master_Formular_Persoenliche_Angaben.png` | `FB1_Praktikum_Persoenliche_Angaben.png` | Diskrepanz bei Pflichtfeldsternen, Entwicklerkommentar im Live-Formular, uneinheitliche Feldbreiten. |
-| **Schaltflächen & Navigation** | `Stellenausschreibung_Button.png` | `Antrag_Sprints_Button.png` | Uneinheitliche Microcopy (`weiter zu Seite 2` vs. `senden`), problematischer Status-Button `Kritischer Fall`. |
+| **Schaltflächen & Navigation** | `KI-Beschaffung_Button.png` | `Antrag_Sprints_Button.png` | Uneinheitliche Microcopy (`weiter zu Seite 2` vs. `senden`), problematischer Status-Button `Kritischer Fall`. |
 
 ---
 

@@ -384,7 +384,9 @@ def evaluate_form(xfp_path, registry):
         results["score"] -= penalties["major"]
 
     # 3. HWG-A11Y-01 (Fieldsets)
-    if not has_fieldset and len(items) > 20:
+    if has_fieldset:
+        results["passed"].append("HWG-A11Y-01 (Fieldsets vorhanden: Semantische Gruppenbildung erfüllt)")
+    elif len(items) > 20:
         results["violations"].append({
             "rule": "HWG-A11Y-01",
             "severity": "critical",
@@ -392,7 +394,7 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["critical"]
     else:
-        results["passed"].append("HWG-A11Y-01 (Fieldsets vorhanden)")
+        results["passed"].append("HWG-A11Y-01 (Kompaktformular <= 20 Elemente: Keine Abschnittsbildung per Fieldset erforderlich)")
 
     # 4. HWG-A11Y-02 (Pflichtfeld-Deklaration mit Sternchen & aria-required)
     if missing_required_hints or manual_asterisks_in_labels:
@@ -588,6 +590,13 @@ def evaluate_form(xfp_path, registry):
             )
         })
         results["score"] -= penalties.get("recommendation", 0)
+    elif has_save_button:
+        results["passed"].append("HWG-UX-02 (Zwischenspeichern-Funktion für komplexe Formulare vorhanden)")
+    else:
+        results["not_applicable"]["HWG-UX-02"] = (
+            f"Kriterium auf diesen Formularkontext nicht anwendbar: Formularumfang ({page_count} Seiten, "
+            f"{input_field_count} Eingabefelder) erfordert keine Zwischenspeicherung."
+        )
 
     # 16. HWG-LANG-01
     if jargon_without_help:
