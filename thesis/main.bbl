@@ -162,21 +162,45 @@
       \verb https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
       \endverb
     \endentry
-    \entry{iso9241110}{standard}{}{}
+    \entry{iso9241110}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=2c17e6369f3351198fed96a848795517}{%
+           family={{DIN Deutsches Institut f{"u}r Normung e.\,V.}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \name{shortauthor}{1}{}{%
+        {{hash=0756f27ca9ade505a577fcdbfde2969b}{%
+           family={DIN},
+           familyi={D\bibinitperiod}}}%
+      }
       \list{location}{1}{%
         {Berlin}%
       }
-      \list{publisher}{1}{%
-        {Deutsches Institut für Normung e.\,V. / Beuth Verlag}%
+      \list{organization}{1}{%
+        {DIN Deutsches Institut f{"u}r Normung e.\,V.}%
       }
+      \list{publisher}{1}{%
+        {Beuth Verlag}%
+      }
+      \strng{namehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{fullhash}{2c17e6369f3351198fed96a848795517}
+      \strng{fullhashraw}{2c17e6369f3351198fed96a848795517}
+      \strng{bibnamehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{authorbibnamehash}{2c17e6369f3351198fed96a848795517}
+      \strng{authornamehash}{2c17e6369f3351198fed96a848795517}
+      \strng{authorfullhash}{2c17e6369f3351198fed96a848795517}
+      \strng{authorfullhashraw}{2c17e6369f3351198fed96a848795517}
+      \strng{shortauthorbibnamehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{shortauthornamehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{shortauthorfullhash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{shortauthorfullhashraw}{0756f27ca9ade505a577fcdbfde2969b}
       \field{sortinit}{D}
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \field{labelnamesource}{shortauthor}
       \field{labeltitlesource}{title}
-      \field{number}{DIN EN ISO 9241-110:2020-10}
-      \field{title}{Ergonomie der Mensch-System-Interaktion -- Teil 110: Interaktionsprinzipien}
-      \field{type}{Norm}
+      \field{title}{DIN EN ISO 9241-110:2020-10: Ergonomie der Mensch-System-Interaktion -- Teil 110: Interaktionsprinzipien}
       \field{year}{2020}
     \endentry
     \entry{duan2024generating}{inproceedings}{}{}
@@ -230,6 +254,44 @@
       \endverb
       \verb{url}
       \verb https://doi.org/10.1145/3613904.3642782
+      \endverb
+    \endentry
+    \entry{gregor2013positioning}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=6cb3773d13196927d56a5877ea24b6a2}{%
+           family={Gregor},
+           familyi={G\bibinitperiod},
+           given={Shirley},
+           giveni={S\bibinitperiod}}}%
+        {{hash=e054261c7f1739e1ba1db0a45e385c1b}{%
+           family={Hevner},
+           familyi={H\bibinitperiod},
+           given={Alan\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{62477b683a6398d89f0689141480a261}
+      \strng{fullhash}{62477b683a6398d89f0689141480a261}
+      \strng{fullhashraw}{62477b683a6398d89f0689141480a261}
+      \strng{bibnamehash}{62477b683a6398d89f0689141480a261}
+      \strng{authorbibnamehash}{62477b683a6398d89f0689141480a261}
+      \strng{authornamehash}{62477b683a6398d89f0689141480a261}
+      \strng{authorfullhash}{62477b683a6398d89f0689141480a261}
+      \strng{authorfullhashraw}{62477b683a6398d89f0689141480a261}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{MIS Quarterly}
+      \field{number}{2}
+      \field{title}{Positioning and Presenting Design Science Research for Maximum Impact}
+      \field{volume}{37}
+      \field{year}{2013}
+      \field{pages}{337\bibrangedash 355}
+      \range{pages}{19}
+      \verb{doi}
+      \verb 10.25300/MISQ/2013/37.2.01
       \endverb
     \endentry
     \entry{guerino2025gpt4o}{inproceedings}{}{}
@@ -633,32 +695,34 @@
       \verb https://doi.org/10.1007/978-3-031-94168-9_22
       \endverb
     \endentry
-    \entry{westermann2026ki}{book}{}{}
+    \entry{westermann2026ki}{misc}{}{}
       \name{author}{1}{}{%
-        {{hash=2a4da213989324b4a244a0652cbafbeb}{%
+        {{hash=b66f8d2c3200ff2249ad9486d5d31387}{%
            family={Westermann},
            familyi={W\bibinitperiod},
-           given={Henrik},
-           giveni={H\bibinitperiod}}}%
+           given={Anja},
+           giveni={A\bibinitperiod}}}%
       }
-      \list{publisher}{1}{%
-        {Springer Gabler}%
+      \list{institution}{1}{%
+        {Universit{"a}t Paderborn, Stabsstelle Bildungsinnovationen und Hochschuldidaktik}%
       }
-      \strng{namehash}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{fullhash}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{fullhashraw}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{bibnamehash}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{authorbibnamehash}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{authornamehash}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{authorfullhash}{2a4da213989324b4a244a0652cbafbeb}
-      \strng{authorfullhashraw}{2a4da213989324b4a244a0652cbafbeb}
+      \strng{namehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{fullhash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{fullhashraw}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{bibnamehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authorbibnamehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authornamehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authorfullhash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authorfullhashraw}{b66f8d2c3200ff2249ad9486d5d31387}
       \field{sortinit}{W}
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Wissenschaftliches Arbeiten mit KI: Ein Leitfaden für Studierende und Forschende}
+      \field{howpublished}{Handreichung, Universit{"a}t Paderborn}
+      \field{note}{Lizenziert unter CC BY 4.0}
+      \field{title}{KI in Seminar- und Abschlussarbeiten -- Eine Handreichung f{"u}r Lehrende}
       \field{year}{2026}
     \endentry
     \entry{wroblewski2008web}{book}{}{}
