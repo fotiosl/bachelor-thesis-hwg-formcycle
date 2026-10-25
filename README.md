@@ -60,6 +60,6 @@ Diese Arbeit verfolgt ein doppeltes Ziel nach dem **Design Science Research (DSR
 * **Phase 1 (Woche 1):** Setup, Literaturorganisation, Exposé-Abgabe.
 * **Phase 2 (Woche 2–3):** Ist-Analyse des Formularbestands & Formcycle-Exporte $\rightarrow$ **Milestone 2 mit Betreuer**.
 * **Phase 3 (Woche 4):** Standard-Definition & **Meilenstein 1 (Synthetische Testformulare)**.
-* **Phase 4 (Woche 5–6):** Middleware-Entwicklung & **Meilenstein 2 (Evaluationsfragebogen)**.
-* **Phase 5 (Woche 7):** Benchmarks & Praxistest mit Personal $\rightarrow$ **Milestone 3 mit Betreuer**.
+* **Phase 4 (Woche 5–6):** Middleware-Entwicklung & **Meilenstein 2 (Pipeline & Web-Dashboard)**.
+* **Phase 5 (Woche 7):** Benchmarks & Experten-Feedback mit FB1-Praxisexperte $\rightarrow$ **Milestone 3 mit Betreuer**.
 * **Phase 6 (Woche 8–9):** Schreibphase, Vorabkorrektur & **Abgabe am 07.12.2026**.

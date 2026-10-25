@@ -1,18 +1,59 @@
 \chapter{Reflexionsbericht zur Nutzung von KI-Tools}
 \label{chap:reflexionsbericht}
 
-Gemäß den Betreuungsrichtlinien von Prof. Dr. Simon Kloker sowie der Handreichung zur guten wissenschaftlichen Praxis im Umgang mit generativer künstlicher Intelligenz an Hochschulen \parencite{westermann2026ki} dokumentiert und reflektiert dieser Bericht den theoriegeleiteten Einsatz von KI-Werkzeugen im Verlauf der vorliegenden Bachelorarbeit unter ständiger Wahrung der wissenschaftlichen Eigenständigkeit des Autors.
+Gemäß den Betreuungsrichtlinien von Prof. Dr. Simon Kloker sowie der Handreichung zur guten wissenschaftlichen Praxis im Umgang mit generativer künstlicher Intelligenz an Hochschulen \parencite{westermann2026ki} dokumentiert und reflektiert dieser Bericht den theoriegeleiteten Einsatz von KI-Werkzeugen im Verlauf der vorliegenden Bachelorarbeit. Die wissenschaftliche Gesamtverantwortung, die inhaltliche Urheberschaft, die kritische Evaluation und die finale Abfassung aller Teile der Ausarbeitung lagen zu jedem Zeitpunkt uneingeschränkt beim Autor.
 
-\textbf{1. Auswahl der KI-Tools und methodisches Vorgehen:} Die Werkzeugauswahl erfolgte nach definierten Kriterien: Großes Kontextfenster, hohe Code-Verständnisfähigkeit für hierarchische AST-Bäume und strikte JSON-Schema-Treue. Primär wurde das multimodale Modell \textit{Google Gemini} in einer agentischen Entwicklungsumgebung eingesetzt. Zur Sicherung der universitären Datensouveränität wurden komplementär fünf quelloffene Open-Source-Modelle (\textit{Llama 3.1 8B}, \textit{Qwen 3.8 27B}, \textit{Qwen 3 30B}, \textit{GLM 5.3 Flash}, \textit{DeepSeek V4 Flash}) über die Infrastruktur der \textit{Academic Cloud} (GWDG) evaluiert.
+\section*{1. Kriteriengeleitete Auswahl der KI-Tools und methodisches Vorgehen}
 
-\textbf{2. Häufigkeit, Nutzen und ungeeignete Werkzeuge:} Die Intensität variierte je nach Arbeitsschritt. Einen sehr hohen Nutzen stiftete die KI als Pair-Programming-Partner bei der Entwicklung der Python-Middleware (AST-Traversierung verschachtelter Formcycle-Archive). Mittleren Nutzen bot sie als Resonanzboden zur stilistischen Schärfung des wissenschaftlichen Textes. Reine generative Chat-Assistenten ohne Code-Anbindung erwiesen sich für die formale Regelfindung als ungeeignet, da unbereinigte Formular-Dumps zu Orientierungsverlust (\textit{Lost in the Middle}) und oberflächlichen Halluzinationen führten. Erst gezieltes Context-Engineering (>90\,\% Token-Kompression) ermöglichte verlässliche Inferenz.
+Die Auswahl der eingesetzten KI-Systeme orientierte sich an den spezifischen technischen und methodischen Anforderungen der einzelnen DSR-Phasen:
+\begin{itemize}
+    \item \textbf{Primäre Entwicklungsumgebung:} Für die Code-Entwicklung, die Datenexploration der Formcycle-Dateien und die methodische Strukturierung wurde das multimodale Modell \textit{Google Gemini} innerhalb einer agentischen Pair-Programming-Umgebung eingesetzt. Entscheidende Kriterien waren das extrem große Kontextfenster (zur simultanen Analyse umfangreicher \texttt{.fcp}-JSON-Strukturen mit bis zu 400 Komponenten), die native Tool-Use-Fähigkeit zur Ausführung von Prüfskripten im Workspace sowie eine hohe Zuverlässigkeit bei der Einhaltung formaler JSON-Schemata.
+    \item \textbf{Vergleichende Benchmark-Modelle (Academic Cloud):} Zur Validierung der Modell-Agnostik und zur Wahrung der universitären Datensouveränität (Art. 44 ff. DSGVO) wurden komplementär fünf Open-Weight-Modelle über die HPC-Infrastruktur der \textit{Academic Cloud} (GWDG) evaluiert: \textit{Meta Llama 3.1 8B Instruct}, \textit{Qwen 3.8 27B}, \textit{Qwen 3 30B A3B Instruct}, \textit{GLM 5.3 Flash} sowie \textit{DeepSeek V4 Flash}. Hierbei standen Parametergröße, Inferenzlatenz und Lizenzierungsmodelle (Open Source vs. Open Weight) im Fokus der Auswahl.
+\end{itemize}
 
-\textbf{3. Anwendungsbereiche und Herausforderungen:} Unterstützend wirkte die KI bei der mathematischen Formulierung des Scoring-Modells und der CSS/JS-Entwicklung des Intranet-Dashboards. Eine zentrale Herausforderung bildete die Literatursynthese: Da Sprachmodelle zu plausiblen, jedoch fiktiven Bibliografien (\textit{Phantom-Zitate}) neigen, wurden sämtliche Quellen originär gegen ACM, IEEE und SpringerLink geprüft. Zudem neigten kleinere Modelle ($<$10B) bei negativen Constraints (z.\,B. Satzlängenbegrenzungen) zu Zählfehlern.
+\section*{2. Häufigkeit, Nutzen und ungeeignete Werkzeuge}
 
-\textbf{4. Validierung der KI-generierten Inhalte:} Alle durch KI-Interaktion entstandenen Artefakte wurden nach dem Vier-Augen-Prinzip rigoros validiert: Programmcode wurde über automatisierte Unit- und Regressionstests an realen \texttt{.xfp}-Exporten auf Fehlerfreiheit und Laufzeit ($<$20\,ms) verifiziert; synthetische Ground-Truth-Formulare wurden manuell auf DOM-Ebene auditiert; rechtliche und ergonomische Vorgaben (BITV 2.0, DIN EN ISO 9241-110, Art. 13 DSGVO) wurden originär an den Primärquellen gespiegelt.
+Die Nutzungsintensität variierte entlang des Projektfortschritts erheblich. Einen \textbf{sehr hohen Nutzen} stiftete die KI als intelligenter Entwicklungspartner bei der prototypischen Programmierung der Python-Middleware. Insbesondere das Entwickeln robuster, rekursiver AST-Traversierungsfunktionen zur Extraktion verschachtelter Formcycle-Container (\texttt{XPage}, \texttt{XFieldSet}, \texttt{XContainerInvisible}) sowie das Aufsetzen des regulären Ausdruckskatalogs (Regex für IBAN, PLZ und Telefonnummern) ließen sich in iterativen Code-Zyklen drastisch beschleunigen. Auch beim Frontend-Engineering des barrierefreien Intranet-Dashboards (SVG-Score-Tacho, JSZip-Client-Parsing) bot das Modell wertvolle Implementierungsunterstützung.
 
-\textbf{5. Erforderliche Kompetenzen:} Der effektive Einsatz generativer KI erfordert ein hohes Maß an Domänen- und Methodenkompetenz \parencite{recker2013scientific}. Ohne fundiertes Verständnis von Web-Accessibility, Usability-Heuristiken und internen Formcycle-Objektmodellen können weder präzise System-Prompts konstruiert noch fehlerhafte Modellausgaben identifiziert werden. Erforderlich war fortgeschrittenes \textit{Context-Engineering} zur Durchsetzung deterministischer Antworten.
+Als \textbf{völlig ungeeignet} erwiesen sich hingegen unstrukturierte Chat-Modelle ohne Code-Interpreter oder formales Context-Engineering: Wurden rohe Formular-Dumps ohne Vorverarbeitung an standardmäßige Chat-Prompts übergeben, traten massive Orientierungsverluste (\textit{Lost in the Middle}) und oberflächliche Halluzinationen auf (z.\,B. das Erfinden nicht existierender CSS-Klassen oder falscher Pflichtfeldzuordnungen). Erst durch die in Kapitel~\ref{chap:implementierung} konzipierte, über 90\,\%ige Token-Kompression und die Injektion deterministischer Regel-Registries konnte eine konsistente Inferenzqualität erzielt werden.
 
-\textbf{6. Auswirkungen auf den Forschungsprozess:} Die KI transformierte den Schreibprozess von einer sequenziellen Texterstellung hin zu einer dialogischen Wissenskonstruktion. Durch die Automatisierung mechanischer Routinen verlagerte sich der Schwerpunkt der Arbeit auf konzeptionelle Tiefe und empirische Validierung. Der Gefahr einer unkritischen Übernahme (\textit{Automation Bias}) wurde durch bewusstes Hinterfragen jedes Vorschlags aktiv begegnet.
+\section*{3. Anwendungsbereiche und technische Herausforderungen}
 
-\textbf{7. Schlussfolgerungen für zukünftige Arbeiten:} Generative KI ist kein autonomer Texterzeuger, sondern ein mächtiges Analyse- und Reflexionswerkzeug. Die strikte Trennung von deterministischer Merkmalsextraktion und semantischer LLM-Inferenz bietet eine praxistaugliche, datensouveräne Blaupause für den dauerhaften Einsatz an Hochschulen.
+Im Rahmen des Forschungsprozesses traten spezifische Herausforderungen auf:
+\begin{itemize}
+    \item \textbf{Mathematische Scoring-Modellierung:} Bei der Konzeption der Scoring-Formel nach Gleichung~(\ref{eq:compliance_score}) diente die KI als mathematischer Sparringspartner, um Randwertstabilitäten (Vermeidung negativer Scores, Gewichtung nach Nielsen-Schweregraden) analytisch zu durchdringen.
+    \item \textbf{Schwächen bei Zähl- und Negativ-Constraints:} Kleinere Modelle unter 10B Parametern (insbesondere \textit{Llama 3.1 8B}) zeigten gravierende Schwächen bei der Prüfung quantitativer Negativ-Bedingungen. So halluzinierte das 8B-Modell bei der Regel \texttt{HWG-LANG-02} (Satzlängenbegrenzung auf $\le 25$ Wörter) fälschlicherweise einen Verstoß bei einem prägnanten 8-Wörter-Satz. Dieser Befund verdeutlicht, dass einfache Sprachmodelle syntaktische Zähloperationen nicht zuverlässig ausführen und quantitative Schwellenwerte zwingend deterministisch durch Python-Code geprüft werden müssen.
+    \item \textbf{Gefahr von Phantom-Zitaten in der Literaturarbeit:} Bei anfänglichen bibliografischen Recherchen generierten Sprachmodelle vereinzelt plausible, semantisch stimmige, im Detail jedoch frei erfundene Literaturquellen (\textit{Halluzinierte Zitate}). Aus diesem Grund wurde der KI jegliche autonome Literaturrecherche entzogen; sämtliche 18 Kernquellen wurden manuell in Primärdatenbanken (ACM Digital Library, IEEE Xplore, ScienceDirect, SpringerLink) recherchiert und über Original-DOIs validiert.
+\end{itemize}
+
+\section*{4. Validierung der KI-generierten Inhalte (Vier-Augen-Prinzip)}
+
+Um den Grundsätzen guter wissenschaftlicher Praxis \parencite{recker2013scientific} uneingeschränkt gerecht zu werden, wurden alle durch KI-Interaktion entstandenen Artefakte einem mehrstufigen Validierungsprozess unterzogen:
+\begin{enumerate}
+    \item \textbf{Code- und Algorithmen-Validierung:} Jede generierte Python-Funktion der Prüf-Engine wurde durch automatisierte Unit-Tests und Regressionstests an realen \texttt{.xfp}-Exporten der HWG validiert. Latenzmessungen ($<20$\,ms) und Speicherallokationen wurden instrumentell überwacht.
+    \item \textbf{Empirischer Ground-Truth-Abgleich:} Die synthetischen Formularmodelle (\textit{synthetic\_compliant\_form.json} und \textit{synthetic\_noncompliant\_form.json}) wurden vom Autor manuell auf DOM- und JSON-Ebene auditiert, um sicherzustellen, dass alle 18 injizierten Mängel mit den theoretischen Definitionen übereinstimmen.
+    \item \textbf{Regulatorische Primärspiegelung:} Alle in der Registry hinterlegten Richtlinien und Klickpfad-Empfehlungen wurden originär an den aktuellen Originaldokumenten der BITV 2.0, den WCAG 2.1-Kriterien, der DIN EN ISO 9241-110 sowie der Formcycle-Herstellerdokumentation verifiziert.
+\end{enumerate}
+
+\section*{5. Erforderliche Fach- und Methodenkompetenzen}
+
+Die Arbeit machte deutlich, dass der produktive Einsatz generativer KI eine hohe Domänen- und Methodenkompetenz voraussetzt. Ohne fundiertes Fachwissen in Web-Barrierefreiheit, Software-Ergonomie und relationalen Datenmodellen wäre es unmöglich gewesen:
+\begin{itemize}
+    \item präzise System-Prompts mit disjunkten Fehlerklassen und eindeutigen Abbruchbedingungen zu formulieren,
+    \item subtile Fehler und Halluzinationen (wie die falsche Klassifikation von \texttt{FEEDBACK-01} als unverbindliche Empfehlung durch Llama 3.1) ad hoc zu identifizieren,
+    \item die Grenzen probabilistischer Modelle zu erkennen und eine hybride Architektur zu wählen, die das Scoring strikt deterministisch berechnet.
+\end{itemize}
+Prompt-Engineering fungierte dabei nicht als Ersatz für Fachwissen, sondern als spezialisierte Übersetzungskompetenz zwischen informatischer Theorie und Modellinstruktion.
+
+\section*{6. Auswirkungen auf den wissenschaftlichen Denk- und Schreibprozess}
+
+Die Einbindung von KI führte zu einer grundlegenden Verschiebung des wissenschaftlichen Arbeitsprozesses: Weg von zeitaufwendigen, mechanischen Routinen (wie dem repetitiven Verfassen von CSS-Boilerplate oder dem manuellen Sichten hunderter JSON-Zeilen) und hin zu einer vertieften konzeptionellen und theoriegeleiteten Auseinandersetzung. Der Schreibprozess wandelte sich von einer rein monologischen Texterstellung zu einem dialektischen Diskurs, bei dem Argumentationslinien durch Modellinteraktion kontinuierlich auf Widerspruchsfreiheit geprüft wurden. Der latenten Gefahr eines \textit{Automation Bias} (der unkritischen Akzeptanz plausibel klingender Textentwürfe) wurde durch eine konsequent skeptische Grundhaltung und die manuelle Formulierung des eigentlichen wissenschaftlichen Argumentationsfadens aktiv begegnet.
+
+\section*{7. Schlussfolgerungen und Handlungsempfehlungen für zukünftige Arbeiten}
+
+Aus der methodischen Reflexion lassen sich drei zentrale Leitlinien für künftige wissenschaftliche Arbeiten ableiten:
+\begin{enumerate}
+    \item \textbf{Strikte Funktionstrennung (Deterministik vs. Semantik):} Sprachmodelle sollten niemals für arithmetische Berechnungen, exakte Zählungen oder deterministische Syntaxprüfungen eingesetzt werden. Ihre Stärke liegt ausschließlich in der semantischen, pragmatischen und sprachlichen Interpretation.
+    \item \textbf{Context-Engineering schlägt Modellgröße:} Ein zielgerichtet komprimierter, mit formalen Registry-Regeln angereicherter Kontext ermöglicht es kompakten Open-Source-Modellen (ab 27B), dieselbe Präzision wie proprietäre Großmodelle zu erreichen.
+    \item \textbf{Wahrung universitärer Datensouveränität:} Für Hochschulen ist der Einsatz von Open-Source-Modellen auf eigener Rechenzentrumsinfrastruktur (wie der Academic Cloud der GWDG) nicht nur datenschutzrechtlich geboten, sondern technisch und qualitativ vollkommen konkurrenzfähig.
+\end{enumerate}

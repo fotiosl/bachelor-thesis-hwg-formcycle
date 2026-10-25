@@ -9,7 +9,7 @@ import tempfile
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts")))
 from test_rule_engine import evaluate_form, load_rules
 
-PORT = 8080
+PORT = int(os.environ.get("PORT", 8080))
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 class ComplianceHandler(http.server.SimpleHTTPRequestHandler):

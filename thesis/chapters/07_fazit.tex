@@ -32,6 +32,25 @@ Für das Qualitätsmanagement und die IT-Leitung der HWG Ludwigshafen lassen sic
 \section{Wissenschaftlicher Beitrag und Ausblick}
 \label{sec:wissenschaftlicher_beitrag}
 
-Der wissenschaftliche Beitrag dieser Arbeit liegt in der theoriegeleiteten Formalisierung ergonomischer und gesetzlicher Normen in ein maschinenlesbares Governance-Artefakt (Level-2 DSR-Beitrag) sowie im Nachweis, dass Open-Source-LLMs im Verbund mit strukturiertem Context-Engineering verlässliche Usability-Audits durchführen können.
+\subsection{Theoretischer und methodischer Wissensbeitrag}
+\label{subsec:theoretischer_beitrag}
 
-Zukünftige Forschungsarbeiten sollten die Pipeline um die multimodale Kontrastprüfung mittels Vision-Language-Modellen sowie die automatische Generierung von Reparatur-Patches für das \texttt{.xfp}-Archiv erweitern, um festgestellte Mängel direkt auf Knopfdruck beheben zu können.
+Der wissenschaftliche Beitrag dieser Bachelorarbeit verortet sich im Schnittfeld von Software-Ergonomie, administrativer E-Government-Transformation und angewandter künstlicher Intelligenz. Im Sinne des \textit{Knowledge Contribution Frameworks} nach \textcite{gregor2013positioning} leistet die Arbeit einen theoriegeleiteten \textbf{Level-2-DSR-Beitrag (\textit{Nascent Design Theory / Operational Standard})}:
+\begin{itemize}
+    \item \textbf{Formalisierung normativer Anforderungen:} Abstrakte ergonomische Grundsätze (DIN EN ISO 9241-110), rechtliche Barrierefreiheitsnormen (BITV 2.0 / WCAG 2.1) und Datenschutzvorgaben (Art. 13 DSGVO) wurden nicht als passive Textleitfäden belassen, sondern erstmals in eine formal operationalisierte, maschinenlesbare Governance-Registry (\texttt{rules\_registry.json}) für No-Code-Formularplattformen überführt.
+    \item \textbf{Hybride Prüf-Methodik:} Die Arbeit demonstriert methodisch, dass die strikte Trennung zwischen deterministischer AST-Merkmalsextraktion und semantischer LLM-Inferenz im Verbund mit mathematischem Scoring das Problem stochastischer Bewertungsverzerrungen und Halluzinationen bei automatisierten Heuristikprüfungen wirksam eliminiert.
+    \item \textbf{Empirischer Nachweis universitärer Datensouveränität:} Die komparative Evaluation belegt, dass moderne quelloffene Open-Source-Modelle der 27B--30B-Klasse (wie Qwen 3 oder DeepSeek V4) im Verbund mit Registry-Injektion eine mit kommerziellen Frontier-Modellen identische Regeltreue erzielen. Damit wird der wissenschaftliche Beweis erbracht, dass Hochschulen automatisierte KI-Governance datenschutzkonform und souverän über föderierte Hochschulrechenzentren (Academic Cloud) betreiben können.
+\end{itemize}
+
+\subsection{Technologische Perspektiven und zukünftige Forschungsarbeiten}
+\label{subsec:zukuenftige_forschung}
+
+Aufbauend auf dem in dieser Arbeit realisierten Prototypen eröffnen sich vier vielversprechende Pfade für zukünftige Forschung und weiterführende Entwicklungen:
+\begin{enumerate}
+    \item \textbf{Automatisierte Defekt-Remediation (Self-Healing / Patch-Generierung):} Während der aktuelle Prototyp handlungsorientierte Klickpfade für die manuelle Korrektur im Designer ausgibt, sollte eine Folgearbeit die automatisierte Rückschreibung (\textit{Auto-Remediation}) erforschen. Da das Formcycle-Archivformat (\texttt{.xfp}) eine unverschlüsselte ZIP-Container-Struktur darstellt, kann die Pipeline berechnete Korrektur-Patches (z.\,B. automatische Breitenanpassung auf 850\,px, Deaktivierung des Herstellerlogos, Einbindung kanonischer Regex-Validierungsmuster) direkt in die interne JSON-Modelldatei (\texttt{form.fcp}) injizieren. Das System könnte Formularerstellenden somit ein vollständig bereinigtes, re-komprimiertes Archiv zum direkten Re-Import auf Knopfdruck bereitstellen.
+    \item \textbf{Multimodale Schnittstelleninspektion mittels Vision-Language-Modellen (VLMs):} Neben der strukturellen und syntaktischen AST-Analyse sollten zukünftige Systeme multimodale Seh- und Sprachmodelle einbinden. Durch die automatisierte Erzeugung von Bildschirm-Snapshots gerenderter Formulare im Headless-Browser können Kontrastverhältnisse nach WCAG 1.4.3 (Kontrast Minimum 4,5:1), Whitespace-Proportionen sowie das responsive Umbruchverhalten auf simulierten mobilen Endgeräten rein visuell auditiert werden.
+    \item \textbf{Nahtlose Integration als nativer Freigabe-Gatekeeper (CI/CD für Formulare):} Das im Rahmen dieser Arbeit als entkoppelte Intranet-Applikation realisierte Dashboard kann über Formcycle-Webhooks zu einem verbindlichen Release-Gatekeeper im Veröffentlichungs-Workflow ausgebaut werden. Vor der Aktivierung eines Formulars im Produktivsystem übermittelt der Formcycle-Server das Archiv automatisch an die Prüfpipeline; unterschreitet das Formular den definierten Mindest-Score von 80 Punkten, wird die Veröffentlichung technisch blockiert und der Prüfbericht an den Autor zurückgespiegelt.
+    \item \textbf{Empirische Längsschnitt- und Interventionsstudien:} Schließlich empfiehlt sich eine verhaltenswissenschaftliche Folgestudie, welche die tatsächlichen Auswirkungen des harmonisierten Standards auf Studierende und Beschäftigte der HWG quantifiziert. Ein Vorher-Nachher-Vergleich der Bearbeitungszeiten, Abbruchraten (\textit{Form Abandonment}) und Support-Anfragen bei sanierten Formularen würde den betriebswirtschaftlichen und ergonomischen Nutzen des Standards für die Hochschulleitung empirisch untermauern.
+\end{enumerate}
+
+

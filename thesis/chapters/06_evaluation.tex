@@ -24,7 +24,7 @@ Zur Überprüfung der Praxistauglichkeit unter realen Betriebsbedingungen wurden
 \end{enumerate}
 
 \subsection{Benchmark-Metriken}
-Die Güte der automatisierten Regelauswertung wird anhand etablierter statistischer Kennzahlen gemessen:
+Die Güte der automatisierten Regelauswertung wird anhand der etablierten statistischen Kennzahlen Recall, Precision und $F_1$-Score gemäß Gleichung~(\ref{eq:f1_metric}) gemessen:
 \begin{equation}
     \text{Recall} = \frac{TP}{TP + FN}, \quad \text{Precision} = \frac{TP}{TP + FP}, \quad F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
     \label{eq:f1_metric}
@@ -38,17 +38,17 @@ Tabelle~\ref{tab:eval_results} fasst die quantitativen Evaluationsergebnisse der
 
 \begin{table}[htbp]
 \centering
-\small
-\begin{tabularx}{\textwidth}{lccccX}
+\scriptsize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}lccc>{\raggedright\arraybackslash}X}
 \toprule
 \textbf{Formular-Instanz} & \textbf{Typ} & \textbf{Score} & \textbf{Bestanden} & \textbf{Verstöße} & \textbf{Zentrale Befunde \& Empfehlungen} \\
 \midrule
 \textit{Synthetisch Konform} & Benchmark & 100 / 100 & 20 & 0 & Perfektes Referenzmuster ($P = 1{,}0; R = 1{,}0$) \\
 \textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 2 & 18 & Alle 18 Injektionen erkannt ($P = 1{,}0; R = 1{,}0$) \\
 \midrule
-\textit{Auslagenerstattung} & Real (Prod) & 3 / 100 & 6 & 15 & 700px statt 850px, Header-Logo 50px statt 60px, H1 fehlt, DSGVO fehlt, Uploads unspezifiziert, IBAN unvalidiert, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
+\textit{Auslagenerstattung} & Real (Prod) & 3 / 100 & 6 & 15 & 700px statt 850px, Logo 50px statt 60px, H1 fehlt, Button \texttt{senden}, DSGVO fehlt, 4 Uploads unspezifiziert, IBAN/PLZ unvalidiert, Stamm-Sequenz, Ad-hoc-Status, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
 \textit{Antrag-Sprints ZFK} & Real (Test) & 0 / 100 & 5 & 13 & Kein Header-Banner, H1 fehlt, XIMA-Logo aktiv, keine Fieldsets, DSGVO fehlt, Vorgangs-ID fehlt \\
-\textit{Master-Formular} & Real (Admin) & 56 / 100 & 10 & 8 & Logo 50px statt 60px, veraltete 700px, HTML-Entities, unvalidierte PLZ, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
+\textit{Master-Formular} & Real (Admin) & 56 / 100 & 10 & 8 & Logo 50px statt 60px, veraltete 700px, Stamm-Sequenz (Suchfeld vorn), unvalidierte PLZ, HTML-Entities, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
 \bottomrule
 \end{tabularx}
 \caption{Quantitative Evaluationsergebnisse der Compliance-Pipeline (Registry v1.5.0)}
@@ -61,9 +61,9 @@ Am synthetischen Referenzkorpus demonstriert die Prüfpipeline eine perfekte Tre
 \subsection{Diagnostische Erkenntnisse am realen HWG-Bestand}
 Die Auswertung der drei realen Formulare bestätigt die in der Ist-Analyse (Kapitel~\ref{chap:ist_analyse}) diagnostizierten Schwachstellen unter Anwendung des formalisierten Bewertungsmodells nach Gleichung~(\ref{eq:compliance_score}):
 \begin{enumerate}
-    \item \textbf{Auslagenerstattung (Score: 3 / 100):} Das Produktivformular schneidet mangelhaft ab. Die 15 identifizierten Regelverstöße summieren sich auf Punktabzüge von 97 Punkten. Wesentliche Abzüge resultieren aus dem Fehlen eines DSGVO-Datenschutzhinweises (-15 Punkte), vier unvollständig spezifizierten Dateiuploads (-8 Punkte), unvalidierten IBAN- und PLZ-Feldern (-8 Punkte), einer veralteten 700px-Breite (-8 Punkte), einem abweichenden Header-Logo (50\,px statt 60\,px, -8 Punkte), dem Fehlen der H1-Hauptüberschrift im Header (-8 Punkte), dem generischen Button \enquote{senden} (-8 Punkte), Jargon-Begriffen ohne Hilfetext (-8 Punkte), einer invertierten Stammdaten-Reihenfolge (-8 Punkte) sowie weiteren Abzügen (-18 Punkte für HTML-Entities, Feldbreiten, Stammdaten-Labels, Navigation, Ad-hoc-Status und Vorgangsnummern). Zudem löste das System die abzugsfreie Empfehlung \texttt{HWG-UX-02} zur Aktivierung der Zwischenspeicherung aus (49 Eingabefelder).
+    \item \textbf{Auslagenerstattung (Score: 3 / 100):} Das Produktivformular schneidet mangelhaft ab. Die 15 identifizierten Regelverstöße summieren sich auf Punktabzüge von exakt 97 Punkten. Wesentliche Abzüge resultieren aus dem Fehlen eines DSGVO-Datenschutzhinweises (-15 Punkte), vier unvollständig spezifizierten Dateiuploads (-8 Punkte), unvalidierten IBAN- und PLZ-Feldern (-8 Punkte), einer veralteten 700px-Breite (-8 Punkte), einem abweichenden Header-Logo (50\,px statt 60\,px, -8 Punkte), dem Fehlen der H1-Hauptüberschrift im Header (-8 Punkte), dem generischen Button \enquote{senden} (-8 Punkte), Jargon-Begriffen ohne Hilfetext (-8 Punkte), einer inkonsistenten Stammdaten-Reihenfolge (-8 Punkte, resultierend aus section-übergreifenden Wiederholungen persönlicher Felder nach Telefonnummer und E-Mail) sowie weiteren Abzügen (-18 Punkte für HTML-Entities in 48 Labels, unbeschränkte Feldbreiten, nicht-standardisierte Stammdaten-Labels, nicht-konforme Navigationsbuttons, sieben Ad-hoc-Workflow-Status und fehlende Vorgangsnummern in E-Mails). Zudem löste das System die abzugsfreie Empfehlung \texttt{HWG-UX-02} zur Aktivierung der Zwischenspeicherung aus (49 Eingabefelder).
     \item \textbf{Antrag-Sprints des ZFK (Score: 0 / 100):} Mit 0 Punkten (abzugsbedingt unter die Nullgrenze gefallen) erreicht dieses Formular den niedrigsten Reifegrad. Ursächlich sind das Fehlen des offiziellen HWG-Headerbanners (-15 Punkte), das Fehlen der H1-Hauptüberschrift im Header (-8 Punkte), das sichtbare XIMA-Herstellerbranding (-8 Punkte), fehlende semantische Fieldsets (-15 Punkte), ein fehlender Datenschutzhinweis (-15 Punkte), der unklare Button \enquote{Kritischer Fall} (-8 Punkte) sowie das Fehlen der Vorgangsnummer im Workflow (-3 Punkte).
-    \item \textbf{Master-Formular (Score: 56 / 100):} Das administrative Vorlage-Formular erreicht mit 56 Punkten das beste Ergebnis unter den Realformularen, offenbart bei 8 festgestellten Verstößen jedoch historische Altlasten (Gesamtabzug: 44 Punkte): Veraltete 700px-Breite (-8 Punkte), abweichende Header-Logo-Höhe (50\,px statt 60\,px, -8 Punkte), unvalidierte PLZ-Felder (-8 Punkte), inkonsistente Stammdaten-Reihenfolge (-8 Punkte), HTML-Fragmente in 29 Labels (-3 Punkte), gestreckte Layout-Breiten (-3 Punkte), fehlende Vorgangsnummer im Workflow (-3 Punkte) sowie fehlende automatische Eingangsbestätigung (-3 Punkte). Die H1-Hauptüberschrift im Header (\texttt{HWG-CD-04}) wird vom Vorlage-Formular hingegen bereits normgerecht erfüllt.
+    \item \textbf{Master-Formular (Score: 56 / 100):} Das administrative Vorlage-Formular erreicht mit 56 Punkten das beste Ergebnis unter den Realformularen, offenbart bei 8 festgestellten Verstößen jedoch historische Altlasten (Gesamtabzug: exakt 44 Punkte): Veraltete 700px-Breite (-8 Punkte), abweichende Header-Logo-Höhe (50\,px statt 60\,px, -8 Punkte), unvalidierte PLZ-Felder (-8 Punkte), inkonsistente Stammdaten-Reihenfolge (-8 Punkte, hervorgerufen durch das dem Vornamen vorangestellte Suchfeld \enquote{Person (SucheName)} sowie die zwischen Anrede und Vorname eingeschobene Matrikelnummer), HTML-Fragmente in 29 Labels (-3 Punkte), unbeschränkte kompakte Layout-Breiten (-3 Punkte), fehlende Vorgangsnummer im Workflow (-3 Punkte) sowie fehlende automatische Eingangsbestätigung (-3 Punkte). Der DSGVO-Datenschutzhinweis (\texttt{HWG-DSGVO-01}) wird hingegen normgerecht über die Footer-Konfiguration (\texttt{privacyPolicyShow="1"}) erfüllt; ebenso führt die im Rich-Text-Container (\texttt{rtevalue}) hinterlegte Entwickler-Notiz im AST-basierten Label-Audit nicht zu einem Abzug. Die H1-Hauptüberschrift im Header (\texttt{HWG-CD-04}) wird vom Vorlage-Formular ebenfalls normgerecht umgesetzt.
 \end{enumerate}
 
 \subsection{Laufzeit- und Performanzmessung}
@@ -89,12 +89,12 @@ Tabelle~\ref{tab:model_comparison} stellt die empirisch gemessenen Evaluationser
 \centering
 \scriptsize
 \renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{llcccX}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{2.3cm}>{\centering\arraybackslash}p{1.1cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{0.8cm}>{\raggedright\arraybackslash}X}
 \toprule
-\textbf{Modell} & \textbf{Klasse / Architektur} & \textbf{JSON-Treue} & \textbf{Recall (4 Verstöße)} & \textbf{False Positives} & \textbf{Empirischer Befund \& Bewertung} \\
+\textbf{Modell} & \textbf{Klasse / Architektur} & \textbf{JSON} & \textbf{Recall (4 V.)} & \textbf{FP} & \textbf{Empirischer Befund \& Bewertung} \\
 \midrule
 \textit{GLM 5.3 Flash} & Frontier / Open-Weight & 100\,\% & 4 / 4 (100\,\%) & 0 & Erkennt \texttt{btnSubmit} und \texttt{btnKritisch}; exakte Wortzählung bei \texttt{LANG-02} (8 Wörter $\le$ 25 $\rightarrow$ PASS). \\
-\textit{Llama 3.1 8B} & Lightweight Open-Source & 100\,\% & 3 / 4 (75\,\%) & 1 & Erkennt \texttt{btnSubmit}, übersieht \texttt{btnKritisch}; stuft \texttt{FEEDBACK-01} als Empfehlung statt Verstoß ein; Fehlalarm bei \texttt{LANG-02} (behauptet fälschlich $>25$ Wörter). \\
+\textit{Llama 3.1 8B} & Lightweight Open-Source & 100\,\% & 3 / 4 (75\,\%) & 1 & Erkennt \texttt{btnSubmit}, übersieht \texttt{btnKritisch}; stuft \texttt{FEEDBACK-01} als Empfehlung statt Verstoß ein; Fehlalarm bei \texttt{LANG-02} (fälschlich $>25$ Wörter). \\
 \textit{Qwen 3.8 27B} & Mid-Sized Open-Source (27B) & 100\,\% & 4 / 4 (100\,\%) & 0 & Herausragendes CoT-Reasoning; erkennt \texttt{tfEmail}, \texttt{btnKritisch}, \texttt{Kostenstelle}; stuft \texttt{UX-02} als Empfehlung ein. \\
 \textit{Qwen 3 30B A3B} & MoE / Open-Source (30B) & 100\,\% & 4 / 4 (100\,\%) & 0 & Perfekte Regeltreue; exzellente Remediation-Vorschläge für Formcycle Designer; keine Halluzinationen. \\
 \textit{DeepSeek V4 Flash} & Sparse MoE / Fast Inferenz & 100\,\% & 4 / 4 (100\,\%) & 0 & Höchste Recheneffizienz (Latenz 2,15\,s); präzise Erkennung aller semantischen Nuancen. \\
@@ -121,6 +121,21 @@ Die Ergebnisse beweisen, dass die Pipeline vollständig \textbf{modellagnostisch
 \section{Praxistauglichkeit des Intranet-Dashboards und Validitätsbedrohungen}
 \label{sec:praxistauglichkeit_validitaet}
 
-In qualitativen Tests mit dezentralen Sachbearbeitenden wurde das Intranet-Dashboard als intuitiv und arbeitserleichternd bewertet. Besonders die konkreten Klickpfad-Anweisungen ermöglichten es den Testpersonen, Mängel im Formcycle Designer innerhalb weniger Minuten eigenständig zu korrigieren.
+\subsection{Formatives Experten-Review mit der Verwaltungspraxis (FB1)}
+\label{subsec:experten_review}
+
+Zur praxisnahen Überprüfung der Anwendbarkeit und externen Validität des gestaltungsorientierten Artefakts \parencite{hevner2004design, peffers2007design} wurde eine qualitative formative Evaluation in Form eines strukturierten Experten-Reviews mit einem zentralen Praxisakteur der HWG Ludwigshafen – dem Hauptsachbearbeiter und Praktikumsaufseher des Fachbereichs 1 (verantwortlich u.\,a. für das analysierte \textit{FB1-Praktikumsformular}) – durchgeführt. Dieser formative Evaluationszyklus diente dazu, das Artefakt iterativ an die reale Verwaltungspraxis rückzukoppeln und führte zu wesentlichen Verfeinerungen der Governance-Regeln:
+\begin{itemize}
+    \item \textbf{Hersteller-Branding im Footer (\texttt{HWG-CD-03}):} Der Experte regte an, das herstellerseitige Werbelogo (\textit{\enquote{Powered by XIMA Formcycle}}) als feste Governance-Regel zu deaktivieren, um den behördlichen Charakter und die institutionelle Authentizität der Anträge zu wahren.
+    \item \textbf{Umsetzbarkeit der Barrierefreiheit (\texttt{HWG-A11Y-02}):} Er hinterfragte die praktische Handhabbarkeit der Pflichtfeldauszeichnung für nicht-technische Autoren. Dies führte zur Ausarbeitung der konkreten Klickpfad-Remediation, welche die Aktivierung des systemeigenen Häkchens (\textit{\enquote{Pflichtfeldhinweis anzeigen}}) anstelle manueller Textsternchen im Designer anleitet.
+    \item \textbf{Gebrauchsfertige Regex-Muster (\texttt{HWG-VAL-01}):} Auf Vorschlag des Experten wurde die Validierungsregel so erweitert, dass die Registry und das Dashboard praxiserprobte reguläre Ausdrücke (Regex für PLZ, IBAN, Telefonnummer) direkt als Copy-and-Paste-Muster bereitstellen, um Hürden bei der Konfiguration zu minimieren.
+    \item \textbf{Zwischenspeichern bei Großanträgen (\texttt{HWG-UX-02}):} Bei vielteiligen Anträgen empfahl der Experte eine standardmäßige Zwischenspeicher-Funktion mit E-Mail-Fortsetzungslink, um Abbrüche (\textit{Form Abandonment}) bei unvollständigen Belegen zu vermeiden.
+    \item \textbf{Prozessuale Transparenz im Workflow (\texttt{HWG-FEEDBACK-01}):} Ein zentraler Impuls des Praxisakteurs bestand darin, die Selbstbeschreibungsfähigkeit nach ISO 9241-110 nicht auf die Eingabemaske zu beschränken, sondern in den nachgelagerten Kommunikationsfluss zu verlagern. Die technische Machbarkeit wurde im Rahmen dieser Arbeit verifiziert: Die Prüfpipeline extrahiert hierfür die automatisierten Workflow-Knoten (\texttt{FC\_EMAIL}) aus den Prozessgraphen und verifiziert das Vorhandensein von Eingangsbestätigungen und nächsten Bearbeitungsschritten.
+\end{itemize}
+
+In der qualitativen Erprobung des Intranet-Dashboards durch dezentrale Formularerstellende wurde das Werkzeug als intuitiv und arbeitserleichternd bewertet. Besonders die aus dem Experten-Review hervorgegangenen konkreten Klickpfad-Anweisungen ermöglichten es den Anwendenden, Mängel im Formcycle Designer innerhalb weniger Minuten eigenständig zu beheben. Methodisch demonstriert dieser iterative DSR-Rückkopplungszyklus, dass die Kombination aus formaler Standardisierung und formativem Praxis-Feedback die Akzeptanz und Praxistauglichkeit des Governance-Artefakts entscheidend steigert.
+
+\subsection{Validitätsbedrohungen}
+\label{subsec:validitaetsbedrohungen}
 
 Als Bedrohung der internen Validität ist die Stichprobengröße annotierter Realformulare zu nennen. Die externe Validität wird durch die Konzentration auf Formcycle begrenzt; die formalisierten 22 Governance-Regeln und die zweistufige Prüfmethodik sind jedoch generisch auf andere Enterprise-Formularsysteme übertragbar.

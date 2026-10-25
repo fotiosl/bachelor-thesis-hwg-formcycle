@@ -76,7 +76,7 @@ def extract_compact_payload(xfp_path):
 def build_prompt(xfp_path, registry_path="data/rules/rules_registry.json"):
     with open(registry_path, "r", encoding="utf-8") as f:
         reg = json.load(f)
-    semantic_rules = [r for r in reg["rules"] if r.get("evaluation_type") == "semantic"]
+    semantic_rules = [r for r in reg["rules"] if r.get("evaluation_type") in ["semantic", "hybrid"]]
     payload = extract_compact_payload(xfp_path)
 
     prompt = f"""Du bist ein wissenschaftlicher Usability- und Compliance-Auditor für digitale Hochschulformulare (XIMA Formcycle) an der HWG Ludwigshafen.

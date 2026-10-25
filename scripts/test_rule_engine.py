@@ -672,6 +672,16 @@ def evaluate_form(xfp_path, registry):
     else:
         results["passed"].append("HWG-WF-02 (Vorgangsnummern-Referenz in Workflow-E-Mail vorhanden)")
 
+    # Ensure both 'rule' and 'rule_id' are present on all violations and recommendations
+    for v in results["violations"]:
+        r_id = v.get("rule") or v.get("rule_id")
+        v["rule"] = r_id
+        v["rule_id"] = r_id
+    for r in results["recommendations"]:
+        r_id = r.get("rule") or r.get("rule_id")
+        r["rule"] = r_id
+        r["rule_id"] = r_id
+
     results["score"] = max(0, results["score"])
     return results
 

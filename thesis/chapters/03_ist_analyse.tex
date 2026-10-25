@@ -13,18 +13,18 @@ Mithilfe eigens entwickelter Analysewerkzeuge wurden die zugrundeliegenden JSON-
 \subsection{Klassifikation in funktionale Archetypen}
 \label{subsec:archetypen}
 
-Die Analyse offenbart eine enorme strukturelle Spannweite: Die Formulare reichen von schlanken, einseitigen Abfragen mit 30 Elementen bis hin zu hochkomplexen Anträgen mit 419 UI-Elementen und 10 Bildschirmseiten. Inhaltlich lassen sich die Vorlagen in vier funktionale Archetypen unterteilen (siehe Tabelle~\ref{tab:archetypen}):
+Die Analyse offenbart eine enorme strukturelle Spannweite: Die Formulare reichen von schlanken, einseitigen Abfragen mit 30 Elementen bis hin zu hochkomplexen Anträgen mit 424 UI-Elementen und 12 Bildschirmseiten (z.\,B. der Dienstreiseantrag). Inhaltlich lassen sich die Vorlagen in vier funktionale Archetypen unterteilen (siehe Tabelle~\ref{tab:archetypen}):
 
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabularx}{\textwidth}{lXccc}
+\begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}Xccc}
 \toprule
 \textbf{Archetyp} & \textbf{Typische Anwendungsbereiche \& Beispiele} & \textbf{Elemente} & \textbf{Seiten} & \textbf{Anteil} \\
 \midrule
 \textbf{1. Studierendenprozesse} & Praxisphasen-Anmeldungen (\textit{FB1-GiP-Praktikum}), Notenverbuchung & 114--133 & 2 & 22\,\% \\
-\textbf{2. Finanzen \& Beschaffung} & Auslagenerstattung, Haushaltsvergabevermerke, KI-Beschaffung & 63--102 & 3--5 & 27\,\% \\
-\textbf{3. Personalverwaltung (HR)} & Stellenausschreibungen, Vertragsänderungen, Nebentätigkeiten & 110--345 & 2--9 & 24\,\% \\
+\textbf{2. Finanzen, Beschaffung \& Reisen} & Auslagenerstattung, Vergabevermerke, Dienstreiseantrag & 63--424 & 3--12 & 27\,\% \\
+\textbf{3. Personalverwaltung (HR)} & Stellen\-ausschreibungen, Vertragsänderungen, Nebentätigkeiten & 110--345 & 2--9 & 24\,\% \\
 \textbf{4. Forschung \& Transfer (ZFK)} & Drittmittel-Sprints, Promotionsförderung, Tagungsbeihilfen & 30--419 & 1--10 & 27\,\% \\
 \bottomrule
 \end{tabularx}
@@ -40,7 +40,7 @@ Um die Bandbreite der existierenden Implementierungsstile zu illustrieren, stell
 \begin{table}[htbp]
 \centering
 \scriptsize
-\begin{tabularx}{\textwidth}{lXXXX}
+\begin{tabularx}{\textwidth}{l*4{>{\raggedright\arraybackslash}X}}
 \toprule
 \textbf{Prüfdimension} & \textbf{Auslagenerstattung (Prod)} & \textbf{Antrag-Sprints (Test/ZFK)} & \textbf{FB1-Praktikum (Prod)} & \textbf{Master-Formular (Admin)} \\
 \midrule
@@ -49,17 +49,17 @@ Layout-Breite & 700px (starr) & 850px (modern) & 700px (starr) & 700px (starr) \
 Seitenanzahl & 3 Seiten & 1 Seite & 2 Seiten & 1 Seite \\
 Header-Banner & HWG-Logo vorhanden & Kein Logo / kein Banner & Kein Logo / kein Banner & HWG-Logo vorhanden \\
 Footer-Branding & XIMA-Logo deaktiviert & XIMA-Logo aktiv & XIMA-Logo aktiv & XIMA-Logo deaktiviert \\
-Container-Struktur & 4 \texttt{<fieldset>}-Gruppen & 0 Fieldsets (nur \texttt{<div>}) & 3 Fieldsets & 2 Fieldsets \\
+Container-Struktur & 4 \texttt{<fieldset>}-Gruppen & 0 Fieldsets (nur \texttt{<div>}) & 2 Fieldsets* & 4 \texttt{<fieldset>}-Gruppen \\
 Pflichtfeld-Kennzeichnung & Optischer Stern vorhanden & Optischer Stern vorhanden & Sterne fehlen teilweise & Vollständig mit Stern \\
-ARIA-Attribute & \texttt{aria-required="true"} & \texttt{aria-required="true"} & Fehlt teilweise & \texttt{aria-required="true"} \\
+ARIA-Attribute & \texttt{aria-required} \texttt{="true"} & \texttt{aria-required} \texttt{="true"} & Fehlt teilweise & \texttt{aria-required} \texttt{="true"} \\
 IBAN-/PLZ-Validierung & Unvalidierter Freitext & Telefon unvalidiert & Unvalidiert & PLZ unvalidiert \\
-Dateiuploads & 4 Uploads ohne Formatangabe & Keine Uploads & 1 Upload ohne Größenangabe & Keine Uploads \\
-Datenschutz (Art. 13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis \\
-Primär-Button & \texttt{Antrag einreichen} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Abschicken} & \texttt{Antrag einreichen} \\
+Dateiuploads & 4 Uploads ohne Formatangabe & Keine Uploads & 1 Upload* ohne Größenangabe & Keine Uploads \\
+Datenschutz (Art. 13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Im Footer aktiv (\texttt{privacyPolicyShow="1"}) \\
+Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Keiner (Template-Snippet) \\
 Workflow-E-Mail & Bestätigung vorhanden & Bestätigung vorhanden & Bestätigung vorhanden & Keine Workflow-Mail \\
 \bottomrule
 \end{tabularx}
-\caption{Struktureller und ergonomischer Vergleich dreier Kernformulare mit dem Master-Formular}
+\caption{Struktureller und ergonomischer Vergleich dreier Kernformulare mit dem Master-Formular (*Die Struktur- und Upload-Werte für FB1-Praktikum beziehen sich auf die gerenderte Einstiegsseite; das Gesamtprojekt umfasst über alle Verzweigungen hinweg 17 Dateiuploads und 20 Fieldset-Container)}
 \label{tab:vergleich_kernformulare}
 \end{table}
 
@@ -100,7 +100,7 @@ Ein professioneller behördlicher Webauftritt erfordert die verlässliche Wieder
     \label{fig:vergleich_header}
 \end{figure}
 
-Darüber hinaus divergiert die Anordnung grundlegender Eingabefelder: Während in Abbildung~\ref{fig:header_auslagen} intuitiv \textit{Vorname} links und \textit{Nachname} rechts angeordnet sind, kehrt Abbildung~\ref{fig:header_sprints} diese Reihenfolge in \textit{Name} (links) und \textit{Vorname} (rechts) um. Diese Permutation verstößt gegen die empirisch nachgewiesene Lesegewohnheit \parencite{bargas2010usable, wroblewski2008web}. Ein weiteres CI-Defizit betrifft die Fußzeile: In 61\,\% der Vorlagen ist das herstellerseitige Werbelogo \textit{\enquote{Powered by XIMA Formcycle}} aktiv geschaltet.
+Darüber hinaus divergiert die Anordnung grundlegender Eingabefelder: Während im initialen Zahlungsempfänger-Block der \textit{Auslagenerstattung} (Abbildung~\ref{fig:header_auslagen}) intuitiv \textit{Vorname} links und \textit{Nachname} rechts angeordnet sind, kehrt Abbildung~\ref{fig:header_sprints} diese Reihenfolge in \textit{Name} (links) und \textit{Vorname} (rechts) um. Diese Permutation verstößt gegen die empirisch nachgewiesene Lesegewohnheit \parencite{bargas2010usable, wroblewski2008web}. Gleichwohl zeigt die spätere automatisierte Gesamtevaluation (Kapitel~\ref{chap:evaluation}), dass auch die \textit{Auslagenerstattung} über das gesamte mehrseitige Formular hinweg die Sequenz-Governance (\texttt{HWG-STAMM-01}) verletzt, da in nachgelagerten Abschnitten (z.\,B. Budgetverwaltung/Führungskraft) wiederholt persönliche Namens- und E-Mail-Felder nach der Telefonnummer eingeschoben werden. Ein weiteres CI-Defizit betrifft die Fußzeile: In 61\,\% der Vorlagen ist das herstellerseitige Werbelogo \textit{\enquote{Powered by XIMA Formcycle}} aktiv geschaltet.
 
 \subsection{Problemfeld 3: Heterogene Stammdaten-Muster und Copy-Paste-Risiken}
 \label{subsec:problem_stammdaten}
@@ -126,16 +126,16 @@ An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiede
 
 Wie der Vergleich in Abbildung~\ref{fig:vergleich_stammdaten} belegt:
 \begin{itemize}
-    \item Im \textit{Master-Formular} sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} als Pflichtfelder markiert; die \textit{Matrikelnummer} ist optional.
-    \item Im \textit{FB1-Praktikum} fehlen die Pflichtfeldsterne bei Name und E-Mail im DOM vollständig, während die \textit{Matrikelnummer*} zwingend gefordert wird.
+    \item Im \textit{Master-Formular} (Abbildung~\ref{fig:master_pers}) sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} als Pflichtfelder markiert; die \textit{Matrikelnummer} ist optional.
+    \item Im \textit{FB1-Praktikum} (Abbildung~\ref{fig:praktikum_pers}) fehlen die Pflichtfeldsterne bei Name und E-Mail im DOM vollständig, während die \textit{Matrikelnummer*} zwingend gefordert wird.
     \item Das E-Mail-Feld variiert in der Beschriftung willkürlich zwischen \textit{E-Mail-Adresse}, \textit{E-Mail} und internen Bezeichnern wie \textit{HWGLU-Email}.
-    \item Zudem enthält die Kopiervorlage im Produktivzustand sichtbare Entwickler-Notizen (\textit{\enquote{Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert}}), die für Endnutzende unverständlich sind und die \textbf{Selbstbeschreibungsfähigkeit (ISO 9241-110)} verletzen.
+    \item Zudem enthält die Kopiervorlage im Designer-Produktivzustand sichtbare Entwickler-Notizen (\textit{\enquote{Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert}}), die für Endnutzende unverständlich sind und die \textbf{Selbstbeschreibungsfähigkeit (ISO 9241-110)} verletzen. Während dieser Hinweis im Vorlagen-Formular als beschreibender Rich-Text-Container (\texttt{rtevalue}) hinterlegt ist und in der automatisierten Einzelfall-Evaluation von Kapitel~\ref{chap:evaluation} mangels Label-Zuordnung keinen Punkteabzug auslöst, stellt ein solches Überbleibsel in abgeleiteten Anträgen ein kritisches Usability-Risiko dar (\texttt{HWG-UI-01}).
 \end{itemize}
 
 \subsection{Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote{Kritischer Fall}}
 \label{subsec:problem_buttons}
 
-Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}, siehe Abbildung~\ref{fig:buttons_beispiele}).
+Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}, siehe Abbildung~\ref{fig:buttons_beispiele}): Während Abbildung~\ref{fig:btn_sprints} ein kleingeschriebenes Minimal-Label neben dem unklaren Ausnahmeknopf zeigt, illustriert Abbildung~\ref{fig:btn_kibeschaffung} eine abweichende Navigationsbeschriftung.
 
 \begin{figure}[htbp]
     \centering
@@ -178,9 +178,9 @@ Die automatisierte DOM-Auswertung der gerenderten HTML-Dateien deckt erhebliche 
 \subsection{Problemfeld 6: Workflow-Fragmentierung und vertikale Abteilungssilos}
 \label{subsec:workflow_silos}
 
-Im Rahmen einer vertieften Untersuchung aller 49 Formcycle-Vorlagen wurde überprüft, ob hochschulweit standardisierte Prozessketten über mehrere Verwaltungseinheiten hinweg existieren. Die Datenanalyse der Prozessmodelle (\texttt{workflowVersions}) widerlegt dies:
+Im Rahmen einer vertieften Untersuchung aller 49 im Korpus enthaltenen Workflow-Prozessgraphen wurde überprüft, ob hochschulweit standardisierte Prozessketten über mehrere Verwaltungseinheiten hinweg existieren. Die Datenanalyse der Prozessmodelle (\texttt{workflowVersions}) widerlegt dies:
 \begin{itemize}
-    \item \textbf{Hoher Anteil isolierter Einzelaufgaben:} Lediglich 14 der 49 Formulare (29\,\%) binden zwei oder mehr Abteilungen bzw. Prüfinstanzen ein. Die Mehrheit (71\,\%) verbleibt als rein lokale Einzelaufgabe innerhalb einer spezifischen Organisationseinheit.
+    \item \textbf{Hoher Anteil isolierter Einzelaufgaben:} Lediglich 14 der 49 Workflow-Prozessgraphen (29\,\%) binden zwei oder mehr Abteilungen bzw. Prüfinstanzen ein. Die Mehrheit (71\,\%) verbleibt als rein lokale Einzelaufgabe innerhalb einer spezifischen Organisationseinheit.
     \item \textbf{Vertikale funktionale Silos statt Querschnittsprozesse:} Wo mehrstufige Genehmigungsketten existieren, sind diese strikt fachdomänenspezifisch strukturiert (Personal, Finanzen, Forschung).
     \item \textbf{Inkonsistente Status-Nomenklatur:} Ein identischer Prozessschritt (\enquote{Genehmigung}) wird uneinheitlich als \textit{\enquote{Akzeptiert - VG}}, \textit{\enquote{Vergabe genehmigt}} oder \textit{\enquote{Antrag genehmigt}} bezeichnet. Zudem fehlen in vielen automatisierten E-Mails an Antragstellende eindeutige Vorgangsnummern (\texttt{[\%\$PROJECT\_ALIAS\%]}).
 \end{itemize}

@@ -37,7 +37,8 @@ Das Dashboard und die Prüf-API sind nun sofort erreichbar unter:
 Da das Dashboard clientseitige Prüflogik und die Archiv-Dekompression (JSZip) direkt im Browser mitbringt, genügt für den Basisbetrieb eine einzige HTML-Datei:
 
 ### Schritte für Nginx / Apache:
-1. Kopieren Sie die Datei `web/compliance_dashboard.html` in das Web-Verzeichnis des Webservers (z. B. `/var/www/compliance_dashboard/index.html`).
+1. Kopieren Sie die Datei `web/compliance_dashboard.html` sowie den Ordner `web/vendor/` (enthält `jszip.min.js`) in das Web-Verzeichnis des Webservers (z. B. `/var/www/compliance_dashboard/`).
+   *Hinweis für Air-Gapped-Umgebungen:* Das Mitkopieren von `web/vendor/jszip.min.js` stellt sicher, dass das Client-seitige ZIP-Parsing ohne Internetverbindung und ohne Rückgriff auf externe CDNs vollständig lokal funktioniert.
 2. Konfiguration anlegen (eine Vorlage befindet sich in `deploy/nginx.conf`).
 3. Webserver neu laden (`systemctl reload nginx`).
 
@@ -78,3 +79,15 @@ server {
 | **Internet-Verbindung?** | **Nein.** Das System kann vollständig isoliert (*Air-Gapped*) im Intranet ohne ausgehende Internet-Verbindungen betrieben werden. |
 | **Ressourcenbedarf:** | Minimal: 1 vCPU, 512 MB RAM genügen für Hunderte gleichzeitige Prüfungen. |
 | **Wartungsaufwand:** | Nahezu null, da keine externen Python-Bibliotheken aktualisiert werden müssen. |
+
+---
+
+## Air-Gapped-Betrieb mit KI / LLM-Anbindung
+
+Ein zentraler Vorteil der Architektur ist die vollständige Unabhängigkeit von externen Cloud-Diensten:
+1. **Deterministische Prüfung (Stufe 1):** Die AST-Strukturprüfung (15 von 22 Regeln) läuft vollständig lokal und offline in unter 20 ms.
+2. **Semantische Prüfung (Stufe 2 mit Open-Source-LLM):** 
+   * Auch die semantische Sprachmodell-Inferenz kann **zu 100 % Air-Gapped** im Hochschulnetz betrieben werden.
+   * Hierzu wird ein quelloffenes Open-Weight-Modell (z. B. *Qwen 3 30B* oder *Llama 3.1 8B*) auf einem internen Server des Hochschul-Rechenzentrums oder der *Academic Cloud* (GWDG) über Inferenz-Server wie **vLLM** oder **Ollama** gehostet.
+   * Das Dashboard bzw. die Python-Middleware sendet den kompakten JSON-Payload ausschließlich an die interne Netzwerkadresse (z. B. `http://llm-service.intern.hwg-lu.de/v1/chat/completions`).
+   * **Ergebnis:** Zu keinem Zeitpunkt verlassen Formulardaten das interne Hochschulnetzwerk. Die Anforderungen nach Art. 9 und Art. 44 ff. DSGVO bezüglich Datensouveränität werden vollständig erfüllt.

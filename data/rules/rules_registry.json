@@ -34,15 +34,26 @@
       "category": "corporate_design",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage im Header platziert sein, eine standardisierte Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1).",
+      "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage im Header platziert sein, eine standardisierte Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1). Zweistufige Schweregrad-Logik: Fehlen des Logos wird als Critical (15 Punkte Abzug), Maß- oder Ausrichtungsabweichungen werden als Major (8 Punkte Abzug) bewertet.",
       "specification": {
         "target": "header_elements",
         "required_component": "XImage",
         "alt_pattern": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
         "required_height": "60px",
-        "required_alignment": "right"
+        "required_alignment": "right",
+        "severity_rule": "Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8"
       },
-      "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (technisches Attribut imageheight = '60') und das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right'). Hinterlegen Sie im Feld 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'."
+      "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (technisches Attribut imageheight = '60') und das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right'). Hinterlegen Sie im Feld 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'.",
+      "severity_tiers": {
+        "critical": {
+          "penalty": 15,
+          "condition": "Fehlen des offiziellen HWG-Header-Banners (XImage) im Kopfbereich"
+        },
+        "major": {
+          "penalty": 8,
+          "condition": "Maß- oder Ausrichtungsabweichung (Höhe != 60px oder Ausrichtung != rechtsbündig)"
+        }
+      }
     },
     {
       "id": "HWG-CD-03",
@@ -84,7 +95,10 @@
       "specification": {
         "target": "form_sections",
         "required_container": "XFieldSet",
-        "forbidden_container_as_section": ["XContainer", "XContainerInvisible"],
+        "forbidden_container_as_section": [
+          "XContainer",
+          "XContainerInvisible"
+        ],
         "require_legend": true
       },
       "remediation": "Gruppieren Sie zusammengehörige Felder in einem XFieldSet mit einer aussagekräftigen Legende (z. B. 'Persönliche Angaben'). Nutzen Sie reine Container nur für internes Styling."
@@ -151,12 +165,26 @@
       "specification": {
         "target": "master_data_labels",
         "canonical_patterns": {
-          "salutation": ["Anrede"],
-          "first_name": ["Vorname"],
-          "last_name": ["Nachname"],
-          "email": ["E-Mail-Adresse", "Hochschul-E-Mail"],
-          "phone": ["Telefonnummer", "Mobilfunknummer"],
-          "matriculation": ["Matrikelnummer"]
+          "salutation": [
+            "Anrede"
+          ],
+          "first_name": [
+            "Vorname"
+          ],
+          "last_name": [
+            "Nachname"
+          ],
+          "email": [
+            "E-Mail-Adresse",
+            "Hochschul-E-Mail"
+          ],
+          "phone": [
+            "Telefonnummer",
+            "Mobilfunknummer"
+          ],
+          "matriculation": [
+            "Matrikelnummer"
+          ]
         },
         "anti_patterns": [
           "Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r')",
@@ -232,7 +260,12 @@
           "Datenschutz-Hinweis im Formular oder aktivierte Datenschutzerklärung im Footer (privacyPolicyShow = 1)",
           "Link zur Datenschutzerklärung der HWG Ludwigshafen"
         ],
-        "keywords": ["Datenschutz", "Datenschutzerklärung", "DSGVO", "hwg-lu.de"]
+        "keywords": [
+          "Datenschutz",
+          "Datenschutzerklärung",
+          "DSGVO",
+          "hwg-lu.de"
+        ]
       },
       "remediation": "Fügen Sie vor der Absende-Schaltfläche einen Hinweis auf die Datenverarbeitung mit Link zur HWG-Datenschutzerklärung ein oder aktivieren Sie im Footer die Option 'Datenschutzerklärung anzeigen' (privacyPolicyShow = 1)."
     },
@@ -245,7 +278,10 @@
       "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nutzende müssen vor dem Upload wissen, welche Dateiformate (z. B. PDF) und Dateigrößen (z. B. max. 10 MB) akzeptiert werden, um Systemabbrüche zu verhindern.",
       "specification": {
         "target": "upload_components",
-        "component_types": ["XUpload", "XFile"],
+        "component_types": [
+          "XUpload",
+          "XFile"
+        ],
         "required_hint_elements": [
           "Zulässige Dateiformate (z. B. 'PDF, JPG')",
           "Maximale Dateigröße (z. B. 'max. 10 MB')"
@@ -262,7 +298,14 @@
       "rationale": "Fehlerrobustheit und Benutzerführung nach ISO 9241-110: Strukturierte Daten (IBAN, PLZ, Telefon, Datum) dürfen nicht als unvalidierte Freitexte erfasst werden, sondern benötigen Validierungsmuster.",
       "specification": {
         "target": "structured_fields",
-        "field_patterns": ["iban", "plz", "postleitzahl", "telefon", "datum", "geburtsdatum"],
+        "field_patterns": [
+          "iban",
+          "plz",
+          "postleitzahl",
+          "telefon",
+          "datum",
+          "geburtsdatum"
+        ],
         "required_property": "validation_pattern_or_preset",
         "copy_paste_regex_catalog": {
           "plz_deutschland": "^[0-9]{5}$",
@@ -284,7 +327,12 @@
       "rationale": "Nielsen Norman Group Form Design: Die optische Breite eines Feldes signalisiert die erwartete Inhaltslänge. Extrem kurze Angaben (PLZ, Hausnummer) dürfen nicht über 100% Breite gestreckt werden.",
       "specification": {
         "target": "compact_fields",
-        "field_names": ["plz", "postleitzahl", "hausnummer", "hnr"],
+        "field_names": [
+          "plz",
+          "postleitzahl",
+          "hausnummer",
+          "hnr"
+        ],
         "max_recommended_width_percentage": 40
       },
       "remediation": "Begrenzen Sie die Spaltenbreite von kurzen Eingabefeldern wie Postleitzahl oder Hausnummer auf maximal 30-40% der Zeilenbreite oder platzieren Sie sie nebeneinander in einer Mehrspaltenzeile."
@@ -293,7 +341,7 @@
       "id": "HWG-UX-02",
       "name": "Empfehlung: Zwischenspeichern mit E-Mail-Link bei umfangreichen Formularen",
       "category": "input_validation_ux",
-      "evaluation_type": "semantic",
+      "evaluation_type": "hybrid",
       "severity": "recommendation",
       "rationale": "ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei großen Formularen (z. B. ab 3 Seiten oder vielen Eingabefeldern/Nachweis-Uploads) sollten Nutzende die Bearbeitung unterbrechen können. Ein Zwischenspeichern-Button mit E-Mail-Link-Versand speichert die bisherigen Angaben und erlaubt die nahtlose Fortsetzung zu einem späteren Zeitpunkt.",
       "specification": {
@@ -322,7 +370,7 @@
       "id": "HWG-LANG-02",
       "name": "Prägnante und barrierearme Formulierung (Vermeidung von Schachtelsätzen)",
       "category": "plain_language_semantics",
-      "evaluation_type": "semantic",
+      "evaluation_type": "hybrid",
       "severity": "minor",
       "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte und Hinweise müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das kognitive Verständnis.",
       "specification": {
@@ -336,7 +384,7 @@
       "id": "HWG-FEEDBACK-01",
       "name": "Prozesstransparenz in den Workflow-E-Mail-Bestätigungen",
       "category": "process_transparency",
-      "evaluation_type": "semantic",
+      "evaluation_type": "hybrid",
       "severity": "minor",
       "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über die automatisierten Workflow-E-Mails (FC_EMAIL) transparent über den Eingang, den aktuellen Bearbeitungsstatus und die nächsten Prozessschritte informiert werden.",
       "specification": {

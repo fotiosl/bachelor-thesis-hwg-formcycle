@@ -11,13 +11,16 @@ Zur Sicherstellung der wissenschaftlichen Reproduzierbarkeit und Dokumentation d
 Du bist ein wissenschaftlicher Usability-, Barrierefreiheits- und Governance-Auditor für digitale Hochschulformulare (XIMA Formcycle) an der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen (HWG Ludwigshafen).
 
 \vspace{0.3cm}
-\textbf{Kontext-Injektion (Auszug der semantischen Governance-Regeln v1.5.0):}
+\textbf{Kontext-Injektion (Vollständiger Katalog der 7 semantischen Benchmark-Regeln v1.5.0):}
 \begin{itemize}
-    \item \texttt{HWG-BTN-01} (Aktionsorientierte Schaltflächen, Major): Schaltflächen müssen ein klares Vollverb und ein konkretes Zielobjekt nennen (\textit{Action-Verb-Pattern}, z.\,B. \enquote{Antrag einreichen} statt \enquote{senden} oder \enquote{Kritischer Fall}).
-    \item \texttt{HWG-STAMM-02} (Kanonische Stammdaten, Minor): Persönliche Felder müssen kanonische Bezeichnungen führen (z.\,B. \enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse}).
-    \item \texttt{HWG-LANG-01} (Erklärung von Hochschuljargon, Major): Fachbegriffe wie Kostenstelle, Vergabevermerk oder Shibboleth müssen mit einem verständlichen Hilfetext versehen sein.
-    \item \texttt{HWG-LANG-02} (Barrierearme Sprache, Minor): Vermeidung von Schachtelsätzen und bürokratischen Floskeln im Formulartext.
-    \item \texttt{HWG-FEEDBACK-01} (Prozesstransparenz in Workflow-E-Mails, Minor): Automatisierte E-Mails müssen Eingangsbestätigung, Folgeschritte und Ansprechpartner nennen.
+    \item \texttt{HWG-STAMM-02} (Standardisierte Stammdaten-Bezeichnungen, Minor): Persönliche Felder müssen kanonische Bezeichnungen führen (z.\,B. \enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse} bzw. \enquote{Hochschul-E-Mail}). Technische Feldkürzel (z.\,B. \texttt{tf1}, \texttt{HWGLU-Email}) oder sperrige Zusätze (\enquote{Name Antragstellende/r}) sind unzulässig.
+    \item \texttt{HWG-BTN-01} (Aktionsorientierte Schaltflächen, Major): Schaltflächen müssen ein klares Vollverb im Infinitiv und ein konkretes Zielobjekt nennen (\textit{Action-Verb-Pattern}, z.\,B. \enquote{Antrag einreichen} statt generischem \enquote{senden} oder unklarer Statusbezeichnung wie \enquote{Kritischer Fall}).
+    \item \texttt{HWG-BTN-02} (Einheitliche Navigations-Schaltflächen, Minor): In mehrseitigen Formularen dürfen zur Pagination ausschließlich die Bezeichnungen \enquote{Weiter} (vorwärts) und \enquote{Zurück} (rückwärts) eingesetzt werden. Unpräzise Konstrukte wie \enquote{weiter zu Seite 2} sind unzulässig.
+    \item \texttt{HWG-UX-02} (Zwischenspeicher-Empfehlung, Recommendation): Bei Formularen mit hohem Umfang ($\ge 3$ Seiten oder $\ge 25$ Eingabefelder) ist eine unverbindliche Empfehlung zur Bereitstellung eines \enquote{Zwischenspeichern}-Buttons mit Versand eines Fortsetzungs-Links per E-Mail auszugeben (kein Punktabzug).
+
+    \item \texttt{HWG-LANG-01} (Erklärung von Hochschuljargon, Major): Fachbegriffe wie Kostenstelle, Vergabevermerk, GStB, KAP oder Shibboleth/LDAP müssen mit einem verständlichen Hilfetext (Tooltip/Beschreibung) versehen sein.
+    \item \texttt{HWG-LANG-02} (Prägnante und barrierearme Formulierung, Minor): Anleitungssätze und Hinweistexte dürfen maximal 25 Wörter umfassen und keine unverständlichen Schachtelsätze bilden.
+    \item \texttt{HWG-FEEDBACK-01} (Prozesstransparenz in Workflow-E-Mails, Minor): Automatisierte E-Mails an Antragstellende müssen eine verbindliche Eingangsbestätigung, die zuständige Prüfstelle und die nächsten Prozessschritte transparent ausweisen.
 \end{itemize}
 
 \vspace{0.3cm}

@@ -23,7 +23,7 @@ Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.88\textwidth]{figures/pipeline_architektur.pdf}
-    \caption{Vierstufige Architektur der hybriden Compliance-Prüfpipeline}
+    \caption{Vierstufige Architektur der hybriden Compliance-Prüfpipeline (Quelle: Eigene Darstellung)}
     \label{fig:pipeline_datenfluss}
 \end{figure}
 
@@ -80,7 +80,7 @@ Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Ext
 7 & \quad \textbf{Wenn} \texttt{className} == \texttt{"XFooter"}: Speichere \texttt{props.showlogo} und \texttt{props.privacyPolicyShow} \\
 8 & \quad \textbf{Wenn} \texttt{className} == \texttt{"XFieldSet"}: Setze \textit{features.has\_fieldset} $\leftarrow$ \texttt{True} \\
 9 & \quad \textbf{Wenn} \textit{props} ein Attribut \texttt{maxwidth} enthält: Füge Wert zu \textit{features.widths} hinzu \\
-10 & \quad \textbf{Prüfe} Pflichtfeld-Konsistenz: Wenn \texttt{props.required} == "1" und \texttt{props.showrequiredhint} == "0": \\
+10 & \quad \textbf{Prüfe} Pflichtfeld-Konsistenz: Wenn \texttt{props.required == "1"} und \texttt{props.showrequiredhint == "0"}: \\
 11 & \quad \quad Registriere Feldname in \textit{features.missing\_required\_hints} \\
 12 & \quad \textbf{Prüfe} Textinhalte: Bereinige Labels von HTML-Entities; extrahiere Jargon-Kandidaten \\
 13 & \quad \textbf{Für jeden} Kindknoten \textit{child} in \textit{node.values()}: Führe \texttt{TraverseAST}(\textit{child}, \textit{features}) aus \\
@@ -96,13 +96,20 @@ Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Ext
 \section{Konzeption und Gestaltung des Intranet-Dashboards}
 \label{sec:dashboard_gestaltung}
 
-Das Intranet-Dashboard wurde in den offiziellen Hochschulfarben (\texttt{\#003366} HWG-Blau, \texttt{\#b41414} HWG-Rot) gestaltet. Es bietet folgende Kernkomponenten:
+Das Intranet-Dashboard (siehe Abbildung~\ref{fig:dashboard_ui}) wurde in den offiziellen Hochschulfarben (\texttt{\#003366} HWG-Blau, \texttt{\#b41414} HWG-Rot) gestaltet. Es bietet folgende Kernkomponenten:
 \begin{itemize}
     \item \textbf{Score-Messanzeige (Gauge):} Eine dynamische SVG-Tacho-Anzeige visualisiert den Compliance-Score von 0 bis 100 mit intuitiver Farbcodierung (Grün $\ge 85$, Gelb 60--84, Rot $<60$).
     \item \textbf{Benchmark-Presets:} Formularerstellende können fünf vorgefertigte Formularprofile mit einem Klick testen, um das Prüfsystem ohne eigene Dateien kennenzulernen.
     \item \textbf{Klickpfad-Remediation-Karten:} Jeder Regelverstoß wird mit einem klaren Badge (Critical, Major, Minor), einer verständlichen Fehlerbeschreibung und dem exakten Klickpfad für den visuellen Formcycle Designer dargestellt.
     \item \textbf{Druckoptimierung und Audit-Export:} Ein dediziertes Print-Stylesheet blendet interaktive Bedienelemente aus und generiert einen formalen Audit-Bericht für Qualitätszirkel.
 \end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/compliance_dashboard.png}
+    \caption{Benutzeroberfläche des Intranet-Compliance-Dashboards mit dynamischer Tacho-Anzeige, Prüf-Presets und handlungsorientierten Klickpfad-Remediation-Karten}
+    \label{fig:dashboard_ui}
+\end{figure}
 
 \section{Technologie-Stack und Skalierbarkeit}
 \label{sec:technologie_stack}
