@@ -941,6 +941,18 @@ def generate_dashboard():
                     messageHtml = `<div class="rule-message" style="color: var(--slate-600);">${{escapeHtml(naReason)}}</div>`;
                 }}
 
+                let remediationHtml = '';
+                if (!isPassed) {{
+                    remediationHtml = `
+                    <div class="remediation-box">
+                        <div class="remediation-title">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5v-4A.5.5 0 0 1 8 4z"/></svg>
+                            Klickpfad im XIMA Formcycle Designer (Remediation):
+                        </div>
+                        <div class="remediation-text">${{escapeHtml(rule.remediation)}}</div>
+                    </div>`;
+                }}
+
                 card.className = cardClass;
                 card.innerHTML = `
                     <div class="rule-top">
@@ -951,13 +963,7 @@ def generate_dashboard():
                         ${{badgeHtml}}
                     </div>
                     ${{messageHtml}}
-                    <div class="remediation-box">
-                        <div class="remediation-title">
-                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5v-4A.5.5 0 0 1 8 4z"/></svg>
-                            Klickpfad im XIMA Formcycle Designer (Remediation):
-                        </div>
-                        <div class="remediation-text">${{escapeHtml(rule.remediation)}}</div>
-                    </div>
+                    ${{remediationHtml}}
                     <div class="rationale-text">Theoretische & regulatorische Fundierung: ${{escapeHtml(rule.rationale)}}</div>
                 `;
                 container.appendChild(card);
