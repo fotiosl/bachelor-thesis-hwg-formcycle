@@ -234,16 +234,32 @@ def evaluate_form(xfp_path, registry):
                     has_save_button = True
 
         # Master Data Sequence (HWG-STAMM-01)
+        non_person_keywords = [
+            "vorname", "antrag", "bank", "kredit", "projekt", "programm", 
+            "foerder", "titel", "datei", "forschung", "vorhaben", "institut", 
+            "organisation", "unternehmen", "thema", "kurs", "modul", "fach", 
+            "abteilung", "studiengang", "dokument", "bezeichnung", "stelle",
+            "einrichtung", "arbeit", "abschlussarbeit", "hochschule", "firma"
+        ]
         if c in input_classes:
             elem_name = props.get("name", "unnamed")
+            has_nachname = any(f[0] == "nachname" for f in personal_fields_sequence)
+            is_non_person = any(k in name or k in lbl_lower for k in non_person_keywords)
+
             # Only classify personal identity fields
             if any(term in name or term in lbl_lower for term in ["anrede", "salutation"]):
                 personal_fields_sequence.append(("anrede", elem_name, lbl_clean or "Anrede", 1))
             elif "vorname" in name or "vorname" in lbl_lower:
                 personal_fields_sequence.append(("vorname", elem_name, lbl_clean or "Vorname", 2))
-            elif "nachname" in name or "nachname" in lbl_lower or ("name" in name and not any(t in name for t in ["vorname", "antrag", "bank", "kredit", "projekt", "programm", "foerder", "titel", "datei"])):
-                personal_fields_sequence.append(("nachname", elem_name, lbl_clean or "Nachname", 3))
-            elif lbl_clean.lower() == "name" or "name antragstellende" in lbl_lower or "name antragsteller" in lbl_lower:
+            elif not is_non_person and (
+                "nachname" in name 
+                or "nachname" in lbl_lower 
+                or (not has_nachname and (
+                    lbl_clean.lower() in ["name", "nachname", "familienname"] 
+                    or any(term in lbl_lower for term in ["name antragstellende", "name antragsteller", "name der antragstellenden"])
+                    or ("name" in name and not any(t in name for t in non_person_keywords))
+                ))
+            ):
                 personal_fields_sequence.append(("nachname", elem_name, lbl_clean or "Nachname", 3))
             elif any(term in name or term in lbl_lower for term in ["email", "e-mail", "mail"]):
                 personal_fields_sequence.append(("email", elem_name, lbl_clean or "E-Mail-Adresse", 4))
@@ -468,7 +484,8 @@ def evaluate_form(xfp_path, registry):
         if "email" in name or "mail" in name:
             if lbl and lbl not in ["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"]:
                 non_canonical_master_labels.append((lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"))
-        if "nachname" in name or ("name" in name and "vorname" not in name and "antrag" not in name and "bank" not in name and "kredit" not in name and "projekt" not in name and "programm" not in name and "foerder" not in name):
+        is_non_person_label = any(k in name or k in lbl.lower() for k in non_person_keywords)
+        if not is_non_person_label and ("nachname" in name or ("name" in name and not any(t in name for t in non_person_keywords))):
             if "antragstellende" in lbl.lower() or lbl == "Name":
                 non_canonical_master_labels.append((lbl, "Erwartet: Nachname"))
 

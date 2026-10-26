@@ -1058,6 +1058,14 @@ def generate_dashboard():
             const jargonWithoutHelp = [];
             const longSentences = [];
 
+            const nonPersonKeywords = [
+                "vorname", "antrag", "bank", "kredit", "projekt", "programm", 
+                "foerder", "titel", "datei", "forschung", "vorhaben", "institut", 
+                "organisation", "unternehmen", "thema", "kurs", "modul", "fach", 
+                "abteilung", "studiengang", "dokument", "bezeichnung", "stelle",
+                "einrichtung", "arbeit", "abschlussarbeit", "hochschule", "firma"
+            ];
+
             const jargonCatalog = [
                 "gstb", "kostenstelle", "vergabevermerk", "remonstration", 
                 "promotionsausschuss", "exmatrikulation", "shibboleth", "ldap",
@@ -1161,13 +1169,22 @@ def generate_dashboard():
 
                 if (inputClasses.has(c)) {{
                     const elemName = props.name || "unnamed";
+                    const hasNachname = personalFieldsSequence.some(f => f[0] === "nachname");
+                    const isNonPerson = nonPersonKeywords.some(k => name.includes(k) || lblLower.includes(k));
+
                     if (["anrede", "salutation"].some(t => name.includes(t) || lblLower.includes(t))) {{
                         personalFieldsSequence.push(["anrede", elemName, lblClean || "Anrede", 1]);
                     }} else if (name.includes("vorname") || lblLower.includes("vorname")) {{
                         personalFieldsSequence.push(["vorname", elemName, lblClean || "Vorname", 2]);
-                    }} else if (name.includes("nachname") || lblLower.includes("nachname") || (name.includes("name") && !["vorname", "antrag", "bank", "kredit", "projekt", "programm", "foerder", "titel", "datei"].some(t => name.includes(t)))) {{
-                        personalFieldsSequence.push(["nachname", elemName, lblClean || "Nachname", 3]);
-                    }} else if (lblClean.toLowerCase() === "name" || lblLower.includes("name antragstellende") || lblLower.includes("name antragsteller")) {{
+                    }} else if (!isNonPerson && (
+                        name.includes("nachname") || 
+                        lblLower.includes("nachname") || 
+                        (!hasNachname && (
+                            ["name", "nachname", "familienname"].includes(lblClean.toLowerCase()) || 
+                            ["name antragstellende", "name antragsteller", "name der antragstellenden"].some(t => lblLower.includes(t)) ||
+                            (name.includes("name") && !nonPersonKeywords.some(k => name.includes(k)))
+                        ))
+                    )) {{
                         personalFieldsSequence.push(["nachname", elemName, lblClean || "Nachname", 3]);
                     }} else if (["email", "e-mail", "mail"].some(t => name.includes(t) || lblLower.includes(t))) {{
                         personalFieldsSequence.push(["email", elemName, lblClean || "E-Mail-Adresse", 4]);
@@ -1357,7 +1374,8 @@ def generate_dashboard():
                 if ((name.includes("email") || name.includes("mail")) && lbl && !["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"].includes(lbl)) {{
                     nonCanonical.push([lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"]);
                 }}
-                if (name.includes("nachname") || (name.includes("name") && !["vorname", "antrag", "bank", "kredit", "projekt", "programm", "foerder"].some(t => name.includes(t)))) {{
+                const isNonPersonLabel = nonPersonKeywords.some(k => name.includes(k) || lbl.toLowerCase().includes(k));
+                if (!isNonPersonLabel && (name.includes("nachname") || (name.includes("name") && !nonPersonKeywords.some(t => name.includes(t))))) {{
                     if (lbl.toLowerCase().includes("antragstellende") || lbl === "Name") {{
                         nonCanonical.push([lbl, "Erwartet: Nachname"]);
                     }}
