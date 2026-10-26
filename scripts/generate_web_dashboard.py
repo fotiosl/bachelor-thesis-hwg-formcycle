@@ -1067,7 +1067,7 @@ def generate_dashboard():
                 const rawLbl = String(props.label || props.text || props.heading || "");
                 const lblClean = rawLbl.replace(/<[^>]+>/g, " ").trim();
                 const lblLower = lblClean.toLowerCase();
-                const helpText = String(props.help || props.tooltip || props.description || "").toLowerCase();
+                const helpText = String(props.helptext || props.help || props.tooltip || props.description || "").toLowerCase();
 
                 if (c === "XPage") pageCount++;
                 if (inputClasses.has(c)) inputFieldCount++;
@@ -1192,7 +1192,7 @@ def generate_dashboard():
 
                 if (["iban", "plz", "postleitzahl", "telefon", "geburtsdatum"].some(t => name.includes(t) || lblLower.includes(t))) {{
                     const valRule = props.validation || {{}};
-                    const hasRegex = Boolean(props.pattern || valRule.regex || valRule.type);
+                    const hasRegex = Boolean(props.pattern || props.vrule || ["regexp", "email", "number", "date"].includes(props.datatype) || valRule.regex || valRule.type);
                     if (!hasRegex) structuredFieldsUnvalidated.push(props.name || lblClean.slice(0, 15));
                 }}
 
@@ -1481,10 +1481,13 @@ def generate_dashboard():
                 results.violations.push({{ rule: "HWG-WF-01", severity: "minor", message: "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt. Kanonischer Lebenszyklus erforderlich." }});
                 results.score -= penalties.minor;
             }} else {{
-                const canonicalStates = new Set(["eingegangen", "in prüfung", "in bearbeitung", "nachforderung ausstehend", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"]);
-                const nonCanonical = workflowStates.filter(s => !canonicalStates.has(s.toLowerCase()));
+                const canonicalRoots = ["eingegangen", "in prüfung", "in bearbeitung", "nachforderung", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"];
+                const nonCanonical = workflowStates.filter(s => {{
+                    const low = s.toLowerCase().trim();
+                    return !canonicalRoots.some(root => low.includes(root));
+                }});
                 if (nonCanonical.length > 0) {{
-                    results.violations.push({{ rule: "HWG-WF-01", severity: "minor", message: `Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: [${{nonCanonical.join(", ")}}]. Erwartet: kanonische Zustände ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt').` }});
+                    results.violations.push({{ rule: "HWG-WF-01", severity: "minor", message: `Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: [${{nonCanonical.join(", ")}}]. Statusnamen müssen auf den kanonischen Phasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt').` }});
                     results.score -= penalties.minor;
                 }} else {{
                     results.passed.push(`HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: ${{workflowStates.join(", ")}})`);

@@ -176,9 +176,6 @@
       \list{location}{1}{%
         {Berlin}%
       }
-      \list{organization}{1}{%
-        {DIN Deutsches Institut f{"u}r Normung e.\,V.}%
-      }
       \list{publisher}{1}{%
         {Beuth Verlag}%
       }
@@ -483,8 +480,15 @@
       \field{title}{Wissenschaftlich schreiben leicht gemacht: für Bachelor, Master und Dissertation}
       \field{year}{2011}
     \endentry
-    \entry{nielsen1994severity}{incollection}{}{}
+    \entry{nielsen1994severity}{inbook}{}{}
       \name{author}{1}{}{%
+        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           familyi={N\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod}}}%
+      }
+      \name{bookauthor}{1}{}{%
         {{hash=753054f71283d85f82cda8e35daf6bac}{%
            family={Nielsen},
            familyi={N\bibinitperiod},
@@ -502,6 +506,10 @@
       \strng{authornamehash}{753054f71283d85f82cda8e35daf6bac}
       \strng{authorfullhash}{753054f71283d85f82cda8e35daf6bac}
       \strng{authorfullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthorbibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthornamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthorfullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthorfullhashraw}{753054f71283d85f82cda8e35daf6bac}
       \field{sortinit}{N}
       \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
       \field{extradatescope}{labelyear}

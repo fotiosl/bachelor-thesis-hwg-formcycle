@@ -132,7 +132,7 @@
         "target": "field_labels",
         "check": "Keine HTML-Tags (<p>, <br>), keine Entities (&szlig;, &ouml;) und keine technischen Trenner (|) im sichtbaren Text."
       },
-      "remediation": "Verwenden Sie sauberen Text ohne HTML-Elemente für die Beschriftung (z. B. 'Straße' statt '<p>Stra&szlig;e</p>' und 'Fachbereich und Studiengang' statt 'Fachbereichen|Studiengang')."
+      "remediation": "Wählen Sie das betroffene Feld im Formcycle-Designer aus und öffnen Sie unter 'Eigenschaften' den Bereich 'Beschriftung' (Label). Schalten Sie im Texteditor über das Quellcode-Symbol ('<>') in die Quellcode-Ansicht um: Entfernen Sie alle umschließenden HTML-Absatz-Tags ('<p>' und '</p>') und ersetzen Sie maskierte HTML-Entities (wie '&ouml;', '&uuml;', '&auml;', '&szlig;') sowie technische Trenner ('|') durch sauberen Fließtext mit regulären Umlauten (z. B. 'Förderprogramm' statt '<p>F&ouml;rderprogramm</p>' und 'Straße' statt '<p>Stra&szlig;e</p>')."
     },
     {
       "id": "HWG-STAMM-01",
@@ -404,12 +404,12 @@
       "category": "workflow_governance",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen in der Verwaltung. Mehrstufige Formulare müssen den Lebenszyklus des Antrags über formale Statusübergänge (FC_CHANGE_STATE) abbilden und kanonische Bezeichnungen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') anstelle willkürlicher Ad-hoc-Zustände nutzen.",
+      "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen in der Verwaltung. Mehrstufige Formulare müssen den Lebenszyklus des Antrags über formale Statusübergänge (FC_CHANGE_STATE) abbilden und kanonische Phasen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') nutzen. Fachspezifische Zwischenschritte und Unterstatus sind zulässig, sofern sie auf diesen Phasen aufbauen.",
       "specification": {
         "target": "workflow_state_nodes",
         "canonical_lifecycle": [
-          "Eingegangen",
-          "In Prüfung",
+          "Eingegangen (inkl. Bereichserweiterungen wie 'Eingegangen - Finanzabteilung')",
+          "In Prüfung (inkl. Teilschritten wie 'In Prüfung Rückmeldung')",
           "Nachforderung ausstehend",
           "Genehmigt",
           "Abgelehnt",
@@ -418,9 +418,10 @@
         "disallowed_patterns": [
           "Workflow ohne Status-Knoten (FC_CHANGE_STATE)",
           "Willkürliche Ad-hoc-Zustände ohne Prozessbedeutung (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')"
-        ]
+        ],
+        "allowed_extensions": "Fachbereichsspezifische Teilschritte und Unterstatus (z. B. 'In Prüfung Rückmeldung', 'Eingegangen - Fachbereich') sind zulässig, solange die kanonischen Phasen als Basis dienen."
       },
-      "remediation": "Definieren Sie im Workflow strukturierte Statusänderungen (FC_CHANGE_STATE) und nutzen Sie die kanonischen Bezeichnungen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') anstelle von Ad-hoc-Statusnamen."
+      "remediation": "Definieren Sie im Workflow strukturierte Statusänderungen (FC_CHANGE_STATE) und nutzen Sie Bezeichnungen, die auf den kanonischen Lebenszyklusphasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt'). Fachspezifische Zusätze (wie 'In Prüfung Rückmeldung' oder 'Eingegangen - Finanzabteilung') sind zulässig."
     },
     {
       "id": "HWG-WF-02",

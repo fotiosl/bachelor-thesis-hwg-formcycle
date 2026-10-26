@@ -137,7 +137,7 @@ def evaluate_form(xfp_path, registry):
         lbl = str(props.get("label", "") or props.get("text", "") or props.get("heading", ""))
         lbl_clean = re.sub(r"<[^>]+>", " ", lbl).strip()
         lbl_lower = lbl_clean.lower()
-        help_text = str(props.get("help", "") or props.get("tooltip", "") or props.get("description", "")).lower()
+        help_text = str(props.get("helptext", "") or props.get("help", "") or props.get("tooltip", "") or props.get("description", "")).lower()
         
         if c == "XPage":
             page_count += 1
@@ -275,7 +275,13 @@ def evaluate_form(xfp_path, registry):
         # 9. Structured fields validation (IBAN, PLZ, Datum)
         if any(term in name or term in lbl_lower for term in ["iban", "plz", "postleitzahl", "telefon", "geburtsdatum"]):
             val_rule = props.get("validation", {})
-            has_regex = bool(props.get("pattern") or (isinstance(val_rule, dict) and val_rule.get("regex")) or (isinstance(val_rule, dict) and val_rule.get("type")))
+            has_regex = bool(
+                props.get("pattern")
+                or props.get("vrule")
+                or (props.get("datatype") in ["regexp", "email", "number", "date"])
+                or (isinstance(val_rule, dict) and val_rule.get("regex"))
+                or (isinstance(val_rule, dict) and val_rule.get("type"))
+            )
             if not has_regex:
                 structured_fields_unvalidated.append(props.get("name", lbl[:15]))
 
@@ -641,13 +647,13 @@ def evaluate_form(xfp_path, registry):
         })
         results["score"] -= penalties["minor"]
     else:
-        canonical_states = {"eingegangen", "in prüfung", "in bearbeitung", "nachforderung ausstehend", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"}
-        non_canonical_states = [s for s in workflow_states if s.lower() not in canonical_states]
+        canonical_roots = ["eingegangen", "in prüfung", "in bearbeitung", "nachforderung", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"]
+        non_canonical_states = [s for s in workflow_states if not any(root in s.lower().strip() for root in canonical_roots)]
         if non_canonical_states:
             results["violations"].append({
                 "rule": "HWG-WF-01",
                 "severity": "minor",
-                "message": f"Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: {non_canonical_states}. Erwartet: kanonische Zustände ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt')."
+                "message": f"Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: {non_canonical_states}. Statusnamen müssen auf den kanonischen Phasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt')."
             })
             results["score"] -= penalties["minor"]
         else:
