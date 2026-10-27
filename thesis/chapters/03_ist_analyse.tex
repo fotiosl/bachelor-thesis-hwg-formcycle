@@ -1,41 +1,36 @@
 \chapter{Empirische Ist-Analyse des HWG-Formularbestands}
 \label{chap:ist_analyse}
 
-Dieses Kapitel widmet sich der systematischen Erhebung und Analyse des bestehenden Formularbestands an der Hochschule für Wirtschaft und Gesellschaft Ludwigshafen (HWG). Ziel ist es, gewachsene Usability-Defizite, Brüche im visuellen Corporate Design sowie Barrierefreiheitsmängel empirisch und quantitativ offenzulegen. Die hieraus gewonnenen Erkenntnisse bilden das empirische Fundament für die anschließende Konzeption des einheitlichen Formular-Standards und der maschinenlesbaren Prüfregeln.
+Dieses Kapitel untersucht den bestehenden Formcycle-Formularbestand der HWG Ludwigshafen empirisch, um gewachsene Brüche in Corporate Design, Usability, Barrierefreiheit, Datenschutz und Workflow-Steuerung quantitativ offenzulegen (FQ1).
 
-\section{Erhebungsmethodik und Charakterisierung des Formular-Korpus}
+\section{Erhebungsmethodik und Charakterisierung des Korpus}
 \label{sec:methodik_korpus}
 
-Die Bestandsaufnahme basiert auf einer Vollerhebung der zentral im Formular-Management-System Formcycle bereitgestellten Vorlagen. Der erhobene Rohbestand umfasst 49 Formular-Archive (\texttt{.xfp}), aufgeteilt in das Produktivsystem (\texttt{prod}, 15 Vorlagen) sowie das Test- und Entwicklungssystem (\texttt{test}, 34 Vorlagen). Nach Bereinigung von redundanten Sicherungskopien und Zwischenversionen ergab sich ein bereinigtes Kernkorpus von \textbf{34 distinkten Formular-Projekten} mit insgesamt \textbf{49 Workflow-Prozessgraphen}.
+Die Bestandsaufnahme stützt sich auf sämtliche zum Erhebungszeitpunkt verfügbaren \textbf{34 Formcycle-Exportarchive (\texttt{.xfp})}, bestehend aus 13 Vorlagen des Produktivsystems (\texttt{prod}) und 21 Vorlagen des Test- und Entwicklungssystems (\texttt{test}). Abzüglich von neun systemübergreifenden Entwicklungs-/Produktivdubletten repräsentiert das Korpus 25 fachlich eigenständige Formularprojekte. Aus den Archiven wurden die JSON-Maskenmodelle (\texttt{.fcp}) sowie 53 Projekt-Exportdateien (\texttt{.fcexport}) mit insgesamt \textbf{34 Workflow-Modellen (\texttt{workflowVersions})} automatisiert extrahiert; ergänzend wurden für acht repräsentative Formulare gerenderte HTML-DOM-Snapshots aus Antragstellenden-Sicht ausgewertet.
 
-Mithilfe eigens entwickelter Analysewerkzeuge wurden die zugrundeliegenden JSON-Modelle (\texttt{.fcp}-Dateien für die Maskenstruktur sowie \texttt{.fcexport}-Dateien für die Prozessketten) automatisiert extrahiert und quantitativ ausgewertet. Zur Erfassung der realen Benutzerschnittstelle wurden zusätzlich von acht Kernformularen gerenderte DOM-Snapshots im HTML-Format erhoben, welche die Einstiegsansicht aus Antragstellenden-Sicht repräsentieren.
-
-\subsection{Klassifikation in funktionale Archetypen}
+\subsection{Funktionale Archetypen und repräsentative Kernanträge}
 \label{subsec:archetypen}
 
-Die Analyse offenbart eine enorme strukturelle Spannweite: Die Formulare reichen von schlanken, einseitigen Abfragen mit 30 Elementen bis hin zu hochkomplexen Anträgen mit 424 UI-Elementen und 12 Bildschirmseiten (z.\,B. der Dienstreiseantrag). Inhaltlich lassen sich die Vorlagen in vier funktionale Archetypen unterteilen (siehe Tabelle~\ref{tab:archetypen}):
+Die Formulare reichen von kompakten einseitigen Masken (30 UI-Elemente) bis zu hochkomplexen Großanträgen mit 424 Elementen auf 12 Seiten und gliedern sich in vier funktionale Archetypen (Tabelle~\ref{tab:archetypen}).
 
 \begin{table}[htbp]
 \centering
 \small
 \begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}Xccc}
 \toprule
-\textbf{Archetyp} & \textbf{Typische Anwendungsbereiche \& Beispiele} & \textbf{Elemente} & \textbf{Seiten} & \textbf{Anteil} \\
+\textbf{Archetyp} & \textbf{Anwendungsbereiche \& Beispiele} & \textbf{Elemente} & \textbf{Seiten} & \textbf{Anteil} \\
 \midrule
-\textbf{1. Studierendenprozesse} & Praxisphasen-Anmeldungen (\textit{FB1-GiP-Praktikum}), Notenverbuchung & 114--133 & 2 & 22\,\% \\
-\textbf{2. Finanzen, Beschaffung \& Reisen} & Auslagenerstattung, Vergabevermerke, Dienstreiseantrag & 63--424 & 3--12 & 27\,\% \\
-\textbf{3. Personalverwaltung (HR)} & Stellen\-ausschreibungen, Vertragsänderungen, Nebentätigkeiten & 110--345 & 2--9 & 24\,\% \\
-\textbf{4. Forschung \& Transfer (ZFK)} & Drittmittel-Sprints, Promotionsförderung, Tagungsbeihilfen & 30--419 & 1--10 & 27\,\% \\
+\textbf{1. Studierendenprozesse} & Praxisphasen (\textit{FB1-GiP-Praktikum}), Notenverbuchung & 114--133 & 2 & 22\,\% \\
+\textbf{2. Finanzen \& Beschaffung} & Auslagenerstattung, Vergabevermerke, Dienstreisen & 63--424 & 3--12 & 27\,\% \\
+\textbf{3. Personalverwaltung (HR)} & Stellenausschreibungen, Vertragsänderungen & 110--345 & 2--9 & 24\,\% \\
+\textbf{4. Forschung \& Transfer (ZFK)} & Antrag-Sprints, Promotions- und Tagungsförderung & 30--419 & 1--10 & 27\,\% \\
 \bottomrule
 \end{tabularx}
-\caption{Funktionale Archetypen der analysierten HWG-Formulare}
+\caption{Funktionale Archetypen des analysierten HWG-Formularbestands ($N = 34$)}
 \label{tab:archetypen}
 \end{table}
 
-\subsection{Empirisches Profil dreier repräsentativer Kernanträge}
-\label{subsec:profil_kernantraege}
-
-Um die Bandbreite der existierenden Implementierungsstile zu illustrieren, stellt Tabelle~\ref{tab:vergleich_kernformulare} drei reale Anträge aus unterschiedlichen Fachdomänen dem internen Referenzmuster (\textit{Master-Formular}) gegenüber:
+Zur mikroanalytischen Gegenüberstellung vergleicht Tabelle~\ref{tab:vergleich_kernformulare} drei reale Fachformulare mit dem internen Vorlage-Snippet (\textit{Master-Formular}).
 
 \begin{table}[htbp]
 \centering
@@ -44,68 +39,57 @@ Um die Bandbreite der existierenden Implementierungsstile zu illustrieren, stell
 \toprule
 \textbf{Prüfdimension} & \textbf{Auslagenerstattung (Prod)} & \textbf{Antrag-Sprints (Test/ZFK)} & \textbf{FB1-Praktikum (Prod)} & \textbf{Master-Formular (Admin)} \\
 \midrule
-Domäne & Finanzen / Haushalt & Forschung \& Kooperation & Fachbereich 1 / Studium & Zentrale Vorlage \\
-Layout-Breite & 700px (starr) & 850px (modern) & 700px (starr) & 700px (starr) \\
+Domäne & Finanzen / Haushalt & Forschung (ZFK) & Fachbereich 1 & Zentrale Kopiervorlage \\
+Layout-Breite & 700\,px (starr) & 850\,px (modern) & 700\,px (starr) & 700\,px (starr) \\
 Seitenanzahl & 3 Seiten & 1 Seite & 2 Seiten & 1 Seite \\
-Header-Banner & HWG-Logo vorhanden & Kein Logo / kein Banner & Kein Logo / kein Banner & HWG-Logo vorhanden \\
-Footer-Branding & XIMA-Logo deaktiviert & XIMA-Logo aktiv & XIMA-Logo aktiv & XIMA-Logo deaktiviert \\
-Container-Struktur & 4 \texttt{<fieldset>}-Gruppen & 0 Fieldsets (nur \texttt{<div>}) & 2 Fieldsets* & 4 \texttt{<fieldset>}-Gruppen \\
-Pflichtfeld-Kennzeichnung & Optischer Stern vorhanden & Optischer Stern vorhanden & Sterne fehlen teilweise & Vollständig mit Stern \\
-ARIA-Attribute & \texttt{aria-required} \texttt{="true"} & \texttt{aria-required} \texttt{="true"} & Fehlt teilweise & \texttt{aria-required} \texttt{="true"} \\
-IBAN-/PLZ-Validierung & Unvalidierter Freitext & Telefon unvalidiert & Unvalidiert & PLZ unvalidiert \\
-Dateiuploads & 4 Uploads ohne Formatangabe & Keine Uploads & 1 Upload* ohne Größenangabe & Keine Uploads \\
-Datenschutz (Art. 13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Im Footer aktiv (\texttt{privacyPolicyShow="1"}) \\
-Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Keiner (Template-Snippet) \\
-Workflow-E-Mail & Bestätigung vorhanden & Bestätigung vorhanden & Bestätigung vorhanden & Keine Workflow-Mail \\
+Header-Bereich & Logo 50\,px (ohne Alt-Text), keine H1 & Kein Logo, keine H1 & Logo 50\,px (ohne Alt-Text), keine H1 & Logo 50\,px (ohne Alt-Text), H1 vorhanden \\
+Footer-Branding & XIMA deaktiviert & XIMA-Logo aktiv & XIMA deaktiviert & XIMA deaktiviert \\
+Fieldset-Gruppen & 4 \texttt{<fieldset>}* (11 ges.) & 0 Fieldsets (nur \texttt{<div>}) & 2 \texttt{<fieldset>}* (20 ges.) & 4 \texttt{<fieldset>} \\
+Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & Programmatisch; Vorname, Nachname, E-Mail optional & Programmatisch inkl. Vorname, Nachname, E-Mail \\
+Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & PLZ (\texttt{plzDE}); Matrikelnr. unvalidiert \\
+Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads \\
+Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Im Footer aktiv (\texttt{privacyPolicyShow="1"}) \\
+Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Keiner (Snippet) \\
+Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Keine Bestätigungs-Mail \\
 \bottomrule
 \end{tabularx}
-\caption{Struktureller und ergonomischer Vergleich dreier Kernformulare mit dem Master-Formular (*Die Struktur- und Upload-Werte für FB1-Praktikum beziehen sich auf die gerenderte Einstiegsseite; das Gesamtprojekt umfasst über alle Verzweigungen hinweg 17 Dateiuploads und 20 Fieldset-Container)}
+\caption{Vergleich dreier Kernformulare mit dem Master-Formular (*Werte der Antragstellenden-Ansicht; Gesamtwerte über alle Prozessseiten in Klammern)}
 \label{tab:vergleich_kernformulare}
 \end{table}
 
-\section{Identifikation zentraler Problemfelder und Heuristik-Audit}
+\section{Sechs empirische Kernproblemfelder}
 \label{sec:problemfelder}
 
-Der detaillierte Komponenten- und DOM-Vergleich offenbart erhebliche ergonomische und technische Inkonsistenzen, die den Grundsätzen der DIN EN ISO 9241-110, den Richtlinien nach \textcite{bargas2010usable} sowie den WCAG 2.1 widersprechen. Im Folgenden werden die sechs zentralen Problemfelder detailliert analysiert.
-
-\subsection{Problemfeld 1: Layout-Inkonsistenzen und starre Breitenbrüche}
+\subsection{Problemfeld 1: Layout-Spaltung zwischen 700\,px und 850\,px}
 \label{subsec:problem_breiten}
+Der Bestand teilt sich nahezu hälftig in zwei inkompatible Layout-Generationen: \textbf{53\,\% (18/34)} – darunter Personal- und Studierendenformulare sowie das \textit{Master-Formular} – sind starr auf \texttt{max-width: 700px} begrenzt, was bei mehrspaltigen Zeilen zu Umbrüchen führt. Demgegenüber nutzen \textbf{47\,\% (16/34)} neuere \texttt{850px}-Container. Dieser unkoordinierte Wechsel verletzt die Erwartungskonformität nach \textcite{iso9241110}.
 
-Die quantitative Auswertung aller Vorlagen zeigt eine fundamentale Zerrissenheit des Bestands:
-\begin{itemize}
-    \item \textbf{700px-Gruppe (53\,\% des Bestands):} Ältere Formulare aus der Personalverwaltung und dem Studierendenservice sowie das interne \textit{Master-Formular} (18 von 34 Vorlagen) sind starr auf eine Maximalbreite von \texttt{700px} fixiert (\texttt{max-width: 700px; min-width: 300px;}). Auf modernen hochauflösenden Monitoren wirkt das Formular wie ein schmaler Fremdkörper; bei horizontalen Mehrfachspalten kommt es zu unschönen Zeilenumbrüchen.
-    \item \textbf{850px-Gruppe (47\,\% des Bestands):} Neuere Formulare (insbesondere aus dem Forschungs- und IT-Umfeld, 16 von 34 Vorlagen) nutzen durchgängig eine Maximalbreite von \texttt{850px}.
-\end{itemize}
-Dieser Generationswechsel ist historisch auf geänderte Voreinstellungen im Formcycle-System zurückzuführen. Da es an einer zentralen Styleguide-Vorgabe fehlte, wechselt die Darstellung für Nutzende innerhalb des Hochschulportals unvorhersehbar, was die \textbf{Erwartungskonformität nach ISO 9241-110} verletzt.
-
-\subsection{Problemfeld 2: Uneinheitliche Corporate Identity und Header-Strukturen}
+\subsection{Problemfeld 2: Brüche in Corporate Identity, Header und Stammdatensequenz}
 \label{subsec:problem_ci}
-
-Ein professioneller behördlicher Webauftritt erfordert die verlässliche Wiedererkennung der Institution. Während etablierte Formulare wie die \textit{Auslagenerstattung} über ein gestochen scharfes HWG-Logo im Kopfbereich verfügen, verzichten neuere Anträge (z.\,B. \textit{Antrag auf Förderung Antrag-Sprints}) vollständig auf visuelle Markenanker (siehe Abbildung~\ref{fig:vergleich_header}).
+Im Kopfbereich weichen \textbf{100\,\% (34/34)} der Vorlagen von einer konsistenten Marken- und Barrierefreiheitsnorm ab: Während ältere Formulare wie die \textit{Auslagenerstattung} zwar ein HWG-Logo einbinden (jedoch mit 50\,px Höhe und ohne Alternativtext), fehlt das Logo in neueren Formularen wie \textit{Antrag-Sprints} vollständig (Abbildung~\ref{fig:vergleich_header}). Zudem fehlt in \textbf{97\,\% (33/34)} eine semantische \texttt{<h1>}-Hauptüberschrift im Header, und in \textbf{47\,\% (16/34)} ist im Footer das Herstellerlogo \enquote{Powered by XIMA Formcycle} (\texttt{showlogo="1"}) aktiviert.
 
 \begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{figures/Auslagenerstattung_Layout_Banner.png}
-        \caption{Auslagenerstattung (700px, HWG-Logo)}
+        \caption{Auslagenerstattung (700\,px, HWG-Logo)}
         \label{fig:header_auslagen}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{figures/Antrag_Sprints_Layout_Banner.png}
-        \caption{Antrag-Sprints (850px, kein Logo)}
+        \caption{Antrag-Sprints (850\,px, kein Logo)}
         \label{fig:header_sprints}
     \end{subfigure}
-    \caption{Gegenüberstellung der Kopfbereiche und Corporate-Design-Elemente}
+    \caption{Gegenüberstellung der Kopfbereiche und Stammdaten-Anordnung}
     \label{fig:vergleich_header}
 \end{figure}
 
-Darüber hinaus divergiert die Anordnung grundlegender Eingabefelder: Während im initialen Zahlungsempfänger-Block der \textit{Auslagenerstattung} (Abbildung~\ref{fig:header_auslagen}) intuitiv \textit{Vorname} links und \textit{Nachname} rechts angeordnet sind, kehrt Abbildung~\ref{fig:header_sprints} diese Reihenfolge in \textit{Name} (links) und \textit{Vorname} (rechts) um. Diese Permutation verstößt gegen die empirisch nachgewiesene Lesegewohnheit \parencite{bargas2010usable, wroblewski2008web}. Gleichwohl zeigt die spätere automatisierte Gesamtevaluation (Kapitel~\ref{chap:evaluation}), dass auch die \textit{Auslagenerstattung} über das gesamte mehrseitige Formular hinweg die Sequenz-Governance (\texttt{HWG-STAMM-01}) verletzt, da in nachgelagerten Abschnitten (z.\,B. Budgetverwaltung/Führungskraft) wiederholt persönliche Namens- und E-Mail-Felder nach der Telefonnummer eingeschoben werden. Ein weiteres CI-Defizit betrifft die Fußzeile: In 61\,\% der Vorlagen ist das herstellerseitige Werbelogo \textit{\enquote{Powered by XIMA Formcycle}} aktiv geschaltet.
+Ebenso divergiert die Feldreihenfolge: Während die \textit{Auslagenerstattung} ihre Personenblöcke erwartungskonform mit \textit{Vorname} vor \textit{Nachname} gliedert, kehrt \textit{Antrag-Sprints} dies in \enquote{Name Antragstellende/r} vor \enquote{Vorname Antragstellende/r} sowie \enquote{Telefonnummer} vor \enquote{E-Mail} um \parencite{bargas2010usable, wroblewski2008web}.
 
-\subsection{Problemfeld 3: Heterogene Stammdaten-Muster und Copy-Paste-Risiken}
+\subsection{Problemfeld 3: Dezentrale Copy-Paste-Abwandlungen und Entwicklernotizen}
 \label{subsec:problem_stammdaten}
-
-An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiederverwendbares Komponenten-Snippet zur Erfassung persönlicher Angaben konzipiert wurde. Da dieses Snippet jedoch nicht zentral als versionierte Bibliothek eingebunden, sondern von Erstellenden manuell kopiert und im Designer modifiziert wird, entstehen gravierende Inkonsistenzen:
+Das interne \textit{Master-Formular} dient als Kopiervorlage für persönliche Angaben, wird mangels zentraler Referenzierung jedoch manuell dupliziert und uneinheitlich verändert (Abbildung~\ref{fig:vergleich_stammdaten}): Im \textit{Master-Formular} sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} Pflichtfelder, während im abgeleiteten \textit{FB1-Praktikum} Vorname, Nachname und E-Mail ohne Pflichtfeldstatus bleiben, dafür aber die \textit{Matrikelnummer*} verpflichtend ist. E-Mail-Labels variieren zwischen \textit{E-Mail-Adresse}, \textit{E-Mail} und internen Kürzeln (\texttt{HWGLU-Email}). Kritisch ist zudem eine im \textit{Master-Formular} als sichtbarer Rich-Text (\texttt{XSpan.rtevalue}) belassene Entwicklernotiz (\enquote{Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert}), die bei unbereinigter Übernahme Endnutzende irritiert (\texttt{HWG-UI-01}).
 
 \begin{figure}[htbp]
     \centering
@@ -120,79 +104,45 @@ An der HWG existiert ein sogenanntes \textit{Master-Formular}, welches als wiede
         \caption{FB1-Praktikumsantrag (Abwandlung)}
         \label{fig:praktikum_pers}
     \end{subfigure}
-    \caption{Inkonsistenzen bei der Erfassung persönlicher Stammdaten}
+    \caption{Divergierende Pflichtfeld- und Label-Konfigurationen persönlicher Stammdaten}
     \label{fig:vergleich_stammdaten}
 \end{figure}
 
-Wie der Vergleich in Abbildung~\ref{fig:vergleich_stammdaten} belegt:
-\begin{itemize}
-    \item Im \textit{Master-Formular} (Abbildung~\ref{fig:master_pers}) sind \textit{Anrede*}, \textit{Vorname*}, \textit{Nachname*} und \textit{E-Mail*} als Pflichtfelder markiert; die \textit{Matrikelnummer} ist optional.
-    \item Im \textit{FB1-Praktikum} (Abbildung~\ref{fig:praktikum_pers}) fehlen die Pflichtfeldsterne bei Name und E-Mail im DOM vollständig, während die \textit{Matrikelnummer*} zwingend gefordert wird.
-    \item Das E-Mail-Feld variiert in der Beschriftung willkürlich zwischen \textit{E-Mail-Adresse}, \textit{E-Mail} und internen Bezeichnern wie \textit{HWGLU-Email}.
-    \item Zudem enthält die Kopiervorlage im Designer-Produktivzustand sichtbare Entwickler-Notizen (\textit{\enquote{Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert}}), die für Endnutzende unverständlich sind und die \textbf{Selbstbeschreibungsfähigkeit (ISO 9241-110)} verletzen. Während dieser Hinweis im Vorlagen-Formular als beschreibender Rich-Text-Container (\texttt{rtevalue}) hinterlegt ist und in der automatisierten Einzelfall-Evaluation von Kapitel~\ref{chap:evaluation} mangels Label-Zuordnung keinen Punkteabzug auslöst, stellt ein solches Überbleibsel in abgeleiteten Anträgen ein kritisches Usability-Risiko dar (\texttt{HWG-UI-01}).
-\end{itemize}
-
-\subsection{Problemfeld 4: Schaltflächen-Semantik und die Fallstudie \enquote{Kritischer Fall}}
+\subsection{Problemfeld 4: Schaltflächen-Microcopy und der Button \enquote{Kritischer Fall}}
 \label{subsec:problem_buttons}
-
-Die Beschriftung von Aktionsschaltflächen (Microcopy) folgt keinen einheitlichen Regeln. Es finden sich uneinheitliche Mischformen aus kleingeschriebenen Minimal-Labels (\texttt{senden}), englischen Begriffen (\texttt{Submit}) und formalen Aktionsverben (\texttt{Antrag einreichen}, siehe Abbildung~\ref{fig:buttons_beispiele}): Während Abbildung~\ref{fig:btn_sprints} ein kleingeschriebenes Minimal-Label neben dem unklaren Ausnahmeknopf zeigt, illustriert Abbildung~\ref{fig:btn_kibeschaffung} eine abweichende Navigationsbeschriftung.
+Aktions- und Navigationsbuttons variieren zwischen kleingeschriebenem \texttt{senden}, unpräzisem \enquote{weiter zu Seite 2} und normgerechtem \enquote{Antrag einreichen} (Abbildung~\ref{fig:buttons_beispiele}). Instruktiv ist insbesondere der im ZFK-Formular \textit{Antrag-Sprints} eingesetzte Button \enquote{Kritischer Fall}: Fachlich war eine dedizierte Einreichungsaktion für Anträge mit besonderer Tragweite (Einbindung des Hochschulpräsidiums) ausdrücklich gewünscht. Das ergonomische Defizit liegt daher nicht in der Existenz der Schaltfläche, sondern im Verstoß gegen das \textbf{Action-Verb-Pattern} \parencite{wroblewski2008web}: Die reine Nominalphrase \enquote{Kritischer Fall} benennt lediglich einen Zustand und lässt offen, welche Systemaktion ausgelöst wird. Erst die Ergänzung eines infinitiven Handlungsverbs – etwa \textbf{\enquote{Kritischen Fall einreichen}} – stellt Selbstbeschreibungsfähigkeit und Erwartungskonformität nach \textcite{iso9241110} her.
 
 \begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{figures/Antrag_Sprints_Button.png}
-        \caption{Antrag-Sprints (Minimal-Label \& Weiche)}
+        \caption{Antrag-Sprints (verblose Beschriftung)}
         \label{fig:btn_sprints}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{figures/KI-Beschaffung_Button.png}
-        \caption{KI-Beschaffung (Navigation)}
+        \caption{KI-Beschaffung (uneinheitliche Navigation)}
         \label{fig:btn_kibeschaffung}
     \end{subfigure}
-    \caption{Heterogene Schaltflächen-Gestaltung im HWG-Bestand}
+    \caption{Beispiele inkonsistenter Schaltflächen-Microcopy im HWG-Bestand}
     \label{fig:buttons_beispiele}
 \end{figure}
 
-Ein besonders aufschlussreiches Usability-Phänomen offenbart die Fallstudie des Buttons \textit{\enquote{Kritischer Fall}}:
-
-\textbf{Fachlicher Hintergrund \& Problemursache:} Im Zentrum für Forschung und Kooperation (ZFK) bestand die Anforderung, bei Förderanträgen mit außergewöhnlicher Tragweite eine gesonderte Prüfschleife unter Beteiligung des Hochschulpräsidenten einzuschalten. Anstatt diese Ausnahmeverzweigung organisatorisch in den nachgelagerten Prüf-Workflow einzubetten, verlagerten die Formularautoren die Weiche direkt in das Antragsformular: Sobald Antragstellende eine Checkbox aktivieren, wird der reguläre Absende-Button durch einen Button namens \textit{\enquote{Kritischer Fall}} ersetzt.
-
-\textbf{Ergonomische Bewertung:} Aus Sicht der Dialoggestaltung nach \textcite{wroblewski2008web} und DIN EN ISO 9241-110 stellt dies einen gravierenden Bruch der \textbf{Erwartungskonformität} dar:
-\begin{itemize}
-    \item Ein Button muss zwingend dem \textbf{Action-Verb-Pattern} folgen (\textit{[Zielobjekt] + [Vollverb im Infinitiv]}). Die Beschriftung \textit{\enquote{Kritischer Fall}} ist ein reines Substantiv, das einen Ausnahmezustand beschreibt, jedoch keine Aktion.
-    \item Antragstellende werden massiv verunsichert, ob sie einen Antrag einreichen oder einen Systemfehler melden.
-    \item Eine fachliche Ausnahmeroute muss organisatorisch getrennt werden: Antragstellende betätigen stets \textit{\enquote{Antrag einreichen}}; die Sachbearbeitung leitet den Vorgang in der Prüfphase über eine rollenspezifische Schaltfläche an den Präsidenten weiter.
-\end{itemize}
-
-\subsection{Problemfeld 5: Defizite bei Barrierefreiheit und Eingabevalidierung}
+\subsection{Problemfeld 5: Barrierefreiheit, Datenschutz und Formatvalidierung}
 \label{subsec:problem_a11y}
-
-Die automatisierte DOM-Auswertung der gerenderten HTML-Dateien deckt erhebliche Mängel bezüglich digitaler Barrierefreiheit auf:
+Die Korpusanalyse belegt flächendeckende Defizite in der technischen Qualitätssicherung:
 \begin{itemize}
-    \item \textbf{Fehlen semantischer Gruppen (\texttt{<fieldset>}):} In 65\,\% der Formulare verzichten die Autoren auf \texttt{<fieldset>}-Tags mit \texttt{<legend>} und nutzen stattdessen rein visuelle \texttt{<div>}-Container. Für Screenreader geht dadurch der thematische Kontext von Eingabegruppen vollständig verloren (Verstoß gegen \textbf{WCAG 1.3.1}).
-    \item \textbf{Inkonsistente ARIA-Attribute (\texttt{aria-required}):} In mehreren Vorlagen wird der Pflichtfeldstatus rein visuell über rote Sternchen signalisiert, ohne das maschinenlesbare Attribut \texttt{aria-required="true"} im Eingabeelement zu hinterlegen (\textbf{WCAG 3.3.2}).
-    \item \textbf{HTML-Fragmente in Labels:} In 68\,\% der untersuchten Vorlagen enthalten die Label-Strings unmaskierte HTML-Tags (z.\,B. \texttt{<p>Vorname</p>} oder Entities wie \texttt{\&szlig;}). Dies führt bei Screenreadern zu störenden Ansagen.
+    \item \textbf{Fehlende Fieldset-Semantik (WCAG 1.3.1):} \textbf{47\,\% (16/34)} der Formulare besitzen kein einziges \texttt{XFieldSet}-Element; unter Einschluss unbeschrifteter Legenden und ungruppierter Container verfehlen \textbf{56\,\% (19/34)} eine barrierefreie Abschnittsgruppierung.
+    \item \textbf{HTML-Störfragmente in Labels:} Während Formcycle einfache \texttt{<p>}-Wrapper intern regulär erzeugt, enthalten \textbf{76\,\% (26/34)} der Vorlagen störende Inline-Tags (\texttt{<br>}, \texttt{<span>}), geschützte Leerzeichen (\texttt{\&nbsp;}), doppelt maskierte Entitäten oder Pipe-Trenner in Feldlabels.
+    \item \textbf{Fehlende DSGVO-Hinweise \& Validierung:} \textbf{82\,\% (28/34)} erheben Personendaten ohne Art.-13-DSGVO-Hinweis, und \textbf{47\,\% (16/34)} belassen strukturierte Felder (IBAN, PLZ, Telefon, Matrikelnummer) ohne wirksame Formatvalidierung.
 \end{itemize}
 
-\subsection{Problemfeld 6: Workflow-Fragmentierung und vertikale Abteilungssilos}
+\subsection{Problemfeld 6: Workflow-Silos und fehlende Vorgangsreferenzen}
 \label{subsec:workflow_silos}
+Die Auswertung aller 34 Workflow-Modelle zeigt eine ausgeprägte Prozessfragmentierung: Zwar bilden \textbf{56\,\% (19/34)} mehrstufige Genehmigungsketten ab, während \textbf{44\,\% (15/34)} einstufige Einzelaufgaben bleiben, doch operieren selbst mehrstufige Prozesse in vertikalen Abteilungssilos. In \textbf{91\,\% (31/34)} fehlen kanonische Statusbezeichnungen (stattdessen z.\,B. \enquote{Akzeptiert - VG} oder \enquote{Antrag kontiert - warten auf Auszahlung}), und \textbf{79\,\% (27/34)} versenden automatisierte E-Mails ohne die eindeutige Vorgangsreferenz \texttt{[\%\$PROJECT\_ALIAS\%]}.
 
-Im Rahmen einer vertieften Untersuchung aller 49 im Korpus enthaltenen Workflow-Prozessgraphen wurde überprüft, ob hochschulweit standardisierte Prozessketten über mehrere Verwaltungseinheiten hinweg existieren. Die Datenanalyse der Prozessmodelle (\texttt{workflowVersions}) widerlegt dies:
-\begin{itemize}
-    \item \textbf{Hoher Anteil isolierter Einzelaufgaben:} Lediglich 14 der 49 Workflow-Prozessgraphen (29\,\%) binden zwei oder mehr Abteilungen bzw. Prüfinstanzen ein. Die Mehrheit (71\,\%) verbleibt als rein lokale Einzelaufgabe innerhalb einer spezifischen Organisationseinheit.
-    \item \textbf{Vertikale funktionale Silos statt Querschnittsprozesse:} Wo mehrstufige Genehmigungsketten existieren, sind diese strikt fachdomänenspezifisch strukturiert (Personal, Finanzen, Forschung).
-    \item \textbf{Inkonsistente Status-Nomenklatur:} Ein identischer Prozessschritt (\enquote{Genehmigung}) wird uneinheitlich als \textit{\enquote{Akzeptiert - VG}}, \textit{\enquote{Vergabe genehmigt}} oder \textit{\enquote{Antrag genehmigt}} bezeichnet. Zudem fehlen in vielen automatisierten E-Mails an Antragstellende eindeutige Vorgangsnummern (\texttt{[\%\$PROJECT\_ALIAS\%]}).
-\end{itemize}
-
-\section{Ableitung der Kernanforderungen an den Formular-Standard}
+\section{Ableitung der Kernanforderungen}
 \label{sec:ableitung_anforderungen}
 
-Aus der empirischen Ist-Analyse lassen sich fünf fundamentale Anforderungen ableiten:
-\begin{enumerate}
-    \item \textbf{Standardisierte Layout- und CI-Vorgaben:} Verbindliche Festlegung auf ein responsives Desktop-Raster (850px) sowie zwingende Einbindung des offiziellen HWG-Header-Banners und Deaktivierung herstellerseitiger Fußzeilen-Logos (\texttt{showlogo="0"}).
-    \item \textbf{Zentrales Komponenten-Muster für Stammdaten:} Formalisierung eines verbindlichen Musters für persönliche Angaben mit fixer Feldabfolge (Anrede $\rightarrow$ Vorname $\rightarrow$ Nachname) und kanonischen Bezeichnungen.
-    \item \textbf{Kontext- und rollenabhängige Microcopy-Regeln:} Zwingende Formulierung von Schaltflächen als handlungsorientierte Verben im Infinitiv (Action-Verb-Pattern); strikte Entkopplung von fachlichen Ausnahme-Workflows und primären Absende-Aktionen.
-    \item \textbf{Regelbasierte Barrierefreiheits-Governance:} Maschinenlesbare Durchsetzung von \texttt{<fieldset>}-Strukturen sowie lückenlose Koppelung visueller Pflichtfeld-Sternchen an ARIA-Attribute.
-    \item \textbf{Workflow-Harmonisierung und Prozesstransparenz:} Standardisierung der Lebenszyklus-Zustände, verbindliche Führung von Vorgangs-IDs in Bestätigungs-E-Mails sowie automatisierte Empfehlungen für Zwischenspeicher-Funktionen bei komplexen Mehrseiten-Anträgen.
-\end{enumerate}
+Aus den sechs Problemfeldern resultieren fünf Anforderungen an den HWG-Formular-Standard: (1)~einheitliches 850\,px-Raster mit normiertem HWG-Header (\texttt{<h1>} + 60\,px-Logo inkl. Alt-Text) und deaktiviertem Herstellerlogo, (2)~kanonisches Stammdaten-Muster ohne sichtbare Entwicklernotizen, (3)~verbindliches Action-Verb-Pattern für Schaltflächen sowie verständlich erläuterte Fachbegriffe, (4)~lückenlose Fieldset-, Pflichtfeld-, DSGVO-, Upload- und Formatvalidierungs-Governance sowie (5)~harmonisierte Workflow-Status mit Vorgangs-ID und Eingangsbestätigung.

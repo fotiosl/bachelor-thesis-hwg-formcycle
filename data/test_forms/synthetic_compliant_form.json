@@ -1,6 +1,6 @@
 {
   "name": "Synthetic Compliant Form (Ground Truth 100%)",
-  "description": "Synthetisches Referenzformular der HWG Ludwigshafen, das alle 18 Regeln der Compliance-Registry strikt einhält.",
+  "description": "Synthetisches Referenzformular der HWG Ludwigshafen, das alle 22 Governance-Regeln der Compliance-Registry v1.5.0 strikt einhält.",
   "properties": {
     "maxwidth": "850px",
     "minwidth": "300px"
@@ -10,7 +10,10 @@
       "className": "XHeader",
       "properties": {
         "name": "header1",
-        "id": "xi-header-1"
+        "id": "xi-header-1",
+        "maxwidth": "850px",
+        "minwidth": "300px",
+        "showrequiredhint": "1"
       }
     },
     {
@@ -35,9 +38,21 @@
       }
     },
     {
+      "className": "XPage",
+      "properties": {
+        "name": "p1",
+        "id": "xi-page-1",
+        "maxwidth": "850px",
+        "minwidth": "300px"
+      }
+    },
+    {
       "className": "XFieldSet",
       "properties": {
         "name": "fsPersoenlicheAngaben",
+        "id": "xi-fs-pers",
+        "parentid": "xi-page-1",
+        "label": "<p>Pers&ouml;nliche Angaben</p>",
         "legend": "Persönliche Angaben",
         "maxwidth": "850px"
       }
@@ -46,43 +61,57 @@
       "className": "XSelect",
       "properties": {
         "name": "selAnrede",
-        "label": "Anrede",
-        "required": "1",
-        "showrequiredhint": "1"
+        "parentid": "xi-fs-pers",
+        "label": "<p>Anrede</p>",
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfVorname",
-        "label": "Vorname",
-        "required": "1",
-        "showrequiredhint": "1"
+        "parentid": "xi-fs-pers",
+        "label": "<p>Vorname</p>",
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfNachname",
-        "label": "Nachname",
-        "required": "1",
-        "showrequiredhint": "1"
+        "parentid": "xi-fs-pers",
+        "label": "<p>Nachname</p>",
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfEmail",
-        "label": "E-Mail-Adresse",
+        "parentid": "xi-fs-pers",
+        "label": "<p>E-Mail-Adresse</p>",
         "required": "1",
-        "showrequiredhint": "1",
+        "datatype": "email",
         "validation": { "type": "email" }
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfTelefon",
+        "parentid": "xi-fs-pers",
+        "label": "<p>Telefonnummer</p>",
+        "datatype": "regexp",
+        "vrule": "^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$"
       }
     },
     {
       "className": "XFieldSet",
       "properties": {
         "name": "fsAnschriftBank",
+        "id": "xi-fs-bank",
+        "parentid": "xi-page-1",
+        "label": "<p>Anschrift und Bankverbindung</p>",
         "legend": "Anschrift und Bankverbindung",
         "maxwidth": "850px"
       }
@@ -91,39 +120,50 @@
       "className": "XTextField",
       "properties": {
         "name": "tfPLZ",
-        "label": "Postleitzahl",
+        "parentid": "xi-fs-bank",
+        "rowid": "row-plz-ort",
+        "computedwidth": "30%",
         "maxwidth": "120px",
+        "label": "<p>Postleitzahl</p>",
+        "datatype": "plzDE",
         "pattern": "^[0-9]{5}$",
         "validation": { "regex": "^[0-9]{5}$" },
-        "required": "1",
-        "showrequiredhint": "1"
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfOrt",
-        "label": "Wohnort",
-        "required": "1",
-        "showrequiredhint": "1"
+        "parentid": "xi-fs-bank",
+        "rowid": "row-plz-ort",
+        "computedwidth": "70%",
+        "label": "<p>Wohnort</p>",
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfIBAN",
-        "label": "IBAN",
-        "pattern": "^[A-Z]{2}[0-9]{20}$",
-        "validation": { "regex": "^[A-Z]{2}[0-9]{20}$", "type": "iban" },
-        "required": "1",
-        "showrequiredhint": "1"
+        "parentid": "xi-fs-bank",
+        "label": "<p>IBAN</p>",
+        "datatype": "regexp",
+        "vrule": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
+        "pattern": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
+        "validation": { "regex": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$", "type": "iban" },
+        "required": "1"
       }
     },
     {
       "className": "XUpload",
       "properties": {
         "name": "uplNachweise",
-        "label": "Nachweisbelege hochladen",
+        "parentid": "xi-fs-bank",
+        "label": "<p>Nachweisbelege hochladen</p>",
+        "fileextension": ".pdf,.jpg,.png",
+        "maxfilesize": "10240",
+        "helptext": "Erlaubte Dateiformate: PDF, JPG, PNG. Maximale Dateigröße: max. 10 MB pro Datei.",
         "help": "Erlaubte Dateiformate: PDF, JPG, PNG. Maximale Dateigröße: max. 10 MB pro Datei."
       }
     },
@@ -131,20 +171,27 @@
       "className": "XFieldSet",
       "properties": {
         "name": "fsDatenschutzAblauf",
-        "legend": "Datenschutz und Verfahrensablauf"
+        "id": "xi-fs-dsgvo",
+        "parentid": "xi-page-1",
+        "label": "<p>Datenschutz und Verfahrensablauf</p>",
+        "legend": "Datenschutz und Verfahrensablauf",
+        "maxwidth": "850px"
       }
     },
     {
       "className": "XText",
       "properties": {
         "name": "txtDatenschutzHinweis",
-        "text": "Informationen zur Datenverarbeitung: Ihre personenbezogenen Daten werden gemäß Art. 13 DSGVO vertraulich verarbeitet. Ausführliche Informationen finden Sie in der Datenschutzerklärung der HWG Ludwigshafen unter www.hwg-lu.de/datenschutz."
+        "parentid": "xi-fs-dsgvo",
+        "text": "Informationen zur Datenverarbeitung: Ihre personenbezogenen Daten werden gemäß Art. 13 DSGVO vertraulich verarbeitet. Ausführliche Informationen finden Sie in der Datenschutzerklärung der HWG Ludwigshafen unter https://www.hwg-lu.de/datenschutz.",
+        "rtevalue": "<p>Informationen zur Datenverarbeitung: Ihre personenbezogenen Daten werden gem&auml;&szlig; Art. 13 DSGVO vertraulich verarbeitet. Ausf&uuml;hrliche Informationen finden Sie in der <a href=\"https://www.hwg-lu.de/datenschutz\">Datenschutzerkl&auml;rung der HWG Ludwigshafen</a>.</p>"
       }
     },
     {
       "className": "XText",
       "properties": {
         "name": "txtVerfahrensablauf",
+        "parentid": "xi-fs-dsgvo",
         "text": "Weiterer Ablauf: Nach dem Absenden wird Ihr Antrag geprüft. Die reguläre Bearbeitungsdauer beträgt ca. 10 Werktage. Sie erhalten den schriftlichen Bescheid per E-Mail."
       }
     },
@@ -152,6 +199,7 @@
       "className": "XButton",
       "properties": {
         "name": "btnSubmit",
+        "parentid": "xi-page-1",
         "text": "Antrag einreichen",
         "type": "submit"
       }
@@ -160,16 +208,20 @@
       "className": "XFooter",
       "properties": {
         "name": "footer1",
+        "maxwidth": "850px",
+        "minwidth": "300px",
         "showlogo": "0",
+        "showrequiredhint": "1",
         "privacyPolicyShow": "1"
       }
     }
   ],
   "workflow_emails": [
     {
-      "node_name": "E-Mail Eingangsbestätigung",
+      "node_name": "E-Mail Eingangsbestätigung an Antragstellende",
+      "recipient": "[%$tfEmail%]",
       "subject": "Eingangsbestätigung Ihres Antrags (Vorgangsnummer [%$PROJECT_ALIAS%])",
-      "body": "Vielen Dank für Ihren Antrag. Ihr Antrag wird nun durch die zuständige Abteilung geprüft. Über die weiteren Folgeschritte und die Entscheidung werden Sie per E-Mail informiert."
+      "body": "Vielen Dank für Ihren Antrag (Vorgangsnummer [%$PROJECT_ALIAS%]). Ihr Antrag ist eingegangen und wird nun durch das Studierendensekretariat der HWG Ludwigshafen geprüft. Über die weiteren Prozessschritte und die Entscheidung werden Sie per E-Mail informiert."
     }
   ],
   "workflow_states": [

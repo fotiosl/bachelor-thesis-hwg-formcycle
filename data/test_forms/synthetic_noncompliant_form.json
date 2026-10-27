@@ -1,6 +1,6 @@
 {
   "name": "Synthetic Non-Compliant Form (Ground Truth with Injected Violations)",
-  "description": "Synthetisches Formular mit gezielt injizierten Verstößen zur quantitativen Validierung der Compliance-Pipeline.",
+  "description": "Synthetisches Formular mit 19 gezielt injizierten Verstößen (15 deterministische AST-Verstöße und 4 semantische Verstöße) zur quantitativen Validierung der Compliance-Pipeline.",
   "properties": {
     "maxwidth": "700px",
     "minwidth": "300px"
@@ -10,64 +10,73 @@
       "className": "XContainer",
       "properties": {
         "name": "contHeaderTitle",
+        "id": "xi-cont-header",
+        "maxwidth": "700px",
         "heading": "Antrag auf Sondergenehmigung"
       }
     },
     {
       "className": "XContainer",
       "properties": {
-        "name": "contPersonalData"
+        "name": "contPersonalData",
+        "id": "xi-cont-pers",
+        "maxwidth": "700px"
       }
     },
     {
       "className": "XSelect",
       "properties": {
         "name": "selAnrede",
+        "parentid": "xi-cont-pers",
         "label": "<p>Anrede</p>",
-        "required": "1",
-        "showrequiredhint": "0"
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfNachname",
-        "label": "Nachname",
-        "required": "1",
-        "showrequiredhint": "0"
+        "parentid": "xi-cont-pers",
+        "label": "<p>Nachname</p>",
+        "required": "1"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfVorname",
-        "label": "Vorname",
-        "required": "1",
-        "showrequiredhint": "0"
+        "parentid": "xi-cont-pers",
+        "label": "<p>Vorname*</p>",
+        "required": "0"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfEmail",
-        "label": "HWGLU-Email",
-        "required": "1",
-        "showrequiredhint": "0"
+        "parentid": "xi-cont-pers",
+        "label": "<p>HWGLU-Email</p>",
+        "required": "1"
       }
     },
     {
       "className": "XText",
       "properties": {
         "name": "txtDevNote",
-        "text": "Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert."
+        "parentid": "xi-cont-pers",
+        "text": "Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert.",
+        "rtevalue": "<p>Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert.</p>"
       }
     },
     {
       "className": "XTextField",
       "properties": {
         "name": "tfPLZ",
-        "label": "<p>PLZ &szlig; Wohnort</p>",
+        "parentid": "xi-cont-pers",
+        "label": "<p>PLZ | Wohnort<br><span>&amp;szlig;</span></p>",
+        "computedwidth": "100%",
         "colwidth": "100%",
+        "datatype": "text",
         "required": "1"
       }
     },
@@ -75,7 +84,10 @@
       "className": "XTextField",
       "properties": {
         "name": "tfIBAN",
-        "label": "IBAN",
+        "parentid": "xi-cont-pers",
+        "label": "<p>IBAN</p>",
+        "datatype": "regexp",
+        "vrule": "",
         "required": "1"
       }
     },
@@ -83,14 +95,18 @@
       "className": "XTextField",
       "properties": {
         "name": "tfKostenstelle",
-        "label": "Kostenstelle"
+        "parentid": "xi-cont-pers",
+        "label": "<p>Kostenstelle</p>"
       }
     },
     {
       "className": "XUpload",
       "properties": {
         "name": "uplDateien",
-        "label": "Belege hochladen"
+        "parentid": "xi-cont-pers",
+        "label": "<p>Belege hochladen</p>",
+        "fileextension": "",
+        "maxfilesize": "0"
       }
     },
     {
@@ -113,7 +129,9 @@
       "className": "XFooter",
       "properties": {
         "name": "footer1",
+        "maxwidth": "700px",
         "showlogo": "1",
+        "showrequiredhint": "0",
         "privacyPolicyShow": "0"
       }
     }

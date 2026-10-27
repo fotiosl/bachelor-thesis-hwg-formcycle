@@ -1,141 +1,86 @@
 \chapter{Empirische Evaluation und Diskussion}
 \label{chap:evaluation}
 
-Zur wissenschaftlichen Überprüfung und Validierung des gestaltungsorientierten Artefakts \parencite{hevner2004design, peffers2007design} wird in diesem Kapitel eine umfassende empirische Evaluation durchgeführt. Ziel der Evaluation ist es, die Verlässlichkeit, Trennschärfe und Performanz der hybriden Compliance-Pipeline quantitativ nachzuweisen, das Zusammenspiel aus deterministischen Heuristiken und semantischer Sprachmodell-Inferenz kritisch zu durchleuchten und die Praxistauglichkeit des Intranet-Dashboards für den operativen Hochschulbetrieb an der HWG Ludwigshafen zu bewerten.
+Gemäß dem DSR-Zyklus \parencite{hevner2004design, peffers2007design} evaluiert dieses Kapitel die Erkennungsgüte, Laufzeit, Modell-Agnostik und Praxistauglichkeit der entwickelten Compliance-Pipeline quantitativ und qualitativ (FQ4).
 
-\section{Evaluationsdesign, Methodik und Benchmark-Metriken}
+\section{Evaluationsdesign und Datenherkunft}
 \label{sec:eval_design}
 
-Um sowohl eine exakte mathematische Fehlerquantifizierung als auch eine hohe externe Validität sicherzustellen, stützt sich das Evaluationsdesign auf ein duales Testkorpus, bestehend aus synthetischen Ground-Truth-Referenzmodellen und realen Produktivanträgen.
+\subsection{Synthetisches Kontrollkorpus und KI-Datenherkunft}
+Da reale Bestandsformulare keine vorab annotierte Ground Truth besitzen \parencite{zhong2025synthetic, guerino2025gpt4o}, wurden zwei synthetische Formcycle-v8-Modelle erstellt: \texttt{synthetic\_compliant\_form.json} (vollkonformes Referenzmuster, Ziel-Score 100) und \texttt{synthetic\_noncompliant\_form.json} (Worst-Case-Muster mit exakt \textbf{19 gezielt injizierten Regelverstößen}: alle 15 deterministischen Regeln sowie 4 semantische Verstöße in \texttt{STAMM-02}, \texttt{BTN-01}, \texttt{LANG-01} und \texttt{FEEDBACK-01}; Ziel-Score 0).
 
-\subsection{Synthetisches Kontrollkorpus (Ground Truth)}
-In der empirischen Software- und Usability-Forschung stellt das Fehlen objektiv annotierter Ground-Truth-Datensätze eine zentrale methodische Herausforderung dar \parencite{zhong2025synthetic, guerino2025gpt4o}. Da reale Bestandsformulare naturgemäß unbekannte Mischformen von Konformität aufweisen, wurden im Rahmen dieser Untersuchung zwei synthetische Kontrollinstanzen nach dem Formcycle-Schema konstruiert:
-\begin{itemize}
-    \item \textbf{Synthetisches Referenzformular A (Vollkonform, Ground Truth = 100 Punkte):} Dieses Formular implementiert das im Standard (Kapitel~\ref{chap:konzeption}) definierte Idealbild: Layoutbreite 850px, offizielles HWG-Kopfbanner (Höhe 60px, rechtsbündig), Formulartitel im Header als Hauptüberschrift (H1), XIMA-Footerlogo deaktiviert (\texttt{showlogo="0"}), semantische \texttt{XFieldSet}-Container, programmatische Pflichtfelder, kanonische Stammdaten-Labels, Regex-Validierung für PLZ und IBAN, DSGVO-Datenschutzerklärung, spezifizierte Upload-Formate und -Größen, aktionsorientierte Schaltflächen (\enquote{Antrag einreichen}) und vollständige E-Mail-Bestätigung mit Vorgangsnummer \texttt{[\%\$PROJECT\_ALIAS\%]}.
-    \item \textbf{Synthetisches Referenzformular B (Fehlerinjiziert, Ground Truth = 0 Punkte):} In dieses Negativmuster wurden bewusst 18 distinkte Regelverstöße über alle Schweregrade hinweg injiziert: Veraltete 700px-Breite (Major), fehlendes Kopflogo (Critical), fehlende H1-Hauptüberschrift im Header (Major), aktives XIMA-Herstellerbranding im Footer (Major), deaktivierte Pflichtfeld-Hinweise (Major), HTML-Tags in Labels (Minor), inkonsistente Stammdaten-Reihenfolge (Major), nicht-standardisierte Bezeichner (Minor), sichtbare Entwicklernotizen im Frontend (Critical), generische Button-Labels wie \texttt{senden} und Status-Labels wie \enquote{Kritischer Fall} (Major), fehlende DSGVO-Klausel bei Personendaten (Critical), unvollständige Upload-Angaben (Major), unvalidierte strukturierte Eingabefelder (Major), unbeschränkte kompakte Felder (Minor), Hochschul-Jargon ohne Tooltip (Major), fehlende E-Mail-Bestätigung (Minor), fehlende Workflow-Statusübergänge (Minor) sowie fehlende Vorgangsnummern in E-Mails (Minor).
-\end{itemize}
+\textit{Dokumentation der KI-Generierung:} Das Grundgerüst beider JSON-Dateien wurde KI-gestützt mit \textit{Google Gemini} über den strukturierten Systemauftrag erzeugt, das Formcycle-v8-Schema (\texttt{elements.items} mit \texttt{parentid}-Referenzen, \texttt{XHeader}/\texttt{XFooter}, \texttt{workflow\_emails}) einmal normkonform zu allen 22 Regeln der \texttt{rules\_registry.json} und einmal mit disjunkten Testverstößen abzubilden; anschließend wurden sämtliche Knoten, Feldattribute und Ground-Truth-Zuordnungen vom Autor manuell im JSON auditiert und korrigiert (vgl. Anhang~\ref{chap:reflexionsbericht}).
 
-\subsection{Reales Evaluierungskorpus der HWG Ludwigshafen}
-Zur Überprüfung der Praxistauglichkeit unter realen Betriebsbedingungen wurden drei authentische Formulare aus dem Formcycle-System der Hochschule ausgewählt:
-\begin{enumerate}
-    \item \textit{Auslagenerstattung (Finanzwesen / Reisekosten, Produktivsystem):} Ein hochgradig komplexes, dreiseitiges Antragsformular mit 49 Eingabefeldern, Bankverbindungsdaten und mehreren Dateiuploads für Belege.
-    \item \textit{Antrag-Sprints für Drittmittelanträge (Zentrum für Forschung und Kooperation, Testsystem):} Ein forschungsbezogenes Antragsformular mit Freitextfeldern, Finanzierungsplänen und Kooperationspartnerangaben.
-    \item \textit{Master-Formular (Campus Management / Hochschulverwaltung, internes Template):} Ein als administrative Vorlage konzipiertes Formular mit kanonischen Stammdatenblöcken.
-\end{enumerate}
-
-\subsection{Benchmark-Metriken}
-Die Güte der automatisierten Regelauswertung wird anhand der etablierten statistischen Kennzahlen Recall, Precision und $F_1$-Score gemäß Gleichung~(\ref{eq:f1_metric}) gemessen:
+\subsection{Reales Testkorpus und Benchmark-Metriken}
+Ergänzend wurden drei repräsentative HWG-Exporte aus Produktiv-, Forschungs- und Vorlagenbetrieb geprüft: \textit{Auslagenerstattung} (\texttt{prod}, 3 Seiten, 49 Eingabefelder), \textit{Antrag-Sprints für Drittmittelanträge} (\texttt{test/ZFK}, 1 Seite, 16 Felder) sowie das \textit{Master-Formular} (\texttt{test/Admin}, 1 Seite, 29 Felder). Die Klassifikationsgüte wird über Recall, Precision und $F_1$-Score bestimmt:
 \begin{equation}
-    \text{Recall} = \frac{TP}{TP + FN}, \quad \text{Precision} = \frac{TP}{TP + FP}, \quad F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+    \text{Recall} = \frac{TP}{TP + FN}, \quad \text{Precision} = \frac{TP}{TP + FP}, \quad F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}.
     \label{eq:f1_metric}
 \end{equation}
-wobei $TP$ für korrekt erkannte Verstöße, $FN$ für übersehene Verstöße und $FP$ für Fehlalarme steht.
 
-\section{Quantitative Benchmark-Ergebnisse und Performance-Analyse}
+\section{Ergebnisse der deterministischen Prüfstufe und Performanz}
 \label{sec:benchmark_ergebnisse}
 
-Tabelle~\ref{tab:eval_results} fasst die quantitativen Evaluationsergebnisse der Compliance-Pipeline (Registry v1.5.0) über das gesamte Testkorpus zusammen:
+Tabelle~\ref{tab:eval_results} weist die gemessenen Ergebnisse der Stufe~1 (15 deterministische Regeln) aus. Die sieben semantischen Regeln sind darin – entsprechend dem Fail-Safe-Mechanismus – als \enquote{KI-ungeprüft} ausgewiesen und fließen nicht in den Score ein. Gemessene Ergebnisse der Stufe~2 liegen für das synthetische Negativformular vor (Abschnitt~\ref{sec:opensource_eval}); für das Konformformular und die Realformulare steht der LLM-Lauf über die GWDG-API noch aus.
 
 \begin{table}[htbp]
 \centering
 \scriptsize
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}lccc>{\raggedright\arraybackslash}X}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.3cm}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.3cm}}
 \toprule
-\textbf{Formular-Instanz} & \textbf{Typ} & \textbf{Score} & \textbf{Bestanden} & \textbf{Verstöße} & \textbf{Zentrale Befunde \& Empfehlungen} \\
+\textbf{Formular-Instanz} & \textbf{Score Stufe 1 (Best./Verst./N/A)} & \textbf{Gemessene Verstöße Stufe 1 (AST)} & \textbf{Stufe 2 (LLM)} \\
 \midrule
-\textit{Synthetisch Konform} & Benchmark & 100 / 100 & 20 & 0 & Perfektes Referenzmuster ($P = 1{,}0; R = 1{,}0$) \\
-\textit{Synthetisch Fehlerhaft} & Benchmark & 0 / 100 & 2 & 18 & Alle 18 Injektionen erkannt ($P = 1{,}0; R = 1{,}0$) \\
+\textit{Synthetisch Konform} & \textbf{100} (15 / 0 / 7) & Keine ($P = R = 1{,}00$ auf Stufe 1). & Lauf ausstehend \\
+\textit{Synthetisch Fehlerhaft} & \textbf{0} (0 / 15 / 7) & Alle 15 deterministischen Injektionen erkannt ($F_1 = 1{,}00$). & Gemessen: 4/4 Verstöße (Modelle $\ge$ 27B, Tab.~\ref{tab:model_comparison}) \\
 \midrule
-\textit{Auslagenerstattung} & Real (Prod) & 3 / 100 & 6 & 15 & 700px statt 850px, Logo 50px statt 60px, H1 fehlt, Button \texttt{senden}, DSGVO fehlt, 4 Uploads unspezifiziert, IBAN/PLZ unvalidiert, Stamm-Sequenz, Ad-hoc-Status, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (49 Felder) \\
-\textit{Antrag-Sprints ZFK} & Real (Test) & 0 / 100 & 5 & 13 & Kein Header-Banner, H1 fehlt, XIMA-Logo aktiv, keine Fieldsets, DSGVO fehlt, Vorgangs-ID fehlt \\
-\textit{Master-Formular} & Real (Admin) & 56 / 100 & 10 & 8 & Logo 50px statt 60px, veraltete 700px, Stamm-Sequenz (Suchfeld vorn), unvalidierte PLZ, HTML-Entities, Vorgangs-ID fehlt; \textit{Empfehlung:} \texttt{HWG-UX-02} (29 Felder) \\
+\textit{Auslagenerstattung} (Prod) & \textbf{36} (6 / 9 / 7) & $-64$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, keine H1, Label-HTML (2), kein DSGVO-Hinweis, 2 Uploads ohne Größenlimit, Telefon/IBAN unvalidiert, 3 Ad-hoc-Status, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{BTN-01} (\texttt{senden}), \texttt{LANG-01}, \texttt{UX-02} (49 Felder) \\
+\textit{Antrag-Sprints} (ZFK) & \textbf{25} (5 / 8 / 9)* & $-75$\,P.: Kein Logo, XIMA aktiv, keine H1, 0 Fieldsets, Stammdatensequenz vertauscht, kein DSGVO-Hinweis, 3 Ad-hoc-Status, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{STAMM-02}, \texttt{BTN-01} (\texttt{senden}, \enquote{Kritischer Fall}) \\
+\textit{Master-Formular} (Admin) & \textbf{55} (8 / 6 / 8)* & $-45$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, Label-HTML (3), sichtbare Shibboleth-Entwicklernotiz (\texttt{UI-01}), Matrikelnummer unvalidiert, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{LANG-01}, \texttt{UX-02} (29 Felder) \\
 \bottomrule
 \end{tabularx}
-\caption{Quantitative Evaluationsergebnisse der Compliance-Pipeline (Registry v1.5.0)}
+\caption{Gemessene Ergebnisse der deterministischen Stufe 1 (N/A = 7 KI-ungeprüfte Regeln; *zusätzlich strukturell nicht anwendbar: \texttt{UPLOAD-01}, bei \textit{Antrag-Sprints} auch \texttt{UX-01}; \enquote{erwartet} = manuelle Annotation des Autors, keine Messung)}
 \label{tab:eval_results}
 \end{table}
 
-\subsection{Erkennungsgenauigkeit am synthetischen Kontrollkorpus}
-Am synthetischen Referenzkorpus demonstriert die Prüfpipeline eine perfekte Trennschärfe: Beim fehlerhaften Referenzformular wurden ausnahmslos alle 18 injizierten Mängel detektiert ($R = 100\,\%$, $P = 100\,\%$). Beim vollkonformen Formular attestierte das System 20 bestandene Kriterien (sowie zweier im einseitigen bzw. kompakten Kontext nicht-anwendbaren Prüfregeln \texttt{HWG-BTN-02} und \texttt{HWG-UX-02}) ohne einen einzigen Fehlalarm ($P = 100\,\%$).
+Am synthetischen Kontrollkorpus trennt Stufe~1 fehlerfrei: Alle 15 deterministischen Injektionen werden erkannt, während das Konformformular keinen einzigen Fehlalarm erzeugt ($P = R = 1{,}00$). An den Realformularen identifiziert Stufe~1 sämtliche Sperrkriterien (u.\,a. fehlende DSGVO-Hinweise, fehlende Fieldsets sowie die sichtbare Entwicklernotiz in \texttt{XSpan.rtevalue} des \textit{Master-Formulars}). Die Prüfung ist dabei differenziert: Die \textit{Auslagenerstattung} besteht etwa die sektionsweise Stammdatensequenz (\texttt{HWG-STAMM-01}) und die PLZ-Validierung (\texttt{plzDE}), scheitert jedoch an der Telefon- und IBAN-Validierung. Da Stufe~2 nur Verstöße hinzufügen kann, stellen die Stufe-1-Scores Obergrenzen der späteren Hybrid-Scores dar.
 
-\subsection{Diagnostische Erkenntnisse am realen HWG-Bestand}
-Die Auswertung der drei realen Formulare bestätigt die in der Ist-Analyse (Kapitel~\ref{chap:ist_analyse}) diagnostizierten Schwachstellen unter Anwendung des formalisierten Bewertungsmodells nach Gleichung~(\ref{eq:compliance_score}):
-\begin{enumerate}
-    \item \textbf{Auslagenerstattung (Score: 3 / 100):} Das Produktivformular schneidet mangelhaft ab. Die 15 identifizierten Regelverstöße summieren sich auf Punktabzüge von exakt 97 Punkten. Wesentliche Abzüge resultieren aus dem Fehlen eines DSGVO-Datenschutzhinweises (-15 Punkte), vier unvollständig spezifizierten Dateiuploads (-8 Punkte), unvalidierten IBAN- und PLZ-Feldern (-8 Punkte), einer veralteten 700px-Breite (-8 Punkte), einem abweichenden Header-Logo (50\,px statt 60\,px, -8 Punkte), dem Fehlen der H1-Hauptüberschrift im Header (-8 Punkte), dem generischen Button \enquote{senden} (-8 Punkte), Jargon-Begriffen ohne Hilfetext (-8 Punkte), einer inkonsistenten Stammdaten-Reihenfolge (-8 Punkte, resultierend aus section-übergreifenden Wiederholungen persönlicher Felder nach Telefonnummer und E-Mail) sowie weiteren Abzügen (-18 Punkte für HTML-Entities in 48 Labels, unbeschränkte Feldbreiten, nicht-standardisierte Stammdaten-Labels, nicht-konforme Navigationsbuttons, sieben Ad-hoc-Workflow-Status und fehlende Vorgangsnummern in E-Mails). Zudem löste das System die abzugsfreie Empfehlung \texttt{HWG-UX-02} zur Aktivierung der Zwischenspeicherung aus (49 Eingabefelder).
-    \item \textbf{Antrag-Sprints des ZFK (Score: 0 / 100):} Mit 0 Punkten (abzugsbedingt unter die Nullgrenze gefallen) erreicht dieses Formular den niedrigsten Reifegrad. Ursächlich sind das Fehlen des offiziellen HWG-Headerbanners (-15 Punkte), das Fehlen der H1-Hauptüberschrift im Header (-8 Punkte), das sichtbare XIMA-Herstellerbranding (-8 Punkte), fehlende semantische Fieldsets (-15 Punkte), ein fehlender Datenschutzhinweis (-15 Punkte), der unklare Button \enquote{Kritischer Fall} (-8 Punkte) sowie das Fehlen der Vorgangsnummer im Workflow (-3 Punkte).
-    \item \textbf{Master-Formular (Score: 56 / 100):} Das administrative Vorlage-Formular erreicht mit 56 Punkten das beste Ergebnis unter den Realformularen, offenbart bei 8 festgestellten Verstößen jedoch historische Altlasten (Gesamtabzug: exakt 44 Punkte): Veraltete 700px-Breite (-8 Punkte), abweichende Header-Logo-Höhe (50\,px statt 60\,px, -8 Punkte), unvalidierte PLZ-Felder (-8 Punkte), inkonsistente Stammdaten-Reihenfolge (-8 Punkte, hervorgerufen durch das dem Vornamen vorangestellte Suchfeld \enquote{Person (SucheName)} sowie die zwischen Anrede und Vorname eingeschobene Matrikelnummer), HTML-Fragmente in 29 Labels (-3 Punkte), unbeschränkte kompakte Layout-Breiten (-3 Punkte), fehlende Vorgangsnummer im Workflow (-3 Punkte) sowie fehlende automatische Eingangsbestätigung (-3 Punkte). Der DSGVO-Datenschutzhinweis (\texttt{HWG-DSGVO-01}) wird hingegen normgerecht über die Footer-Konfiguration (\texttt{privacyPolicyShow="1"}) erfüllt; ebenso führt die im Rich-Text-Container (\texttt{rtevalue}) hinterlegte Entwickler-Notiz im AST-basierten Label-Audit nicht zu einem Abzug. Die H1-Hauptüberschrift im Header (\texttt{HWG-CD-04}) wird vom Vorlage-Formular ebenfalls normgerecht umgesetzt.
-\end{enumerate}
+\textbf{Performanz:} Über alle 34 Archive des Korpus benötigte die In-Memory-Prüfung der Stufe~1 im Median $3{,}8\,\text{ms}$ (Maximum $15{,}0\,\text{ms}$ beim zwölfseitigen Dienstreiseantrag; Median aus je fünf Läufen auf einem Standard-Notebook). Die Latenz der Stufe~2 hängt vom gewählten Modell und der Auslastung der GWDG-Infrastruktur ab und wird mit der API-Anbindung systematisch erhoben.
 
-\subsection{Laufzeit- und Performanzmessung}
-In Benchmark-Messungen auf Standard-Hardware erzielte die Pipeline folgende Performanzwerte: Die deterministische AST-Traversierung beanspruchte durchschnittlich $18{,}4\,\text{ms}$ pro Formular. Die semantische LLM-Inferenz über universitäre Academic-Cloud-Ressourcen lag bei $1{,}8$ bis $3{,}5\,\text{Sekunden}$. Das vollständige Audit inklusive Score-Berechnung und Remediation-Generierung liegt bei rund zwei Sekunden, was eine verzögerungsfreie interaktive Nutzung im Intranet-Dashboard ermöglicht.
-
-\section{Validierung der Modell-Agnostik und Open-Source-Evaluation (Academic Cloud)}
+\section{Multi-Model-Benchmark in der Academic Cloud (GWDG)}
 \label{sec:opensource_eval}
 
-Ein zentraler Aspekt der wissenschaftlichen Validierung betrifft die Unabhängigkeit von proprietären KI-Ökosystemen (\textit{Modell-Agnostik}). Für eine öffentlich-rechtliche Hochschule wie die HWG Ludwigshafen ist eine dauerhafte Bindung an US-Hyperscaler aus Gründen der \textbf{digitalen Souveränität, des Datenschutzes und der Kostensicherheit} nicht vertretbar.
-
-Um dies empirisch zu überprüfen, wurde der standardisierte semantische Audit-Prompt (Anhang~\ref{app:prompt_extrakt}) an \textbf{fünf unterschiedliche Sprachmodelle} aus diversen Modellfamilien und Parameterklassen übergeben:
-\begin{enumerate}
-    \item \textbf{GLM 5.3 Flash} (Modernes Open-Weight-Modell mit integriertem CoT-Reasoning),
-    \item \textbf{Meta Llama 3.1 8B Instruct} (Leichtgewichtiges Open-Source-Modell der 8B-Klasse),
-    \item \textbf{Qwen 3.8 27B} (Open-Source-Modell mittlerer Größe mit expliziten \texttt{<think>}-Reasoning-Blöcken),
-    \item \textbf{Qwen 3 30B A3B Instruct} (Für Code- und Constraint-Befolgung optimiertes 30B-Modell),
-    \item \textbf{DeepSeek V4 Flash} (Effizientes, hochperformantes Open-Weight-Modell).
-\end{enumerate}
-
-Tabelle~\ref{tab:model_comparison} stellt die empirisch gemessenen Evaluationsergebnisse über alle fünf Modelle gegenüber:
+Zur Überprüfung der Modell-Agnostik und Datensouveränität wurde der standardisierte Audit-Prompt (Anhang~\ref{app:prompt_extrakt}) mit dem Extrakt von \texttt{synthetic\_noncompliant\_form.json} an fünf Open-Weight-Sprachmodelle der \textit{Academic Cloud} übergeben (Tabelle~\ref{tab:model_comparison}). Ground Truth sind die 4 semantischen Injektionen; die übrigen 3 semantischen Regeln sind regelkonform.
 
 \begin{table}[htbp]
 \centering
 \scriptsize
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{2.3cm}>{\centering\arraybackslash}p{1.1cm}>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{0.8cm}>{\raggedright\arraybackslash}X}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{2.2cm}ccc>{\raggedright\arraybackslash}X}
 \toprule
-\textbf{Modell} & \textbf{Klasse / Architektur} & \textbf{JSON} & \textbf{Recall (4 V.)} & \textbf{FP} & \textbf{Empirischer Befund \& Bewertung} \\
+\textbf{Modell} & \textbf{Architektur} & \textbf{JSON} & \textbf{Recall} & \textbf{FP} & \textbf{Empirischer Befund (7 semantische Regeln)} \\
 \midrule
-\textit{GLM 5.3 Flash} & Frontier / Open-Weight & 100\,\% & 4 / 4 (100\,\%) & 0 & Erkennt \texttt{btnSubmit} und \texttt{btnKritisch}; exakte Wortzählung bei \texttt{LANG-02} (8 Wörter $\le$ 25 $\rightarrow$ PASS). \\
-\textit{Llama 3.1 8B} & Lightweight Open-Source & 100\,\% & 3 / 4 (75\,\%) & 1 & Erkennt \texttt{btnSubmit}, übersieht \texttt{btnKritisch}; stuft \texttt{FEEDBACK-01} als Empfehlung statt Verstoß ein; Fehlalarm bei \texttt{LANG-02} (fälschlich $>25$ Wörter). \\
-\textit{Qwen 3.8 27B} & Mid-Sized Open-Source (27B) & 100\,\% & 4 / 4 (100\,\%) & 0 & Herausragendes CoT-Reasoning; erkennt \texttt{tfEmail}, \texttt{btnKritisch}, \texttt{Kostenstelle}; stuft \texttt{UX-02} als Empfehlung ein. \\
-\textit{Qwen 3 30B A3B} & MoE / Open-Source (30B) & 100\,\% & 4 / 4 (100\,\%) & 0 & Perfekte Regeltreue; exzellente Remediation-Vorschläge für Formcycle Designer; keine Halluzinationen. \\
-\textit{DeepSeek V4 Flash} & Sparse MoE / Fast Inferenz & 100\,\% & 4 / 4 (100\,\%) & 0 & Höchste Recheneffizienz (Latenz 2,15\,s); präzise Erkennung aller semantischen Nuancen. \\
+\textit{GLM 5.3 Flash} & Open-Weight & valide & 4 / 4 & 0 & Erkennt \texttt{tfEmail}, \texttt{senden} und \enquote{Kritischer Fall}, \enquote{Kostenstelle} und \enquote{Shibboleth/LDAP}; \texttt{BTN-02}, \texttt{UX-02}, \texttt{LANG-02} korrekt bestanden. \\
+\textit{Llama 3.1 8B} & Lightweight (8B) & valide & 3 / 4 & 1 & Übersieht \enquote{Kritischer Fall}; stuft \texttt{FEEDBACK-01} nur als Empfehlung ein; Fehlalarm bei \texttt{LANG-02} (8-Wörter-Satz als $>25$ Wörter gewertet). \\
+\textit{Qwen 3.8 27B} & Dense (27B) & valide & 4 / 4 & 0 & Alle 4 Verstöße erkannt; \texttt{UX-02} als 0-Punkte-Empfehlung wegen Beleg-Upload. \\
+\textit{Qwen 3 30B A3B} & MoE (30B) & valide & 4 / 4 & 0 & Alle 4 Verstöße erkannt; \texttt{UX-02} als 0-Punkte-Empfehlung; präzise Klickpfad-Vorschläge. \\
+\textit{DeepSeek V4 Flash} & Open-Weight & valide & 4 / 4 & 0 & Alle 4 Verstöße erkannt; \texttt{UX-02} als 0-Punkte-Empfehlung wegen Beleg-Upload. \\
 \bottomrule
 \end{tabularx}
-\caption{Empirischer Multi-Model-Vergleich zur Validierung der Modell-Agnostik (N=5)}
+\caption{Multi-Model-Vergleich der semantischen Prüfstufe am synthetischen Negativformular ($N = 5$ Modelle)}
 \label{tab:model_comparison}
 \end{table}
 
-\subsection{Detaillierte Analyse der Inferenz- und Reasoning-Qualität}
-\label{subsec:llm_reasoning_analyse}
+Das kompakte 8B-Modell scheitert an negativen Zählbedingungen (\texttt{HWG-LANG-02}) und übersieht einen Verstoß. Alle vier größeren Modelle erkennen dagegen $4/4$ Verstöße ohne Fehlalarm ($F_1 = 1{,}00$); in Kombination mit Stufe~1 werden damit alle 19 Injektionen erkannt. Drei Modelle gaben zusätzlich die abzugsfreie Empfehlung \texttt{HWG-UX-02} aus, obwohl das einseitige Formular die Schwelle ($\ge 3$ Seiten oder $\ge 25$ Felder) nicht erreicht. Diese Grenzfall-Unschärfe ohne Score-Auswirkung adressiert die inzwischen eingeführte deterministische Vorberechnung \texttt{metrics.ux02\_complexity\_threshold\_reached}; ihre Wirksamkeit ist im ausstehenden API-Lauf zu bestätigen. Insgesamt zeigt der Benchmark, dass Stufe~2 mit Open-Weight-Modellen auf Hochschulinfrastruktur betrieben werden kann. Die Generalisierbarkeit auf Realformulare ist mit $N = 1$ Testformular jedoch noch nicht belegt.
 
-Die empirischen Messdaten verdeutlichen signifikante Leistungsunterschiede:
-\begin{itemize}
-    \item \textbf{Modelle unter 10B Parametern (Llama 3.1 8B):} Neigen bei komplexen Zähl- und Negativ-Bedingungen (\texttt{HWG-LANG-02}) zu Zählfehlern und erzeugen False Positives. Für den autonomen Produktivbetrieb sind sie nur eingeschränkt empfehlenswert.
-    \item \textbf{Modelle ab 27B Parametern (Qwen 3.8 27B, Qwen 3 30B):} Zeigen eine herausragende semantische Schärfe. Die Klassifikation des Buttons \enquote{Kritischer Fall} als reiner Ausnahmezustand ohne Handlungsverb gelang diesen Modellen absolut fehlerfrei.
-    \item \textbf{High-Efficiency MoE-Modelle (GLM 5.3 Flash, DeepSeek V4 Flash):} Kombinieren höchste Erkennungspräzision mit geringer Latenz (unter 2,2 Sekunden).
-\end{itemize}
-
-\subsection{Schlussfolgerung für den autonomen Hochschulbetrieb}
-\label{subsec:hochschulbetrieb_fazit}
-Die Ergebnisse beweisen, dass die Pipeline vollständig \textbf{modellagnostisch} arbeitet. Für den produktiven Einsatz an der HWG Ludwigshafen wird der Betrieb eines offenen Modells (wie DeepSeek V4 Flash oder Qwen 3 30B) über die Academic Cloud der GWDG empfohlen. Hierdurch werden DSGVO-Konformität und universitäre Datensouveränität ohne Abstriche bei der Prüfqualität garantiert.
-
-\section{Praxistauglichkeit des Intranet-Dashboards und Validitätsbedrohungen}
+\section{Formatives Experten-Review und Validitätsgrenzen}
 \label{sec:praxistauglichkeit_validitaet}
 
 \subsection{Formatives Experten-Review mit der Verwaltungspraxis (FB1)}
 \label{subsec:experten_review}
 
-Zur praxisnahen Überprüfung der Anwendbarkeit und externen Validität des gestaltungsorientierten Artefakts \parencite{hevner2004design, peffers2007design} wurde eine qualitative formative Evaluation in Form eines strukturierten Experten-Reviews mit einem zentralen Praxisakteur der HWG Ludwigshafen – dem Hauptsachbearbeiter und Praktikumsaufseher des Fachbereichs 1 (verantwortlich u.\,a. für das analysierte \textit{FB1-Praktikumsformular}) – durchgeführt. Dieser formative Evaluationszyklus diente dazu, das Artefakt iterativ an die reale Verwaltungspraxis rückzukoppeln und führte zu wesentlichen Verfeinerungen der Governance-Regeln:
-\begin{itemize}
-    \item \textbf{Hersteller-Branding im Footer (\texttt{HWG-CD-03}):} Der Experte regte an, das herstellerseitige Werbelogo (\textit{\enquote{Powered by XIMA Formcycle}}) als feste Governance-Regel zu deaktivieren, um den behördlichen Charakter und die institutionelle Authentizität der Anträge zu wahren.
-    \item \textbf{Umsetzbarkeit der Barrierefreiheit (\texttt{HWG-A11Y-02}):} Er hinterfragte die praktische Handhabbarkeit der Pflichtfeldauszeichnung für nicht-technische Autoren. Dies führte zur Ausarbeitung der konkreten Klickpfad-Remediation, welche die Aktivierung des systemeigenen Häkchens (\textit{\enquote{Pflichtfeldhinweis anzeigen}}) anstelle manueller Textsternchen im Designer anleitet.
-    \item \textbf{Gebrauchsfertige Regex-Muster (\texttt{HWG-VAL-01}):} Auf Vorschlag des Experten wurde die Validierungsregel so erweitert, dass die Registry und das Dashboard praxiserprobte reguläre Ausdrücke (Regex für PLZ, IBAN, Telefonnummer) direkt als Copy-and-Paste-Muster bereitstellen, um Hürden bei der Konfiguration zu minimieren.
-    \item \textbf{Zwischenspeichern bei Großanträgen (\texttt{HWG-UX-02}):} Bei vielteiligen Anträgen empfahl der Experte eine standardmäßige Zwischenspeicher-Funktion mit E-Mail-Fortsetzungslink, um Abbrüche (\textit{Form Abandonment}) bei unvollständigen Belegen zu vermeiden.
-    \item \textbf{Prozessuale Transparenz im Workflow (\texttt{HWG-FEEDBACK-01}):} Ein zentraler Impuls des Praxisakteurs bestand darin, die Selbstbeschreibungsfähigkeit nach ISO 9241-110 nicht auf die Eingabemaske zu beschränken, sondern in den nachgelagerten Kommunikationsfluss zu verlagern. Die technische Machbarkeit wurde im Rahmen dieser Arbeit verifiziert: Die Prüfpipeline extrahiert hierfür die automatisierten Workflow-Knoten (\texttt{FC\_EMAIL}) aus den Prozessgraphen und verifiziert das Vorhandensein von Eingangsbestätigungen und nächsten Bearbeitungsschritten.
-\end{itemize}
-
-In der qualitativen Erprobung des Intranet-Dashboards durch dezentrale Formularerstellende wurde das Werkzeug als intuitiv und arbeitserleichternd bewertet. Besonders die aus dem Experten-Review hervorgegangenen konkreten Klickpfad-Anweisungen ermöglichten es den Anwendenden, Mängel im Formcycle Designer innerhalb weniger Minuten eigenständig zu beheben. Methodisch demonstriert dieser iterative DSR-Rückkopplungszyklus, dass die Kombination aus formaler Standardisierung und formativem Praxis-Feedback die Akzeptanz und Praxistauglichkeit des Governance-Artefakts entscheidend steigert.
+Zur Sicherung der Praxisrelevanz wurde ein strukturiertes Experten-Review mit dem Hauptsachbearbeiter und Praktikumsbeauftragten des Fachbereichs~1 (Verantwortlicher u.\,a. für das \textit{FB1-Praktikumsformular}) durchgeführt. Seine Rückmeldungen flossen unmittelbar in die Registry v1.5.0 ein: (1)~verbindliche Deaktivierung des XIMA-Footerlogos (\texttt{HWG-CD-03}), (2)~Klickpfad-Anleitung für die systemeigene Pflichtfeldlegende (\texttt{HWG-A11Y-02}), (3)~gebrauchsfertige Copy-and-Paste-Regex-Muster (\texttt{HWG-VAL-01}), (4)~Zwischenspeicher-Empfehlung bei Großanträgen (\texttt{HWG-UX-02}) sowie (5)~Prüfung transparenter Eingangsbestätigungs-E-Mails (\texttt{HWG-FEEDBACK-01}).
 
 \subsection{Validitätsbedrohungen}
 \label{subsec:validitaetsbedrohungen}
 
-Als Bedrohung der internen Validität ist die Stichprobengröße annotierter Realformulare zu nennen. Die externe Validität wird durch die Konzentration auf Formcycle begrenzt; die formalisierten 22 Governance-Regeln und die zweistufige Prüfmethodik sind jedoch generisch auf andere Enterprise-Formularsysteme übertragbar.
+Intern beruht die Bewertung der Stufe~2 bislang auf einem einzigen synthetischen Formular mit vier Injektionen. Zudem wurden die synthetischen Formulare KI-gestützt erzeugt und vom Autor annotiert, sodass ein Bestätigungsbias nicht auszuschließen ist. Die Strukturregeln der Stufe~1 wurden dagegen am gesamten 34er-Korpus ausgeführt. Extern ist der Parser auf das Formcycle-v8-Datenmodell zugeschnitten; die Trennung aus maschinenlesbarer Regel-Registry, deterministischem Struktur-Audit und API-gestützter Semantikprüfung ist jedoch auf andere E-Government-FMS übertragbar.

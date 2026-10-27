@@ -1,166 +1,105 @@
 \chapter{Konzeption des Formular-Standards und der Prüf-Registry}
 \label{chap:konzeption}
 
-Aufbauend auf den Befunden der empirischen Ist-Analyse und den theoretischen Grundlagen der Dialogergonomie (DIN EN ISO 9241-110), der digitalen Barrierefreiheit (BITV 2.0 / WCAG 2.1) und des Datenschutzes (Art. 13 DSGVO) wird in diesem Kapitel der formale Formular-Standard für die Hochschule für Wirtschaft und Gesellschaft Ludwigshafen (HWG) entwickelt. Dieser Standard harmonisiert visuelle, strukturelle, ergonomische und prozessuale Dimensionen. Anschließend wird der Standard in eine maschinenlesbare Komponenten- und Regel-Registry (\texttt{rules\_registry.json}, Version 1.5.0) überführt, welche als formale Wissensbasis für die automatisierte Compliance-Prüfpipeline dient.
+Aufbauend auf den normativen Grundlagen (Kapitel~\ref{chap:theorie}) und den empirischen Befunden (Kapitel~\ref{chap:ist_analyse}) spezifiziert dieses Kapitel den einheitlichen Formular-Standard der HWG Ludwigshafen und überführt ihn in eine maschinenlesbare Governance-Registry (\texttt{rules\_registry.json}, v1.5.0; FQ2).
 
-\section{Struktur-, Navigations- und Informationsarchitektur}
+\section{Layout-, Marken- und Barrierefreiheits-Governance}
 \label{sec:architektur}
 
-Eine verlässliche institutionelle Governance erfordert eindeutige architektonische Leitplanken, die das visuelle Erscheinungsbild im Hochschulportal homogenisieren und die kognitive Belastung der Nutzenden minimieren.
-
-\subsection{Responsives Desktop-Raster (850px-Norm)}
+\subsection{Responsives 850\,px-Raster und Pagination}
 \label{subsec:breiten_norm}
 
-Die Fragmentierung zwischen älteren 700px- und neueren 850px-Layouts wird durch eine verbindliche Standardbreite aufgelöst:
-\begin{itemize}
-    \item \textbf{Normierung auf 850px (\texttt{HWG-CD-01}):} Sämtliche Formularvorlagen werden verbindlich auf eine Maximalbreite von \texttt{850px} (\texttt{max-width: 850px; min-width: 300px;}) normiert.
-    \item \textbf{Ergonomische Begründung:} Bei einer Standard-Schriftgröße von 14\,px bis 16\,px resultiert eine Zeilenbreite von 850\,px in einem optimalen Textband von 65 bis 75 Zeichen pro Zeile. Dies entspricht den typografischen Empfehlungen nach \textcite{wroblewski2008web} und verhindert überdehnte Zeilenlängen bei horizontalen Formularfeldern. Zugleich fügt sich das 850px-Raster nahtlos in das Content-Management-System (Typo3) des Hochschulportals ein.
-    \item \textbf{Mobile Responsivität:} Durch die Mindestbreite von \texttt{300px} in Kombination mit prozentualen Spaltenbreiten (\texttt{colwidth}) brechen mehrspaltige Formularzeilen auf mobilen Endgeräten automatisch in ein ergonomisches einspaltiges Layout um.
-\end{itemize}
+Alle Formularcontainer werden auf \texttt{max-width: 850px} bei \texttt{min-width: 300px} normiert (\texttt{HWG-CD-01}). Dies gewährleistet auf Desktop-Monitoren eine lesefreundliche Zeilenlänge von 65--75 Zeichen \parencite{wroblewski2008web}, fügt sich konsistent in das Hochschulportal ein und bricht auf Mobilgeräten responsiv um. Umfangreiche Anträge sind thematisch in logische Seiten (\texttt{XPage}) zu gliedern \parencite{bargas2010usable, seckler2014validation}; mehrseitige Vor-/Zurück-Aktionen (\texttt{goto\_next}, \texttt{goto\_prev}) dürfen ausschließlich mit \enquote{Weiter} und \enquote{Zurück} beschriftet werden (\texttt{HWG-BTN-02}).
 
-\subsection{Seitenstrukturierung und Pagination (Chunking)}
-\label{subsec:pagination_chunking}
-
-Komplexe Verwaltungsprozesse im Hochschulbereich (wie Auslagenerstattungen oder Drittmittelanträge) umfassen häufig 50 bis über 100 Einzelfelder. Ein monolithisches Single-Page-Design überfordert Nutzende kognitiv und führt zu hohen Abbruchraten \parencite{bargas2010usable, seckler2014validation}.
-\begin{itemize}
-    \item \textbf{Regelbasiertes Chunking:} Formulare mit mehr als 20 Einzelelementen müssen in logisch abgegrenzte Bildschirmseiten (\texttt{XPage}) unterteilt werden: (1) Persönliche Angaben / Stammdaten $\rightarrow$ (2) Sachverhalts- und Antragsdaten $\rightarrow$ (3) Finanzielle Kalkulation / Belege $\rightarrow$ (4) Bestätigung, Datenschutz und Abschluss.
-    \item \textbf{Lineare Navigationssteuerung (\texttt{HWG-BTN-02}):} Zur Seitensteuerung dürfen ausschließlich standardisierte Schaltflächen mit den Beschriftungen \textit{\enquote{Weiter}} (primär, rechtsbündig) und \textit{\enquote{Zurück}} (sekundär, linksbündig) eingesetzt werden. Unpräzise Bezeichnungen wie \textit{\enquote{weiter zu Seite 2}} sind unzulässig.
-\end{itemize}
-
-\section{Corporate Design, Barrierefreiheit und Stammdaten-Muster}
-\label{sec:cd_komponenten}
-
-\subsection{Corporate Identity, Header- und Footer-Struktur}
+\subsection{Corporate Identity und technische Barrierefreiheit}
 \label{subsec:ci_header_footer}
 
-Jedes Formular repräsentiert die Hochschule als administrative Behörde:
 \begin{itemize}
-    \item \textbf{Offizielles Header-Logo (\texttt{HWG-CD-02}):} Im Kopfbereich (\texttt{xi-header-1}) muss zwingend das offizielle Bildbanner der Hochschule als \texttt{XImage}-Komponente platziert werden. Zur Wahrung des Corporate Designs ist im Formcycle-Designer unter den Bildeigenschaften das Feld \textit{\enquote{Höhe (in px)}} verbindlich auf exakt 60\,px zu konfigurieren (technisch im Datenmodell als Eigenschaft \texttt{imageheight="60"} hinterlegt und im DOM als Attribut \texttt{height="60"} gerendert) sowie die \textit{\enquote{Ausrichtung}} auf \textit{\enquote{Rechts}} zu setzen (\texttt{textalign="right"}, im DOM über die CSS-Klasse \texttt{xm-t-right}). Zur Erfüllung von WCAG 2.1 Erfolgskriterium 1.1.1 (Nicht-Text-Inhalt) muss das Bild mit dem Alternativtext \textit{\enquote{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}} hinterlegt sein.
-    \item \textbf{Formulartitel im Header als Hauptüberschrift H1 (\texttt{HWG-CD-04}):} Der Formulartitel muss zwingend im Header-Bereich platziert und als HTML-Überschrift erster Ordnung (\texttt{<h1>}) ausgezeichnet sein. Dies etabliert eine normgerechte semantische Dokumentenhierarchie für assistierende Technologien nach WCAG 2.1 Kriterium 1.3.1 und 2.4.6 sowie eine einheitliche visuelle Orientierung.
-    \item \textbf{Deaktivierung herstellerseitiger Werbelogos (\texttt{HWG-CD-03}):} In der Fußzeile (\texttt{XFooter}) muss der herstellerseitige Hinweis \textit{\enquote{Powered by XIMA Formcycle}} deaktiviert werden (\texttt{properties.showlogo = "0"}). Dies eliminiert fremdes Software-Branding und stärkt die Authentizität des hochschuleigenen Dienstes.
+    \item \textbf{Offizielles Header-Logo (\texttt{HWG-CD-02}):} Im Kopfbereich (\texttt{XHeader}) ist das offizielle HWG-Logo als \texttt{XImage} mit exakt \texttt{imageheight="60"}, rechtsbündiger Ausrichtung (\texttt{textalign="right"} bzw. \texttt{xm-t-right}) und aussagekräftigem Alternativtext (z.\,B. \enquote{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}, WCAG 1.1.1) einzubinden.
+    \item \textbf{Hauptüberschrift H1 (\texttt{HWG-CD-04}) \& Footer-Bereinigung (\texttt{HWG-CD-03}):} Der Formulartitel im Header muss als \texttt{<h1>} ausgezeichnet sein (WCAG 1.3.1, 2.4.6); im \texttt{XFooter} ist das Herstellerlogo zwingend zu deaktivieren (\texttt{showlogo="0"}).
+    \item \textbf{Semantische Fieldsets (\texttt{HWG-A11Y-01}):} Logische Eingabegruppen müssen als \texttt{XFieldSet} mit ausgefüllter Legende (\texttt{legend}) statt bloßer \texttt{<div>}-Container modelliert werden.
+    \item \textbf{Pflichtfeld-Deklaration (\texttt{HWG-A11Y-02}):} Pflichtfelder setzen \texttt{required="1"} ohne manuelle Label-Sternchen voraus; zugleich muss im Header oder Footer der globale Pflichtfeldhinweis (\texttt{showrequiredhint="1"}) aktiviert sein, sodass optischer Stern und \texttt{aria-required="true"} synchron gerendert werden.
+    \item \textbf{Bereinigte Label-Syntax (\texttt{HWG-A11Y-03}):} Während der systemseitige äußere \texttt{<p>}-Wrapper von Formcycle zulässig bleibt, sind eingebettete Formatierungs-Tags (\texttt{<br>}, \texttt{<span>}), \texttt{\&nbsp;}-Entitäten, doppelt maskierte Sonderzeichen und Pipe-Zeichen im Label untersagt.
 \end{itemize}
 
-\subsection{Semantische Gruppierung und Pflichtfeld-Indikation}
-\label{subsec:fieldsets_aria}
-
-Die Barrierefreiheitsdefizite erfordern verbindliche technische Vorgaben:
-\begin{itemize}
-    \item \textbf{Semantische Fieldset-Gruppierung (\texttt{HWG-A11Y-01}):} Gemäß WCAG 2.1 Erfolgskriterium 1.3.1 dürfen thematische Blöcke nicht ausschließlich durch rein visuelle \texttt{<div>}-Container strukturiert werden. Jeder logische Abschnitt muss als semantisches \texttt{XFieldSet} angelegt und mit einer lesbaren Legende versehen werden. Screenreader kündigen diese Legende beim Betreten jedes enthaltenen Feldes an.
-    \item \textbf{Konsistente Pflichtfeld-Indikation (\texttt{HWG-A11Y-02}):} Unter \textit{Einschränkungen} muss das Kontrollkästchen \textit{\enquote{Pflichtfeld}} (\texttt{required = "1"}) gemeinsam mit \textit{\enquote{Pflichtfeldhinweis anzeigen}} (\texttt{showrequiredhint = "1"}) aktiviert werden. Formcycle rendert hierdurch automatisch das visuelle Sternchen und das HTML-Attribut \texttt{aria-required="true"}. Manuelle Textsternchen im Feldlabel sind verboten.
-    \item \textbf{Bereinigung von HTML-Fragmenten (\texttt{HWG-A11Y-03}):} Feldlabels und Hilfetexte müssen als reiner Text hinterlegt werden. HTML-Tags wie \texttt{<p>} oder HTML-Entities wie \texttt{\&szlig;} dürfen nicht im Label verbleiben.
-\end{itemize}
-
-\subsection{Das normierte HWG-Stammdaten-Muster}
-\label{subsec:stammdaten_muster}
-
-Um Copy-Paste-Abweichungen dauerhaft zu unterbinden, definiert der Standard ein festes Stammdaten-Muster:
-\begin{enumerate}
-    \item \textbf{Sequenz-Garantie (\texttt{HWG-STAMM-01}):} Persönliche Angaben folgen ausnahmslos der natürlichen Sequenz:
-    \begin{equation}
-        \text{Anrede} \longrightarrow \text{Vorname} \longrightarrow \text{Nachname} \longrightarrow \text{E-Mail-Adresse}
-    \end{equation}
-    \item \textbf{Kanonische Feldbezeichnungen (\texttt{HWG-STAMM-02}):} Es sind ausschließlich die Standardbezeichnungen zulässig: \textit{\enquote{Anrede}} (Herr, Frau, Divers, Keine Angabe), \textit{\enquote{Vorname}}, \textit{\enquote{Nachname}} und \textit{\enquote{E-Mail-Adresse}} (bzw. \textit{\enquote{Hochschul-E-Mail}}).
-    \item \textbf{Bereinigung von Entwickler-Rückständen (\texttt{HWG-UI-01}):} Sichtbare Skript-Kommentare oder LDAP-Hinweise im Frontend sind im Produktivzustand strikt untersagt.
-\end{enumerate}
-
-\section{Datenschutz, Eingabevalidierung und Microcopy}
+\section{Stammdaten, Datenschutz, Validierung und Microcopy}
 \label{sec:datenschutz_validierung}
 
-\subsection{Datenschutz-Transparenz nach Art. 13 DSGVO (\texttt{HWG-DSGVO-01})}
-Werden personenbezogene Daten erfasst, muss unmittelbar vor der Absende-Schaltfläche oder über den Datenschutzbereich des Footers (\texttt{privacyPolicyShow = "1"}) ein verständlicher Datenschutzhinweis eingebunden sein, der den Zweck umreißt und einen aktiven Link auf die Datenschutzerklärung der HWG enthält.
+\subsection{Normiertes Stammdaten-Muster und Bereinigung}
+\label{subsec:stammdaten_muster}
 
-\subsection{Strukturierte Formatvalidierung (\texttt{HWG-VAL-01})}
-Eingabefelder für strukturierte Datenformate dürfen nicht als unvalidierte Freitexte verbleiben. Um dezentralen Formularerstellenden ohne Programmierkenntnisse eine barrierefreie Umsetzung zu ermöglichen, stellt die Registry standardisierte reguläre Ausdrücke (Regex) direkt als Copy-and-Paste-Vorlagen bereit:
+Innerhalb jeder Personensektion folgen Stammdaten strikt der Sequenz (\texttt{HWG-STAMM-01})
+\begin{equation}
+    \text{Anrede} \longrightarrow \text{Vorname} \longrightarrow \text{Nachname} \longrightarrow \text{E-Mail} \longrightarrow \text{Telefonnummer}.
+\end{equation}
+Zulässig sind ausschließlich klare Einzelbezeichnungen (\enquote{Anrede}, \enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse}, \enquote{E-Mail} oder \enquote{Hochschul-E-Mail}, \enquote{Telefonnummer}; \texttt{HWG-STAMM-02}) statt ungetrennter Sammelfelder (\enquote{Name Antragstellende/r}) oder interner Kürzel. Sichtbare Entwicklernotizen (auch in \texttt{XSpan.rtevalue}) sind im Produktivbetrieb unzulässig (\texttt{HWG-UI-01}).
+
+\subsection{DSGVO, Dateiuploads, Validierung und sprachliche Klarheit}
+\label{subsec:validierung_microcopy}
+
 \begin{itemize}
-    \item \textbf{Postleitzahl (PLZ, 5 Ziffern):} \texttt{\^{}[0-9]\{5\}\$}
-    \item \textbf{IBAN (Deutschland, 22 Zeichen):} \texttt{\^{}[A-Z]\{2\}[0-9]\{20\}\$} (bzw. SEPA international: \texttt{\^{}[A-Z]\{2\}[0-9]\{2\}[A-Z0-9]\{11,28\}\$})
-    \item \textbf{Telefonnummer (Festnetz \& Mobil):} \texttt{\string^(\string\+[0-9]\{1,3\}|0)[0-9\string\s\string\-/]\{6,20\}\$}
-    \item \textbf{Matrikelnummer (HWG Ludwigshafen, 6--7 Ziffern):} \texttt{\^{}[0-9]\{6,7\}\$}
+    \item \textbf{DSGVO (\texttt{HWG-DSGVO-01}) \& Uploads (\texttt{HWG-UPLOAD-01}):} Personenbezogene Formulare erfordern die aktivierte Footer-Datenschutzerklärung (\texttt{privacyPolicyShow="1"}) oder einen verlinkten Art.-13-DSGVO-Hinweis vor dem Absenden. Dateiuploads (\texttt{XUpload}) müssen zulässige Dateiformate und Maximalgröße sowohl technisch als auch sichtbar im Label/Hilfetext kongruent ausweisen.
+    \item \textbf{Formatvalidierung (\texttt{HWG-VAL-01}) \& Feldbreiten (\texttt{HWG-UX-01}):} Strukturierte Felder erfordern passende native Formcycle-Datentypen (\texttt{email}, \texttt{plzDE}, \texttt{iban}, \texttt{phone}) oder hinterlegte Copy-and-Paste-Regex-Muster: PLZ \texttt{\^{}[0-9]\{5\}\$}, SEPA-IBAN \texttt{\^{}[A-Z]\{2\}[0-9]\{2\}[A-Z0-9\textbackslash s]\{11,34\}\$}, Matrikelnummer \texttt{\^{}[0-9]\{6,7\}\$} sowie Telefonnummer \texttt{\string^(\string\+[0-9]\{1,3\}|0)[0-9\string\s\string\-/]\{6,20\}\$} (explizit als Regex zulässig, da der native Typ \texttt{phone} internationale Vorwahlen mit \texttt{+} abweist). Kompakte Felder (PLZ, Hausnummer) sind auf \texttt{computedwidth} $\le 50\,\%$ oder \texttt{max-width} $\le 220\,\text{px}$ zu begrenzen (\texttt{HWG-UX-01}).
+    \item \textbf{Action-Verb-Microcopy (\texttt{HWG-BTN-01}) \& Verständlichkeit (\texttt{HWG-LANG-01}, \texttt{HWG-LANG-02}):} Primäre Absende-Buttons müssen Zielobjekt und Infinitivverb kombinieren – zulässig sind daher sowohl \enquote{Antrag einreichen} als auch kontextspezifische Auslöser wie \enquote{Kritischen Fall einreichen}, nicht jedoch \texttt{senden} oder verbloses \enquote{Kritischer Fall}. Verwaltungsjargon (z.\,B. Kostenstelle, GStB, KAP, Shibboleth) erfordert einen Hilfetext (\texttt{HWG-LANG-01}); Hinweissätze sollen 25 Wörter nicht überschreiten (\texttt{HWG-LANG-02}).
 \end{itemize}
-Die Formularerstellenden müssen diese Ausdrücke lediglich im Formcycle Designer unter \textit{\enquote{Eigenschaften $\rightarrow$ Validierung $\rightarrow$ Regulärer Ausdruck (Regex)}} einfügen und einen verständlichen Hinweistext hinterlegen.
 
-\subsection{Affordanzgerechte Feldbreiten (\texttt{HWG-UX-01})}
-Kurze strukturierte Eingabefelder (PLZ, Hausnummer) dürfen nicht auf 100\,\% gestreckt werden. Die visuelle Feldlänge signalisiert als nonverbale Affordanz nach \textcite{wroblewski2008web} die erwartete Zeichenanzahl und muss auf maximal 30--40\,\% der Zeilenbreite (bzw. 4 Spalten im 12er-Raster) oder eine Obergrenze von \texttt{150px} begrenzt werden.
-
-\subsection{Transparente Dateiupload-Spezifikationen (\texttt{HWG-UPLOAD-01})}
-Upload-Elemente müssen im Label oder Hilfetext die zulässigen Dateiformate (z.\,B. PDF, JPG, PNG) und die maximale Dateigröße (z.\,B. max. 10\,MB) transparent ausweisen.
-
-\subsection{Schaltflächen-Semantik nach dem Action-Verb-Muster (\texttt{HWG-BTN-01})}
-Zur Wahrung der Dialoggrundsätze nach DIN EN ISO 9241-110 müssen alle Aktionsschaltflächen dem \textbf{Action-Verb-Muster} folgen (\textit{[Zielobjekt] + [Vollverb im Infinitiv]}, z.\,B. \textit{\enquote{Antrag einreichen}}). Generische Verben (\texttt{senden}) oder reine Statusbegriffe (\enquote{Kritischer Fall}) sind unzulässig.
-
-\subsection{Verständliche Verwaltungssprache und Jargon-Erklärung (\texttt{HWG-LANG-01})}
-Hochschulspezifische Fachbegriffe (z.\,B. \enquote{Kostenstelle}, \enquote{Remonstration}) müssen durch kontextuelle Hilfetexte erläutert werden. Anweisungssätze dürfen maximal 25 Wörter umfassen (\texttt{HWG-LANG-02}).
-
-\section{Workflow-Governance und Prozess-Harmonisierung}
+\section{Workflow-Governance}
 \label{sec:workflow_governance}
 
-\subsection{Standardisierte Workflow-Statusnomenklatur (\texttt{HWG-WF-01})}
-Die Statusbezeichnungen in Formcycle-Workflows werden universitätsweit auf einen kanonischen Lebenszyklus harmonisiert: \textit{\enquote{Eingegangen}}, \textit{\enquote{In Prüfung}}, \textit{\enquote{Nachforderung ausstehend}}, \textit{\enquote{Genehmigt}} und \textit{\enquote{Abgelehnt}} (sowie \textit{\enquote{Archiviert}}). Ad-hoc-Statusbezeichnungen ohne Prozessbedeutung sind unzulässig.
+Für die Prozessmodelle schreibt \texttt{HWG-WF-01} kanonische Lebenszyklus-Status (\enquote{Eingegangen}, \enquote{In Prüfung}, \enquote{Nachforderung ausstehend}, \enquote{Genehmigt}, \enquote{Abgelehnt}, \enquote{Archiviert}) vor. Automatisierte Workflow-E-Mails müssen den dynamischen Vorgangsplatzhalter \texttt{[\%\$PROJECT\_ALIAS\%]} in Betreff oder Textkörper führen (\texttt{HWG-WF-02}) sowie Eingang, zuständige Stelle und nächste Schritte bestätigen (\texttt{HWG-FEEDBACK-01}). Ab drei Seiten oder 25 Eingabefeldern empfiehlt \texttt{HWG-UX-02} abzugsfrei eine Zwischenspeicherfunktion (\texttt{submitNoCheck} mit \texttt{[\%\$URL\_FORM\%]}).
 
-\subsection{Eindeutige Vorgangsreferenz in Prozess-E-Mails (\texttt{HWG-WF-02})}
-Jede vom Workflow versendete E-Mail muss den Platzhalter der Vorgangsnummer (\texttt{[\%\$PROJECT\_ALIAS\%]}) im Betreff und im Nachrichtentext führen, um Medienbrüche bei Rückfragen zu verhindern.
-
-\subsection{Prozesstransparenz und Zwischenspeicher-Empfehlung}
-\label{subsec:feedback_zwischenspeicher}
-Antragstellende müssen unmittelbar nach dem Absenden eine automatisierte Bestätigungs-E-Mail erhalten (\texttt{HWG-FEEDBACK-01}). Bei Formularen mit drei oder mehr Seiten wird eine Zwischenspeicherfunktion (\textit{Save \& Resume}) empfohlen (\texttt{HWG-UX-02}).
-
-\section{Formalisierung als maschinenlesbare Compliance-Registry}
+\section{Mathematisches Bewertungsmodell und Regelkatalog}
 \label{sec:formalisiertes_scoring}
 
-\subsection{Mathematisches Bewertungsmodell}
-\label{subsec:mathematisches_modell}
-Die Gesamtevaluation eines Formulars mündet in einen normierten Compliance-Score $C \in [0, 100]$. Ausgehend von einem Basiswert von 100 Punkten führt jeder identifizierte Regelverstoß zu einem Punkteabzug entsprechend seiner Nielsen-Schweregradklasse:
+Die Compliance eines Formulars wird als normierter Score $C \in [0, 100]$ berechnet:
 \begin{equation}
     C = \max\left(0, \; 100 - \sum_{i=1}^{k} w(s_i) \cdot v_i\right)
     \label{eq:compliance_score}
 \end{equation}
-wobei $v_i \in \{0, 1\}$ als binäre Indikatorvariable definiert ist ($v_i = 1$, falls im Formular mindestens ein Verstoß gegen Regel $i$ vorliegt, andernfalls $v_i = 0$, sodass jede verletzte Regel genau einmal punktabzugswirksam wird) und der Gewichtungsvektor $w(s)$ gemäß Gleichung~(\ref{eq:severity_weights}) definiert ist:
+mit dem binären Verstoßindikator $v_i \in \{0, 1\}$ je Regel $i$ (Mehrfachbefunde innerhalb derselben Regel werden dokumentiert, aber nur einfach abgezogen) und dem Schweregradgewicht nach Gleichung~(\ref{eq:severity_weights}):
 \begin{equation}
     w(s) = \begin{cases}
-        15 & \text{für } s = \text{Critical} \\
-        8  & \text{für } s = \text{Major} \\
-        3  & \text{für } s = \text{Minor} \\
-        0  & \text{für } s = \text{Recommendation}
+        15 & \text{für } s = \text{Critical}, \\
+        8  & \text{für } s = \text{Major}, \\
+        3  & \text{für } s = \text{Minor}, \\
+        0  & \text{für } s = \text{Recommendation}.
     \end{cases}
     \label{eq:severity_weights}
 \end{equation}
-
-\subsection{Katalog der formalisierten Governance-Regeln}
-\label{subsec:regelkatalog}
-Tabelle~\ref{tab:rules_catalog} dokumentiert den vollständigen Katalog der 22 formalisierten Governance-Regeln der Registry v1.5.0:
+Für die Freigabeentscheidung gelten einheitliche Ampelschwellenwerte: \textbf{Grün ($C \ge 80$)} signalisiert Freigabefähigkeit, \textbf{Orange ($50 \le C \le 79$)} Überarbeitungsbedarf vor Produktivsetzung und \textbf{Rot ($C < 50$)} eine kritische Sperrung. Tabelle~\ref{tab:rules_catalog} fasst alle 22 Governance-Regeln (21 punktabzugswirksame Prüfregeln und eine 0-Punkte-Empfehlung) zusammen.
 
 \begin{table}[htbp]
 \centering
 \scriptsize
 \renewcommand{\arraystretch}{1.0}
-\begin{tabularx}{\textwidth}{llp{5.2cm}lc}
+\begin{tabularx}{\textwidth}{llXlc}
 \toprule
-\textbf{Regel-ID} & \textbf{Prüfstufe} & \textbf{Regelbezeichnung / Prüfkriterium} & \textbf{Schweregrad} & \textbf{Abzug} \\
+\textbf{Regel-ID} & \textbf{Prüfstufe} & \textbf{Prüfkriterium (Registry v1.5.0)} & \textbf{Schweregrad} & \textbf{Abzug} \\
 \midrule
-\texttt{HWG-CD-01}     & Deterministisch & Standard-Layoutbreite exakt 850px & Major & 8 \\
-\texttt{HWG-CD-02}     & Deterministisch & Offizielles Header-Logo (60px, rechtsbündig) & Critical* & 15 \\
-\texttt{HWG-CD-03}     & Deterministisch & XIMA-Herstellerlogo deaktiviert (\texttt{showlogo="0"}) & Major & 8 \\
-\texttt{HWG-CD-04}     & Deterministisch & Formulartitel im Header als H1 ausgezeichnet & Major & 8 \\
-\texttt{HWG-A11Y-01}   & Deterministisch & Semantische Fieldsets zur Gruppenbildung & Critical & 15 \\
-\texttt{HWG-A11Y-02}   & Deterministisch & Programmatische \& optische Pflichtfeld-Deklaration & Major & 8 \\
-\texttt{HWG-A11Y-03}   & Deterministisch & Keine HTML-Entitäten in sichtbaren Labels & Minor & 3 \\
-\texttt{HWG-STAMM-01}  & Deterministisch & Kanonische Stammdaten-Reihenfolge & Major & 8 \\
-\texttt{HWG-STAMM-02}  & Semantisch (LLM)& Standardisierte Stammdaten-Bezeichnungen & Minor & 3 \\
-\texttt{HWG-UI-01}     & Deterministisch & Bereinigung interner Entwicklernotizen & Critical & 15 \\
-\texttt{HWG-BTN-01}    & Semantisch (LLM)& Action-Verb-Muster für Schaltflächen & Major & 8 \\
-\texttt{HWG-BTN-02}    & Semantisch (LLM)& Einheitliche Mehrseiten-Navigation & Minor & 3 \\
-\texttt{HWG-DSGVO-01}  & Deterministisch & DSGVO-Datenschutzklausel vorhanden & Critical & 15 \\
-\texttt{HWG-UPLOAD-01} & Deterministisch & Dateityp- und Größenbeschränkung genannt & Major & 8 \\
-\texttt{HWG-VAL-01}    & Deterministisch & Regex-Formatvalidierung (IBAN, PLZ, Tel) & Major & 8 \\
-\texttt{HWG-UX-01}     & Deterministisch & Affordanzgerechte Feldbreiten & Minor & 3 \\
-\texttt{HWG-UX-02}     & Hybrid (AST/LLM)& Zwischenspeicher-Empfehlung ($\ge 3$ S. / $\ge 25$ F.) & Recomm. & 0 \\
-\texttt{HWG-LANG-01}   & Semantisch (LLM)& Fachjargon und Abkürzungen erläutert & Major & 8 \\
-\texttt{HWG-LANG-02}   & Hybrid (AST/LLM)& Satzlängenbegrenzung ($\le 25$ Wörter) & Minor & 3 \\
-\texttt{HWG-FEEDBACK-01}& Hybrid (AST/LLM)& Automatisierte Eingangsbestätigung & Minor & 3 \\
-\texttt{HWG-WF-01}     & Deterministisch & Standardisierte Statusnomenklatur & Minor & 3 \\
-\texttt{HWG-WF-02}     & Deterministisch & Eindeutige Vorgangsreferenz in E-Mails & Minor & 3 \\
+\texttt{HWG-CD-01}     & Stufe 1 (AST) & Standard-Layoutbreite 850\,px (\texttt{max-width}) & Major & 8 \\
+\texttt{HWG-CD-02}     & Stufe 1 (AST) & HWG-Header-Logo (60\,px, rechts, Alt-Text) & Critical* & 15 / 8 \\
+\texttt{HWG-CD-03}     & Stufe 1 (AST) & XIMA-Footerlogo deaktiviert (\texttt{showlogo="0"}) & Major & 8 \\
+\texttt{HWG-CD-04}     & Stufe 1 (AST) & Formulartitel im Header als \texttt{<h1>} & Major & 8 \\
+\texttt{HWG-A11Y-01}   & Stufe 1 (AST) & Semantische \texttt{XFieldSet}-Gruppen mit Legende & Critical & 15 \\
+\texttt{HWG-A11Y-02}   & Stufe 1 (AST) & Programmatische Pflichtfelder + globale Legende & Major & 8 \\
+\texttt{HWG-A11Y-03}   & Stufe 1 (AST) & Keine HTML-Störfragmente in Feldlabels & Minor & 3 \\
+\texttt{HWG-STAMM-01}  & Stufe 1 (AST) & Kanonische Stammdaten-Sequenz je Sektion & Major & 8 \\
+\texttt{HWG-STAMM-02}  & Stufe 2 (LLM) & Kanonische Stammdaten-Bezeichnungen & Minor & 3 \\
+\texttt{HWG-UI-01}     & Stufe 1 (AST) & Keine sichtbaren Entwicklernotizen im Frontend & Critical & 15 \\
+\texttt{HWG-BTN-01}    & Stufe 2 (LLM) & Action-Verb-Pattern auf Abschluss-Buttons & Major & 8 \\
+\texttt{HWG-BTN-02}    & Stufe 2 (LLM) & Einheitliche Mehrseiten-Navigation (Weiter/Zurück) & Minor & 3 \\
+\texttt{HWG-DSGVO-01}  & Stufe 1 (AST) & Art.-13-DSGVO-Hinweis / Footer-Datenschutzlink & Critical & 15 \\
+\texttt{HWG-UPLOAD-01} & Stufe 1 (AST) & Kongruente Dateityp- und Größenangaben & Major & 8 \\
+\texttt{HWG-VAL-01}    & Stufe 1 (AST) & Datentyp- oder Regex-Formatvalidierung & Major & 8 \\
+\texttt{HWG-UX-01}     & Stufe 1 (AST) & Affordanzgerechte Breiten kompakter Felder & Minor & 3 \\
+\texttt{HWG-UX-02}     & Hybrid (1+2)  & Zwischenspeicher-Empfehlung ($\ge 3$ S. / $\ge 25$ F.) & Recomm. & 0 \\
+\texttt{HWG-LANG-01}   & Stufe 2 (LLM) & Erläuterung von Hochschul- und Verwaltungsjargon & Major & 8 \\
+\texttt{HWG-LANG-02}   & Hybrid (1+2)  & Prägnante Satzlänge ($\le 25$ Wörter) & Minor & 3 \\
+\texttt{HWG-FEEDBACK-01}& Hybrid (1+2) & Transparente Eingangsbestätigungs-E-Mail & Minor & 3 \\
+\texttt{HWG-WF-01}     & Stufe 1 (AST) & Kanonische Workflow-Statusnomenklatur & Minor & 3 \\
+\texttt{HWG-WF-02}     & Stufe 1 (AST) & Vorgangsreferenz \texttt{[\%\$PROJECT\_ALIAS\%]} in E-Mails & Minor & 3 \\
 \bottomrule
 \end{tabularx}
-\caption{Übersicht der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8; semantische und hybride Regeln werden zusätzlich über den LLM-Context-Prompt auditiert)}
+\caption{Katalog der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Logo fehlt komplett: Critical/$-15$; Maß-, Ausrichtungs- oder Alt-Text-Abweichung: Major/$-8$)}
 \label{tab:rules_catalog}
 \end{table}

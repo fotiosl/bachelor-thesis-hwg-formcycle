@@ -34,7 +34,6 @@
             --slate-900: #0f172a;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --radius-md: 8px;
             --radius-lg: 12px;
             --radius-xl: 16px;
@@ -57,7 +56,7 @@
         header {
             background: linear-gradient(135deg, var(--hwg-blue) 0%, #001f3f 100%);
             color: white;
-            padding: 24px 32px;
+            padding: 20px 32px;
             box-shadow: var(--shadow);
             border-bottom: 4px solid var(--hwg-red);
         }
@@ -89,14 +88,14 @@
         }
 
         .brand-text h1 {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 700;
             letter-spacing: -0.3px;
         }
 
         .brand-text p {
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.82);
         }
 
         .header-actions {
@@ -124,18 +123,14 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn-light:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
+        .btn-light:hover { background: rgba(255, 255, 255, 0.25); }
 
         .btn-primary {
             background: var(--hwg-blue);
             color: white;
         }
 
-        .btn-primary:hover {
-            background: var(--hwg-blue-light);
-        }
+        .btn-primary:hover { background: var(--hwg-blue-light); }
 
         .btn-print {
             background: white;
@@ -143,33 +138,32 @@
             font-weight: 600;
         }
 
-        .btn-print:hover {
-            background: var(--slate-100);
-        }
+        .btn-print:hover { background: var(--slate-100); }
 
         main {
             max-width: 1200px;
-            margin: 32px auto;
+            margin: 24px auto;
             padding: 0 24px;
         }
 
-        /* Control Panel */
         .card {
             background: white;
             border-radius: var(--radius-xl);
             border: 1px solid var(--slate-200);
             box-shadow: var(--shadow-sm);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
         .card-header {
-            padding: 18px 24px;
+            padding: 16px 24px;
             border-bottom: 1px solid var(--slate-200);
             background: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .card-header h2 {
@@ -178,23 +172,20 @@
             color: var(--slate-900);
         }
 
-        .card-body {
-            padding: 24px;
-        }
+        .card-body { padding: 20px 24px; }
 
-        /* Preset selector */
         .preset-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .preset-btn {
             background: var(--slate-50);
             border: 1.5px solid var(--slate-200);
             border-radius: var(--radius-lg);
-            padding: 12px 14px;
+            padding: 11px 13px;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -220,6 +211,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 6px;
         }
 
         .preset-btn-desc {
@@ -232,17 +224,17 @@
             font-weight: 700;
             padding: 2px 7px;
             border-radius: 999px;
+            white-space: nowrap;
         }
 
         .score-good { background: #dcfce7; color: var(--hwg-green); }
         .score-mid { background: #fef9c3; color: #854d0e; }
         .score-poor { background: #fee2e2; color: var(--hwg-red); }
 
-        /* Drag & Drop Area */
         .dropzone {
             border: 2px dashed var(--slate-300);
             border-radius: var(--radius-lg);
-            padding: 24px;
+            padding: 20px;
             text-align: center;
             background: var(--slate-50);
             transition: all 0.2s ease;
@@ -255,30 +247,97 @@
         }
 
         .dropzone p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--slate-600);
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
-        /* Summary Dashboard */
+        /* LLM Config Box */
+        details.llm-config-box {
+            margin-top: 14px;
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            background: var(--slate-50);
+            padding: 10px 14px;
+        }
+
+        details.llm-config-box summary {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--hwg-blue);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .llm-config-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1.2fr auto;
+            gap: 10px;
+            margin-top: 12px;
+            align-items: end;
+        }
+
+        @media (max-width: 900px) {
+            .llm-config-grid { grid-template-columns: 1fr; }
+        }
+
+        .llm-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-700);
+            margin-bottom: 4px;
+        }
+
+        .llm-field input {
+            width: 100%;
+            padding: 7px 10px;
+            font-size: 12px;
+            border: 1px solid var(--slate-300);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* LLM Warning / Status Banner */
+        .llm-banner {
+            border-radius: var(--radius-lg);
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .llm-banner-warn {
+            background: #fffbeb;
+            border: 1.5px solid #f59e0b;
+            color: #78350f;
+        }
+
+        .llm-banner-ok {
+            background: var(--hwg-green-subtle);
+            border: 1.5px solid #86efac;
+            color: #14532d;
+        }
+
         .dashboard-grid {
             display: grid;
             grid-template-columns: 280px 1fr;
-            gap: 24px;
-            margin-bottom: 24px;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 860px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
 
         .score-card {
             background: white;
             border-radius: var(--radius-xl);
             border: 1px solid var(--slate-200);
-            padding: 24px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -289,9 +348,9 @@
 
         .gauge-container {
             position: relative;
-            width: 170px;
-            height: 170px;
-            margin-bottom: 16px;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 12px;
         }
 
         .gauge-svg {
@@ -326,7 +385,7 @@
         }
 
         .gauge-value {
-            font-size: 40px;
+            font-size: 38px;
             font-weight: 800;
             color: var(--slate-900);
             line-height: 1;
@@ -344,22 +403,22 @@
             display: inline-block;
             padding: 6px 14px;
             border-radius: 999px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 14px;
         }
 
         .stat-card {
             background: white;
             border-radius: var(--radius-xl);
             border: 1px solid var(--slate-200);
-            padding: 20px;
+            padding: 18px;
             box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
@@ -370,7 +429,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .stat-title {
@@ -408,11 +467,10 @@
             margin-top: 6px;
         }
 
-        /* Filter Pills */
         .filter-bar {
             display: flex;
             gap: 8px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             overflow-x: auto;
             padding-bottom: 4px;
         }
@@ -421,8 +479,8 @@
             background: white;
             border: 1px solid var(--slate-300);
             border-radius: 999px;
-            padding: 6px 16px;
-            font-size: 13px;
+            padding: 6px 14px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--slate-700);
             cursor: pointer;
@@ -430,9 +488,7 @@
             white-space: nowrap;
         }
 
-        .filter-pill:hover {
-            background: var(--slate-100);
-        }
+        .filter-pill:hover { background: var(--slate-100); }
 
         .filter-pill.active {
             background: var(--hwg-blue);
@@ -440,7 +496,6 @@
             border-color: var(--hwg-blue);
         }
 
-        /* Rule Cards */
         .rules-list {
             display: flex;
             flex-direction: column;
@@ -465,7 +520,11 @@
         .rule-card.violation-major { border-left: 5px solid #ea580c; }
         .rule-card.violation-minor { border-left: 5px solid var(--hwg-gold); }
         .rule-card.violation-recommendation { border-left: 5px solid var(--hwg-blue); }
-        .rule-card.rule-passed { border-left: 5px solid var(--hwg-green); opacity: 0.9; }
+        .rule-card.rule-passed { border-left: 5px solid var(--hwg-green); opacity: 0.92; }
+        .rule-card.rule-unverified {
+            border-left: 5px solid #d97706;
+            background: #fffdf7;
+        }
 
         .rule-top {
             display: flex;
@@ -492,6 +551,15 @@
             border-radius: 4px;
         }
 
+        .rule-stage-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-600);
+            background: var(--slate-100);
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
         .rule-name {
             font-size: 15px;
             font-weight: 700;
@@ -507,6 +575,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.4px;
+            white-space: nowrap;
         }
 
         .badge-critical { background: var(--hwg-red-subtle); color: var(--hwg-red); }
@@ -514,11 +583,16 @@
         .badge-minor { background: var(--hwg-gold-subtle); color: #854d0e; }
         .badge-recommendation { background: var(--hwg-blue-subtle); color: var(--hwg-blue); }
         .badge-passed { background: var(--hwg-green-subtle); color: var(--hwg-green); }
+        .badge-unverified {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
 
         .rule-message {
             font-size: 14px;
             color: var(--slate-800);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             line-height: 1.5;
         }
 
@@ -556,24 +630,12 @@
             font-style: italic;
         }
 
-        /* Print styles */
         @media print {
-            header, .card:first-child, .filter-bar, .btn-print {
+            header, .card:first-of-type, .filter-bar, .btn-print {
                 display: none !important;
             }
-            body {
-                background: white;
-                color: black;
-            }
-            main {
-                margin: 0;
-                padding: 0;
-                max-width: 100%;
-            }
-            .card {
-                box-shadow: none;
-                border: none;
-            }
+            body { background: white; color: black; }
+            main { margin: 0; padding: 0; max-width: 100%; }
             .rule-card {
                 page-break-inside: avoid;
                 border: 1px solid #ccc;
@@ -582,15 +644,13 @@
             }
             .print-header {
                 display: block !important;
-                margin-bottom: 24px;
+                margin-bottom: 20px;
                 border-bottom: 2px solid #003366;
                 padding-bottom: 12px;
             }
         }
 
-        .print-header {
-            display: none;
-        }
+        .print-header { display: none; }
     </style>
 </head>
 <body>
@@ -601,12 +661,11 @@
                 <div class="brand-badge">HWG LU</div>
                 <div class="brand-text">
                     <h1>Formcycle Compliance Checker</h1>
-                    <p>Wissenschaftliches Governance-, Usability- & Barrierefreiheits-Audit (v1.5.0)</p>
+                    <p>Hybrides Governance-, Usability- &amp; Barrierefreiheits-Audit (Registry v1.5.0)</p>
                 </div>
             </div>
             <div class="header-actions">
                 <button class="btn btn-print" onclick="window.print()">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
                     Prüfbericht drucken / PDF
                 </button>
                 <button class="btn btn-light" onclick="exportAuditJSON()">
@@ -617,7 +676,6 @@
     </header>
 
     <main>
-        <!-- Print Header -->
         <div class="print-header">
             <h2>Hochschule für Wirtschaft und Gesellschaft Ludwigshafen</h2>
             <h3>Formcycle Compliance- und Barrierefreiheits-Prüfbericht</h3>
@@ -627,25 +685,46 @@
         <!-- Benchmark Presets & Ingestion -->
         <div class="card">
             <div class="card-header">
-                <h2>1. Formular-Auswahl & Ingestion (.xfp / .json)</h2>
-                <span style="font-size: 12px; color: var(--slate-600);">21 Governance-Regeln aktiv</span>
+                <h2>1. Formular-Auswahl, In-Memory-Ingestion (.xfp / .json) &amp; KI-API</h2>
+                <span style="font-size: 12px; font-weight: 600; color: var(--hwg-blue);">22 Governance-Regeln aktiv (15 AST · 7 KI/Hybrid)</span>
             </div>
             <div class="card-body">
                 <div style="font-size: 13px; font-weight: 600; color: var(--slate-700); margin-bottom: 8px;">
-                    Benchmark-Formulare der HWG Ludwigshafen testen:
+                    Benchmark-Formulare der HWG Ludwigshafen auswählen:
                 </div>
-                <div class="preset-grid" id="presetGrid">
-                    <!-- populated by JS -->
-                </div>
+                <div class="preset-grid" id="presetGrid"></div>
 
                 <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
                     <input type="file" id="fileInput" accept=".json,.xfp" style="display: none" onchange="handleFileUpload(event)">
-                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--hwg-blue); margin-bottom: 6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                    <div style="font-size: 14px; font-weight: 600; color: var(--slate-800);">Formcycle-Exportdatei hier ablegen oder klicken</div>
-                    <p>Unterstützt extrahierte Formular-JSONs oder XFP-Archivdaten</p>
+                    <div style="font-size: 14px; font-weight: 600; color: var(--slate-800);">Formcycle-Exportdatei (.xfp oder .json) hier ablegen oder klicken</div>
+                    <p>Zero-Disk-Footprint: Verarbeitung im Arbeitsspeicher über Stufe 1 (AST) und optional Stufe 2 (LLM-API)</p>
                 </div>
+
+                <details class="llm-config-box">
+                    <summary>Optionale KI-API-Anbindung für Stufe 2 (7 semantische/hybride Regeln via GWDG Academic Cloud / OpenAI-kompatibel)</summary>
+                    <div class="llm-config-grid">
+                        <div class="llm-field">
+                            <label for="llmApiBase">API-Base-URL</label>
+                            <input type="text" id="llmApiBase" value="https://chat-ai.academiccloud.de/v1" placeholder="https://chat-ai.academiccloud.de/v1">
+                        </div>
+                        <div class="llm-field">
+                            <label for="llmModel">Modell-ID</label>
+                            <input type="text" id="llmModel" value="deepseek-v4-flash-0731" placeholder="deepseek-v4-flash-0731">
+                        </div>
+                        <div class="llm-field">
+                            <label for="llmApiKey">API-Schlüssel (nur flüchtig im Browser-Tab)</label>
+                            <input type="password" id="llmApiKey" value="" placeholder="Bearer API-Key eingeben...">
+                        </div>
+                        <button class="btn btn-primary" id="btnReevalLLM" onclick="reevaluateActivePresetWithLLM()">
+                            Mit KI-API prüfen
+                        </button>
+                    </div>
+                </details>
             </div>
         </div>
+
+        <!-- LLM Evaluation Transparency Banner -->
+        <div id="llmStatusBanner" class="llm-banner llm-banner-warn"></div>
 
         <!-- Dashboard Summary -->
         <div class="dashboard-grid">
@@ -661,7 +740,7 @@
                     </div>
                 </div>
                 <div class="verdict-badge" id="verdictBadge">Wird berechnet...</div>
-                <p id="currentFormName" style="font-size: 12px; color: var(--slate-600); margin-top: 10px; word-break: break-all;">-</p>
+                <p id="currentFormName" style="font-size: 12px; color: var(--slate-600); margin-top: 8px; word-break: break-all;">-</p>
             </div>
 
             <div class="stats-grid">
@@ -695,45 +774,65 @@
                         <div class="stat-icon icon-passed">✓</div>
                     </div>
                     <div class="stat-value" id="countPassed" style="color: var(--hwg-green);">0</div>
-                    <div class="stat-sub" id="passRateSub">von 22 Kriterien</div>
+                    <div class="stat-sub" id="passRateSub">von 22 Governance-Regeln</div>
                 </div>
             </div>
         </div>
 
         <!-- Filter Bar -->
         <div class="filter-bar" id="filterBar">
-            <button class="filter-pill active" onclick="setFilter('all')">Alle Kriterien (<span id="pillAll">22</span>)</button>
-            <button class="filter-pill" onclick="setFilter('critical')">Kritisch (<span id="pillCritical">0</span>)</button>
-            <button class="filter-pill" onclick="setFilter('major')">Major (<span id="pillMajor">0</span>)</button>
-            <button class="filter-pill" onclick="setFilter('minor')">Minor (<span id="pillMinor">0</span>)</button>
-            <button class="filter-pill" onclick="setFilter('recommendation')">Empfehlungen (<span id="pillRec">0</span>)</button>
-            <button class="filter-pill" onclick="setFilter('passed')">Bestanden (<span id="pillPassed">0</span>)</button>
-            <button class="filter-pill" onclick="setFilter('na')">Nicht zutreffend (<span id="pillNA">0</span>)</button>
+            <button class="filter-pill active" onclick="setFilter('all', this)">Alle Regeln (<span id="pillAll">22</span>)</button>
+            <button class="filter-pill" onclick="setFilter('critical', this)">Kritisch (<span id="pillCritical">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('major', this)">Major (<span id="pillMajor">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('minor', this)">Minor (<span id="pillMinor">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('recommendation', this)">Empfehlungen (<span id="pillRec">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('passed', this)">Bestanden (<span id="pillPassed">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('unverified', this)">KI-ungeprüft (<span id="pillUnverified">0</span>)</button>
+            <button class="filter-pill" onclick="setFilter('na', this)">Nicht zutreffend (<span id="pillNA">0</span>)</button>
         </div>
 
-        <!-- Rule Details List -->
-        <div class="rules-list" id="rulesList">
-            <!-- populated by JS -->
-        </div>
+        <div class="rules-list" id="rulesList"></div>
     </main>
 
     <script>
-        const registry = {"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "HWG Ludwigshafen Formcycle Compliance Registry", "version": "1.5.0", "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen", "scoring": {"base_score": 100, "severity_penalties": {"critical": 15, "major": 8, "minor": 3, "recommendation": 0}, "score_formula": "max(0, 100 - sum(penalty_i))"}, "rules": [{"id": "HWG-CD-01", "name": "Standardisierte Layout-Breite", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "major", "rationale": "Verhindert visuelle Sprünge und heterogene Zeilenlängen im Hochschulportal (ISO 9241-110 Erwartungskonformität).", "specification": {"target": "form_properties", "expected_maxwidth": "850px", "allowed_minwidth": "300px"}, "remediation": "Setzen Sie im Formcycle-Designer unter Formular-Eigenschaften die maximale Breite auf 850px und die minimale Breite auf 300px."}, {"id": "HWG-CD-02", "name": "Offizielles Corporate Design Header-Logo (60px Höhe, rechtsbündig)", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "critical", "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage im Header platziert sein, eine standardisierte Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1). Zweistufige Schweregrad-Logik: Fehlen des Logos wird als Critical (15 Punkte Abzug), Maß- oder Ausrichtungsabweichungen werden als Major (8 Punkte Abzug) bewertet.", "specification": {"target": "header_elements", "required_component": "XImage", "alt_pattern": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen", "required_height": "60px", "required_alignment": "right", "severity_rule": "Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8"}, "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (technisches Attribut imageheight = '60') und das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right'). Hinterlegen Sie im Feld 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'.", "severity_tiers": {"critical": {"penalty": 15, "condition": "Fehlen des offiziellen HWG-Header-Banners (XImage) im Kopfbereich"}, "major": {"penalty": 8, "condition": "Maß- oder Ausrichtungsabweichung (Höhe != 60px oder Ausrichtung != rechtsbündig)"}}}, {"id": "HWG-CD-03", "name": "Deaktivierung des Hersteller-Brandings im Footer (Powered by XIMA Formcycle)", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "major", "rationale": "Einheitliches Hochschul-Erscheinungsbild: Das externe Software-Herstellerlogo ('Powered by XIMA Formcycle') im Fußbereich stört das institutionelle Corporate Design und muss deaktiviert werden.", "specification": {"target": "footer_component", "component": "XFooter", "required_property": {"showlogo": "0"}}, "remediation": "Wählen Sie im Formcycle-Designer das Footer-Element ('footer1') aus und entfernen Sie den Haken bei 'Logo anzeigen' (Eigenschaft showlogo = 0), um den Hinweis 'Powered by XIMA Formcycle' auszublenden."}, {"id": "HWG-CD-04", "name": "Formulartitel im Header als Hauptüberschrift (H1)", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "major", "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) und 2.4.6 (Überschriften und Beschriftungen) sowie DIN EN ISO 9241-110 (Selbstbeschreibungsfähigkeit): Der Formulartitel bildet den primären Einstiegspunkt und muss sich zwingend im Kopfbereich (Header) befinden. Zur Gewährleistung einer barrierefreien Dokumentenhierarchie für Screenreader muss der Titel semantisch als Überschrift erster Ordnung (<h1>) ausgezeichnet sein.", "specification": {"target": "header_elements", "required_location": "header", "required_heading_level": "h1"}, "remediation": "Platzieren Sie den Formulartitel im Kopfbereich (Header-Container) und formatieren Sie die Beschriftung im Rich-Text-Editor zwingend als Überschrift erster Ordnung (H1, z. B. <h1>Antrag auf ...</h1>) statt H2 oder unformatiertem Text."}, {"id": "HWG-A11Y-01", "name": "Semantische Gruppierung mit Fieldsets", "category": "accessibility", "evaluation_type": "deterministic", "severity": "critical", "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen): Screenreader benötigen Fieldset-Strukturen zur Kontextualisierung logischer Blöcke.", "specification": {"target": "form_sections", "required_container": "XFieldSet", "forbidden_container_as_section": ["XContainer", "XContainerInvisible"], "require_legend": true}, "remediation": "Gruppieren Sie zusammengehörige Felder in einem XFieldSet mit einer aussagekräftigen Legende (z. B. 'Persönliche Angaben'). Nutzen Sie reine Container nur für internes Styling."}, {"id": "HWG-A11Y-02", "name": "Programmatische und optische Pflichtfeld-Deklaration (Sternchen & aria-required)", "category": "accessibility", "evaluation_type": "deterministic", "severity": "major", "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen): Pflichtfelder müssen über die native Formcycle-Eigenschaft 'Pflichtfeld' (required='1') und 'Pflichtfeldhinweis anzeigen' (showrequiredhint='1') deklariert werden, damit Formcycle automatisch das rote Sternchen sowie im HTML-DOM das Attribut aria-required='true' rendert.", "specification": {"target": "input_fields", "condition": "Feld ist fachlich verpflichtend oder trägt manuelles Sternchen im Label", "required_properties": {"required": "1", "showrequiredhint": "1"}, "custom_attribute_fallback": "Falls das Feld nur bedingt per Skript verpflichtend ist: Unter 'Erweitert -> HTML-Attribute' (properties.attributes) explizit aria-required='true' hinterlegen."}, "remediation": "Aktivieren Sie im Formcycle-Designer unter 'Einschränkungen' den Haken 'Pflichtfeld' (required=1) sowie 'Pflichtfeldhinweis anzeigen' (showrequiredhint=1). Dadurch setzt Formcycle automatisch das Sternchen und das DOM-Attribut aria-required='true'. Tippen Sie niemals manuelle Sternchen (*) in den Label-Text."}, {"id": "HWG-A11Y-03", "name": "Saubere Label-Syntax ohne HTML-Entities", "category": "accessibility", "evaluation_type": "deterministic", "severity": "minor", "rationale": "HTML-Fragmente wie '<p>Straße</p>' oder Sonderzeichen wie '|' in Labels führen bei Screenreadern und Sprachausgaben zu fehlerhaften Aussprachen.", "specification": {"target": "field_labels", "check": "Keine HTML-Tags (<p>, <br>), keine Entities (&szlig;, &ouml;) und keine technischen Trenner (|) im sichtbaren Text."}, "remediation": "Wählen Sie das betroffene Feld im Formcycle-Designer aus und öffnen Sie unter 'Eigenschaften' den Bereich 'Beschriftung' (Label). Schalten Sie im Texteditor über das Quellcode-Symbol ('<>') in die Quellcode-Ansicht um: Entfernen Sie alle umschließenden HTML-Absatz-Tags ('<p>' und '</p>') und ersetzen Sie maskierte HTML-Entities (wie '&ouml;', '&uuml;', '&auml;', '&szlig;') sowie technische Trenner ('|') durch sauberen Fließtext mit regulären Umlauten (z. B. 'Förderprogramm' statt '<p>F&ouml;rderprogramm</p>' und 'Straße' statt '<p>Stra&szlig;e</p>')."}, {"id": "HWG-STAMM-01", "name": "Einheitliche Abfolge persönlicher Stammdaten", "category": "master_data", "evaluation_type": "deterministic", "severity": "major", "rationale": "Erwartungskonformität nach ISO 9241-110: Natürlicher Lesefluss für Stammdaten erfordert Anrede -> Vorname -> Nachname.", "specification": {"target": "personal_data_block", "expected_sequence": ["Anrede", "Vorname", "Nachname", "E-Mail-Adresse"], "disallowed_sequence": ["Nachname vor Vorname"]}, "remediation": "Ordnen Sie im Stammdaten-Block zuerst das Feld 'Vorname' und danach das Feld 'Nachname' an. Vermeiden Sie umgekehrte Reihenfolgen."}, {"id": "HWG-STAMM-02", "name": "Standardisierte Feldbezeichnungen für persönliche Stammdaten", "category": "master_data", "evaluation_type": "semantic", "severity": "minor", "rationale": "Konsistente Bezeichnungen bei Stammdaten verhindern Verwirrung über erforderliche Eingaben (z. B. 'Vorname' statt 'Vorname Antragstellende/r*' und 'E-Mail-Adresse' statt technischer Kürzel).", "specification": {"target": "master_data_labels", "canonical_patterns": {"salutation": ["Anrede"], "first_name": ["Vorname"], "last_name": ["Nachname"], "email": ["E-Mail-Adresse", "Hochschul-E-Mail"], "phone": ["Telefonnummer", "Mobilfunknummer"], "matriculation": ["Matrikelnummer"]}, "anti_patterns": ["Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r')", "Mehrdeutige Kurzbezeichnungen (z. B. nur 'Name' für Nachname)", "Technische Feldbezeichner als sichtbares Label (z. B. 'tf1', 'HWGLU-Email')"]}, "remediation": "Nutzen Sie für persönliche Stammdaten die kanonischen Standardbezeichnungen ('Anrede', 'Vorname', 'Nachname', 'E-Mail-Adresse') ohne sperrige Sonderzusätze."}, {"id": "HWG-UI-01", "name": "Keine Entwickler-Notizen oder Code-Artefakte im Frontend", "category": "ui_quality_hygiene", "evaluation_type": "deterministic", "severity": "critical", "rationale": "Verhindert Verunsicherung der Nutzenden und unprofessionelle Darstellung durch unbereinigte Template-Reste in allen Bereichen des Formulars.", "specification": {"target": "all_form_elements", "check": "Kein sichtbares Element im gesamten Formular darf technische Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB', 'display:none') enthalten."}, "remediation": "Entfernen Sie alle technischen Kommentare aus sichtbaren Textelementen. Interne Notizen gehören ausschließlich in das Entwickler-Kommentarfeld der Komponente."}, {"id": "HWG-BTN-01", "name": "Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)", "category": "microcopy_buttons", "evaluation_type": "semantic", "severity": "major", "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Erwartungskonformität: Schaltflächen müssen stets eine eindeutige Handlung beschreiben ([Zielobjekt] + [Vollverb im Infinitiv]). Reine Systemzustände oder generische Ein-Wort-Labels stiften Verwirrung.", "specification": {"target": "action_buttons", "pattern_rule": "Muss ein konkretes Vollverb im Infinitiv enthalten, das die ausgelöste Transaktion beschreibt.", "valid_examples": ["Antrag einreichen", "Bedarfsmeldung absenden", "Kritischen Fall einreichen", "Rückmeldung an ZFK übermitteln", "Zur Präsidiumsprüfung weiterleiten", "Speichern und einreichen"], "disallowed_patterns": ["Reine Substantive oder Statusbezeichnungen ohne Handlungsverb (z. B. bloß 'Kritischer Fall', 'Status', 'Genehmigung')", "Generische, kleingeschriebene Minimal-Labels (z. B. bloß 'senden', 'Submit', 'OK', 'Abschicken')"]}, "remediation": "Beschriften Sie jede Aktionsschaltfläche mit einer konkreten Handlung im Infinitiv (z. B. 'Antrag einreichen', 'Kritischen Fall einreichen' oder 'Rückmeldung übermitteln') anstelle von reinen Zuständen ('Kritischer Fall') oder generischen Begriffen ('senden')."}, {"id": "HWG-BTN-02", "name": "Einheitliche Navigations-Schaltflächen (Mehrseitige Formulare)", "category": "microcopy_buttons", "evaluation_type": "semantic", "severity": "minor", "rationale": "Konsistente Bezeichnungen bei Pagination verringern die kognitive Belastung.", "specification": {"target": "navigation_buttons", "standard_next": "Weiter", "standard_back": "Zurück"}, "remediation": "Verwenden Sie für die Seitennavigation einheitlich 'Weiter' und 'Zurück' anstelle von seitenbezogenen Konstrukten wie 'weiter zu Seite 2'."}, {"id": "HWG-DSGVO-01", "name": "Datenschutz-Hinweis und DSGVO-Transparenz", "category": "data_privacy_security", "evaluation_type": "deterministic", "severity": "critical", "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Hinweis mit Link zur zentralen HWG-Datenschutzerklärung (im Formular oder über die Footer-Option privacyPolicyShow) ist rechtlich zwingend.", "specification": {"target": "privacy_section_or_footer", "condition": "form_contains_personal_data", "required_elements": ["Datenschutz-Hinweis im Formular oder aktivierte Datenschutzerklärung im Footer (privacyPolicyShow = 1)", "Link zur Datenschutzerklärung der HWG Ludwigshafen"], "keywords": ["Datenschutz", "Datenschutzerklärung", "DSGVO", "hwg-lu.de"]}, "remediation": "Fügen Sie vor der Absende-Schaltfläche einen Hinweis auf die Datenverarbeitung mit Link zur HWG-Datenschutzerklärung ein oder aktivieren Sie im Footer die Option 'Datenschutzerklärung anzeigen' (privacyPolicyShow = 1)."}, {"id": "HWG-UPLOAD-01", "name": "Transparente Dateiupload-Spezifikation (Formate & Maximalgröße)", "category": "input_validation_ux", "evaluation_type": "deterministic", "severity": "major", "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nutzende müssen vor dem Upload wissen, welche Dateiformate (z. B. PDF) und Dateigrößen (z. B. max. 10 MB) akzeptiert werden, um Systemabbrüche zu verhindern.", "specification": {"target": "upload_components", "component_types": ["XUpload", "XFile"], "required_hint_elements": ["Zulässige Dateiformate (z. B. 'PDF, JPG')", "Maximale Dateigröße (z. B. 'max. 10 MB')"]}, "remediation": "Hinterlegen Sie im Hilfetext (Tooltip/Beschreibung) des Upload-Elements klar ersichtlich die erlaubten Dateiformate (z. B. 'Nur PDF-Dateien') sowie die maximale Upload-Größe (z. B. 'max. 10 MB')."}, {"id": "HWG-VAL-01", "name": "Formale Validierung strukturierter Eingabefelder", "category": "input_validation_ux", "evaluation_type": "deterministic", "severity": "major", "rationale": "Fehlerrobustheit und Benutzerführung nach ISO 9241-110: Strukturierte Daten (IBAN, PLZ, Telefon, Datum) dürfen nicht als unvalidierte Freitexte erfasst werden, sondern benötigen Validierungsmuster.", "specification": {"target": "structured_fields", "field_patterns": ["iban", "plz", "postleitzahl", "telefon", "datum", "geburtsdatum"], "required_property": "validation_pattern_or_preset", "copy_paste_regex_catalog": {"plz_deutschland": "^[0-9]{5}$", "iban_deutschland": "^[A-Z]{2}[0-9]{20}$", "iban_international_sepa": "^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,28}$", "telefonnummer": "^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$", "matrikelnummer_hwg": "^[0-9]{6,7}$", "email_adresse": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"}}, "remediation": "Wählen Sie im Formcycle-Designer das unvalidierte Feld aus und navigieren Sie unter 'Eigenschaften' zum Bereich 'Validierung' (bzw. 'Einschränkungen'). Tragen Sie im Feld 'Regulärer Ausdruck (Regex)' direkt das passende Prüfmuster per Copy & Paste ein:\n• Postleitzahl (PLZ, 5 Ziffern): ^[0-9]{5}$\n• IBAN (Deutschland, 22 Zeichen): ^[A-Z]{2}[0-9]{20}$\n• IBAN (International / SEPA): ^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,28}$\n• Telefonnummer (Festnetz & Mobil): ^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$\n• Matrikelnummer (6-7 Ziffern): ^[0-9]{6,7}$\n• E-Mail-Adresse: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\nHinterlegen Sie unter 'Fehlermeldung' stets einen verständlichen Hinweistext (z. B. 'Bitte geben Sie eine gültige 5-stellige deutsche Postleitzahl ein.')."}, {"id": "HWG-UX-01", "name": "Affordanzgerechte Feldbreiten (Kompakte Felder)", "category": "input_validation_ux", "evaluation_type": "deterministic", "severity": "minor", "rationale": "Nielsen Norman Group Form Design: Die optische Breite eines Feldes signalisiert die erwartete Inhaltslänge. Extrem kurze Angaben (PLZ, Hausnummer) dürfen nicht über 100% Breite gestreckt werden.", "specification": {"target": "compact_fields", "field_names": ["plz", "postleitzahl", "hausnummer", "hnr"], "max_recommended_width_percentage": 40}, "remediation": "Begrenzen Sie die Spaltenbreite von kurzen Eingabefeldern wie Postleitzahl oder Hausnummer auf maximal 30-40% der Zeilenbreite oder platzieren Sie sie nebeneinander in einer Mehrspaltenzeile."}, {"id": "HWG-UX-02", "name": "Empfehlung: Zwischenspeichern mit E-Mail-Link bei umfangreichen Formularen", "category": "input_validation_ux", "evaluation_type": "hybrid", "severity": "recommendation", "rationale": "ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei großen Formularen (z. B. ab 3 Seiten oder vielen Eingabefeldern/Nachweis-Uploads) sollten Nutzende die Bearbeitung unterbrechen können. Ein Zwischenspeichern-Button mit E-Mail-Link-Versand speichert die bisherigen Angaben und erlaubt die nahtlose Fortsetzung zu einem späteren Zeitpunkt.", "specification": {"target": "form_complexity_and_buttons", "trigger_condition": "Formular hat >= 3 Seiten (XPage) oder >= 25 Eingabefelder oder erfordert umfangreiche Dokumenten-Uploads", "recommended_feature": "Schaltfläche 'Zwischenspeichern' mit Workflow-Aktion zum Versand eines Fortsetzungs-Links per E-Mail an die antragstellende Person.", "penalty_points": 0}, "remediation": "Empfehlung (ohne Punktabzug): Da dieses Formular einen hohen Umfang aufweist, empfiehlt sich die Integration eines 'Zwischenspeichern'-Buttons, der dem Nutzenden per E-Mail einen Link zur späteren Fortsetzung der Bearbeitung zusendet."}, {"id": "HWG-LANG-01", "name": "Erklärung von Hochschul- und Amtsjargon", "category": "plain_language_semantics", "evaluation_type": "semantic", "severity": "major", "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich): Hochschulspezifische Fachbegriffe, interne Organisationsabkürzungen und Amtsdeutsch ohne begleitende Hilfetexte überfordern Studierende und externe Antragstellende.", "specification": {"target": "text_and_labels", "detection_strategy": "Semantische Analyse durch LLM: Identifikation von bürokratischen Fachbegriffen, internen Organisationskürzeln (z. B. GStB, KAP, ZFK, Kostenstelle) oder Rechtsbegriffen (z. B. Vergabevermerk, Remonstration), für die kein Tooltip, Glossar oder Hilfetext hinterlegt ist.", "requirement": "Jeder identifizierte Jargon-Begriff muss von einem verständlichen Hilfetext oder Tooltip begleitet sein."}, "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen mit einem verständlichen Hilfetext (Tooltip) oder einer kurzen Begriffserklärung."}, {"id": "HWG-LANG-02", "name": "Prägnante und barrierearme Formulierung (Vermeidung von Schachtelsätzen)", "category": "plain_language_semantics", "evaluation_type": "hybrid", "severity": "minor", "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte und Hinweise müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das kognitive Verständnis.", "specification": {"target": "instructions_and_descriptions", "max_sentence_length_words": 25, "style_criteria": "Aktivformulierungen, keine verschachtelten Passivkonstruktionen, klare Handlungsanweisungen."}, "remediation": "Kürzen Sie überlange Schachtelsätze in Anleitungen und Hilfetexten auf maximal 20-25 Wörter pro Satz und nutzen Sie handlungsorientierte Aktivsätze."}, {"id": "HWG-FEEDBACK-01", "name": "Prozesstransparenz in den Workflow-E-Mail-Bestätigungen", "category": "process_transparency", "evaluation_type": "hybrid", "severity": "minor", "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über die automatisierten Workflow-E-Mails (FC_EMAIL) transparent über den Eingang, den aktuellen Bearbeitungsstatus und die nächsten Prozessschritte informiert werden.", "specification": {"target": "workflow_email_nodes", "target_path": "workflowVersions[].mainProcess.tasks[].nodes[type='FC_EMAIL'].customParameters.body", "required_information": ["Eingangsbestätigung an die antragstellende Person nach dem Absenden", "Information über die zuständige Prüfstelle (z. B. ZFK, Haushaltsabteilung) und den weiteren Prozessablauf", "Status-Updates bei Genehmigung, Ablehnung oder Nachforderung von Unterlagen"]}, "remediation": "Hinterlegen Sie im Formcycle-Workflow einen E-Mail-Knoten (FC_EMAIL) für die antragstellende Person, dessen Text den Eingang bestätigt und transparent erläutert, welche Stelle den Antrag im nächsten Schritt prüft."}, {"id": "HWG-WF-01", "name": "Standardisierte Workflow-Statusnomenklatur und Lebenszyklus", "category": "workflow_governance", "evaluation_type": "deterministic", "severity": "minor", "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen in der Verwaltung. Mehrstufige Formulare müssen den Lebenszyklus des Antrags über formale Statusübergänge (FC_CHANGE_STATE) abbilden und kanonische Phasen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') nutzen. Fachspezifische Zwischenschritte und Unterstatus sind zulässig, sofern sie auf diesen Phasen aufbauen.", "specification": {"target": "workflow_state_nodes", "canonical_lifecycle": ["Eingegangen (inkl. Bereichserweiterungen wie 'Eingegangen - Finanzabteilung')", "In Prüfung (inkl. Teilschritten wie 'In Prüfung Rückmeldung')", "Nachforderung ausstehend", "Genehmigt", "Abgelehnt", "Archiviert"], "disallowed_patterns": ["Workflow ohne Status-Knoten (FC_CHANGE_STATE)", "Willkürliche Ad-hoc-Zustände ohne Prozessbedeutung (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')"], "allowed_extensions": "Fachbereichsspezifische Teilschritte und Unterstatus (z. B. 'In Prüfung Rückmeldung', 'Eingegangen - Fachbereich') sind zulässig, solange die kanonischen Phasen als Basis dienen."}, "remediation": "Definieren Sie im Workflow strukturierte Statusänderungen (FC_CHANGE_STATE) und nutzen Sie Bezeichnungen, die auf den kanonischen Lebenszyklusphasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt'). Fachspezifische Zusätze (wie 'In Prüfung Rückmeldung' oder 'Eingegangen - Finanzabteilung') sind zulässig."}, {"id": "HWG-WF-02", "name": "Eindeutige Vorgangsreferenz in automatisierter Prozesskommunikation", "category": "workflow_governance", "evaluation_type": "deterministic", "severity": "minor", "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Prozesskontrolle: Sämtliche automatisierte E-Mails an Antragstellende und Sachbearbeitende müssen eine eindeutige Vorgangsnummer führen, um Rückfragen, Statusverfolgung und Aktenablage fehlerfrei zu ermöglichen.", "specification": {"target": "workflow_email_nodes", "target_field": "subject_and_body", "required_variable": "[%$PROJECT_ALIAS%]", "disallowed_patterns": ["E-Mail-Benachrichtigungen ohne Vorgangsnummer ([%$PROJECT_ALIAS%]) im Betreff oder Textkörper"]}, "remediation": "Binden Sie im Formcycle-Workflow in den Betreff aller E-Mail-Knoten (FC_EMAIL) die Systemvariable [%$PROJECT_ALIAS%] als eindeutige Vorgangsnummer ein."}]};
-        const presets = {"synth_comp": {"name": "Synthetisches Referenzformular (Best-Practice)", "file": "data/test_forms/synthetic_compliant_form.json", "eval": {"form": "synthetic_compliant_form.json", "violations": [], "recommendations": [], "passed": ["HWG-CD-01 (Breite 850px eingehalten)", "HWG-CD-02 (Header-Logo mit 60px Höhe, rechtsbündig vorhanden)", "HWG-CD-03 (XIMA-Logo im Footer deaktiviert)", "HWG-CD-04 (Formulartitel im Header als H1 vorhanden)", "HWG-A11Y-01 (Fieldsets vorhanden: Semantische Gruppenbildung erfüllt)", "HWG-A11Y-02 (Pflichtfeld-Deklaration: 7 Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)", "HWG-A11Y-03 (Saubere Labels ohne HTML-Fragmente und Entities)", "HWG-STAMM-01 (Kanonische Stammdaten-Abfolge eingehalten)", "HWG-STAMM-02 (Kanonische Stammdaten-Labels)", "HWG-UI-01 (Keine Entwickler-Notizen)", "HWG-BTN-01 (Aktionsorientierte Schaltflächen: Action-Verb-Muster erfüllt)", "HWG-DSGVO-01 (Datenschutz-Hinweis vorhanden oder keine Personendaten)", "HWG-UPLOAD-01 (Dateiuploads mit Formaten und Maximalgröße spezifiziert)", "HWG-VAL-01 (Strukturierte Felder validiert)", "HWG-UX-01 (Affordanzgerechte Feldbreiten für Kompaktfelder eingehalten)", "HWG-LANG-01 (Verständlicher Wortschatz: Kein unerklärter Jargon)", "HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)", "HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in 1 FC_EMAIL-Knoten bestätigt)", "HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: Eingegangen, In Prüfung, Genehmigt, Abgelehnt, Archiviert)", "HWG-WF-02 (Vorgangsnummern-Referenz in Workflow-E-Mail vorhanden)"], "not_applicable": {"HWG-BTN-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich).", "HWG-UX-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Formularumfang (0 Seiten, 8 Eingabefelder) erfordert keine Zwischenspeicherung."}, "score": 100}}, "synth_noncomp": {"name": "Synthetisches Negativformular (Worst-Case)", "file": "data/test_forms/synthetic_noncompliant_form.json", "eval": {"form": "synthetic_noncompliant_form.json", "violations": [{"rule": "HWG-CD-01", "severity": "major", "message": "Formular verwendet veraltete 700px-Breite statt dem 850px-Standard.", "rule_id": "HWG-CD-01"}, {"rule": "HWG-CD-02", "severity": "critical", "message": "Kein offizielles HWG-Header-Banner (XImage) im Kopfbereich vorhanden.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-CD-03", "severity": "major", "message": "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle').", "rule_id": "HWG-CD-03"}, {"rule": "HWG-CD-04", "severity": "major", "message": "Formulartitel im Header ist nicht als Überschrift erster Ordnung (H1) ausgezeichnet (gefunden: H2 oder Fließtext statt <h1>).", "rule_id": "HWG-CD-04"}, {"rule": "HWG-A11Y-02", "severity": "major", "message": "Pflichtfeld-Deklaration verletzt: Optischer Hinweis deaktiviert (showrequiredhint='0') in ['selAnrede', 'tfNachname', 'tfVorname', 'tfEmail'].", "rule_id": "HWG-A11Y-02"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Fragmente oder Entities in 2 Label(s) gefunden: [selAnrede, tfPLZ].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-STAMM-01", "severity": "major", "message": "Inkonsistente Abfolge persönlicher Stammdaten: 'Nachname' (nachname) vor 'Vorname' (vorname). Erwartete Reihenfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.", "rule_id": "HWG-STAMM-01"}, {"rule": "HWG-STAMM-02", "severity": "minor", "message": "Nicht-standardisierte Stammdaten-Bezeichnungen gefunden: [('HWGLU-Email', 'Erwartet: E-Mail-Adresse oder Hochschul-E-Mail')]", "rule_id": "HWG-STAMM-02"}, {"rule": "HWG-UI-01", "severity": "critical", "message": "Sichtbare Entwickler-Notizen / Skript-Reste im Frontend: [('txtDevNote', 'Fieldset wird per JavaScript eingeblende')]", "rule_id": "HWG-UI-01"}, {"rule": "HWG-BTN-01", "severity": "major", "message": "Schaltflächen verletzen das Action-Verb-Muster: 'senden' (Generisches Minimal-Label ohne Zielobjekt), 'Kritischer Fall' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb)", "rule_id": "HWG-BTN-01"}, {"rule": "HWG-DSGVO-01", "severity": "critical", "message": "Personenbezogene Daten werden erhoben, aber es fehlt ein Datenschutz-Hinweis / DSGVO-Link.", "rule_id": "HWG-DSGVO-01"}, {"rule": "HWG-UPLOAD-01", "severity": "major", "message": "1 Dateiupload-Element(e) ohne transparente Angabe von Dateiformat und/oder Maximalgröße.", "rule_id": "HWG-UPLOAD-01"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Felder ohne Validierungsregel gefunden: ['tfPLZ', 'tfIBAN']", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-UX-01", "severity": "minor", "message": "Kompakte Felder (PLZ/Hausnummer) ohne Breitenbegrenzung über volle Breite gestreckt: ['tfPLZ']", "rule_id": "HWG-UX-01"}, {"rule": "HWG-LANG-01", "severity": "major", "message": "Hochschul- und Verwaltungs-Jargon ohne erläuternden Hilfetext gefunden: 'shibboleth' in txtDevNote, 'ldap' in txtDevNote, 'kostenstelle' in tfKostenstelle", "rule_id": "HWG-LANG-01"}, {"rule": "HWG-FEEDBACK-01", "severity": "minor", "message": "Keine Eingangsbestätigungs-E-Mail mit Prozess-/Bearbeitungsinformationen in den Workflow-E-Mail-Knoten (FC_EMAIL) gefunden.", "rule_id": "HWG-FEEDBACK-01"}, {"rule": "HWG-WF-01", "severity": "minor", "message": "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt. Kanonischer Lebenszyklus erforderlich.", "rule_id": "HWG-WF-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen.", "rule_id": "HWG-WF-02"}], "recommendations": [], "passed": ["HWG-A11Y-01 (Kompaktformular <= 20 Elemente: Keine Abschnittsbildung per Fieldset erforderlich)", "HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)"], "not_applicable": {"HWG-BTN-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich).", "HWG-UX-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Formularumfang (0 Seiten, 8 Eingabefelder) erfordert keine Zwischenspeicherung."}, "score": 0}}, "auslagen": {"name": "Reales Formular: Auslagenerstattung (Finanzen)", "file": "data/raw_forms/prod/Auslagenerstattung _20260929.xfp", "eval": {"form": "Auslagenerstattung _20260929.xfp", "violations": [{"rule": "HWG-CD-01", "severity": "major", "message": "Formular verwendet veraltete 700px-Breite statt dem 850px-Standard.", "rule_id": "HWG-CD-01"}, {"rule": "HWG-CD-02", "severity": "major", "message": "HWG-Header-Logo weicht von den Formatvorgaben ab: Höhe (in px) ist '50' statt 60px.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-CD-04", "severity": "major", "message": "Formulartitel im Header ist nicht als Überschrift erster Ordnung (H1) ausgezeichnet (gefunden: H2 oder Fließtext statt <h1>).", "rule_id": "HWG-CD-04"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Fragmente oder Entities in 48 Label(s) gefunden: [selZahlungAnrede, tfZahlungVorname, tfZahlungNachname, tfZahlungEmail, tf1, tfZahlungStrasse und 42 weitere].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-STAMM-01", "severity": "major", "message": "Inkonsistente Abfolge persönlicher Stammdaten: 'Telefonnummer' (telefon) vor 'Vorname' (vorname), 'E-Mail Adresse' (email) vor 'Vorname, Name' (vorname), 'Vorname, Name' (vorname) vor 'Bitte E-Mail Text zu den ben&ouml;tigten Unterlagen einf&uuml;gen. [ Anrede und Gru&szlig;floskel wird automatisch eingef&uuml;gt]' (anrede). Erwartete Reihenfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.", "rule_id": "HWG-STAMM-01"}, {"rule": "HWG-STAMM-02", "severity": "minor", "message": "Nicht-standardisierte Stammdaten-Bezeichnungen gefunden: [('E-Mail Adresse', 'Erwartet: E-Mail-Adresse oder Hochschul-E-Mail')]", "rule_id": "HWG-STAMM-02"}, {"rule": "HWG-BTN-01", "severity": "major", "message": "Schaltflächen verletzen das Action-Verb-Muster: 'senden' (Generisches Minimal-Label ohne Zielobjekt)", "rule_id": "HWG-BTN-01"}, {"rule": "HWG-BTN-02", "severity": "minor", "message": "Nicht-standardisierte Navigations-Schaltflächen in mehrseitigem Formular gefunden: ['weitere Unterlagen anfordern']. Erwartet: 'Weiter' und 'Zurück'.", "rule_id": "HWG-BTN-02"}, {"rule": "HWG-DSGVO-01", "severity": "critical", "message": "Personenbezogene Daten werden erhoben, aber es fehlt ein Datenschutz-Hinweis / DSGVO-Link.", "rule_id": "HWG-DSGVO-01"}, {"rule": "HWG-UPLOAD-01", "severity": "major", "message": "4 Dateiupload-Element(e) ohne transparente Angabe von Dateiformat und/oder Maximalgröße.", "rule_id": "HWG-UPLOAD-01"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Felder ohne Validierungsregel gefunden: ['tf1', 'tfPLZ']", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-UX-01", "severity": "minor", "message": "Kompakte Felder (PLZ/Hausnummer) ohne Breitenbegrenzung über volle Breite gestreckt: ['tfPLZ']", "rule_id": "HWG-UX-01"}, {"rule": "HWG-LANG-01", "severity": "major", "message": "Hochschul- und Verwaltungs-Jargon ohne erläuternden Hilfetext gefunden: 'kostenstelle' in tfKoStKontiBudgetverwaltung, 'kostenstelle' in tfKontiKostenstelle", "rule_id": "HWG-LANG-01"}, {"rule": "HWG-WF-01", "severity": "minor", "message": "Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: ['Antrag kontiert  - warten auf Auszahlung', 'Antrag  bearbeitet', 'Nachreichung beendet - warten auf Auszahlung']. Statusnamen müssen auf den kanonischen Phasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt').", "rule_id": "HWG-WF-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen.", "rule_id": "HWG-WF-02"}], "recommendations": [{"rule": "HWG-UX-02", "severity": "recommendation", "message": "Formularumfang (3 Seiten, 49 Eingabefelder) überschreitet den Komplexitätsschwellenwert. Empfehlung (0 Pkt. Abzug): Einen 'Zwischenspeichern'-Button ergänzen, der das Formular speichert und einen Fortsetzungs-Link per E-Mail an die Nutzenden versendet.", "rule_id": "HWG-UX-02"}], "passed": ["HWG-CD-03 (XIMA-Logo im Footer deaktiviert)", "HWG-A11Y-01 (Fieldsets vorhanden: Semantische Gruppenbildung erfüllt)", "HWG-A11Y-02 (Pflichtfeld-Deklaration: 15 Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)", "HWG-UI-01 (Keine Entwickler-Notizen)", "HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)", "HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in 14 FC_EMAIL-Knoten bestätigt)"], "not_applicable": {}, "score": 3}}, "sprints": {"name": "Reales Formular: Antrag-Sprints Drittmittel (ZFK)", "file": "data/raw_forms/test/unfertige und vielleicht fertige formulare/AFörderung Antrag-Sprints für Drittmittelanträge.xfp", "eval": {"form": "AFörderung Antrag-Sprints für Drittmittelanträge.xfp", "violations": [{"rule": "HWG-CD-02", "severity": "critical", "message": "Kein offizielles HWG-Header-Banner (XImage) im Kopfbereich vorhanden.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-CD-03", "severity": "major", "message": "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle').", "rule_id": "HWG-CD-03"}, {"rule": "HWG-CD-04", "severity": "major", "message": "Formulartitel im Header ist nicht als Überschrift erster Ordnung (H1) ausgezeichnet (gefunden: H2 oder Fließtext statt <h1>).", "rule_id": "HWG-CD-04"}, {"rule": "HWG-A11Y-01", "severity": "critical", "message": "Keine semantischen XFieldSet-Gruppierungen für Formularabschnitte vorhanden.", "rule_id": "HWG-A11Y-01"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Fragmente oder Entities in 16 Label(s) gefunden: [tfName, tfVorname, tfTelefonnummer, tfEmail, edInhaltBeschreibung, edNameFoerderprogramm und 10 weitere].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-STAMM-01", "severity": "major", "message": "Inkonsistente Abfolge persönlicher Stammdaten: 'Telefonnummer' (telefon) vor 'E-Mail' (email). Erwartete Reihenfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.", "rule_id": "HWG-STAMM-01"}, {"rule": "HWG-BTN-01", "severity": "major", "message": "Schaltflächen verletzen das Action-Verb-Muster: 'senden' (Generisches Minimal-Label ohne Zielobjekt), 'Kritischer Fall' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb), 'Rückmeldung' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb), 'Abgelehnt' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb), 'Angenommen' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb)", "rule_id": "HWG-BTN-01"}, {"rule": "HWG-DSGVO-01", "severity": "critical", "message": "Personenbezogene Daten werden erhoben, aber es fehlt ein Datenschutz-Hinweis / DSGVO-Link.", "rule_id": "HWG-DSGVO-01"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Felder ohne Validierungsregel gefunden: ['tfTelefonnummer']", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-LANG-01", "severity": "major", "message": "Hochschul- und Verwaltungs-Jargon ohne erläuternden Hilfetext gefunden: 'mittelgeber' in edNameFoerderprogramm, 'mittelgeber' in selFoerderprojektvolumen, 'zfk' in tfHoeheZuschuss", "rule_id": "HWG-LANG-01"}, {"rule": "HWG-WF-01", "severity": "minor", "message": "Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: ['Kritischer Fall', 'Kritischer Fall Rückmeldung', 'Angenommen']. Statusnamen müssen auf den kanonischen Phasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt').", "rule_id": "HWG-WF-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen.", "rule_id": "HWG-WF-02"}], "recommendations": [], "passed": ["HWG-CD-01 (Breite 850px eingehalten)", "HWG-A11Y-02 (Pflichtfeld-Deklaration: 12 Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)", "HWG-STAMM-02 (Kanonische Stammdaten-Labels)", "HWG-UI-01 (Keine Entwickler-Notizen)", "HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)", "HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in 8 FC_EMAIL-Knoten bestätigt)"], "not_applicable": {"HWG-BTN-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich).", "HWG-UPLOAD-01": "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Dateiupload-Elemente im Formular vorhanden.", "HWG-UX-01": "Kriterium auf diesen Formularkontext nicht anwendbar: Keine typischen Kompaktfelder (wie PLZ oder Hausnummer) vorhanden.", "HWG-UX-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Formularumfang (1 Seiten, 16 Eingabefelder) erfordert keine Zwischenspeicherung."}, "score": 0}}, "master": {"name": "Reales Formular: Master-Formular (Campus Management)", "file": "data/raw_forms/test/adminformulare/Master-Formular.xfp", "eval": {"form": "Master-Formular.xfp", "violations": [{"rule": "HWG-CD-01", "severity": "major", "message": "Formular verwendet veraltete 700px-Breite statt dem 850px-Standard.", "rule_id": "HWG-CD-01"}, {"rule": "HWG-CD-02", "severity": "major", "message": "HWG-Header-Logo weicht von den Formatvorgaben ab: Höhe (in px) ist '50' statt 60px.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Fragmente oder Entities in 29 Label(s) gefunden: [selMasterAnrede, tfMasterMatrikelnummer, tfMasterVorname, tfMasterNachname, tfMasterStrasse, tfMasterPLZ und 23 weitere].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Felder ohne Validierungsregel gefunden: ['tfMasterPLZ', 'tfMasterPLZ1', 'tfMasterPLZ2']", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-UX-01", "severity": "minor", "message": "Kompakte Felder (PLZ/Hausnummer) ohne Breitenbegrenzung über volle Breite gestreckt: ['tfMasterPLZ', 'tfMasterPLZ1']", "rule_id": "HWG-UX-01"}, {"rule": "HWG-FEEDBACK-01", "severity": "minor", "message": "Keine Eingangsbestätigungs-E-Mail mit Prozess-/Bearbeitungsinformationen in den Workflow-E-Mail-Knoten (FC_EMAIL) gefunden.", "rule_id": "HWG-FEEDBACK-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen.", "rule_id": "HWG-WF-02"}], "recommendations": [{"rule": "HWG-UX-02", "severity": "recommendation", "message": "Formularumfang (1 Seiten, 29 Eingabefelder) überschreitet den Komplexitätsschwellenwert. Empfehlung (0 Pkt. Abzug): Einen 'Zwischenspeichern'-Button ergänzen, der das Formular speichert und einen Fortsetzungs-Link per E-Mail an die Nutzenden versendet.", "rule_id": "HWG-UX-02"}], "passed": ["HWG-CD-03 (XIMA-Logo im Footer deaktiviert)", "HWG-CD-04 (Formulartitel im Header als H1 vorhanden)", "HWG-A11Y-01 (Fieldsets vorhanden: Semantische Gruppenbildung erfüllt)", "HWG-A11Y-02 (Pflichtfeld-Deklaration: 25 Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)", "HWG-STAMM-01 (Kanonische Stammdaten-Abfolge eingehalten)", "HWG-STAMM-02 (Kanonische Stammdaten-Labels)", "HWG-UI-01 (Keine Entwickler-Notizen)", "HWG-DSGVO-01 (Datenschutz-Hinweis vorhanden oder keine Personendaten)", "HWG-LANG-01 (Verständlicher Wortschatz: Kein unerklärter Jargon)", "HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)", "HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: Eingegangen)"], "not_applicable": {"HWG-BTN-01": "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Aktionsschaltflächen im Formular vorhanden.", "HWG-BTN-02": "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich).", "HWG-UPLOAD-01": "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Dateiupload-Elemente im Formular vorhanden."}, "score": 64}}};
+        const registry = {"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "HWG Ludwigshafen Formcycle Compliance Registry", "version": "1.5.0", "institution": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen", "scoring": {"base_score": 100, "severity_penalties": {"critical": 15, "major": 8, "minor": 3, "recommendation": 0}, "score_formula": "max(0, 100 - sum(penalty_i))"}, "rules": [{"id": "HWG-CD-01", "name": "Standardisierte Layout-Breite", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "major", "rationale": "Verhindert visuelle Sprünge und heterogene Zeilenlängen im Hochschulportal (DIN EN ISO 9241-110 Erwartungskonformität).", "specification": {"target": "layout_containers", "components": ["XHeader", "XPage", "XFooter"], "expected_maxwidth": "850px", "allowed_minwidth": "300px"}, "remediation": "Wählen Sie im Formcycle-Designer die Layout-Container (Kopfzeile 'header1', sämtliche Seiten 'p1'… sowie Fußzeile 'footer1') aus und setzen Sie unter 'Layout' das Feld 'Max. Breite' einheitlich auf '850px' sowie 'Min. Breite' auf '300px'."}, {"id": "HWG-CD-02", "name": "Offizielles Corporate Design Header-Logo (60px Höhe, rechtsbündig, Alt-Text)", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "critical", "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage innerhalb des Header-Containers (XHeader) platziert sein, eine Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1). Zweistufige Schweregrad-Logik: Fehlen des Logos im Header wird als Critical (15 Punkte Abzug), Maß-, Ausrichtungs- oder Alternativtext-Abweichungen werden als Major (8 Punkte Abzug) bewertet.", "specification": {"target": "header_elements", "required_parent": "XHeader", "required_component": "XImage", "alt_patterns": ["Hochschule für Wirtschaft und Gesellschaft Ludwigshafen", "HWG Ludwigshafen"], "required_height": "60px", "required_alignment": "right", "severity_rule": "Fehlen des Logos im Header: Critical/15; Maß-, Ausrichtungs- oder Alt-Text-Abweichung: Major/8"}, "remediation": "Platzieren Sie im Kopfbereich ('header1' / XHeader) das offizielle HWG-Logo als Bild-Element (XImage). Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (imageheight = '60'), das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right') und hinterlegen Sie im Feld 'Alternativtext' (alt) die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'.", "severity_tiers": {"critical": {"penalty": 15, "condition": "Fehlen des offiziellen HWG-Header-Banners (XImage) im Kopfbereich (XHeader)"}, "major": {"penalty": 8, "condition": "Maß-, Ausrichtungs- oder Alternativtext-Abweichung (Höhe != 60px, Ausrichtung != rechtsbündig oder fehlender/unvollständiger Alternativtext)"}}}, {"id": "HWG-CD-03", "name": "Deaktivierung des Hersteller-Brandings im Footer (Powered by XIMA Formcycle)", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "major", "rationale": "Einheitliches Hochschul-Erscheinungsbild: Das externe Software-Herstellerlogo ('Powered by XIMA Formcycle') im Fußbereich stört das institutionelle Corporate Design und muss deaktiviert werden.", "specification": {"target": "footer_component", "component": "XFooter", "required_property": {"showlogo": "0"}}, "remediation": "Wählen Sie im Formcycle-Designer das Fußzeilen-Element ('footer1' / XFooter) aus und entfernen Sie unter 'Eigenschaften' den Haken bei 'Logo anzeigen' (showlogo = '0'), um den Hinweis 'Powered by XIMA Formcycle' auszublenden."}, {"id": "HWG-CD-04", "name": "Formulartitel im Header als Hauptüberschrift (H1)", "category": "corporate_design", "evaluation_type": "deterministic", "severity": "major", "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) und 2.4.6 (Überschriften und Beschriftungen) sowie DIN EN ISO 9241-110 (Selbstbeschreibungsfähigkeit): Der Formulartitel bildet den primären Einstiegspunkt, muss sich direkt innerhalb des Kopfbereichs (XHeader) befinden und semantisch eindeutig als Überschrift erster Ordnung (<h1>) ausgezeichnet sein.", "specification": {"target": "header_elements", "required_parent": "XHeader", "required_heading_level": "h1", "max_h1_count": 1}, "remediation": "Platzieren Sie ein Text-/Überschrift-Element (XSpan / XHeading) direkt innerhalb des Header-Containers ('header1' / XHeader) und formatieren Sie den Formulartitel im Rich-Text-Editor exakt einmal als Überschrift erster Ordnung ('Überschrift 1' / <h1>Antrag auf ...</h1>) statt H2 oder unformatiertem Fließtext."}, {"id": "HWG-A11Y-01", "name": "Semantische Gruppierung mit Fieldsets und Legenden", "category": "accessibility", "evaluation_type": "deterministic", "severity": "critical", "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen): Screenreader benötigen semantische Fieldset-Strukturen mit nicht-leerer Legende (<fieldset>/<legend>) zur Kontextualisierung logischer Eingabeblöcke.", "specification": {"target": "form_sections", "min_input_fields_for_fieldset": 4, "required_container": "XFieldSet", "forbidden_container_as_section": ["XContainer", "XContainerInvisible"], "require_legend": true}, "remediation": "Ziehen Sie im Formcycle-Designer unter 'Layout-Elemente' das Element 'Gruppierung (Fieldset)' (XFieldSet) in das Formular, vergeben Sie unter 'Beschriftung' (Legend) einen sprechenden Abschnittstitel (z. B. 'Persönliche Angaben') und ordnen Sie zusammengehörige Eingabefelder darin an. Verwenden Sie keine unsemantischen Container (XContainer) als Abschnittsersatz."}, {"id": "HWG-A11Y-02", "name": "Programmatische und optische Pflichtfeld-Deklaration (Sternchen & aria-required)", "category": "accessibility", "evaluation_type": "deterministic", "severity": "major", "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen oder Anweisungen): Pflichtfelder müssen über die native Feldeigenschaft 'Pflichtfeld' (required='1' bzw. bedingte Pflicht über requiredif) deklariert werden, damit Formcycle automatisch das Sternchen am Feldlabel und im HTML-DOM das Attribut aria-required='true' setzt. Zugleich muss in Kopf- oder Fußzeile (XHeader/XFooter) die globale Legende 'Pflichtfeldhinweis anzeigen' (showrequiredhint='1') aktiviert sein.", "specification": {"target": "input_fields_and_header_footer", "condition": "Mindestens ein Pflichtfeld vorhanden oder manuelles Sternchen (*) im Labeltext", "required_field_property": {"required": "1"}, "required_container_property": {"components": ["XHeader", "XFooter"], "showrequiredhint": "1"}, "forbid_manual_asterisk_without_required": true}, "remediation": "Aktivieren Sie bei jedem Pflichtfeld unter 'Einschränkungen' den Haken 'Pflichtfeld' (required = '1'; niemals ein manuelles Sternchen '*' in den Beschriftungstext tippen!) und setzen Sie im Element 'Kopfzeile' ('header1') oder 'Fußzeile' ('footer1') den Haken bei 'Pflichtfeldhinweis anzeigen' (showrequiredhint = '1')."}, {"id": "HWG-A11Y-03", "name": "Saubere Label-Syntax ohne HTML-Störfragmente", "category": "accessibility", "evaluation_type": "deterministic", "severity": "minor", "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 & 2.5.3: Während Formcycle 8 einfache Absatz-Wrapper (<p>...</p>) und reguläre Umlaut-Entities beim Rendern automatisch auflöst, führen manuelle Zeilenumbrüche (<br>), kopierte Inline-Formatierungen (<span>, style=), geschützte Leerzeichen-Ketten (&nbsp;), doppelt maskierte Entities (&amp;szlig;) und technische Pipe-Trenner ('|') zu fehlerhaften Screenreader-Ansagen und Layoutbrüchen.", "specification": {"target": "field_labels", "allowed_editor_wrapper": "Einfacher Formcycle-Standard-Wrapper (<p>...</p>) und einfach kodierte Umlaute", "disallowed_patterns": ["Manuelle Zeilenumbrüche (<br>) oder geschachtelte Formatierungs-Tags (<span>, <div>, <font>, Inline-style)", "Doppelt maskierte Entities (&amp;auml;, &amp;szlig;) oder mehrfache &nbsp;-Ketten", "Technische Pipe-Trenner ('|') im sichtbaren Labeltext"]}, "remediation": "Bereinigen Sie im Feld 'Beschriftung' (Label) manuelle Zeilenumbrüche (<br>), kopierte Formatierungs-Tags (<span>, Inline-Styles), geschützte Leerzeichen-Ketten (&nbsp;), doppelt maskierte Entities sowie technische Trenner ('|'). Lagern Sie erläuternde Zusatzhinweise unter 'Allgemein' in das dedizierte Feld 'Hilfetext' (helptext) aus."}, {"id": "HWG-STAMM-01", "name": "Einheitliche Abfolge persönlicher Stammdaten", "category": "master_data", "evaluation_type": "deterministic", "severity": "major", "rationale": "Erwartungskonformität nach DIN EN ISO 9241-110: Natürlicher Lesefluss für persönliche Stammdaten innerhalb einer Sektion erfordert die Sequenz Anrede -> Vorname -> Nachname -> E-Mail-Adresse (bzw. E-Mail / Hochschul-E-Mail) -> Telefonnummer.", "specification": {"target": "personal_data_block_per_section", "expected_sequence": ["Anrede", "Vorname", "Nachname", "E-Mail-Adresse", "Telefonnummer"], "disallowed_sequence": ["Nachname (bzw. 'Name Antragstellende/r') vor Vorname", "Namensfelder nach E-Mail oder Telefonnummer innerhalb derselben Sektion"]}, "remediation": "Ordnen Sie persönliche Stammdaten innerhalb jedes Fieldsets in der kanonischen Reihenfolge an: Anrede -> Vorname -> Nachname -> E-Mail-Adresse (bzw. E-Mail) -> Telefonnummer. Kapseln Sie getrennte Rollenblöcke (z. B. Antragstellende vs. Vorgesetzte) in eigene Fieldsets."}, {"id": "HWG-STAMM-02", "name": "Standardisierte Feldbezeichnungen für persönliche Stammdaten", "category": "master_data", "evaluation_type": "semantic", "severity": "minor", "rationale": "Konsistente Bezeichnungen bei persönlichen Stammdaten verhindern Verwirrung über erforderliche Eingaben (z. B. getrennte Felder 'Vorname' und 'Nachname' statt 'Name Antragstellende/r' sowie 'E-Mail-Adresse' bzw. 'E-Mail' statt technischer Kürzel).", "specification": {"target": "master_data_labels", "canonical_patterns": {"salutation": ["Anrede"], "first_name": ["Vorname"], "last_name": ["Nachname"], "email": ["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"], "phone": ["Telefonnummer", "Mobilfunknummer"], "matriculation": ["Matrikelnummer"]}, "anti_patterns": ["Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r', 'Vorname Antragstellende/r')", "Mehrdeutige Kurzbezeichnungen ohne Trennung in Vor- und Nachname (z. B. bloß 'Name')", "Technische Feldbezeichner als sichtbares Label (z. B. 'tf1', 'HWGLU-Email')"]}, "remediation": "Nutzen Sie für persönliche Stammdaten ausschließlich die kanonischen Standardbezeichnungen ('Anrede', 'Vorname', 'Nachname', 'E-Mail-Adresse' bzw. 'E-Mail' oder 'Hochschul-E-Mail', 'Telefonnummer', 'Matrikelnummer') ohne sperrige Rollenzusätze oder technische Kürzel."}, {"id": "HWG-UI-01", "name": "Keine Entwickler-Notizen oder Code-Artefakte im Frontend", "category": "ui_quality_hygiene", "evaluation_type": "deterministic", "severity": "critical", "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit: Verhindert Verunsicherung der Antragstellenden durch unbereinigte Skript-, Shibboleth- oder Template-Kommentare in sichtbaren Text- und Rich-Text-Elementen.", "specification": {"target": "all_visible_form_elements", "inspected_properties": ["label", "text", "heading", "rtevalue", "value"], "check": "Kein für Antragstellende sichtbares Element (inkl. XSpan/rtevalue) darf technische Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB', 'display:none') enthalten."}, "remediation": "Entfernen Sie alle technischen Implementierungshinweise aus sichtbaren Text- und Rich-Text-Elementen (XSpan / Beschriftung). Hinterlegen Sie interne Notizen ausschließlich im Entwickler-Feld 'Kommentar' (comment) der Komponente oder beschränken Sie interne Bearbeiterblöcke unter 'Zugriff / Sichtbarkeit' auf nachgelagerte Workflow-Status (viewstatus)."}, {"id": "HWG-BTN-01", "name": "Aktionsorientierte Schaltflächen-Semantik (Action-Verb-Pattern)", "category": "microcopy_buttons", "evaluation_type": "semantic", "severity": "major", "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Erwartungskonformität: Aktionsschaltflächen müssen stets eine eindeutige Handlung beschreiben ([Zielobjekt] + [Vollverb im Infinitiv]). Reine Zustandsbezeichnungen ohne Verb oder generische Ein-Wort-Labels stiften Verwirrung.", "specification": {"target": "action_buttons", "pattern_rule": "Jede Absende- oder Prozessschaltfläche muss ein konkretes Vollverb im Infinitiv mit Zielobjekt enthalten, das die ausgelöste Transaktion eindeutig beschreibt.", "valid_examples": ["Antrag einreichen", "Bedarfsmeldung absenden", "Kritischen Fall einreichen", "Rückmeldung an ZFK übermitteln", "Zur Präsidiumsprüfung weiterleiten", "Speichern und einreichen"], "disallowed_patterns": ["Reine Substantive oder Statusbezeichnungen ohne Handlungsverb (z. B. bloß 'Kritischer Fall', 'Status', 'Genehmigung')", "Generische, kontextlose Minimal-Labels (z. B. bloß 'senden', 'Submit', 'OK', 'Abschicken')"]}, "remediation": "Wählen Sie im Formcycle-Designer die Schaltflächenleiste (XButtonList) bzw. die Schaltfläche (XButton) aus und beschriften Sie jede Aktionsschaltfläche nach dem Action-Verb-Muster (z. B. 'Antrag einreichen', 'Kritischen Fall einreichen' oder 'Rückmeldung übermitteln') anstelle von reinen Zuständen ('Kritischer Fall') oder generischen Ein-Wort-Begriffen ('senden')."}, {"id": "HWG-BTN-02", "name": "Einheitliche Navigations-Schaltflächen (Mehrseitige Formulare)", "category": "microcopy_buttons", "evaluation_type": "semantic", "severity": "minor", "rationale": "DIN EN ISO 9241-110 Erwartungskonformität & Steuerbarkeit: Konsistente Bezeichnungen bei der Seitennavigation (Pagination) verringern die kognitive Belastung.", "specification": {"target": "navigation_buttons", "action_types": ["next", "prev", "xnavbar_next", "xnavbar_prev", "page_jump"], "standard_next": "Weiter", "standard_back": "Zurück"}, "remediation": "Wählen Sie in mehrseitigen Formularen die Schaltflächenleiste (XButtonList) aus und benennen Sie Schaltflächen mit Seitenwechsel-Aktion einheitlich 'Weiter' und 'Zurück' anstelle uneinheitlicher Konstrukte wie 'weiter zu Seite 2'."}, {"id": "HWG-DSGVO-01", "name": "Datenschutz-Hinweis und DSGVO-Transparenz", "category": "data_privacy_security", "evaluation_type": "deterministic", "severity": "critical", "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Datenschutzhinweis über die native Footer-Option (privacyPolicyShow = '1') oder ein expliziter Hinweistext mit aktivem Link zur zentralen HWG-Datenschutzerklärung ist rechtlich zwingend.", "specification": {"target": "privacy_section_or_footer", "condition": "form_contains_personal_data", "accepted_mechanisms": ["Aktivierte Datenschutzerklärung im Footer (XFooter.privacyPolicyShow = '1')", "Expliziter Datenschutzhinweis (Datenschutz / DSGVO / Art. 13) mit aktiver Verlinkung (href / URL zur HWG-Datenschutzerklärung)"]}, "remediation": "Aktivieren Sie im Fußzeilen-Element ('footer1' / XFooter) unter 'Eigenschaften' die native Option 'Datenschutzerklärung anzeigen' (privacyPolicyShow = '1') oder fügen Sie vor der Absende-Schaltfläche einen Textblock (XSpan) mit Hinweis nach Art. 13 DSGVO und aktivem Link zur HWG-Datenschutzerklärung (https://www.hwg-lu.de/datenschutz) ein."}, {"id": "HWG-UPLOAD-01", "name": "Transparente Dateiupload-Spezifikation (Formate & Maximalgröße)", "category": "input_validation_ux", "evaluation_type": "deterministic", "severity": "major", "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Fehlertoleranz: Upload-Komponenten müssen sowohl technisch eingeschränkt als auch im sichtbaren Label/Hilfetext konsistent mit zulässigen Dateiformaten (z. B. PDF, JPG) und Maximalgröße (z. B. max. 10 MB) ausgewiesen sein.", "specification": {"target": "upload_components", "component_types": ["XUpload", "XFile"], "required_technical_properties": ["fileextension (nicht leer)", "maxfilesize (> 0)"], "required_hint_elements": ["Zulässige Dateiformate im Label oder Hilfetext (widerspruchsfrei zu fileextension)", "Maximale Dateigröße im Label oder Hilfetext (z. B. 'max. 10 MB')"]}, "remediation": "Wählen Sie das Upload-Element (XUpload) im Formcycle-Designer aus: (1) Setzen Sie unter 'Einschränkungen' die zulässigen 'Dateiendungen' (fileextension, z. B. '.pdf, .jpg, .png') und die 'Maximale Dateigröße' (maxfilesize in KB, z. B. '10240' für 10 MB). (2) Nennen Sie exakt dieselben Formate und das Größenlimit unter 'Allgemein -> Hilfetext' (z. B. 'Zulässige Formate: PDF, JPG, PNG; max. 10 MB')."}, {"id": "HWG-VAL-01", "name": "Formale Validierung strukturierter Eingabefelder", "category": "input_validation_ux", "evaluation_type": "deterministic", "severity": "major", "rationale": "Fehlertoleranz nach DIN EN ISO 9241-110: Strukturierte Daten (IBAN, PLZ, Telefonnummer, Datum, Matrikelnummer) dürfen nicht als unvalidierte Freitexte erfasst werden, sondern benötigen einen typgerechten Formcycle-Validator oder ein hinterlegtes Regex-Prüfmuster (vrule). Für Telefonnummern wird ausdrücklich ein regulärer Ausdruck erlaubt und empfohlen, da der native Formcycle-Datentyp 'phone' kein '+'-Zeichen für internationale Ländervorwahlen (z. B. +49) zulässt.", "specification": {"target": "structured_fields", "field_patterns": ["iban", "plz", "postleitzahl", "telefon", "datum", "geburtsdatum", "matrikel", "matrikelnummer"], "accepted_datatypes": ["plzDE", "dateDE", "dateISO", "date", "phone", "email", "regexp (nur mit nicht-leerem Muster in vrule/pattern)"], "copy_paste_regex_catalog": {"plz_deutschland": "^[0-9]{5}$", "iban_deutschland_leerzeichentolerant": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$", "iban_international_sepa": "^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$", "telefonnummer_inkl_plus": "^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$", "matrikelnummer_hwg": "^[0-9]{6,7}$", "email_adresse": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"}}, "remediation": "Wählen Sie das unvalidierte Feld (XTextField) im Formcycle-Designer aus und navigieren Sie unter 'Eigenschaften' zum Bereich 'Validierung' (Datentyp / datatype):\n• Postleitzahl, Datum & E-Mail: Nutzen Sie den nativen Formcycle-Datentyp 'Postleitzahl (DE)' (plzDE), 'Datum' (dateDE) bzw. 'E-Mail' (email) oder 'Regulärer Ausdruck' (regexp) mit Prüfmuster (vrule).\n• Telefonnummer (Empfehlung Regex, da Formcycles Typ 'phone' kein '+' für Ländervorwahlen wie +49 erlaubt): Datentyp 'Regulärer Ausdruck' -> ^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$\n• IBAN (DE, leerzeichentolerant): Datentyp 'Regulärer Ausdruck' -> ^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$ (SEPA international: ^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$)\n• Matrikelnummer (HWG, 6–7 Ziffern): Datentyp 'Regulärer Ausdruck' -> ^[0-9]{6,7}$\nHinterlegen Sie unter 'Fehlermeldung' stets einen verständlichen Hinweistext."}, {"id": "HWG-UX-01", "name": "Affordanzgerechte Feldbreiten (Kompakte Felder)", "category": "input_validation_ux", "evaluation_type": "deterministic", "severity": "minor", "rationale": "Erwartungskonformität & visuelle Affordanz (Wroblewski, 2008): Die optische Breite eines Eingabefeldes signalisiert die erwartete Zeichenlänge. Kurze Angaben (PLZ, Hausnummer) dürfen nicht allein über 100% der Zeilenbreite gestreckt werden.", "specification": {"target": "compact_fields", "field_names": ["plz", "postleitzahl", "hausnummer", "hnr"], "expected_layout": "Mehrspaltige Zeilenanordnung (computedwidth < 100%, Richtwert 25-40% bzw. gemeinsame rowid mit Nachbarfeld)"}, "remediation": "Ziehen Sie kurze Eingabefelder (z. B. Postleitzahl neben Wohnort oder Hausnummer neben Straße) im Formcycle-Designer per Drag-and-Drop in dieselbe Formularzeile (computedwidth < 100%, idealerweise 25–40% für PLZ/Hausnummer) oder begrenzen Sie unter 'Layout' die Elementbreite."}, {"id": "HWG-UX-02", "name": "Empfehlung: Zwischenspeichern mit E-Mail-Link bei umfangreichen Formularen", "category": "input_validation_ux", "evaluation_type": "hybrid", "severity": "recommendation", "rationale": "DIN EN ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei umfangreichen Formularen (ab 3 Seiten oder ab 25 Eingabefeldern) sollten Nutzende die Bearbeitung unterbrechen und später über einen zugesandten Link nahtlos fortsetzen können.", "specification": {"target": "form_complexity_and_buttons", "trigger_condition": "Formular umfasst >= 3 Seiten (XPage) oder >= 25 Eingabefelder", "recommended_feature": "Schaltfläche 'Zwischenspeichern' (ohne Pflichtfeldblockade) mit Workflow-Versand eines Fortsetzungs-Links ([%$URL_FORM%]) per E-Mail an die antragstellende Person.", "penalty_points": 0}, "remediation": "Empfehlung (ohne Punktabzug): Legen Sie in der Schaltflächenleiste (XButtonList) einen Button 'Zwischenspeichern' mit der Aktion 'absenden' OHNE Pflichtfeldprüfung (submitNoCheck, nicht 'absenden + prüfen'!) an und versenden Sie im Workflow über einen FC_EMAIL-Knoten den Fortsetzungs-Link ([%$URL_FORM%])."}, {"id": "HWG-LANG-01", "name": "Erklärung von Hochschul- und Amtsjargon sowie konsistente Sie-Ansprache", "category": "plain_language_semantics", "evaluation_type": "semantic", "severity": "major", "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich) & DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit: Hochschulspezifische Fachbegriffe, interne Organisationskürzel und Amtsdeutsch ohne erläuternde Hilfetexte überfordern Antragstellende.", "specification": {"target": "text_and_labels", "detection_strategy": "Semantische Analyse durch LLM: Identifikation von unerklärten Verwaltungs-/Hochschulfachbegriffen und internen Kürzeln (z. B. GStB, KAP, ZFK, Kostenstelle, Vergabevermerk, Remonstration, Haushaltsstelle) ohne zugehörigen Hilfetext/Tooltip sowie Prüfung auf durchgängige 'Sie'-Ansprache.", "requirement": "Jeder identifizierte Jargon-Begriff muss durch einen verständlichen Hilfetext (helptext) oder im unmittelbaren Kontext erläutert sein."}, "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen unter 'Allgemein -> Hilfetext' (helptext) um eine kurze, allgemeinverständliche Begriffserklärung und achten Sie auf eine konsistente 'Sie'-Ansprache."}, {"id": "HWG-LANG-02", "name": "Prägnante und barrierearme Formulierung (Vermeidung von Schachtelsätzen)", "category": "plain_language_semantics", "evaluation_type": "hybrid", "severity": "minor", "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte, Rich-Text-Blöcke und Hilfetexte müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das Leseverständnis.", "specification": {"target": "instructions_and_helptexts", "max_sentence_length_words": 25, "style_criteria": "Aktivformulierungen, keine verschachtelten Passivkonstruktionen, klare Handlungsanweisungen in Textblöcken (rtevalue/text) und Hilfetexten (helptext)."}, "remediation": "Kürzen Sie überlange Schachtelsätze in Hinweis- und Hilfetexten auf maximal 20–25 Wörter pro Satz und formulieren Sie handlungsorientierte Aktivsätze."}, {"id": "HWG-FEEDBACK-01", "name": "Prozesstransparenz in den Workflow-E-Mail-Bestätigungen", "category": "process_transparency", "evaluation_type": "hybrid", "severity": "minor", "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über eine automatisierte Workflow-E-Mail (FC_EMAIL) transparent über den Eingang, die zuständige Prüfstelle und die nächsten Prozessschritte informiert werden.", "specification": {"target": "workflow_email_nodes", "target_path": "workflowVersions[].mainProcess.tasks[].nodes[type='FC_EMAIL'].customParameters", "required_information": ["Automatisierte Eingangsbestätigung direkt an die antragstellende Person (nicht ausschließlich interne Funktionspostfächer)", "Benennung der zuständigen Prüfstelle (z. B. ZFK, Finanzabteilung, Fachbereich) und der nächsten Prozessschritte"]}, "remediation": "Hinterlegen Sie im Formcycle-Workflow unter 'Prozess-Aktionen' einen E-Mail-Knoten (FC_EMAIL) an die antragstellende Person, dessen Text den Eingang bestätigt und transparent erläutert, welche Stelle den Antrag im nächsten Schritt bearbeitet."}, {"id": "HWG-WF-01", "name": "Standardisierte Workflow-Statusnomenklatur und Lebenszyklus", "category": "workflow_governance", "evaluation_type": "deterministic", "severity": "minor", "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen. Workflows müssen den Antragslebenszyklus über formale Statusübergänge (FC_CHANGE_STATE) abbilden und auf den kanonischen Phasen ('Eingegangen', 'In Prüfung', 'Nachforderung ausstehend', 'Genehmigt', 'Abgelehnt', 'Archiviert') aufbauen.", "specification": {"target": "workflow_state_nodes", "canonical_lifecycle": ["Eingegangen (inkl. Bereichserweiterungen wie 'Eingegangen - Finanzabteilung')", "In Prüfung (inkl. Teilschritten wie 'In Prüfung Rückmeldung')", "Nachforderung ausstehend", "Genehmigt", "Abgelehnt", "Archiviert"], "disallowed_patterns": ["Workflow ohne Status-Knoten (FC_CHANGE_STATE)", "Willkürliche Ad-hoc-Zustände ohne kanonische Phasenbasis (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')"], "allowed_extensions": "Fachbereichsspezifische Zusätze sind zulässig, solange eine kanonische Lebenszyklusphase als Wortstamm enthalten ist."}, "remediation": "Definieren Sie im Formcycle-Workflow über 'Prozess-Aktionen -> Status ändern' (FC_CHANGE_STATE) strukturierte Statusübergänge auf Basis der kanonischen Phasen ('Eingegangen', 'In Prüfung', 'Nachforderung ausstehend', 'Genehmigt', 'Abgelehnt', 'Archiviert')."}, {"id": "HWG-WF-02", "name": "Eindeutige Vorgangsreferenz in automatisierter Prozesskommunikation", "category": "workflow_governance", "evaluation_type": "deterministic", "severity": "minor", "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Steuerbarkeit: Automatisierte Workflow-E-Mails müssen eine dynamische Vorgangsreferenz ([%$PROJECT_ALIAS%]) führen, um Rückfragen, Zuordnung und Statusverfolgung medienbruchfrei zu ermöglichen.", "specification": {"target": "workflow_email_nodes", "target_field": "subject_or_body", "required_variable": "[%$PROJECT_ALIAS%]", "disallowed_patterns": ["Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$PROJECT_ALIAS%] bzw. [%$RECORD_ID%]) im Betreff oder Textkörper"]}, "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) den dynamischen Platzhalter [%$PROJECT_ALIAS%] als eindeutige Vorgangsnummer ein."}]};
+        const presets = {"synth_comp": {"name": "Synthetisches Referenzformular (Best-Practice)", "file": "data/test_forms/synthetic_compliant_form.json", "eval": {"form": "synthetic_compliant_form.json", "violations": [], "recommendations": [], "passed": ["HWG-CD-01 (Layout-Breite durchgängig 850px)", "HWG-CD-02 (Header-Logo 60px, rechtsbündig, mit korrektem Alt-Text)", "HWG-CD-03 (XIMA-Herstellerlogo im Footer deaktiviert)", "HWG-CD-04 (Formulartitel im Header eindeutig als H1 ausgezeichnet)", "HWG-A11Y-01 (3 XFieldSet-Gruppen mit Legenden vorhanden)", "HWG-A11Y-02 (7 Pflichtfelder programmatisch inkl. globaler Legende deklariert)", "HWG-A11Y-03 (Saubere Label-Syntax ohne störende HTML-Fragmente)", "HWG-STAMM-01 (Kanonische Stammdaten-Abfolge in allen Sektionen eingehalten)", "HWG-UI-01 (Keine sichtbaren Entwickler-Notizen im Frontend)", "HWG-DSGVO-01 (DSGVO-Datenschutzhinweis mit Verlinkung / Footer-Option vorhanden)", "HWG-UPLOAD-01 (Alle Dateiuploads technisch und im Hilfetext konsistent spezifiziert)", "HWG-VAL-01 (Alle strukturierten Eingabefelder formal validiert)", "HWG-UX-01 (Affordanzgerechte kompakte Feldbreiten eingehalten)", "HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: Eingegangen, In Prüfung, Genehmigt, Abgelehnt, Archiviert)", "HWG-WF-02 (Dynamische Vorgangsreferenz in 1/1 Workflow-E-Mails vorhanden)"], "not_applicable": {"HWG-STAMM-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-UX-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-FEEDBACK-01": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt)."}, "unverified_semantic": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"], "llm_evaluation": {"evaluated": false, "status": "unconfigured", "api_base": "https://chat-ai.academiccloud.de/v1", "model": "deepseek-v4-flash-0731", "reason": "Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "unverified_rules": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"]}, "score": 100}}, "synth_noncomp": {"name": "Synthetisches Negativformular (Worst-Case)", "file": "data/test_forms/synthetic_noncompliant_form.json", "eval": {"form": "synthetic_noncompliant_form.json", "violations": [{"rule": "HWG-CD-01", "severity": "major", "message": "Layout-Container weichen vom 850px-Standard ab (gefunden: 700px).", "rule_id": "HWG-CD-01"}, {"rule": "HWG-CD-02", "severity": "critical", "message": "Kein offizielles HWG-Header-Banner (XImage) innerhalb des Header-Containers (XHeader) vorhanden.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-CD-03", "severity": "major", "message": "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle').", "rule_id": "HWG-CD-03"}, {"rule": "HWG-CD-04", "severity": "major", "message": "Kein Formulartitel als <h1> innerhalb des Kopfbereichs (XHeader) vorhanden.", "rule_id": "HWG-CD-04"}, {"rule": "HWG-A11Y-01", "severity": "critical", "message": "Keine semantischen XFieldSet-Gruppierungen für 8 Eingabefelder vorhanden.", "rule_id": "HWG-A11Y-01"}, {"rule": "HWG-A11Y-02", "severity": "major", "message": "Pflichtfeld-Deklaration fehlerhaft: Pflichtfeldlegende (showrequiredhint='1') weder in Kopfzeile (XHeader) noch Fußzeile (XFooter) aktiviert; Manuelles Sternchen (*) im Label ohne native Pflichtfeldfunktion (required='1') in ['tfVorname'].", "rule_id": "HWG-A11Y-02"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Störfragmente (<br>, <span>, &nbsp;, doppelte Entities oder '|') in 1 Label(s): [tfPLZ].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-STAMM-01", "severity": "major", "message": "Inkonsistente Stammdaten-Abfolge: 'Nachname' (tfNachname) vor 'Vorname*' (tfVorname). Erwartet: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.", "rule_id": "HWG-STAMM-01"}, {"rule": "HWG-UI-01", "severity": "critical", "message": "Sichtbare Entwickler-Notizen / technische Hinweise im Frontend: txtDevNote: 'Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-M'.", "rule_id": "HWG-UI-01"}, {"rule": "HWG-DSGVO-01", "severity": "critical", "message": "Personenbezogene Daten werden erhoben, aber weder Footer-Datenschutzerklärung (privacyPolicyShow='1') noch verlinkter Art.-13-DSGVO-Hinweis vorhanden.", "rule_id": "HWG-DSGVO-01"}, {"rule": "HWG-UPLOAD-01", "severity": "major", "message": "1 Upload-Element(e) unvollständig oder widersprüchlich spezifiziert: uplDateien (technische Dateiendung/Maximalgröße fehlt, Formate im Hilfetext/Label fehlen, Größenlimit im Hilfetext/Label fehlt).", "rule_id": "HWG-UPLOAD-01"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Eingabefelder ohne gültigen Validator / Regex gefunden: tfPLZ (PLZ: Typ 'text'), tfIBAN (IBAN: leeres/fehlendes Regex-Muster).", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-UX-01", "severity": "minor", "message": "Kompakte Felder über volle 100%-Zeilenbreite gestreckt: tfPLZ.", "rule_id": "HWG-UX-01"}, {"rule": "HWG-WF-01", "severity": "minor", "message": "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt.", "rule_id": "HWG-WF-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in den automatisierten Workflow-E-Mails (FC_EMAIL).", "rule_id": "HWG-WF-02"}], "recommendations": [], "passed": [], "not_applicable": {"HWG-STAMM-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-UX-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-FEEDBACK-01": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt)."}, "unverified_semantic": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"], "llm_evaluation": {"evaluated": false, "status": "unconfigured", "api_base": "https://chat-ai.academiccloud.de/v1", "model": "deepseek-v4-flash-0731", "reason": "Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "unverified_rules": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"]}, "score": 0}}, "auslagen": {"name": "Reales Formular: Auslagenerstattung (Finanzen)", "file": "data/raw_forms/prod/Auslagenerstattung _20260929.xfp", "eval": {"form": "Auslagenerstattung _20260929.xfp", "violations": [{"rule": "HWG-CD-01", "severity": "major", "message": "Layout-Container weichen vom 850px-Standard ab (gefunden: 700px).", "rule_id": "HWG-CD-01"}, {"rule": "HWG-CD-02", "severity": "major", "message": "HWG-Header-Logo weicht von den Vorgaben ab: Höhe ist '50' statt 60px, barrierefreier Alternativtext (alt) fehlt oder unvollständig.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-CD-04", "severity": "major", "message": "Formulartitel im Header (XHeader) ist nicht als Überschrift erster Ordnung (<h1>) ausgezeichnet (nur H2/Fließtext gefunden).", "rule_id": "HWG-CD-04"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Störfragmente (<br>, <span>, &nbsp;, doppelte Entities oder '|') in 2 Label(s): [uplAuslageZahlungsnachweis, tfKoStKontiBudgetverwaltung].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-DSGVO-01", "severity": "critical", "message": "Personenbezogene Daten werden erhoben, aber weder Footer-Datenschutzerklärung (privacyPolicyShow='1') noch verlinkter Art.-13-DSGVO-Hinweis vorhanden.", "rule_id": "HWG-DSGVO-01"}, {"rule": "HWG-UPLOAD-01", "severity": "major", "message": "2 Upload-Element(e) unvollständig oder widersprüchlich spezifiziert: uplAuslageRechnung (Größenlimit im Hilfetext/Label fehlt), uplAuslageZahlungsnachweis (Größenlimit im Hilfetext/Label fehlt).", "rule_id": "HWG-UPLOAD-01"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Eingabefelder ohne gültigen Validator / Regex gefunden: tf1 (Telefon: unvalidierter Freitext), tfBankIBAN (IBAN: leeres/fehlendes Regex-Muster).", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-WF-01", "severity": "minor", "message": "Nicht-standardisierte Ad-hoc-Workflow-Status gefunden (3): ['Antrag kontiert  - warten auf Auszahlung', 'Antrag  bearbeitet', 'Nachreichung beendet - warten auf Auszahlung'].", "rule_id": "HWG-WF-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in den automatisierten Workflow-E-Mails (FC_EMAIL).", "rule_id": "HWG-WF-02"}], "recommendations": [], "passed": ["HWG-CD-03 (XIMA-Herstellerlogo im Footer deaktiviert)", "HWG-A11Y-01 (4 XFieldSet-Gruppen mit Legenden vorhanden)", "HWG-A11Y-02 (22 Pflichtfelder programmatisch inkl. globaler Legende deklariert)", "HWG-STAMM-01 (Kanonische Stammdaten-Abfolge in allen Sektionen eingehalten)", "HWG-UI-01 (Keine sichtbaren Entwickler-Notizen im Frontend)", "HWG-UX-01 (Affordanzgerechte kompakte Feldbreiten eingehalten)"], "not_applicable": {"HWG-STAMM-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-UX-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-FEEDBACK-01": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt)."}, "unverified_semantic": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"], "llm_evaluation": {"evaluated": false, "status": "unconfigured", "api_base": "https://chat-ai.academiccloud.de/v1", "model": "deepseek-v4-flash-0731", "reason": "Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "unverified_rules": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"]}, "score": 36}}, "sprints": {"name": "Reales Formular: Antrag-Sprints Drittmittel (ZFK)", "file": "data/raw_forms/test/unfertige und vielleicht fertige formulare/AFörderung Antrag-Sprints für Drittmittelanträge.xfp", "eval": {"form": "AFörderung Antrag-Sprints für Drittmittelanträge.xfp", "violations": [{"rule": "HWG-CD-02", "severity": "critical", "message": "Kein offizielles HWG-Header-Banner (XImage) innerhalb des Header-Containers (XHeader) vorhanden.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-CD-03", "severity": "major", "message": "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle').", "rule_id": "HWG-CD-03"}, {"rule": "HWG-CD-04", "severity": "major", "message": "Kein Formulartitel als <h1> innerhalb des Kopfbereichs (XHeader) vorhanden.", "rule_id": "HWG-CD-04"}, {"rule": "HWG-A11Y-01", "severity": "critical", "message": "Keine semantischen XFieldSet-Gruppierungen für 13 Eingabefelder vorhanden.", "rule_id": "HWG-A11Y-01"}, {"rule": "HWG-STAMM-01", "severity": "major", "message": "Inkonsistente Stammdaten-Abfolge: 'Name Antragstellende/r' (tfName) vor 'Vorname Antragstellende/r' (tfVorname), 'Telefonnummer' (tfTelefonnummer) vor 'E-Mail' (tfEmail). Erwartet: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.", "rule_id": "HWG-STAMM-01"}, {"rule": "HWG-DSGVO-01", "severity": "critical", "message": "Personenbezogene Daten werden erhoben, aber weder Footer-Datenschutzerklärung (privacyPolicyShow='1') noch verlinkter Art.-13-DSGVO-Hinweis vorhanden.", "rule_id": "HWG-DSGVO-01"}, {"rule": "HWG-WF-01", "severity": "minor", "message": "Nicht-standardisierte Ad-hoc-Workflow-Status gefunden (3): ['Kritischer Fall', 'Kritischer Fall Rückmeldung', 'Angenommen'].", "rule_id": "HWG-WF-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in den automatisierten Workflow-E-Mails (FC_EMAIL).", "rule_id": "HWG-WF-02"}], "recommendations": [], "passed": ["HWG-CD-01 (Layout-Breite durchgängig 850px)", "HWG-A11Y-02 (12 Pflichtfelder programmatisch inkl. globaler Legende deklariert)", "HWG-A11Y-03 (Saubere Label-Syntax ohne störende HTML-Fragmente)", "HWG-UI-01 (Keine sichtbaren Entwickler-Notizen im Frontend)", "HWG-VAL-01 (Alle strukturierten Eingabefelder formal validiert)"], "not_applicable": {"HWG-UPLOAD-01": "Keine Dateiupload-Elemente im Formular vorhanden.", "HWG-UX-01": "Keine typischen Kompaktfelder (PLZ, Hausnummer) im Formular vorhanden.", "HWG-STAMM-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-UX-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-FEEDBACK-01": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt)."}, "unverified_semantic": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"], "llm_evaluation": {"evaluated": false, "status": "unconfigured", "api_base": "https://chat-ai.academiccloud.de/v1", "model": "deepseek-v4-flash-0731", "reason": "Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "unverified_rules": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"]}, "score": 25}}, "master": {"name": "Reales Formular: Master-Formular (Campus Management)", "file": "data/raw_forms/test/adminformulare/Master-Formular.xfp", "eval": {"form": "Master-Formular.xfp", "violations": [{"rule": "HWG-CD-01", "severity": "major", "message": "Layout-Container weichen vom 850px-Standard ab (gefunden: 700px).", "rule_id": "HWG-CD-01"}, {"rule": "HWG-CD-02", "severity": "major", "message": "HWG-Header-Logo weicht von den Vorgaben ab: Höhe ist '50' statt 60px, barrierefreier Alternativtext (alt) fehlt oder unvollständig.", "rule_id": "HWG-CD-02"}, {"rule": "HWG-A11Y-03", "severity": "minor", "message": "HTML-Störfragmente (<br>, <span>, &nbsp;, doppelte Entities oder '|') in 3 Label(s): [tfMasterFachbereichSudiengang, tfMasterFachbereichSudiengang1, tfMasterFachbereichSudiengang2].", "rule_id": "HWG-A11Y-03"}, {"rule": "HWG-UI-01", "severity": "critical", "message": "Sichtbare Entwickler-Notizen / technische Hinweise im Frontend: txtDecline: 'Sie sind nicht Angehörige(r) der Hochschule Ludwigshafen. Daher w'; txt1: 'Fieldset wird per JavaScript eingeblendet, wenn Shibboleh/LDAP-Me'.", "rule_id": "HWG-UI-01"}, {"rule": "HWG-VAL-01", "severity": "major", "message": "Strukturierte Eingabefelder ohne gültigen Validator / Regex gefunden: tfMasterMatrikelnummer (Matrikelnummer: Typ 'text' ohne 6–7-stelligen Regex), tfMasterMatrikelnummer1 (Matrikelnummer: Typ 'text' ohne 6–7-stelligen Regex), tfMasterMatrikelnummer2 (Matrikelnummer: Typ 'text' ohne 6–7-stelligen Regex).", "rule_id": "HWG-VAL-01"}, {"rule": "HWG-WF-02", "severity": "minor", "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in den automatisierten Workflow-E-Mails (FC_EMAIL).", "rule_id": "HWG-WF-02"}], "recommendations": [], "passed": ["HWG-CD-03 (XIMA-Herstellerlogo im Footer deaktiviert)", "HWG-CD-04 (Formulartitel im Header eindeutig als H1 ausgezeichnet)", "HWG-A11Y-01 (4 XFieldSet-Gruppen mit Legenden vorhanden)", "HWG-A11Y-02 (25 Pflichtfelder programmatisch inkl. globaler Legende deklariert)", "HWG-STAMM-01 (Kanonische Stammdaten-Abfolge in allen Sektionen eingehalten)", "HWG-DSGVO-01 (DSGVO-Datenschutzhinweis mit Verlinkung / Footer-Option vorhanden)", "HWG-UX-01 (Affordanzgerechte kompakte Feldbreiten eingehalten)", "HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: Eingegangen)"], "not_applicable": {"HWG-UPLOAD-01": "Keine Dateiupload-Elemente im Formular vorhanden.", "HWG-STAMM-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-BTN-02": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-UX-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-01": "KI-Prüfung ausstehend (Semantische KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-LANG-02": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "HWG-FEEDBACK-01": "KI-Prüfung ausstehend (Hybride AST/KI-Regel): Diese Regel wurde NICHT durch ein Sprachmodell (LLM) begutachtet. Grund: Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt)."}, "unverified_semantic": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"], "llm_evaluation": {"evaluated": false, "status": "unconfigured", "api_base": "https://chat-ai.academiccloud.de/v1", "model": "deepseek-v4-flash-0731", "reason": "Keine LLM-API angebunden (kein API-Key in LLM_API_KEY / GWDG_API_KEY oder Dashboard-Konfiguration hinterlegt).", "unverified_rules": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02", "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"]}, "score": 55}}};
+        const SEMANTIC_RULE_IDS = [
+            "HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02",
+            "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"
+        ];
 
+        let activePresetKey = 'auslagen';
         let currentEval = presets.auslagen.eval;
         let currentFilter = 'all';
 
         document.getElementById('printDate').innerText = new Date().toLocaleDateString('de-DE');
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function getLlmUiConfig() {
+            const apiKey = (document.getElementById('llmApiKey')?.value || '').trim();
+            const apiBase = (document.getElementById('llmApiBase')?.value || 'https://chat-ai.academiccloud.de/v1').trim().replace(/\/+$/, '');
+            const model = (document.getElementById('llmModel')?.value || 'deepseek-v4-flash-0731').trim();
+            return { apiKey, apiBase, model };
+        }
 
         function initPresets() {
             const grid = document.getElementById('presetGrid');
             grid.innerHTML = '';
             for (const [key, p] of Object.entries(presets)) {
                 const btn = document.createElement('div');
-                btn.className = `preset-btn ${key === 'auslagen' ? 'active' : ''}`;
+                btn.className = `preset-btn ${key === activePresetKey ? 'active' : ''}`;
                 btn.id = `preset-${key}`;
-                
+
                 const score = p.eval.score;
                 let scoreClass = 'score-poor';
                 if (score >= 80) scoreClass = 'score-good';
@@ -741,7 +840,7 @@
 
                 btn.innerHTML = `
                     <div class="preset-btn-title">
-                        <span>${escapeHtml(p.name.split(':')[1] || p.name)}</span>
+                        <span>${escapeHtml((p.name.split(':')[1] || p.name).trim())}</span>
                         <span class="preset-score-pill ${scoreClass}">${score} P</span>
                     </div>
                     <div class="preset-btn-desc">${escapeHtml(p.eval.form)}</div>
@@ -752,12 +851,47 @@
         }
 
         function selectPreset(key) {
+            activePresetKey = key;
             document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
             const activeBtn = document.getElementById(`preset-${key}`);
             if (activeBtn) activeBtn.classList.add('active');
-            
             currentEval = presets[key].eval;
             renderEvaluation();
+        }
+
+        async function reevaluateActivePresetWithLLM() {
+            if (!activePresetKey) {
+                alert('Bitte wählen Sie ein Preset aus oder laden Sie eine Datei erneut hoch.');
+                return;
+            }
+            const cfg = getLlmUiConfig();
+            const btn = document.getElementById('btnReevalLLM');
+            const origText = btn.innerText;
+            btn.innerText = 'Prüfe via KI-API...';
+            btn.disabled = true;
+            try {
+                const headers = { 'Content-Type': 'application/json' };
+                if (cfg.apiKey) headers['X-LLM-Api-Key'] = cfg.apiKey;
+                if (cfg.apiBase) headers['X-LLM-Api-Base'] = cfg.apiBase;
+                if (cfg.model) headers['X-LLM-Model'] = cfg.model;
+
+                const resp = await fetch('/api/evaluate-preset', {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ preset: activePresetKey })
+                });
+                if (!resp.ok) throw new Error('Lokaler Python-Server (/api/evaluate-preset) nicht erreichbar.');
+                const res = await resp.json();
+                presets[activePresetKey].eval = res;
+                currentEval = res;
+                initPresets();
+                renderEvaluation();
+            } catch (err) {
+                alert('Hinweis: Für Preset-Live-Prüfungen bitte den lokalen Server starten (python web/server.py) oder die .xfp/.json-Datei direkt in das Upload-Feld ziehen. Detail: ' + err.message);
+            } finally {
+                btn.innerText = origText;
+                btn.disabled = false;
+            }
         }
 
         function renderEvaluation() {
@@ -765,11 +899,36 @@
             document.getElementById('currentFormName').innerText = e.form;
             document.getElementById('printMeta').innerText = `Formular: ${e.form} | Datum: ${new Date().toLocaleDateString('de-DE')} | Registry v${registry.version}`;
 
-            // Score gauge
+            // KI-Transparenz-Banner aktualisieren
+            const banner = document.getElementById('llmStatusBanner');
+            const llmInfo = e.llm_evaluation || { evaluated: false, status: 'unconfigured', reason: 'Keine LLM-API angebunden.' };
+            const unverifiedList = e.unverified_semantic || [];
+            if (llmInfo.evaluated && unverifiedList.length === 0) {
+                banner.className = 'llm-banner llm-banner-ok';
+                banner.innerHTML = `
+                    <div style="font-size: 18px; font-weight: 800;">✓</div>
+                    <div>
+                        <strong>Zweistufige Hybrid-Prüfung aktiv (Stufe 1 AST + Stufe 2 KI-API):</strong>
+                        Alle 15 deterministischen Regeln sowie alle 7 semantischen/hybriden Regeln wurden erfolgreich ausgewertet
+                        (Modell: <code>${escapeHtml(llmInfo.model || 'LLM')}</code>).
+                    </div>`;
+            } else {
+                banner.className = 'llm-banner llm-banner-warn';
+                banner.innerHTML = `
+                    <div style="font-size: 18px; font-weight: 800;">⚠</div>
+                    <div>
+                        <strong>KI-Stufe (Stufe 2) nicht durchgeführt – Semantische Regeln ungeprüft:</strong>
+                        ${escapeHtml(llmInfo.reason || 'Keine aktive LLM-API-Verbindung.')}
+                        Die <strong>${unverifiedList.length || 7} semantischen/hybriden Regeln</strong>
+                        (<code>${escapeHtml((unverifiedList.length ? unverifiedList : SEMANTIC_RULE_IDS).join(', '))}</code>)
+                        wurden <strong>nicht von einer KI begutachtet</strong> und sind unten eindeutig als
+                        <em>„Nicht zutreffend · Keine KI-Prüfung“</em> gekennzeichnet. Der angezeigte Score basiert ausschließlich auf den 15 deterministischen AST-Regeln (Stufe 1).
+                    </div>`;
+            }
+
             const score = e.score;
             document.getElementById('scoreValue').innerText = score;
-            
-            // Circle radius = 70 => circumference = 2 * PI * 70 = 439.82
+
             const circumference = 440;
             const offset = circumference - (score / 100) * circumference;
             const meter = document.getElementById('gaugeMeter');
@@ -793,7 +952,6 @@
                 verdict.style.color = 'var(--hwg-red)';
             }
 
-            // Count severities
             let criticals = 0, majors = 0, minors = 0, recs = (e.recommendations || []).length;
             (e.violations || []).forEach(v => {
                 if (v.severity === 'critical') criticals++;
@@ -803,10 +961,15 @@
 
             const passedCount = (e.passed || []).length;
             const naCount = Object.keys(e.not_applicable || {}).length;
+            const unverifiedCount = (e.unverified_semantic || []).length;
+
             document.getElementById('countCritical').innerText = criticals;
             document.getElementById('countMajor').innerText = majors;
             document.getElementById('countMinor').innerText = minors;
             document.getElementById('countPassed').innerText = passedCount;
+            document.getElementById('passRateSub').innerText = unverifiedCount > 0
+                ? `von 15 geprüften AST-Regeln (${unverifiedCount} KI-offen)`
+                : `von 22 Governance-Regeln`;
 
             document.getElementById('pillAll').innerText = registry.rules.length;
             document.getElementById('pillCritical').innerText = criticals;
@@ -814,27 +977,17 @@
             document.getElementById('pillMinor').innerText = minors;
             document.getElementById('pillRec').innerText = recs;
             document.getElementById('pillPassed').innerText = passedCount;
-            const pillNA = document.getElementById('pillNA');
-            if (pillNA) pillNA.innerText = naCount;
+            document.getElementById('pillUnverified').innerText = unverifiedCount;
+            document.getElementById('pillNA').innerText = naCount;
 
             renderRuleCards();
         }
 
-        function setFilter(filter) {
+        function setFilter(filter, btnEl) {
             currentFilter = filter;
             document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-            if (event && event.target) event.target.classList.add('active');
+            if (btnEl) btnEl.classList.add('active');
             renderRuleCards();
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
         }
 
         function renderRuleCards() {
@@ -845,27 +998,32 @@
             (currentEval.violations || []).forEach(v => { violationsMap[v.rule] = v; });
             const recMap = {};
             (currentEval.recommendations || []).forEach(r => { recMap[r.rule] = r; });
-            
             const passedSet = new Set((currentEval.passed || []).map(p => p.split(' ')[0]));
+            const unverifiedSet = new Set(currentEval.unverified_semantic || []);
 
             registry.rules.forEach(rule => {
                 const isViolation = !!violationsMap[rule.id];
                 const isRec = !!recMap[rule.id];
                 const isPassed = passedSet.has(rule.id);
+                const isUnverified = unverifiedSet.has(rule.id);
                 const isNotApplicable = !isViolation && !isRec && !isPassed;
 
-                // Filter check
                 if (currentFilter === 'critical' && (!isViolation || violationsMap[rule.id].severity !== 'critical')) return;
                 if (currentFilter === 'major' && (!isViolation || violationsMap[rule.id].severity !== 'major')) return;
                 if (currentFilter === 'minor' && (!isViolation || violationsMap[rule.id].severity !== 'minor')) return;
                 if (currentFilter === 'recommendation' && !isRec) return;
                 if (currentFilter === 'passed' && !isPassed) return;
+                if (currentFilter === 'unverified' && !isUnverified) return;
                 if (currentFilter === 'na' && !isNotApplicable) return;
 
                 const card = document.createElement('div');
                 let cardClass = 'rule-card';
                 let badgeHtml = '';
                 let messageHtml = '';
+
+                const stageLabel = rule.evaluation_type === 'deterministic'
+                    ? 'Stufe 1 · Deterministisch (AST)'
+                    : (rule.evaluation_type === 'hybrid' ? 'Stufe 2 · Hybrid (AST + LLM)' : 'Stufe 2 · Semantisch (LLM)');
 
                 if (isViolation) {
                     const v = violationsMap[rule.id];
@@ -882,6 +1040,13 @@
                     cardClass += ' rule-passed';
                     badgeHtml = `<span class="badge badge-passed">BESTANDEN (OK)</span>`;
                     messageHtml = `<div class="rule-message" style="color: var(--hwg-green);">✓ Vorgaben erfolgreich eingehalten.</div>`;
+                } else if (isUnverified) {
+                    cardClass += ' rule-unverified';
+                    badgeHtml = `<span class="badge badge-unverified">NICHT ZUTREFFEND · KEINE KI-PRÜFUNG</span>`;
+                    const naReason = (currentEval.not_applicable && currentEval.not_applicable[rule.id])
+                        ? currentEval.not_applicable[rule.id]
+                        : 'KI-Prüfung ausstehend: Keine LLM-API angebunden oder API-Ausfall.';
+                    messageHtml = `<div class="rule-message" style="color: #92400e;"><strong>Ungeprüft (kein KI-Audit):</strong> ${escapeHtml(naReason)}</div>`;
                 } else {
                     cardClass += ' rule-na';
                     badgeHtml = `<span class="badge" style="background: var(--slate-100); color: var(--slate-600); border: 1px solid var(--slate-300);">NICHT ZUTREFFEND</span>`;
@@ -895,10 +1060,7 @@
                 if (!isPassed) {
                     remediationHtml = `
                     <div class="remediation-box">
-                        <div class="remediation-title">
-                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5v-4A.5.5 0 0 1 8 4z"/></svg>
-                            Klickpfad im XIMA Formcycle Designer (Remediation):
-                        </div>
+                        <div class="remediation-title">Klickpfad im XIMA Formcycle Designer (Remediation):</div>
                         <div class="remediation-text">${escapeHtml(rule.remediation)}</div>
                     </div>`;
                 }
@@ -908,13 +1070,14 @@
                     <div class="rule-top">
                         <div class="rule-id-name">
                             <span class="rule-id">${escapeHtml(rule.id)}</span>
+                            <span class="rule-stage-tag">${escapeHtml(stageLabel)}</span>
                             <span class="rule-name">${escapeHtml(rule.name)}</span>
                         </div>
                         ${badgeHtml}
                     </div>
                     ${messageHtml}
                     ${remediationHtml}
-                    <div class="rationale-text">Theoretische & regulatorische Fundierung: ${escapeHtml(rule.rationale)}</div>
+                    <div class="rationale-text">Theoretische &amp; regulatorische Fundierung: ${escapeHtml(rule.rationale)}</div>
                 `;
                 container.appendChild(card);
             });
@@ -930,6 +1093,32 @@
             dlAnchor.remove();
         }
 
+        function decodeHtmlEntities(str) {
+            if (!str) return '';
+            const txt = document.createElement('textarea');
+            txt.innerHTML = String(str);
+            return txt.value;
+        }
+
+        function cleanVisibleText(raw) {
+            if (!raw) return '';
+            const unesc = decodeHtmlEntities(raw);
+            return unesc.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        }
+
+        function hasDirtyLabelMarkup(rawLabel) {
+            if (!rawLabel) return false;
+            const val = String(rawLabel).trim();
+            if (/&amp;[a-zA-Z0-9#]+;/.test(val) || val.toLowerCase().includes('&nbsp;')) return true;
+            if (/<\s*(?:br|span|div|font|table|tr|td|ul|ol|li|h[1-6])\b/i.test(val)) return true;
+            if (/\bstyle\s*=/i.test(val)) return true;
+            const pMatches = val.match(/<\s*p\b/gi);
+            if (pMatches && pMatches.length > 1) return true;
+            const cleaned = cleanVisibleText(val);
+            if (cleaned.includes('|') || cleaned.includes('<') || cleaned.includes('>')) return true;
+            return false;
+        }
+
         function extractWorkflowClient(obj, emails, states) {
             if (!obj) return;
             if (Array.isArray(obj)) {
@@ -941,12 +1130,13 @@
                         cp = typeof obj.customParameters === 'string' ? JSON.parse(obj.customParameters) : (obj.customParameters || {});
                     } catch (e) {}
                     emails.push({
-                        name: obj.name || '',
+                        node_name: obj.name || '',
+                        recipient: cp.to || cp.recipients || cp.recipient || '',
                         subject: cp.subject || '',
                         body: cp.body || ''
                     });
                 } else if (['FC_CHANGE_STATE', 'CUSTOM', 'RECEIVED'].includes(obj.type)) {
-                    const st = obj.name || '';
+                    const st = String(obj.name || '').trim();
                     if (st && st !== 'FC_CHANGE_STATE' && !states.includes(st)) {
                         states.push(st);
                     }
@@ -957,531 +1147,515 @@
             }
         }
 
-        function evaluateFormDataClient(formData, filename, workflowEmails, workflowStates) {
+        async function evaluateFormDataClient(formData, filename, workflowEmails, workflowStates) {
             const results = {
                 form: filename,
                 violations: [],
                 recommendations: [],
                 passed: [],
                 not_applicable: {},
+                unverified_semantic: [],
+                llm_evaluation: {
+                    evaluated: false,
+                    status: 'unconfigured',
+                    model: null,
+                    api_base: null,
+                    reason: '',
+                    unverified_rules: []
+                },
                 score: 100
             };
 
             const items = formData.items || [];
             const formProps = formData.properties || {};
             const penalties = registry.scoring.severity_penalties;
-
-            const widths = new Set();
-            if (formProps.maxwidth) widths.add(String(formProps.maxwidth));
-
-            let hasImage = false;
-            let imageProps = {};
-            let hasHeaderTitleH1 = false;
-            let headerTitleDetails = null;
-            let hasFieldset = false;
-            let footerShowsLogo = false;
-
-            let requiredFieldsTotal = 0;
-            const missingRequiredHints = [];
-            const manualAsterisksInLabels = [];
-            const htmlInLabels = [];
-            const devNotes = [];
-            const buttonLabels = [];
-            const navButtonLabels = [];
-            let hasSaveButton = false;
-
-            let pageCount = 0;
-            let inputFieldCount = 0;
             const inputClasses = new Set([
-                "XTextField", "XTextArea", "XSelect", "XCheckbox", 
+                "XTextField", "XTextArea", "XSelect", "XCheckbox",
                 "XUpload", "XFile", "XRadio", "XDate", "XNumber"
             ]);
 
-            const personalFieldsSequence = [];
+            const idToItem = {};
+            items.forEach(it => {
+                const p = it.properties || {};
+                const iid = String(p.id || p.name || "");
+                if (iid) idToItem[iid] = it;
+            });
+
+            function getAncestors(props) {
+                const chain = [];
+                let pid = String(props.parentid || "");
+                const visited = new Set();
+                for (let i = 0; i < 8; i++) {
+                    if (!pid || visited.has(pid) || !idToItem[pid]) break;
+                    visited.add(pid);
+                    const parentIt = idToItem[pid];
+                    chain.push(parentIt);
+                    pid = String((parentIt.properties || {}).parentid || "");
+                }
+                return chain;
+            }
+
+            function isInHeader(it) {
+                const c = it.className || "";
+                const props = it.properties || {};
+                if (c === "XHeader") return true;
+                if (String(props.parentid || "").toLowerCase().includes("header")) return true;
+                return getAncestors(props).some(a => a.className === "XHeader");
+            }
+
+            function isApplicantVisible(props) {
+                const vs = props.viewstatus;
+                if (Array.isArray(vs) && vs.length > 0 && !vs.map(String).includes("-1")) return false;
+                for (const anc of getAncestors(props)) {
+                    const avs = (anc.properties || {}).viewstatus;
+                    if (Array.isArray(avs) && avs.length > 0 && !avs.map(String).includes("-1")) return false;
+                }
+                return true;
+            }
+
+            function getSectionKey(props) {
+                for (const anc of getAncestors(props)) {
+                    if (["XFieldSet", "XContainer", "XContainerInvisible", "XPage"].includes(anc.className)) {
+                        const ap = anc.properties || {};
+                        return String(ap.id || ap.name || "root");
+                    }
+                }
+                return String(props.parentid || "root");
+            }
+
+            const rowCounts = {};
+            items.forEach(it => {
+                const props = it.properties || {};
+                if (!isApplicantVisible(props)) return;
+                const rid = String(props.rowid || "").trim();
+                if (rid) rowCounts[rid] = (rowCounts[rid] || 0) + 1;
+            });
+
+            const containerWidths = [];
+            if (formProps.maxwidth) containerWidths.push(String(formProps.maxwidth).trim().toLowerCase());
+
+            const headerImages = [];
+            let headerH1Count = 0;
+            let headerHasNonH1Title = false;
+            let footerShowsLogo = false;
+            let headerOrFooterShowsReqHint = false;
+            let footerShowsPrivacy = false;
+
+            const fieldsetsAll = [];
+            const fieldsetsMissingLegend = [];
+            const containerInputChildren = {};
+            let applicantInputCount = 0;
+            let rawXPageCount = 0;
+
+            let requiredFieldsTotal = 0;
+            const manualAsterisksInLabels = [];
+            const dirtyLabels = [];
+            const devNotes = [];
+            const sectionPersonalSeq = {};
+
             let hasPersonalData = false;
-            let hasDsgvoNotice = false;
-            const uploadElements = [];
+            let hasTextDsgvoWithLink = false;
             let hasUploadElements = false;
+            const deficientUploads = [];
             const structuredFieldsUnvalidated = [];
-            const compactFieldsUnconstrained = [];
             let hasCompactFields = false;
-            const jargonWithoutHelp = [];
-            const longSentences = [];
+            const compactFieldsUnconstrained = [];
 
             const nonPersonKeywords = [
-                "vorname", "antrag", "bank", "kredit", "projekt", "programm", 
-                "foerder", "titel", "datei", "forschung", "vorhaben", "institut", 
-                "organisation", "unternehmen", "thema", "kurs", "modul", "fach", 
+                "vorname", "antrag", "bank", "kredit", "projekt", "programm",
+                "foerder", "förder", "titel", "datei", "forschung", "vorhaben", "institut",
+                "organisation", "unternehmen", "thema", "kurs", "modul", "fach",
                 "abteilung", "studiengang", "dokument", "bezeichnung", "stelle",
-                "einrichtung", "arbeit", "abschlussarbeit", "hochschule", "firma"
-            ];
-
-            const jargonCatalog = [
-                "gstb", "kostenstelle", "vergabevermerk", "remonstration", 
-                "promotionsausschuss", "exmatrikulation", "shibboleth", "ldap",
-                "kap", "mittelbewirtschafter", "mittelgeber", "verausgabt", 
-                "verausgabung", "zfk", "haushaltsstelle", "bewilligungszeitraum", 
-                "titelgruppe", "drittmittel"
+                "einrichtung", "arbeit", "abschlussarbeit", "hochschule", "firma",
+                "suche", "praxispartner", "betreuer"
             ];
 
             items.forEach(it => {
                 const c = it.className || "";
                 const props = it.properties || {};
-                const name = String(props.name || "").toLowerCase();
+                const elemName = String(props.name || "unnamed");
+                const nameLow = elemName.toLowerCase();
+                const appVis = isApplicantVisible(props);
+
+                if (c === "XPage") rawXPageCount++;
+
                 const rawLbl = String(props.label || props.text || props.heading || "");
-                const lblClean = rawLbl.replace(/<[^>]+>/g, " ").trim();
+                const lblClean = cleanVisibleText(rawLbl);
                 const lblLower = lblClean.toLowerCase();
-                const helpText = String(props.helptext || props.help || props.tooltip || props.description || "").toLowerCase();
+                const helpRaw = String(props.helptext || props.help || props.tooltip || props.description || "");
+                const helpClean = cleanVisibleText(helpRaw).toLowerCase();
 
-                if (c === "XPage") pageCount++;
-                if (inputClasses.has(c)) inputFieldCount++;
-
-                if (props.maxwidth) widths.add(String(props.maxwidth));
-
-                if (c === "XImage") {
-                    hasImage = true;
-                    imageProps = props;
+                if (["XHeader", "XPage", "XFooter"].includes(c) && props.maxwidth) {
+                    containerWidths.push(String(props.maxwidth).trim().toLowerCase());
                 }
 
-                const parentId = String(props.parentid || "").toLowerCase();
-                const rte = String(props.rtevalue || "");
-                const heading = String(props.heading || "");
-                const label = String(props.label || "");
-                const text = String(props.text || "");
-                const lvl = String(props.headinglevel || "");
-                const isHeader = parentId.includes("header") || c === "XHeader" || name.includes("header");
-                const allHeading = `${rte} ${heading} ${label} ${text}`.toLowerCase();
-
-                if (isHeader || name.includes("header") || name.includes("titel") || name.includes("title")) {
-                    if (allHeading.includes("<h1") || lvl === "1") {
-                        hasHeaderTitleH1 = true;
-                    } else if (allHeading.includes("<h2") || allHeading.includes("<h3") || allHeading.includes("antrag") || name.includes("title") || name.includes("titel")) {
-                        if (!hasHeaderTitleH1) headerTitleDetails = "h2_or_text";
+                if (isInHeader(it)) {
+                    if (c === "XImage") headerImages.push(props);
+                    const combinedH = `${props.rtevalue || ""} ${props.heading || ""} ${props.label || ""} ${props.text || ""}`;
+                    const h1Matches = combinedH.match(/<\s*h1\b/gi);
+                    if (h1Matches && h1Matches.length > 0) {
+                        headerH1Count += h1Matches.length;
+                    } else if (String(props.headinglevel || "").trim() === "1" && cleanVisibleText(combinedH)) {
+                        headerH1Count += 1;
+                    } else if (/<\s*h[2-6]\b/i.test(combinedH) || (["XSpan", "XHeading", "XText"].includes(c) && cleanVisibleText(combinedH).length >= 5)) {
+                        headerHasNonH1Title = true;
                     }
                 }
 
+                if (["XHeader", "XFooter"].includes(c)) {
+                    if (["1", "true"].includes(String(props.showrequiredhint || "0").trim().toLowerCase())) {
+                        headerOrFooterShowsReqHint = true;
+                    }
+                }
                 if (c === "XFooter") {
-                    if (String(props.showlogo || "0") === "1") footerShowsLogo = true;
+                    if (["1", "true"].includes(String(props.showlogo || "0").trim().toLowerCase())) footerShowsLogo = true;
+                    if (["1", "true"].includes(String(props.privacyPolicyShow || "0").trim().toLowerCase())) footerShowsPrivacy = true;
                 }
 
-                if (c === "XFieldSet") hasFieldset = true;
-
-                if (inputClasses.has(c)) {
-                    const isReq = String(props.required || "0") === "1";
-                    const showHint = String(props.showrequiredhint || "1");
-                    if (isReq) {
-                        requiredFieldsTotal++;
-                        if (showHint === "0") missingRequiredHints.push(props.name || "unnamed");
-                    } else if (lblClean.includes("*")) {
-                        manualAsterisksInLabels.push(props.name || "unnamed");
-                    }
+                if (c === "XFieldSet" && appVis) {
+                    fieldsetsAll.push(elemName);
+                    const legTxt = cleanVisibleText(props.legend || props.label || props.heading || "");
+                    if (!legTxt) fieldsetsMissingLegend.push(elemName);
                 }
 
-                ["label", "text", "heading"].forEach(lk => {
-                    if (props[lk]) {
-                        const val = String(props[lk]);
-                        const cleanVal = val.replace(/\s+/g, " ").trim();
-                        if (/<[^>]+>/.test(val) || /&[a-zA-Z0-9#]+;/.test(val) || val.includes("|")) {
-                            htmlInLabels.push([props.name || "unnamed", cleanVal.slice(0, 35)]);
-                        }
-                        if (["JavaScript", "Shibboleth", "LDAP-Member", "Postfach-SB"].some(t => val.includes(t))) {
-                            devNotes.push([props.name || "unnamed", cleanVal.slice(0, 40)]);
-                        }
-                    }
-                });
-
-                if (c.includes("Button") || c === "XButtonList") {
-                    if (Array.isArray(props.buttons)) {
-                        props.buttons.forEach(b => {
-                            const val = b.value || b.text || b.title || "";
-                            if (val) {
-                                buttonLabels.push([props.name || "btn", val]);
-                                if ((b.action && ["next", "prev"].includes(b.action.page)) || ["weiter", "zurück", "zurueck"].some(s => val.toLowerCase().includes(s))) {
-                                    navButtonLabels.push(val);
-                                }
+                if (inputClasses.has(c) && appVis) {
+                    applicantInputCount++;
+                    const ancs = getAncestors(props);
+                    const inFs = ancs.some(a => a.className === "XFieldSet");
+                    if (!inFs) {
+                        ancs.forEach(a => {
+                            if (["XContainer", "XContainerInvisible"].includes(a.className) && !isInHeader(a)) {
+                                const cn = String((a.properties || {}).name || "container");
+                                containerInputChildren[cn] = (containerInputChildren[cn] || 0) + 1;
                             }
                         });
                     }
-                    const btnLbl = props.text || props.label || props.value || "";
-                    if (btnLbl) {
-                        buttonLabels.push([props.name || "btn", btnLbl]);
-                        if (["weiter", "zurück", "zurueck"].some(s => btnLbl.toLowerCase().includes(s))) {
-                            navButtonLabels.push(btnLbl);
+
+                    const isReq = ["1", "true"].includes(String(props.required || "0").trim().toLowerCase()) || Boolean(String(props.requiredif || "").trim());
+                    if (isReq) requiredFieldsTotal++;
+                    else if (/(?:\*\s*$|\(\*\)|\s\*(?:\s|$))/.test(lblClean)) manualAsterisksInLabels.push(elemName);
+                }
+
+                if ((inputClasses.has(c) || c === "XFieldSet") && appVis && props.label && hasDirtyLabelMarkup(props.label)) {
+                    dirtyLabels.push(elemName);
+                }
+
+                if (appVis) {
+                    for (const tk of ["label", "text", "heading", "rtevalue", "value"]) {
+                        const tval = String(props[tk] || "");
+                        if (!tval) continue;
+                        const tClean = cleanVisibleText(tval);
+                        const tLow = tClean.toLowerCase();
+                        if (["javascript", "shibboleth", "shibboleh", "ldap-member", "forms-admin", "postfach-sb", "display:none", "display: none", "ausgeblendet (hide)", "saml-hslu"].some(p => tLow.includes(p))) {
+                            devNotes.push(`${elemName}: '${tClean.slice(0, 60)}'`);
+                            break;
                         }
                     }
-                    if (Array.isArray(props.items)) {
-                        props.items.forEach(b => {
-                            const val = (typeof b === "object" ? (b.text || b.value || b.title) : b) || "";
-                            if (val) buttonLabels.push([props.name || "btn", val]);
-                        });
+                }
+
+                if (inputClasses.has(c) && c !== "XTextArea" && appVis) {
+                    const secKey = getSectionKey(props);
+                    if (!sectionPersonalSeq[secKey]) sectionPersonalSeq[secKey] = [];
+                    const seq = sectionPersonalSeq[secKey];
+                    const hasNachname = seq.some(f => f[0] === "nachname");
+                    const isExplicitLastname = (
+                        nameLow.includes("nachname") || lblLower.includes("nachname") ||
+                        ["name", "familienname"].includes(lblLower) ||
+                        ["name antragstellende", "name antragsteller", "name der antragstellenden"].some(p => lblLower.includes(p))
+                    ) && !nameLow.includes("vorname") && !lblLower.includes("vorname") && !nameLow.includes("suche") && !lblLower.includes("suche");
+                    const isNonPerson = nonPersonKeywords.some(k => nameLow.includes(k) || lblLower.includes(k));
+
+                    if (["anrede", "salutation"].some(t => nameLow.includes(t) || lblLower.includes(t)) && lblClean.length <= 30) {
+                        seq.push(["anrede", elemName, lblClean || "Anrede", 1]);
+                    } else if ((nameLow.includes("vorname") || lblLower.includes("vorname")) && !nameLow.includes("suche")) {
+                        seq.push(["vorname", elemName, lblClean || "Vorname", 2]);
+                    } else if (isExplicitLastname || (!isNonPerson && !hasNachname && nameLow.includes("name"))) {
+                        seq.push(["nachname", elemName, lblClean || "Nachname", 3]);
+                    } else if (["email", "e-mail", "mail"].some(t => nameLow.includes(t) || lblLower.includes(t)) && c === "XTextField") {
+                        seq.push(["email", elemName, lblClean || "E-Mail-Adresse", 4]);
+                    } else if (["telefon", "telefonnummer", "phone", "mobilfunk"].some(t => nameLow.includes(t) || lblLower.includes(t)) && c === "XTextField") {
+                        seq.push(["telefon", elemName, lblClean || "Telefonnummer", 5]);
                     }
                 }
 
-                if (inputClasses.has(c)) {
-                    const elemName = props.name || "unnamed";
-                    const hasNachname = personalFieldsSequence.some(f => f[0] === "nachname");
-                    const isNonPerson = nonPersonKeywords.some(k => name.includes(k) || lblLower.includes(k));
-
-                    if (["anrede", "salutation"].some(t => name.includes(t) || lblLower.includes(t))) {
-                        personalFieldsSequence.push(["anrede", elemName, lblClean || "Anrede", 1]);
-                    } else if (name.includes("vorname") || lblLower.includes("vorname")) {
-                        personalFieldsSequence.push(["vorname", elemName, lblClean || "Vorname", 2]);
-                    } else if (!isNonPerson && (
-                        name.includes("nachname") || 
-                        lblLower.includes("nachname") || 
-                        (!hasNachname && (
-                            ["name", "nachname", "familienname"].includes(lblClean.toLowerCase()) || 
-                            ["name antragstellende", "name antragsteller", "name der antragstellenden"].some(t => lblLower.includes(t)) ||
-                            (name.includes("name") && !nonPersonKeywords.some(k => name.includes(k)))
-                        ))
-                    )) {
-                        personalFieldsSequence.push(["nachname", elemName, lblClean || "Nachname", 3]);
-                    } else if (["email", "e-mail", "mail"].some(t => name.includes(t) || lblLower.includes(t))) {
-                        personalFieldsSequence.push(["email", elemName, lblClean || "E-Mail-Adresse", 4]);
-                    } else if (["telefon", "telefonnummer", "phone", "mobil"].some(t => name.includes(t) || lblLower.includes(t))) {
-                        personalFieldsSequence.push(["telefon", elemName, lblClean || "Telefonnummer", 5]);
-                    }
-                }
-
-                if (["vorname", "nachname", "name", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift"].some(t => name.includes(t) || lblLower.includes(t))) {
+                if (inputClasses.has(c) && ["vorname", "nachname", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift", "telefon"].some(t => nameLow.includes(t) || lblLower.includes(t))) {
                     hasPersonalData = true;
                 }
-                const rawDsgvoCtx = (lblLower + " " + helpText + " " + String(props.rtevalue || "").toLowerCase() + " " + String(props.html || "").toLowerCase());
-                if (["datenschutz", "dsgvo", "datenverarbeitung", "datenschutzerklärung", "hwg-lu.de"].some(t => rawDsgvoCtx.includes(t))) {
-                    hasDsgvoNotice = true;
-                }
-                if (c === "XFooter" && String(props.privacyPolicyShow || "0") === "1") {
-                    hasDsgvoNotice = true;
+
+                const rawHtmlCtx = `${rawLbl} ${helpRaw} ${props.rtevalue || ""} ${props.html || ""}`.toLowerCase();
+                if (["datenschutz", "dsgvo", "art. 13", "artikel 13", "datenverarbeitung"].some(t => rawHtmlCtx.includes(t)) &&
+                    ["href=", "https://", "http://", "www.hwg-lu.de/datenschutz", "hwg-lu.de/datenschutz"].some(l => rawHtmlCtx.includes(l))) {
+                    hasTextDsgvoWithLink = true;
                 }
 
-                if (["XUpload", "XFile", "XUploadButton"].includes(c) || name.includes("upload")) {
+                if ((["XUpload", "XFile", "XUploadButton"].includes(c) || nameLow.includes("upload")) && appVis) {
                     hasUploadElements = true;
-                    const hasFormats = ["pdf", "jpg", "png", "zip", "format", "dateiformat"].some(fmt => lblLower.includes(fmt) || helpText.includes(fmt));
-                    const hasSize = ["mb", "kb", "maximal", "größe", "dateigröße"].some(sz => lblLower.includes(sz) || helpText.includes(sz));
-                    if (!hasFormats || !hasSize) {
-                        uploadElements.push({ name: props.name || "upload", hasFormats, hasSize });
-                    }
-                }
-
-                if (["iban", "plz", "postleitzahl", "telefon", "geburtsdatum"].some(t => name.includes(t) || lblLower.includes(t))) {
-                    const valRule = props.validation || {};
-                    const hasRegex = Boolean(props.pattern || props.vrule || ["regexp", "email", "number", "date"].includes(props.datatype) || valRule.regex || valRule.type);
-                    if (!hasRegex) structuredFieldsUnvalidated.push(props.name || lblClean.slice(0, 15));
-                }
-
-                if (["plz", "postleitzahl", "hausnummer", "hnr"].some(t => name.includes(t) || lblLower.includes(t))) {
-                    hasCompactFields = true;
-                    const colWidth = props.colwidth || props.width;
-                    if (["100%", "12", undefined, null].includes(colWidth) && !props.maxwidth) {
-                        compactFieldsUnconstrained.push(props.name || lblClean.slice(0, 15));
-                    }
-                }
-
-                jargonCatalog.forEach(jg => {
-                    const matched = (jg.length <= 4) ? new RegExp('\\b' + jg + '\\b', 'i').test(lblLower) : lblLower.includes(jg);
-                    if (matched && (!helpText || helpText.trim().length < 5)) {
-                        jargonWithoutHelp.push([jg, props.name || lblClean.slice(0, 15)]);
-                    }
-                });
-
-                ["text", "help", "tooltip", "description", "rtevalue"].forEach(k => {
-                    const val = String(props[k] || "");
-                    if (val) {
-                        const cleanT = val.replace(/<[^>]+>/g, " ");
-                        cleanT.split(/[.!?]+/).forEach(sent => {
-                            const words = sent.trim().split(/\s+/).filter(w => w.length > 1);
-                            if (words.length > 25) {
-                                longSentences.push([props.name || "unnamed", words.length, words.slice(0, 8).join(" ") + "..."]);
-                            }
+                    const visCtx = `${lblLower} ${helpClean}`;
+                    const hasVisFmt = ["pdf", "jpg", "jpeg", "png", "docx", "xlsx", "zip", "dateiformat"].some(f => visCtx.includes(f));
+                    const hasVisSize = ["mb", "kb", "maximal", "max.", "dateigröße", "dateigroesse"].some(s => visCtx.includes(s));
+                    const fext = String(props.fileextension || "").trim().toLowerCase();
+                    const msize = parseInt(String(props.maxfilesize || "0").trim() || "0", 10) || 0;
+                    const hasTech = Boolean(fext) && msize > 0;
+                    let contradiction = false;
+                    if (fext) {
+                        ["docx", "xlsx", "zip"].forEach(pe => {
+                            if (visCtx.includes(pe) && !fext.includes(pe.slice(0, 3))) contradiction = true;
                         });
                     }
-                });
-            });
+                    if (!(hasVisFmt && hasVisSize && hasTech) || contradiction) {
+                        deficientUploads.push(elemName);
+                    }
+                }
 
-            buttonLabels.forEach(([bSource, bl]) => {
-                const lower = bl.toLowerCase();
-                if (["zwischenspeichern", "speichern", "fortsetzen"].some(s => lower.includes(s))) {
-                    hasSaveButton = true;
+                if (["XTextField", "XDate", "XNumber"].includes(c) && appVis) {
+                    const dt = String(props.datatype || "").trim();
+                    const vrule = String(props.vrule || props.pattern || "").trim();
+                    const valDict = (props.validation && typeof props.validation === 'object') ? props.validation : {};
+                    const hasCustomRegex = (dt === "regexp" && Boolean(vrule)) || Boolean(props.pattern) || Boolean(valDict.regex);
+
+                    const isPlz = /\b(?:plz|postleitzahl)\b/.test(lblLower) || nameLow.includes("plz") || nameLow.includes("postleitzahl");
+                    const isIban = /\biban\b/.test(lblLower) || nameLow.includes("iban");
+                    const isPhone = ["telefon", "mobilfunk", "handynummer"].some(t => nameLow.includes(t) || lblLower.includes(t));
+                    const isDate = c === "XDate" || nameLow.includes("geburtsdatum") || lblLower.includes("geburtsdatum") || /\bdatum\b/.test(lblLower);
+                    const isMatrikel = nameLow.includes("matrikel") || lblLower.includes("matrikel");
+
+                    if (isPlz && !(dt === "plzDE" || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
+                    else if (isIban && !(hasCustomRegex || valDict.type === "iban")) structuredFieldsUnvalidated.push(elemName);
+                    else if (isPhone && !(dt === "phone" || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
+                    else if (isDate && !(c === "XDate" || ["dateDE", "dateISO", "date", "datetime"].includes(dt) || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
+                    else if (isMatrikel && !hasCustomRegex) structuredFieldsUnvalidated.push(elemName);
+                }
+
+                if (c === "XTextField" && appVis) {
+                    const isCompact = /\b(?:plz|postleitzahl|hausnummer|hausnr|hnr)\b/.test(lblLower) || ["plz", "postleitzahl", "hausnummer", "hnr"].some(k => nameLow.includes(k));
+                    if (isCompact) {
+                        hasCompactFields = true;
+                        const cw = String(props.computedwidth || "").trim();
+                        const pct = cw.endsWith("%") ? parseFloat(cw) : 100;
+                        const rid = String(props.rowid || "").trim();
+                        const colW = props.colwidth || props.width;
+                        const isSmall = (pct < 100) || (rid && (rowCounts[rid] || 0) >= 2) || (props.maxwidth && String(props.maxwidth).toLowerCase() !== "100%") || (colW && !["100%", "12"].includes(String(colW)));
+                        if (!isSmall) compactFieldsUnconstrained.push(elemName);
+                    }
                 }
             });
 
-            let hasWorkflowFeedback = false;
-            (workflowEmails || []).forEach(em => {
-                const text = `${em.subject || ""} ${em.body || ""}`.toLowerCase();
-                if (["vielen dank", "eingegangen", "geprüft", "prüfung", "entscheidung", "folgeschritte", "bearbeit", "rückmeldung", "vorgangsnummer", "project_alias"].some(t => text.includes(t))) {
-                    hasWorkflowFeedback = true;
-                }
-            });
+            const unsemanticContainers = Object.entries(containerInputChildren).filter(([, cnt]) => cnt >= 3).map(([k]) => k);
+            const distinctWidths = Array.from(new Set(containerWidths.filter(Boolean)));
 
-            // 1. HWG-CD-01
-            if (widths.has("700px") && !widths.has("850px")) {
-                results.violations.push({ rule: "HWG-CD-01", severity: "major", message: "Formular verwendet veraltete 700px-Breite statt dem 850px-Standard." });
+            if (distinctWidths.length === 0 || !(distinctWidths.length === 1 && distinctWidths[0] === "850px")) {
+                results.violations.push({ rule: "HWG-CD-01", rule_id: "HWG-CD-01", severity: "major", message: `Layout-Container weichen vom 850px-Standard ab (gefunden: ${distinctWidths.filter(w => w !== '850px').join(', ') || 'undefiniert'}).` });
                 results.score -= penalties.major;
-            } else {
-                results.passed.push("HWG-CD-01 (Breite 850px eingehalten)");
-            }
+            } else results.passed.push("HWG-CD-01 (Layout-Breite durchgängig 850px)");
 
-            // 2. HWG-CD-02
-            if (!hasImage) {
-                results.violations.push({ rule: "HWG-CD-02", severity: "critical", message: "Kein offizielles HWG-Header-Banner (XImage) im Kopfbereich vorhanden." });
+            if (headerImages.length === 0) {
+                results.violations.push({ rule: "HWG-CD-02", rule_id: "HWG-CD-02", severity: "critical", message: "Kein offizielles HWG-Header-Banner (XImage) im Header-Container (XHeader) vorhanden." });
                 results.score -= penalties.critical;
             } else {
-                const imgH = String(imageProps.imageheight || imageProps.height || "").trim().toLowerCase();
-                const imgAlign = String(imageProps.textalign || imageProps.align || "").trim().toLowerCase();
-                const isHeight60 = imgH === "60" || imgH === "60px";
-                const isRight = imgAlign === "right" || imgAlign === "2";
-                if (!isHeight60 || !isRight) {
-                    const issues = [];
-                    if (!isHeight60) issues.push(`Höhe (in px) ist '${imgH || "undefiniert"}' statt 60px`);
-                    if (!isRight) issues.push(`Ausrichtung ist '${imgAlign || "links"}' statt rechtsbündig`);
-                    results.violations.push({ rule: "HWG-CD-02", severity: "major", message: `HWG-Header-Logo weicht von den Formatvorgaben ab: ${issues.join(", ")}.` });
+                const ip = headerImages[0];
+                const ih = String(ip.imageheight || ip.height || "").trim().toLowerCase();
+                const ia = String(ip.textalign || ip.align || "").trim().toLowerCase();
+                const ialt = cleanVisibleText(ip.alt || ip.alttext || "").toLowerCase();
+                const okH = ["60", "60px"].includes(ih);
+                const okA = ["right", "2"].includes(ia);
+                const okAlt = Boolean(ialt) && (ialt.includes("hochschule für wirtschaft und gesellschaft") || ialt.includes("hwg ludwigshafen"));
+                if (!(okH && okA && okAlt)) {
+                    const iss = [];
+                    if (!okH) iss.push(`Höhe '${ih || 'undefiniert'}' statt 60px`);
+                    if (!okA) iss.push(`Ausrichtung '${ia || 'links'}' statt rechtsbündig`);
+                    if (!okAlt) iss.push("Alternativtext (alt) fehlt/unvollständig");
+                    results.violations.push({ rule: "HWG-CD-02", rule_id: "HWG-CD-02", severity: "major", message: `HWG-Header-Logo weicht ab: ${iss.join(', ')}.` });
                     results.score -= penalties.major;
-                } else {
-                    results.passed.push("HWG-CD-02 (Header-Logo mit 60px Höhe, rechtsbündig vorhanden)");
-                }
+                } else results.passed.push("HWG-CD-02 (Header-Logo 60px, rechtsbündig, mit Alt-Text)");
             }
 
-            // 3. HWG-CD-03
             if (footerShowsLogo) {
-                results.violations.push({ rule: "HWG-CD-03", severity: "major", message: "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert ('Powered by XIMA Formcycle')." });
+                results.violations.push({ rule: "HWG-CD-03", rule_id: "HWG-CD-03", severity: "major", message: "Im Footer (XFooter) ist 'Logo anzeigen' (showlogo='1') aktiviert." });
                 results.score -= penalties.major;
-            } else {
-                results.passed.push("HWG-CD-03 (XIMA-Logo im Footer deaktiviert)");
-            }
+            } else results.passed.push("HWG-CD-03 (XIMA-Logo deaktiviert)");
 
-            // 4. HWG-CD-04
-            if (hasHeaderTitleH1) {
-                results.passed.push("HWG-CD-04 (Formulartitel im Header als H1 vorhanden)");
-            } else {
-                const msg = headerTitleDetails === "h2_or_text"
-                    ? "Formulartitel im Header ist nicht als Überschrift erster Ordnung (H1) ausgezeichnet (gefunden: H2 oder Fließtext statt <h1>)."
-                    : "Kein Formulartitel im Kopfbereich (Header) vorhanden. Der Antragstitel muss im Header als H1 deklariert werden.";
-                results.violations.push({ rule: "HWG-CD-04", severity: "major", message: msg });
+            if (headerH1Count === 1) results.passed.push("HWG-CD-04 (Formulartitel im Header als H1 ausgezeichnet)");
+            else {
+                results.violations.push({ rule: "HWG-CD-04", rule_id: "HWG-CD-04", severity: "major", message: headerHasNonH1Title ? "Formulartitel im Header ist nicht als <h1> ausgezeichnet." : "Kein Formulartitel als <h1> im Kopfbereich (XHeader) vorhanden." });
                 results.score -= penalties.major;
             }
 
-            // 5. HWG-A11Y-01
-            if (hasFieldset) {
-                results.passed.push("HWG-A11Y-01 (Fieldsets vorhanden: Semantische Gruppenbildung erfüllt)");
-            } else if (items.length > 20) {
-                results.violations.push({ rule: "HWG-A11Y-01", severity: "critical", message: "Keine semantischen XFieldSet-Gruppierungen für Formularabschnitte vorhanden." });
+            if (applicantInputCount < 4 && fieldsetsAll.length === 0) {
+                results.not_applicable["HWG-A11Y-01"] = "Kleinstformular (< 4 Eingabefelder).";
+            } else if (fieldsetsAll.length === 0 || fieldsetsMissingLegend.length > 0 || unsemanticContainers.length > 0) {
+                results.violations.push({ rule: "HWG-A11Y-01", rule_id: "HWG-A11Y-01", severity: "critical", message: fieldsetsAll.length === 0 ? `Keine semantischen XFieldSet-Gruppierungen für ${applicantInputCount} Eingabefelder vorhanden.` : "Unvollständige Fieldset-Legenden oder unsemantische XContainer-Sektionen gefunden." });
                 results.score -= penalties.critical;
-            } else {
-                results.passed.push("HWG-A11Y-01 (Kompaktformular <= 20 Elemente: Keine Abschnittsbildung per Fieldset erforderlich)");
-            }
+            } else results.passed.push("HWG-A11Y-01 (Fieldsets mit Legenden vorhanden)");
 
-            // 6. HWG-A11Y-02
-            if (missingRequiredHints.length > 0 || manualAsterisksInLabels.length > 0) {
-                const issues = [];
-                if (missingRequiredHints.length > 0) issues.push(`Optischer Hinweis deaktiviert (showrequiredhint='0') in [${missingRequiredHints.join(", ")}]`);
-                if (manualAsterisksInLabels.length > 0) issues.push(`Manuelles Sternchen (*) im Label ohne native Pflichtfeldfunktion in [${manualAsterisksInLabels.join(", ")}]`);
-                results.violations.push({ rule: "HWG-A11Y-02", severity: "major", message: `Pflichtfeld-Deklaration verletzt: ${issues.join("; ")}.` });
+            if ((requiredFieldsTotal > 0 && !headerOrFooterShowsReqHint) || manualAsterisksInLabels.length > 0) {
+                results.violations.push({ rule: "HWG-A11Y-02", rule_id: "HWG-A11Y-02", severity: "major", message: "Pflichtfeldlegende (showrequiredhint='1') in Header/Footer deaktiviert oder manuelles Sternchen (*) ohne required='1'." });
                 results.score -= penalties.major;
-            } else if (requiredFieldsTotal > 0) {
-                results.passed.push(`HWG-A11Y-02 (Pflichtfeld-Deklaration: ${requiredFieldsTotal} Pflichtfelder mit optischem Hinweis und barrierefreiem aria-required deklariert)`);
-            } else {
-                results.not_applicable["HWG-A11Y-02"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Pflichtfelder im Formular deklariert.";
-            }
+            } else if (requiredFieldsTotal > 0) results.passed.push("HWG-A11Y-02 (Pflichtfelder korrekt deklariert)");
+            else results.not_applicable["HWG-A11Y-02"] = "Keine Pflichtfelder vorhanden.";
 
-            // 7. HWG-A11Y-03
-            if (htmlInLabels.length > 0) {
-                const affected = htmlInLabels.map(h => h[0]);
-                const preview = affected.slice(0, 6).join(", ") + (affected.length > 6 ? ` und ${affected.length - 6} weitere` : "");
-                results.violations.push({ rule: "HWG-A11Y-03", severity: "minor", message: `HTML-Fragmente oder Entities in ${htmlInLabels.length} Label(s) gefunden: [${preview}].` });
+            if (dirtyLabels.length > 0) {
+                results.violations.push({ rule: "HWG-A11Y-03", rule_id: "HWG-A11Y-03", severity: "minor", message: `HTML-Störfragmente in ${dirtyLabels.length} Label(s): [${dirtyLabels.slice(0, 5).join(', ')}].` });
                 results.score -= penalties.minor;
-            } else {
-                results.passed.push("HWG-A11Y-03 (Saubere Labels ohne HTML-Fragmente und Entities)");
-            }
+            } else results.passed.push("HWG-A11Y-03 (Saubere Labels)");
 
-            // 8. HWG-STAMM-01
-            if (personalFieldsSequence.length >= 2) {
-                const outOfOrder = [];
-                for (let i = 0; i < personalFieldsSequence.length - 1; i++) {
-                    const curr = personalFieldsSequence[i];
-                    const nxt = personalFieldsSequence[i + 1];
-                    if (nxt[0] === "anrede" && (curr[0] === "email" || curr[0] === "telefon")) continue;
-                    if (curr[3] > nxt[3]) {
-                        outOfOrder.push(`'${curr[2]}' (${curr[0]}) vor '${nxt[2]}' (${nxt[0]})`);
-                    }
-                }
-                if (outOfOrder.length > 0) {
-                    results.violations.push({ rule: "HWG-STAMM-01", severity: "major", message: `Inkonsistente Abfolge persönlicher Stammdaten: ${outOfOrder.join(", ")}. Erwartete Reihenfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.` });
-                    results.score -= penalties.major;
-                } else {
-                    results.passed.push("HWG-STAMM-01 (Kanonische Stammdaten-Abfolge eingehalten)");
-                }
-            } else {
-                results.not_applicable["HWG-STAMM-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine oder weniger als 2 persönliche Stammdatenfelder vorhanden. Hinweis: Achten Sie bei der Erhebung von Stammdaten stets auf die kanonische Abfolge: Anrede -> Vorname -> Nachname -> E-Mail-Adresse -> Telefonnummer.";
-            }
-
-            // 9. HWG-STAMM-02
-            const nonCanonical = [];
-            items.forEach(it => {
-                const props = it.properties || {};
-                const rawLbl = String(props.label || "").trim();
-                const lbl = rawLbl.replace(/<[^>]+>/g, "").trim();
-                const name = String(props.name || "").toLowerCase();
-                if ((name.includes("email") || name.includes("mail")) && lbl && !["E-Mail-Adresse", "E-Mail", "Hochschul-E-Mail"].includes(lbl)) {
-                    nonCanonical.push([lbl, "Erwartet: E-Mail-Adresse oder Hochschul-E-Mail"]);
-                }
-                const isNonPersonLabel = nonPersonKeywords.some(k => name.includes(k) || lbl.toLowerCase().includes(k));
-                if (!isNonPersonLabel && (name.includes("nachname") || (name.includes("name") && !nonPersonKeywords.some(t => name.includes(t))))) {
-                    if (lbl.toLowerCase().includes("antragstellende") || lbl === "Name") {
-                        nonCanonical.push([lbl, "Erwartet: Nachname"]);
+            const outOfOrder = [];
+            let hasMultiFieldSec = false;
+            Object.values(sectionPersonalSeq).forEach(seq => {
+                if (seq.length >= 2) {
+                    hasMultiFieldSec = true;
+                    for (let i = 0; i < seq.length - 1; i++) {
+                        if (seq[i][3] > seq[i + 1][3]) outOfOrder.push(`'${seq[i][2]}' vor '${seq[i + 1][2]}'`);
                     }
                 }
             });
-            if (nonCanonical.length > 0) {
-                results.violations.push({ rule: "HWG-STAMM-02", severity: "minor", message: `Nicht-standardisierte Stammdaten-Bezeichnungen gefunden: ${nonCanonical.map(nc => `['${nc[0]}', '${nc[1]}']`).slice(0, 2).join(", ")}` });
-                results.score -= penalties.minor;
-            } else {
-                results.passed.push("HWG-STAMM-02 (Kanonische Stammdaten-Labels)");
-            }
+            if (!hasMultiFieldSec) results.not_applicable["HWG-STAMM-01"] = "Keine Stammdaten-Sektion mit >= 2 Personenfeldern vorhanden.";
+            else if (outOfOrder.length > 0) {
+                results.violations.push({ rule: "HWG-STAMM-01", rule_id: "HWG-STAMM-01", severity: "major", message: `Inkonsistente Stammdaten-Abfolge: ${outOfOrder.slice(0, 3).join(', ')}.` });
+                results.score -= penalties.major;
+            } else results.passed.push("HWG-STAMM-01 (Kanonische Stammdaten-Abfolge)");
 
-            // 10. HWG-UI-01
             if (devNotes.length > 0) {
-                results.violations.push({ rule: "HWG-UI-01", severity: "critical", message: `Sichtbare Entwickler-Notizen / Skript-Reste im Frontend: ${devNotes.map(dn => `['${dn[0]}', '${dn[1]}']`).join(", ")}` });
+                results.violations.push({ rule: "HWG-UI-01", rule_id: "HWG-UI-01", severity: "critical", message: `Sichtbare Entwickler-Notizen im Frontend: ${devNotes.slice(0, 2).join('; ')}.` });
                 results.score -= penalties.critical;
-            } else {
-                results.passed.push("HWG-UI-01 (Keine Entwickler-Notizen)");
-            }
+            } else results.passed.push("HWG-UI-01 (Keine Entwickler-Notizen)");
 
-            // 11. HWG-BTN-01
-            const invalidButtons = [];
-            buttonLabels.forEach(([bSource, b]) => {
-                const bClean = b.trim();
-                const bLower = bClean.toLowerCase();
-                if (["Kritischer Fall", "Status", "Genehmigung", "Fehler", "Rückmeldung", "Abgelehnt", "Angenommen"].includes(bClean)) {
-                    invalidButtons.push(`'${bClean}' (Reine Status-/Zustandsbezeichnung ohne Handlungsverb)`);
-                } else if (["senden", "submit", "ok", "abschicken"].includes(bLower)) {
-                    invalidButtons.push(`'${bClean}' (Generisches Minimal-Label ohne Zielobjekt)`);
-                }
-            });
-            if (invalidButtons.length > 0) {
-                const dedup = Array.from(new Set(invalidButtons));
-                results.violations.push({ rule: "HWG-BTN-01", severity: "major", message: `Schaltflächen verletzen das Action-Verb-Muster: ${dedup.join(", ")}` });
-                results.score -= penalties.major;
-            } else if (buttonLabels.length > 0) {
-                results.passed.push("HWG-BTN-01 (Aktionsorientierte Schaltflächen: Action-Verb-Muster erfüllt)");
-            } else {
-                results.not_applicable["HWG-BTN-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Aktionsschaltflächen im Formular vorhanden.";
-            }
-
-            // 12. HWG-BTN-02
-            if (pageCount > 1) {
-                const invalidNav = navButtonLabels.filter(nb => !["weiter", "zurück", "zurueck"].includes(nb.trim().toLowerCase()));
-                if (invalidNav.length > 0) {
-                    results.violations.push({ rule: "HWG-BTN-02", severity: "minor", message: `Nicht-standardisierte Navigations-Schaltflächen in mehrseitigem Formular gefunden: [${invalidNav.join(", ")}]. Erwartet: 'Weiter' und 'Zurück'.` });
-                    results.score -= penalties.minor;
-                } else {
-                    results.passed.push("HWG-BTN-02 (Einheitliche Navigations-Schaltflächen 'Weiter'/'Zurück' vorhanden)");
-                }
-            } else {
-                results.not_applicable["HWG-BTN-02"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Einseitiges Formular ohne Seitenwechsel (keine Pagination erforderlich).";
-            }
-
-            // 13. HWG-DSGVO-01
-            if (hasPersonalData && !hasDsgvoNotice) {
-                results.violations.push({ rule: "HWG-DSGVO-01", severity: "critical", message: "Personenbezogene Daten werden erhoben, aber es fehlt ein Datenschutz-Hinweis / DSGVO-Link." });
+            if (!hasPersonalData) results.not_applicable["HWG-DSGVO-01"] = "Keine personenbezogenen Daten erhoben.";
+            else if (!(footerShowsPrivacy || hasTextDsgvoWithLink)) {
+                results.violations.push({ rule: "HWG-DSGVO-01", rule_id: "HWG-DSGVO-01", severity: "critical", message: "Personenbezogene Daten ohne DSGVO-Hinweis / Verlinkung." });
                 results.score -= penalties.critical;
-            } else {
-                results.passed.push("HWG-DSGVO-01 (Datenschutz-Hinweis vorhanden oder keine Personendaten)");
-            }
+            } else results.passed.push("HWG-DSGVO-01 (DSGVO-Hinweis vorhanden)");
 
-            // 14. HWG-UPLOAD-01
-            if (!hasUploadElements) {
-                results.not_applicable["HWG-UPLOAD-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine Dateiupload-Elemente im Formular vorhanden.";
-            } else if (uploadElements.length > 0) {
-                results.violations.push({ rule: "HWG-UPLOAD-01", severity: "major", message: `${uploadElements.length} Dateiupload-Element(e) ohne transparente Angabe von Dateiformat und/oder Maximalgröße.` });
+            if (!hasUploadElements) results.not_applicable["HWG-UPLOAD-01"] = "Keine Dateiupload-Elemente vorhanden.";
+            else if (deficientUploads.length > 0) {
+                results.violations.push({ rule: "HWG-UPLOAD-01", rule_id: "HWG-UPLOAD-01", severity: "major", message: `${deficientUploads.length} Upload-Element(e) unvollständig spezifiziert: ${deficientUploads.slice(0, 3).join(', ')}.` });
                 results.score -= penalties.major;
-            } else {
-                results.passed.push("HWG-UPLOAD-01 (Dateiuploads mit Formaten und Maximalgröße spezifiziert)");
-            }
+            } else results.passed.push("HWG-UPLOAD-01 (Uploads spezifiziert)");
 
-            // 15. HWG-VAL-01
             if (structuredFieldsUnvalidated.length > 0) {
-                results.violations.push({ rule: "HWG-VAL-01", severity: "major", message: `Strukturierte Felder ohne Validierungsregel gefunden: [${structuredFieldsUnvalidated.slice(0, 3).join(", ")}]` });
+                results.violations.push({ rule: "HWG-VAL-01", rule_id: "HWG-VAL-01", severity: "major", message: `Strukturierte Felder ohne gültigen Validator / Regex: ${structuredFieldsUnvalidated.slice(0, 4).join(', ')}.` });
                 results.score -= penalties.major;
-            } else {
-                results.passed.push("HWG-VAL-01 (Strukturierte Felder validiert)");
-            }
+            } else results.passed.push("HWG-VAL-01 (Strukturierte Felder validiert)");
 
-            // 16. HWG-UX-01
-            if (!hasCompactFields) {
-                results.not_applicable["HWG-UX-01"] = "Kriterium auf diesen Formularkontext nicht anwendbar: Keine typischen Kompaktfelder (wie PLZ oder Hausnummer) vorhanden.";
-            } else if (compactFieldsUnconstrained.length > 0) {
-                results.violations.push({ rule: "HWG-UX-01", severity: "minor", message: `Kompakte Felder (PLZ/Hausnummer) ohne Breitenbegrenzung über volle Breite gestreckt: [${compactFieldsUnconstrained.slice(0, 2).join(", ")}]` });
+            if (!hasCompactFields) results.not_applicable["HWG-UX-01"] = "Keine Kompaktfelder (PLZ/Hausnummer) vorhanden.";
+            else if (compactFieldsUnconstrained.length > 0) {
+                results.violations.push({ rule: "HWG-UX-01", rule_id: "HWG-UX-01", severity: "minor", message: `Kompakte Felder über 100% Breite gestreckt: ${compactFieldsUnconstrained.join(', ')}.` });
                 results.score -= penalties.minor;
-            } else {
-                results.passed.push("HWG-UX-01 (Affordanzgerechte Feldbreiten für Kompaktfelder eingehalten)");
-            }
+            } else results.passed.push("HWG-UX-01 (Kompakte Feldbreiten eingehalten)");
 
-            // 17. HWG-UX-02
-            if ((pageCount >= 3 || inputFieldCount >= 25) && !hasSaveButton) {
-                results.recommendations.push({
-                    rule: "HWG-UX-02",
-                    severity: "recommendation",
-                    message: `Formularumfang (${pageCount} Seiten, ${inputFieldCount} Eingabefelder) überschreitet den Komplexitätsschwellenwert. Empfehlung (0 Pkt. Abzug): Einen 'Zwischenspeichern'-Button ergänzen, der das Formular speichert und einen Fortsetzungs-Link per E-Mail an die Nutzenden versendet.`
-                });
-            }
-
-            // 18. HWG-LANG-01
-            if (jargonWithoutHelp.length > 0) {
-                const dedupJargon = Array.from(new Set(jargonWithoutHelp.map(j => `'${j[0]}' in ${j[1]}`)));
-                results.violations.push({ rule: "HWG-LANG-01", severity: "major", message: `Hochschul- und Verwaltungs-Jargon ohne erläuternden Hilfetext gefunden: ${dedupJargon.slice(0, 3).join(", ")}` });
-                results.score -= penalties.major;
-            } else {
-                results.passed.push("HWG-LANG-01 (Verständlicher Wortschatz: Kein unerklärter Jargon)");
-            }
-
-            // 19. HWG-LANG-02
-            if (longSentences.length > 0) {
-                results.violations.push({ rule: "HWG-LANG-02", severity: "minor", message: `Überlange Schachtelsätze (> 25 Wörter) gefunden: [${longSentences.map(ls => `['${ls[0]}', ${ls[1]}, '${ls[2]}']`).slice(0, 2).join(", ")}].` });
-                results.score -= penalties.minor;
-            } else {
-                results.passed.push("HWG-LANG-02 (Prägnante Formulierungen: Alle Sätze unter 25 Wörtern)");
-            }
-
-            // 20. HWG-FEEDBACK-01
-            if (!hasWorkflowFeedback) {
-                results.violations.push({ rule: "HWG-FEEDBACK-01", severity: "minor", message: "Keine Eingangsbestätigungs-E-Mail mit Prozess-/Bearbeitungsinformationen in den Workflow-E-Mail-Knoten (FC_EMAIL) gefunden." });
-                results.score -= penalties.minor;
-            } else {
-                results.passed.push(`HWG-FEEDBACK-01 (Workflow-E-Mail-Transparenz in ${workflowEmails.length} FC_EMAIL-Knoten bestätigt)`);
-            }
-
-            // 21. HWG-WF-01
             if (!workflowStates || workflowStates.length === 0) {
-                results.violations.push({ rule: "HWG-WF-01", severity: "minor", message: "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt. Kanonischer Lebenszyklus erforderlich." });
+                results.violations.push({ rule: "HWG-WF-01", rule_id: "HWG-WF-01", severity: "minor", message: "Keine expliziten Status-Knoten (FC_CHANGE_STATE) im Workflow hinterlegt." });
                 results.score -= penalties.minor;
             } else {
                 const canonicalRoots = ["eingegangen", "in prüfung", "in bearbeitung", "nachforderung", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"];
-                const nonCanonical = workflowStates.filter(s => {
-                    const low = s.toLowerCase().trim();
-                    return !canonicalRoots.some(root => low.includes(root));
-                });
-                if (nonCanonical.length > 0) {
-                    results.violations.push({ rule: "HWG-WF-01", severity: "minor", message: `Nicht-standardisierte Ad-hoc-Statusnamen im Workflow gefunden: [${nonCanonical.join(", ")}]. Statusnamen müssen auf den kanonischen Phasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt').` });
+                const nonCan = workflowStates.filter(s => !canonicalRoots.some(r => s.toLowerCase().trim().includes(r)));
+                if (nonCan.length > 0) {
+                    results.violations.push({ rule: "HWG-WF-01", rule_id: "HWG-WF-01", severity: "minor", message: `Ad-hoc-Workflow-Status gefunden: [${nonCan.join(', ')}].` });
                     results.score -= penalties.minor;
-                } else {
-                    results.passed.push(`HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: ${workflowStates.join(", ")})`);
-                }
+                } else results.passed.push("HWG-WF-01 (Kanonische Workflow-Status)");
             }
 
-            // 22. HWG-WF-02
-            let hasProjectAlias = false;
-            (workflowEmails || []).forEach(em => {
-                const s = String(em.subject || "").toLowerCase();
-                const b = String(em.body || "").toLowerCase();
-                if (s.includes("%$project_alias%") || b.includes("%$project_alias%") || s.includes("vorgangsnummer") || s.includes("vorgang")) {
-                    hasProjectAlias = true;
-                }
-            });
-            if (!hasProjectAlias) {
-                results.violations.push({ rule: "HWG-WF-02", severity: "minor", message: "Fehlende Vorgangsnummer ([%$PROJECT_ALIAS%]) in Workflow-E-Mail-Betreffzeilen." });
+            const aliasToks = ["%$project_alias%", "%$record_id%", "%$vorgang", "[%$id%]"];
+            const hasAlias = (workflowEmails || []).some(em => aliasToks.some(t => (`${em.subject || ""} ${em.body || ""}`).toLowerCase().includes(t)));
+            if (!workflowEmails || workflowEmails.length === 0 || !hasAlias) {
+                results.violations.push({ rule: "HWG-WF-02", rule_id: "HWG-WF-02", severity: "minor", message: "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in Workflow-E-Mails." });
                 results.score -= penalties.minor;
+            } else results.passed.push("HWG-WF-02 (Vorgangsreferenz vorhanden)");
+
+            // Stufe 2: Echte LLM-API-Prüfung (sofern API-Key im UI hinterlegt), sonst explizite Kennzeichnung als KI-ungeprüft!
+            const llmCfg = getLlmUiConfig();
+            if (!llmCfg.apiKey) {
+                const reason = "Keine LLM-API angebunden (kein API-Schlüssel für Stufe 2 hinterlegt).";
+                SEMANTIC_RULE_IDS.forEach(rid => {
+                    results.unverified_semantic.push(rid);
+                    results.not_applicable[rid] = `KI-Prüfung ausstehend: Diese semantische Regel wurde NICHT durch ein Sprachmodell geprüft. Grund: ${reason}`;
+                });
+                results.llm_evaluation = {
+                    evaluated: false,
+                    status: 'unconfigured',
+                    api_base: llmCfg.apiBase,
+                    model: llmCfg.model,
+                    reason,
+                    unverified_rules: [...SEMANTIC_RULE_IDS]
+                };
             } else {
-                results.passed.push("HWG-WF-02 (Vorgangsnummern-Referenz in Workflow-E-Mail vorhanden)");
+                try {
+                    const semRules = registry.rules.filter(r => ['semantic', 'hybrid'].includes(r.evaluation_type));
+                    const uiCompact = items.map(it => {
+                        const p = it.properties || {};
+                        return {
+                            className: it.className || '',
+                            name: p.name || '',
+                            label_or_text: cleanVisibleText(p.label || p.text || p.rtevalue || p.heading || p.legend || '').slice(0, 200),
+                            helptext: cleanVisibleText(p.helptext || p.help || p.tooltip || '').slice(0, 200)
+                        };
+                    }).filter(x => x.label_or_text || x.helptext);
+                    const effPages = Math.max(1, rawXPageCount);
+                    const prompt = `Prüfe das Formular '${filename}' anhand dieser 7 Regeln: ${JSON.stringify(semRules)}. Formular-Extrakt: ${JSON.stringify({ metrics: { page_count: effPages, input_field_count: applicantInputCount, ux02_complexity_threshold_reached: (effPages >= 3 || applicantInputCount >= 25) }, ui_elements: uiCompact, workflow_emails: workflowEmails })}. Antworte NUR mit JSON: {"form_name":"${filename}","evaluated_rules":[{"rule_id":"HWG-...","status":"PASS|VIOLATION|RECOMMENDATION|NOT_APPLICABLE","severity":"major|minor|recommendation","affected_elements":[],"finding":"...","remediation_suggestion":"..."}]}`;
+
+                    const endpoint = llmCfg.apiBase.endsWith('/chat/completions') ? llmCfg.apiBase : `${llmCfg.apiBase}/chat/completions`;
+                    const resp = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${llmCfg.apiKey}` },
+                        body: JSON.stringify({ model: llmCfg.model, temperature: 0, messages: [{ role: 'user', content: prompt }] })
+                    });
+                    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                    const rjson = await resp.json();
+                    let rawContent = (((rjson.choices || [{}])[0].message || {}).content || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+                    const sIdx = rawContent.indexOf('{');
+                    const eIdx = rawContent.lastIndexOf('}');
+                    const parsed = JSON.parse(rawContent.slice(sIdx, eIdx + 1));
+                    const ruleMap = Object.fromEntries(registry.rules.map(r => [r.id, r]));
+                    const seen = new Set();
+                    (parsed.evaluated_rules || []).forEach(ent => {
+                        const rid = ent.rule_id || ent.rule;
+                        if (!SEMANTIC_RULE_IDS.includes(rid) || seen.has(rid)) return;
+                        seen.add(rid);
+                        const st = String(ent.status || '').toUpperCase();
+                        const sev = ruleMap[rid].severity;
+                        const msg = `[KI-Befund · ${llmCfg.model}] ${ent.finding || ''}`;
+                        if (st === 'VIOLATION') {
+                            if (sev === 'recommendation') results.recommendations.push({ rule: rid, rule_id: rid, severity: 'recommendation', message: msg });
+                            else {
+                                results.violations.push({ rule: rid, rule_id: rid, severity: sev, message: msg });
+                                results.score -= (penalties[sev] || 0);
+                            }
+                        } else if (st === 'RECOMMENDATION') {
+                            results.recommendations.push({ rule: rid, rule_id: rid, severity: 'recommendation', message: msg });
+                        } else if (st === 'PASS') {
+                            results.passed.push(`${rid} (${ent.finding || 'KI-Prüfung bestanden'})`);
+                        } else {
+                            results.not_applicable[rid] = msg;
+                        }
+                    });
+                    SEMANTIC_RULE_IDS.forEach(rid => {
+                        if (!seen.has(rid)) {
+                            results.unverified_semantic.push(rid);
+                            results.not_applicable[rid] = `KI-Prüfung unvollständig: Keine Bewertung für ${rid} erhalten.`;
+                        }
+                    });
+                    results.llm_evaluation = {
+                        evaluated: results.unverified_semantic.length === 0,
+                        status: 'ok',
+                        api_base: llmCfg.apiBase,
+                        model: llmCfg.model,
+                        reason: `Semantische Prüfung über ${llmCfg.model} abgeschlossen.`,
+                        unverified_rules: results.unverified_semantic
+                    };
+                } catch (apiErr) {
+                    const reason = `LLM-API-Aufruf fehlgeschlagen (${apiErr.message}).`;
+                    SEMANTIC_RULE_IDS.forEach(rid => {
+                        results.unverified_semantic.push(rid);
+                        results.not_applicable[rid] = `KI-Prüfung ausgefallen: ${reason}`;
+                    });
+                    results.llm_evaluation = {
+                        evaluated: false,
+                        status: 'error',
+                        api_base: llmCfg.apiBase,
+                        model: llmCfg.model,
+                        reason,
+                        unverified_rules: [...SEMANTIC_RULE_IDS]
+                    };
+                }
             }
 
             results.score = Math.max(0, results.score);
@@ -1491,72 +1665,69 @@
         async function handleFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
+            activePresetKey = null;
+            const llmCfg = getLlmUiConfig();
 
-            // Try backend API first
             try {
+                const headers = { 'X-File-Name': encodeURIComponent(file.name) };
+                if (llmCfg.apiKey) headers['X-LLM-Api-Key'] = llmCfg.apiKey;
+                if (llmCfg.apiBase) headers['X-LLM-Api-Base'] = llmCfg.apiBase;
+                if (llmCfg.model) headers['X-LLM-Model'] = llmCfg.model;
+
                 const response = await fetch('/api/evaluate', {
                     method: 'POST',
-                    headers: {
-                        'X-File-Name': file.name
-                    },
+                    headers,
                     body: file
                 });
                 if (response.ok) {
-                    const result = await response.json();
-                    currentEval = result;
+                    currentEval = await response.json();
                     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
                     renderEvaluation();
                     return;
                 }
             } catch (netErr) {
-                console.log("Backend API not reachable, falling back to local client parsing:", netErr);
+                console.log("Backend API not reachable, falling back to browser in-memory evaluation:", netErr);
             }
 
-            // Client-side fallback (runs in browser on Vercel or local file://)
             try {
-                if (file.name.endsWith('.xfp')) {
-                    if (typeof JSZip !== 'undefined') {
-                        const zip = await JSZip.loadAsync(file);
-                        let fcpData = null;
-                        const emails = [];
-                        const states = [];
-                        for (const [relPath, zipEntry] of Object.entries(zip.files)) {
-                            if (relPath.endsWith('.fcp')) {
-                                const text = await zipEntry.async('string');
-                                fcpData = JSON.parse(text);
-                            } else if (relPath.endsWith('.fcexport') && relPath.includes('/projects/') && !relPath.includes('idcheck') && !relPath.includes('versions')) {
-                                const text = await zipEntry.async('string');
-                                try {
-                                    const proj = JSON.parse(text);
-                                    extractWorkflowClient(proj, emails, states);
-                                } catch (e) {}
-                            }
-                        }
-                        if (fcpData) {
-                            currentEval = evaluateFormDataClient(fcpData, file.name, emails, states);
-                            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-                            renderEvaluation();
-                            return;
-                        }
-                    } else {
-                        alert("JSZip-Bibliothek wird geladen... Bitte versuchen Sie es in wenigen Sekunden erneut.");
+                if (file.name.toLowerCase().endsWith('.xfp')) {
+                    if (typeof JSZip === 'undefined') {
+                        alert("JSZip-Bibliothek nicht geladen.");
                         return;
                     }
-                } else if (file.name.endsWith('.json')) {
+                    const zip = await JSZip.loadAsync(file);
+                    let fcpData = null;
+                    const emails = [];
+                    const states = [];
+                    for (const [relPath, zipEntry] of Object.entries(zip.files)) {
+                        if (relPath.endsWith('.fcp') && !fcpData) {
+                            const text = await zipEntry.async('string');
+                            fcpData = JSON.parse(text);
+                        } else if (relPath.endsWith('.fcexport') && (relPath.includes('/projects/') || relPath.includes('\\projects\\')) && !relPath.includes('idcheck') && !relPath.includes('versions')) {
+                            const text = await zipEntry.async('string');
+                            try { extractWorkflowClient(JSON.parse(text), emails, states); } catch (e) {}
+                        }
+                    }
+                    if (fcpData) {
+                        currentEval = await evaluateFormDataClient(fcpData, file.name, emails, states);
+                        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                        renderEvaluation();
+                        return;
+                    }
+                } else if (file.name.toLowerCase().endsWith('.json')) {
                     const text = await file.text();
                     const data = JSON.parse(text);
-                    currentEval = evaluateFormDataClient(data, file.name, data.workflow_emails || [], data.workflow_states || []);
+                    currentEval = await evaluateFormDataClient(data, file.name, data.workflow_emails || [], data.workflow_states || []);
                     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
                     renderEvaluation();
                     return;
                 }
             } catch (err) {
                 console.error("Client parsing error:", err);
-                alert("Konnte Datei im Browser nicht verarbeiten: " + err.message);
+                alert("Datei konnte nicht verarbeitet werden: " + err.message);
             }
         }
 
-        // Initialize on load
         window.onload = function() {
             initPresets();
             renderEvaluation();

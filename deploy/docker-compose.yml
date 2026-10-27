@@ -11,6 +11,9 @@ services:
       - "8080:8080"
     environment:
       - PORT=8080
+      - LLM_API_BASE=${LLM_API_BASE:-https://chat-ai.academiccloud.de/v1}
+      - LLM_MODEL=${LLM_MODEL:-deepseek-r1-distill-llama-70b}
+      - LLM_API_KEY=${LLM_API_KEY:-}
     security_opt:
       - no-new-privileges:true
-    read_only: false
+    read_only: true

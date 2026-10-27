@@ -1,117 +1,78 @@
 \chapter{Prototypische Implementierung der Compliance-Pipeline}
 \label{chap:implementierung}
 
-Dieses Kapitel beschreibt die technische Realisierung der hybriden Prüfpipeline und des barrierefreien Intranet-Dashboards zur automatisierten Compliance-Prüfung von Formcycle-Vorlagen.
+Dieses Kapitel beschreibt die technische Realisierung der hybriden Prüfpipeline sowie des barrierefreien Intranet-Dashboards zur automatisierten Governance-Prüfung von Formcycle-Exporten (FQ3).
 
-\section{Architektur und Paradigmenentscheidung: Das Intranet-Web-Dashboard}
+\section{Architekturentscheidung: Entkoppeltes Intranet-Dashboard}
 \label{sec:architektur_entscheidung}
 
-Bei der Konzeption der Systemarchitektur wurden drei Integrationsszenarien für die HWG Ludwigshafen evaluiert:
-\begin{enumerate}
-    \item \textbf{Szenario A: Proprietäres Formcycle-Server-Plugin:} Eine direkte Integration über die Java-basierte Plugin-Schnittstelle von Formcycle. Dieser Ansatz böte eine nahtlose Einbettung in die Redaktionsumgebung, birgt jedoch gravierende Nachteile: Formcycle unterliegt regelmäßigen Versionsaktualisierungen (z.\,B. von Version 7.x auf 8.x), bei denen herstellerspezifische Schnittstellen häufig modifiziert werden (\textit{Vendor-Lock-In}). Zudem würde ein Fehler in der Prüflogik potenziell die gesamte Formularplattform destabilisieren.
-    \item \textbf{Szenario B: Lokales Terminal- und CLI-Werkzeug:} Eine Bereitstellung als reines Befehlszeilenprogramm. Dieser Ansatz ist für die Zielgruppe der dezentralen Sachbearbeitenden ohne IT-Hintergrund gänzlich ungeeignet, da das manuelle Ausführen von Konsolenbefehlen eine unüberwindbare Barriere darstellt.
-    \item \textbf{Szenario C: Entkoppelte Intranet-Web-Applikation (\textit{Gewählte Architektur}):} Die Realisierung als eigenständiger Webdienst im Hochschul-Intranet (z.\,B. unter \texttt{compliance.hwg-lu.de}). Das Prüfsystem agiert vollkommen unabhängig von der Formcycle-Kernsoftware und bleibt immun gegen Versionsupgrades. Sachbearbeitende können Formulararchive (\texttt{.xfp}) per einfacher Drag-and-Drop-Geste analysieren lassen, ohne Software lokal installieren zu müssen.
-\end{enumerate}
+Für den Einsatz an der HWG Ludwigshafen wurden drei Integrationsmuster abgewogen: (A)~ein Java-basiertes Formcycle-Server-Plugin bietet enge Editor-Integration, erzeugt jedoch Versionsabhängigkeiten bei Systemupgrades (v7 auf v8) und Ausfallrisiken im Produktivsystem; (B)~ein reines Command-Line-Interface (CLI) überfordert nicht-technische Sachbearbeitende; (C)~eine \textbf{entkoppelte Intranet-Web-Applikation} (\texttt{server.py} + \texttt{compliance\_dashboard.html}) wahrt strikte \textit{Separation of Concerns} (SoC), bleibt upgrade-stabil und erlaubt die Prüfung von \texttt{.xfp}-Archiven per Drag-and-Drop ohne lokale Installation. Gewählt wurde daher Szenario~C.
 
-Die gewählte Architektur folgt dem Entwurfsmuster der \textit{Separation of Concerns} (SoC): Die Governance- und Prüflogik ist strikt vom Formularerstellungssystem entkoppelt und gliedert sich in ein modulares Python-Backend sowie ein responsives Frontend auf Basis moderner Webstandards (HTML5, CSS3, ES6 JavaScript).
-
-\section{Vierstufige Verarbeitungs-Pipeline und Datenfluss}
+\section{Vierphasige hybride Verarbeitungs-Pipeline}
 \label{sec:verarbeitungspipeline}
 
-Um eine lückenlose und performante Analyse zu gewährleisten, durchläuft jedes geprüfte Formular eine deterministisch definierte, vierstufige Verarbeitungs-Pipeline. Abbildung~\ref{fig:pipeline_datenfluss} visualisiert den Datenfluss von der Bereitstellung der Rohdaten bis zur Generierung des interaktiven Prüfberichts.
+Jedes Formular durchläuft eine vierphasige Pipeline, deren zentrale Prüf-Engine sich in Stufe~1 (deterministischer AST-Audit) und Stufe~2 (semantische LLM-Inferenz) verzweigt (Abbildung~\ref{fig:pipeline_datenfluss}).
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures/pipeline_architektur.pdf}
-    \caption{Vierstufige Architektur der hybriden Compliance-Prüfpipeline (Quelle: Eigene Darstellung)}
+    \includegraphics[width=0.86\textwidth]{figures/pipeline_architektur.pdf}
+    \caption{Vierphasige Architektur der hybriden Compliance-Prüfpipeline (Quelle: Eigene Darstellung in \textit{draw.io}; sprachliche Feinjustierung einzelner Knotenbegriffe KI-gestützt, vgl. Anhang~\ref{chap:reflexionsbericht})}
     \label{fig:pipeline_datenfluss}
 \end{figure}
 
-\subsection{Phase 1: Ingestion und Archiv-Dekompression}
-Formcycle speichert vollständige Formularprojekte im Format \texttt{.xfp} ab (ZIP-komprimierte Container-Struktur). Die Pipeline liest diese Archive im Arbeitsspeicher ein, ohne temporäre Dateien auf dem Dateisystem zu hinterlassen. Aus dem Archiv werden die Frontend-Modelldatei (\texttt{form.fcp}) und die Workflow-Exportdateien (\texttt{*.fcexport}) extrahiert.
+\subsection{Phase 1: Ingestion und Preprocessing (Zero-Disk-Footprint)}
+Der Python-Microservice (\texttt{server.py}) nimmt hochgeladene \texttt{.xfp}-Archive entgegen und entpackt sie ausschließlich im Arbeitsspeicher (\texttt{io.BytesIO}, \textit{Zero-Disk-Footprint}), sodass zu keinem Zeitpunkt temporäre Formulardateien auf dem Serverdateisystem persistiert werden. Extrahiert werden das JSON-Maskenmodell (\texttt{*.fcp}) – inklusive automatischem Kodierungs-Fallback zwischen UTF-8 und Windows-1252 – sowie sämtliche Projekt-Workflows (\texttt{projects/*.fcexport}).
 
-\subsection{Phase 2: Deterministische AST-Traversierung und Merkmalsextraktion}
-Der Komponentenbaum von Formcycle folgt dem Konzept eines \textit{Abstract Syntax Tree} (AST), in dem UI-Elemente als verschachtelte Objekte abgebildet sind. Jedes Element verfügt über eine Klassendeklaration (\texttt{className}) und ein Eigenschafts-Dictionary (\texttt{properties}).
-
-Der Parser traversiert diesen Baum rekursiv und erzeugt standardisierte Merkmalsvektoren für alle deterministischen Regeln der Registry:
-\begin{itemize}
-    \item \textbf{Layout- und Container-Dimensionen:} Auslesen der Formularbreite (\texttt{maxwidth}). Liegt diese bei 700px statt der standardisierten 850px, wird ein Major-Verstoß für \texttt{HWG-CD-01} registriert.
-    \item \textbf{Header-Logo und Formulartitel:} Prüfung auf Vorhandensein, Formatierung (60\,px Höhe, rechtsbündig; \texttt{HWG-CD-02}) sowie Auszeichnung des Formulartitels als \texttt{<h1>} (\texttt{HWG-CD-04}).
-    \item \textbf{Hersteller-Branding im Footer:} Prüfung des \texttt{XFooter}-Elements auf das Attribut \texttt{showlogo}. Ein Wert von \texttt{"1"} triggert einen Verstoß gegen \texttt{HWG-CD-03}.
-    \item \textbf{Pflichtfeld-Kennzeichnung:} Fehlt bei Pflichtfeldern (\texttt{required="1"}) die optische Kennzeichnung (\texttt{showrequiredhint="0"}), wird ein Verstoß gegen \texttt{HWG-A11Y-02} dokumentiert.
-    \item \textbf{Syntaxprüfung der Labels:} Suche nach rohen HTML-Tags (z.\,B. \texttt{<p>}, \texttt{<br>}) oder Entitäten (z.\,B. \texttt{\&szlig;}) in Textattributen (\texttt{HWG-A11Y-03}).
-    \item \textbf{Validierungsmuster:} Abgleich, ob strukturierte Eingabeelemente mit regulären Ausdrücken abgesichert sind (\texttt{HWG-VAL-01}).
-\end{itemize}
-
-\subsection{Phase 3: Kontextoptimiertes Context-Engineering für das LLM}
-Für sprachliche und ergonomische Nuancen schaltet die Pipeline das semantische LLM-Modul zu. Eine unbereinigte Übergabe des vollständigen JSON-Baums würde zu massiver Token-Verschwendung führen und die Gefahr von Aufmerksamkeitsverlust (\textit{Lost in the Middle}) sowie Halluzinationen drastisch erhöhen \parencite{duan2024generating, cha2026design}.
-
-Aus diesem Grund führt die Pipeline vor der Modellinjektion eine gezielte Textabstraktion durch:
-\begin{enumerate}
-    \item Sämtliche rein technischen Attribute (GUIDs, relative Koordinaten, CSS-Style-Definitionen) werden verworfen.
-    \item Es wird ein kompakter Extrakt erzeugt, der ausschließlich funktionale Feldbezeichner, sichtbare Labels, Hilfetexte, Schaltflächenbeschriftungen sowie Workflow-E-Mails enthält. Dadurch sinkt der Token-Bedarf um über 90\,\%.
-    \item Der System-Prompt definiert die Rolle des Modells als Usability-Auditor. Die Definitionen der semantischen Governance-Regeln (u.\,a. \texttt{HWG-BTN-01}, \texttt{HWG-LANG-01}, \texttt{HWG-STAMM-02}, \texttt{HWG-FEEDBACK-01}) werden als deterministischer Kontext injiziert.
-    \item Das Modell wird durch ein striktes JSON-Schema verpflichtet, ausschließlich valide strukturierte Ergebnisse zurückzuliefern. Jede festgestellte Regelverletzung enthält die Regel-ID, die fehlerhafte Textstelle, eine Begründung und einen konkreten Umformulierungsvorschlag.
-\end{enumerate}
-
-\subsection{Phase 4: Mathematische Fusion, Scoring und Remediation}
-In der finalen Phase fusioniert das System die Ergebnisse aus beiden Prüfströmen. Die mathematische Berechnung des Gesamt-Scores erfolgt deterministisch nach Gl.~(\ref{eq:compliance_score}). Für jeden gefundenen Verstoß wird ein strukturierter Berichtseintrag generiert. Ein entscheidender Pfeiler ist das \textit{Remediation-Konzept}: Die Pipeline verknüpft jede verletzte Regel mit einem präzisen, klickbasierten Lösungspfad für den Formcycle-Designer (z.\,B. \enquote{Designer $\rightarrow$ Element footer1 auswählen $\rightarrow$ Eigenschaften $\rightarrow$ Haken bei 'Logo anzeigen' entfernen}).
-
-Übersteigt ein Formular drei Seiten oder 25 Eingabefelder ohne Speicherfunktion, wird eine prominente Empfehlung zur Aktivierung der Zwischenspeicherung ausgegeben (\texttt{HWG-UX-02}, 0 Punkte Abzug).
-
-\section{Formale Algorithmen der Prüf-Engine}
-\label{sec:algorithmen}
-
-Tabelle~\ref{tab:algo_traversal} spezifiziert den rekursiven Algorithmus zur Extraktion der Formular- und Workflow-Merkmale aus dem Komponentenbaum:
+\subsection{Phase 2a (Stufe 1): Deterministische AST-Traversierung}
+In Formcycle v8 werden sämtliche UI-Komponenten innerhalb der \texttt{.fcp}-Datei als flaches Objekt-Array (\texttt{elements.items}) gespeichert, dessen Hierarchie über \texttt{parentid}-Referenzen auf übergeordnete Container (\texttt{XPage}, \texttt{XFieldSet}, \texttt{XContainer}) abgebildet wird, während Workflow-Graphen (\texttt{workflowVersions}) verschachtelte Aktionsbäume bilden. Der in Tabelle~\ref{tab:algo_traversal} spezifizierte Algorithmus löst diese Struktur in unter $20\,\text{ms}$ auf, filtert über \texttt{viewstatus} gezielt die Antragstellenden-Sicht (\texttt{"-1"}) und prüft alle 15 deterministischen Regeln der Registry (\texttt{HWG-CD-01} bis \texttt{CD-04}, \texttt{A11Y-01} bis \texttt{A11Y-03}, \texttt{STAMM-01}, \texttt{UI-01}, \texttt{DSGVO-01}, \texttt{UPLOAD-01}, \texttt{VAL-01}, \texttt{UX-01}, \texttt{WF-01}, \texttt{WF-02}).
 
 \begin{table}[htbp]
 \centering
-\small
+\scriptsize
 \begin{tabularx}{\textwidth}{lX}
 \toprule
-\textbf{Schritt} & \textbf{Operation / Logische Instruktion} \\
+\textbf{Schritt} & \textbf{Formale Operation (\texttt{ExtractAndAudit})} \\
 \midrule
-1 & \textbf{Funktion} \texttt{TraverseAST}(\textit{node}, \textit{features}) \\
-2 & \textbf{Eingabe:} Beliebiger Knoten \textit{node} des Komponentenbaums; Referenz \textit{features} \\
-3 & \textbf{Wenn} \textit{node} ein Dictionary ist: \\
-4 & \quad \textbf{Lese} \texttt{className} $\leftarrow$ \textit{node.className}, \texttt{props} $\leftarrow$ \textit{node.properties} \\
-5 & \quad \textbf{Wenn} \texttt{className} == \texttt{"XPage"}: Erhöhe \textit{features.page\_count} um 1 \\
-6 & \quad \textbf{Wenn} \texttt{className} $\in$ \textit{InputClasses}: Erhöhe \textit{features.input\_count} um 1 \\
-7 & \quad \textbf{Wenn} \texttt{className} == \texttt{"XFooter"}: Speichere \texttt{props.showlogo} und \texttt{props.privacyPolicyShow} \\
-8 & \quad \textbf{Wenn} \texttt{className} == \texttt{"XFieldSet"}: Setze \textit{features.has\_fieldset} $\leftarrow$ \texttt{True} \\
-9 & \quad \textbf{Wenn} \textit{props} ein Attribut \texttt{maxwidth} enthält: Füge Wert zu \textit{features.widths} hinzu \\
-10 & \quad \textbf{Prüfe} Pflichtfeld-Konsistenz: Wenn \texttt{props.required == "1"} und \texttt{props.showrequiredhint == "0"}: \\
-11 & \quad \quad Registriere Feldname in \textit{features.missing\_required\_hints} \\
-12 & \quad \textbf{Prüfe} Textinhalte: Bereinige Labels von HTML-Entities; extrahiere Jargon-Kandidaten \\
-13 & \quad \textbf{Für jeden} Kindknoten \textit{child} in \textit{node.values()}: Führe \texttt{TraverseAST}(\textit{child}, \textit{features}) aus \\
-14 & \textbf{Wenn} \textit{node} eine Liste ist: \\
-15 & \quad \textbf{Für jedes} Element \textit{item} in \textit{node}: Führe \texttt{TraverseAST}(\textit{item}, \textit{features}) aus \\
-16 & \textbf{Rückgabe:} Aggregierter Merkmalsvektor \textit{features} \\
+1 & \textbf{Eingabe:} In-Memory-Bytes eines \texttt{.xfp}-Archivs; Regelkatalog \textit{Registry} (22 Regeln) \\
+2 & Dekomprimiere \texttt{*.fcp} und \texttt{projects/*.fcexport} im RAM (\texttt{io.BytesIO}); dekodiere Text via UTF-8/CP1252 \\
+3 & Erzeuge Lookup-Map $\textit{id\_map}[p.\texttt{id}] \leftarrow p$ über alle Elemente $p \in \texttt{fcp.elements.items}$ \\
+4 & \textbf{Für jedes} Element $e \in \texttt{fcp.elements.items}$ (iterativ mit \texttt{parentid}-Ahnenauflösung): \\
+5 & \quad Bestimme Antragsteller-Sichtbarkeit (\texttt{"-1"} $\in \texttt{viewstatus}$ entlang der \texttt{parentid}-Kette) \\
+6 & \quad Extrahiere Layoutbreite (\texttt{CD-01}), Header-Logo/\texttt{<h1>} (\texttt{CD-02}, \texttt{CD-04}) und Footer-Flags (\texttt{CD-03}, \texttt{DSGVO-01}) \\
+7 & \quad Prüfe \texttt{XFieldSet}-Legenden (\texttt{A11Y-01}), Pflichtfelder (\texttt{A11Y-02}), Label-HTML (\texttt{A11Y-03}) und Dev-Notizen (\texttt{UI-01}) \\
+8 & \quad Prüfe Stammdatensequenz je Sektion (\texttt{STAMM-01}), Uploads (\texttt{UPLOAD-01}), Validatoren (\texttt{VAL-01}) und Breiten (\texttt{UX-01}) \\
+9 & \textbf{Für jeden} Workflow-Graphen $w \in \texttt{fcexport.workflowVersions}$: Traversiere rekursiv \texttt{walk\_nodes}($w$) \\
+10 & \quad Extrahiere Statusknoten (\texttt{WF-01}) sowie \texttt{FC\_EMAIL}-Aktionen auf \texttt{[\%\$PROJECT\_ALIAS\%]} (\texttt{WF-02}) \\
+11 & \textbf{Falls} LLM-API konfiguriert: Sende komprimierten Extrakt an \texttt{/v1/chat/completions} (Stufe 2); \textbf{sonst:} markiere alle 7 semantischen Regeln transparent als \texttt{not\_applicable} (\texttt{unverified\_semantic}) \\
+12 & \textbf{Rückgabe:} Deterministischer Score $C$ nach Gl.~(\ref{eq:compliance_score}), Befundlisten und Klickpfad-Remediation \\
 \bottomrule
 \end{tabularx}
-\caption{Rekursiver Algorithmus zur AST-Traversierung und Merkmalsextraktion}
+\caption{Algorithmus zur In-Memory-Extraktion, flachen \texttt{.fcp}-Auflösung und rekursiven Workflow-Prüfung}
 \label{tab:algo_traversal}
 \end{table}
 
-\section{Konzeption und Gestaltung des Intranet-Dashboards}
+\subsection{Phase 2b (Stufe 2): Semantische LLM-Inferenz via REST-API und Fail-Safe}
+Für die sieben semantischen bzw. hybriden Regeln (\texttt{HWG-STAMM-02}, \texttt{BTN-01}, \texttt{BTN-02}, \texttt{UX-02}, \texttt{LANG-01}, \texttt{LANG-02}, \texttt{FEEDBACK-01}) erzeugt \texttt{generate\_chat\_ai\_prompt.py} einen von GUIDs, Koordinaten und CSS-Ballast bereinigten JSON-Extrakt ($>90\,\%$ Token-Reduktion, Schutz vor \textit{Lost in the Middle}; \cite{cha2026design, duan2024generating}). Um Zählfehler kleinerer Sprachmodelle auszuschließen, werden quantitative Vor-Metriken (\texttt{metrics}: Seitenanzahl, Eingabefeldanzahl, Satzlängen $>25$ Wörter unter Berücksichtigung deutscher Abkürzungen) deterministisch vorberechnet und injiziert.
+
+Die Übergabe erfolgt über einen OpenAI-kompatiblen REST-API-Client (\texttt{POST /v1/chat/completions}, standardmäßig gegen \texttt{chat-ai.academiccloud.de} der GWDG; API-Schlüssel via Umgebungsvariable oder HTTP-Header). Entscheidend für die wissenschaftliche und operative Verlässlichkeit ist ein strikter \textbf{Fail-Safe-Mechanismus}: Da semantische Regeln niemals behelfsmäßig durch starre Heuristiken simuliert werden dürfen, stuft die Engine bei fehlendem API-Schlüssel oder Netzwerk-/API-Ausfall sämtliche sieben Regeln explizit als \texttt{not\_applicable} mit dem Kennzeichen \texttt{unverified\_semantic} ein und weist sowohl im JSON-Bericht als auch im Dashboard unübersehbar aus, dass keine KI-Begutachtung stattfand.
+
+\subsection{Phase 3 und Phase 4: Scoring-Synthese und Klickpfad-Remediation}
+Phase~3 aggregiert die Befunde aus Stufe~1 und (sofern aktiv) Stufe~2 strikt deterministisch nach Gleichung~(\ref{eq:compliance_score}), sodass arithmetische Halluzinationen des Sprachmodells ausgeschlossen sind. Phase~4 reichert jeden Befund aus \texttt{rules\_registry.json} um den exakten Klickpfad im visuellen Formcycle-Designer an.
+
+\section{Gestaltung des Intranet-Dashboards}
 \label{sec:dashboard_gestaltung}
 
-Das Intranet-Dashboard (siehe Abbildung~\ref{fig:dashboard_ui}) wurde in den offiziellen Hochschulfarben (\texttt{\#003366} HWG-Blau, \texttt{\#b41414} HWG-Rot) gestaltet. Es bietet folgende Kernkomponenten:
+Das Web-Dashboard (Abbildung~\ref{fig:dashboard_ui}) setzt das Corporate Design der HWG (\texttt{\#003366} HWG-Blau, \texttt{\#b41414} HWG-Rot) barrierearm um und umfasst vier Hauptelemente:
 \begin{itemize}
-    \item \textbf{Score-Messanzeige (Gauge):} Eine dynamische SVG-Tacho-Anzeige visualisiert den Compliance-Score von 0 bis 100 mit intuitiver Farbcodierung (Grün $\ge 85$, Gelb 60--84, Rot $<60$).
-    \item \textbf{Benchmark-Presets:} Formularerstellende können fünf vorgefertigte Formularprofile mit einem Klick testen, um das Prüfsystem ohne eigene Dateien kennenzulernen.
-    \item \textbf{Klickpfad-Remediation-Karten:} Jeder Regelverstoß wird mit einem klaren Badge (Critical, Major, Minor), einer verständlichen Fehlerbeschreibung und dem exakten Klickpfad für den visuellen Formcycle Designer dargestellt.
-    \item \textbf{Druckoptimierung und Audit-Export:} Ein dediziertes Print-Stylesheet blendet interaktive Bedienelemente aus und generiert einen formalen Audit-Bericht für Qualitätszirkel.
+    \item \textbf{Ingestion, Presets \& KI-Konfiguration:} Fünf Referenz-Presets, Drag-and-Drop-Upload sowie ein aufklappbares Konfigurationsfeld zur direkten Anbindung eines GWDG-/OpenAI-kompatiblen API-Schlüssels bei ausgewiesenen 22 aktiven Governance-Regeln.
+    \item \textbf{Transparenter KI-Statusbanner:} Ein prominentes Hinweisbanner zeigt jederzeit an, ob Stufe~2 aktiv durch ein Sprachmodell geprüft wurde oder ob die sieben semantischen Regeln mangels API-Verbindung ungeprüft blieben (\enquote{Nicht zutreffend $\cdot$ Keine KI-Prüfung}).
+    \item \textbf{Dynamische Score-Tachoanzeige:} Ein SVG-Gauge visualisiert den Score konsistent zu den Freigabeschwellen (\textbf{Grün $\ge 80$} freigabefähig, \textbf{Orange $50\text{--}79$} Überarbeitungsbedarf, \textbf{Rot $< 50$} gesperrt) nebst Aufschlüsselung nach Schweregraden.
+    \item \textbf{Filterbare Remediation-Karten \& Export:} Unterhalb des Kopfbereichs (im Screenshot unterhalb der Kennzahlenkarten anschließend) listen filterbare Detailkarten jeden Befund samt Designer-Klickpfad auf; ergänzend stehen Druckansicht und JSON-Export bereit.
 \end{itemize}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/compliance_dashboard.png}
-    \caption{Benutzeroberfläche des Intranet-Compliance-Dashboards mit dynamischer Tacho-Anzeige, Prüf-Presets und handlungsorientierten Klickpfad-Remediation-Karten}
+    \caption{Kopfbereich des Intranet-Compliance-Dashboards mit 22 aktiven Governance-Regeln, Preset-Auswahl, transparentem KI-Statusbanner und dynamischer Score-Anzeige am Beispiel der \textit{Auslagenerstattung}}
     \label{fig:dashboard_ui}
 \end{figure}
-
-\section{Technologie-Stack und Skalierbarkeit}
-\label{sec:technologie_stack}
-
-Das Backend ist als schlanker Python-3-Microservice (\texttt{server.py}) ohne externe Framework-Abhängigkeiten realisiert. Die deterministische AST-Prüfung erfolgt in unter 20\,ms pro Formular, was eine hervorragende Skalierbarkeit für den hochschulweiten Intranetbetrieb gewährleistet.

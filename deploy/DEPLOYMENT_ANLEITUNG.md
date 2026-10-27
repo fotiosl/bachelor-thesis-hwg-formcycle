@@ -6,11 +6,11 @@ Diese Anleitung richtet sich an das Hochschul-Rechenzentrum / die IT-Administrat
 
 ## Übersicht der Bereitstellungsoptionen
 
-Das Dashboard wurde so konzipiert, dass die IT zwischen **drei extrem schlanken Wegen** wählen kann:
+Das Dashboard unterstützt **drei schlanke Bereitstellungswege**:
 
-1. **Option 1 (Docker / Container – Empfohlen):** Vollständiger Microservice inklusive Python-Auswertungs-API.
-2. **Option 2 (Nginx / Apache – Rein statisch):** Einfachste Bereitstellung ohne Server-Laufzeit (Standalone).
-3. **Option 3 (Reverse Proxy vor Container):** Standard-Enterprise-Setup mit SSL/TLS.
+1. **Option 1 (Docker / Container – Empfohlen):** Vollständiger Microservice inklusive hybrider Python-Auswertungs-API (Stufe 1 AST + optionale Stufe 2 LLM-API).
+2. **Option 2 (Nginx / Apache – Rein statisch):** Bereitstellung ohne Server-Laufzeit (Client-seitiger AST-Audit via JSZip; semantische KI-Regeln transparent als ungeprüft markiert).
+3. **Option 3 (Reverse Proxy vor Container):** Standard-Enterprise-Setup mit SSL/TLS im Hochschulnetz.
 
 ---
 
@@ -18,35 +18,35 @@ Das Dashboard wurde so konzipiert, dass die IT zwischen **drei extrem schlanken 
 
 ### Eigenschaften:
 * **Image-Basis:** `python:3.11-alpine` (Größe: ca. 55 MB).
-* **Abhängigkeiten:** **Keine externen Pip-Pakete** erforderlich (verwendet ausschließlich die Python-Standardbibliothek).
-* **Sicherheit:** Läuft als nicht-privilegierter Benutzer (`appuser`), `no-new-privileges: true`.
+* **Abhängigkeiten:** **Keine externen Pip-Pakete** erforderlich (100 % Python-Standardbibliothek).
+* **Sicherheit & Zero-Disk-Footprint:** Läuft als nicht-privilegierter Benutzer (`appuser`), `no-new-privileges: true` und `read_only: true`, da hochgeladene Archive ausschließlich im Arbeitsspeicher (`io.BytesIO`) verarbeitet werden.
 
-### Startbefehl:
+### Startbefehl (mit optionaler GWDG Academic Cloud / OpenAI-kompatibler KI-API):
 Im Projektverzeichnis ausführen:
 ```bash
+export LLM_API_BASE="https://chat-ai.academiccloud.de/v1"
+export LLM_MODEL="qwen3-30b-a3b-instruct-2507"
+export LLM_API_KEY="<IHR-GWDG-API-KEY>"
 docker compose -f deploy/docker-compose.yml up -d
 ```
+*(Wird kein `LLM_API_KEY` gesetzt oder ist die API nicht erreichbar, greift automatisch der transparente Fail-Safe: Die 15 deterministischen AST-Regeln werden regulär geprüft, während die 7 semantischen/hybriden Regeln eindeutig als „Nicht zutreffend · Keine KI-Prüfung“ gekennzeichnet werden.)*
 
-Das Dashboard und die Prüf-API sind nun sofort erreichbar unter:
+Das Dashboard und die Prüf-API sind erreichbar unter:
 `http://<SERVER-IP-ODER-HOSTNAME>:8080/`
 
 ---
 
 ## Option 2: Reines Nginx oder Apache (Statische Bereitstellung)
 
-Da das Dashboard clientseitige Prüflogik und die Archiv-Dekompression (JSZip) direkt im Browser mitbringt, genügt für den Basisbetrieb eine einzige HTML-Datei:
+Da das Dashboard die deterministische Stufe-1-Prüflogik und die Archiv-Dekompression (`JSZip`) direkt im Browser mitbringt, genügt für den reinen Offline-Strukturaudit eine statische Bereitstellung:
 
-### Schritte für Nginx / Apache:
-1. Kopieren Sie die Datei `web/compliance_dashboard.html` sowie den Ordner `web/vendor/` (enthält `jszip.min.js`) in das Web-Verzeichnis des Webservers (z. B. `/var/www/compliance_dashboard/`).
-   *Hinweis für Air-Gapped-Umgebungen:* Das Mitkopieren von `web/vendor/jszip.min.js` stellt sicher, dass das Client-seitige ZIP-Parsing ohne Internetverbindung und ohne Rückgriff auf externe CDNs vollständig lokal funktioniert.
-2. Konfiguration anlegen (eine Vorlage befindet sich in `deploy/nginx.conf`).
+1. Kopieren Sie `web/compliance_dashboard.html` sowie den Ordner `web/vendor/` (enthält `jszip.min.js`) in das Web-Verzeichnis (z. B. `/var/www/compliance_dashboard/`).
+2. Konfiguration anlegen (Vorlage in `deploy/nginx.conf`).
 3. Webserver neu laden (`systemctl reload nginx`).
 
 ---
 
 ## Option 3: Nginx als Reverse Proxy mit HTTPS
-
-Zur Absicherung im Hochschulnetz hinter einem zentralen Nginx mit Hochschulzertifikat:
 
 ```nginx
 server {
@@ -74,20 +74,16 @@ server {
 
 | Kriterium | Status / Nachweis |
 | :--- | :--- |
-| **Datenbank erforderlich?** | **Nein.** Das System arbeitet zustandslos (*stateless*). Es wird keine SQL/NoSQL-Datenbank benötigt. |
-| **Dateispeicherung?** | **Nein.** Hochgeladene Formulare werden nur im Arbeitsspeicher/flüchtigen Temp-Dateien analysiert und sofort verworfen. Keine Persistierung von Antragsdaten. |
-| **Internet-Verbindung?** | **Nein.** Das System kann vollständig isoliert (*Air-Gapped*) im Intranet ohne ausgehende Internet-Verbindungen betrieben werden. |
-| **Ressourcenbedarf:** | Minimal: 1 vCPU, 512 MB RAM genügen für Hunderte gleichzeitige Prüfungen. |
-| **Wartungsaufwand:** | Nahezu null, da keine externen Python-Bibliotheken aktualisiert werden müssen. |
+| **Datenbank erforderlich?** | **Nein.** Das System arbeitet vollständig zustandslos (*stateless*). |
+| **Dateispeicherung?** | **Nein (Zero-Disk-Footprint).** Hochgeladene `.xfp`-Formulare werden ausschließlich im Arbeitsspeicher (`io.BytesIO`) entpackt und unmittelbar nach Antwortversand verworfen; keine Temp-Dateien auf der Festplatte. |
+| **Internet-Verbindung?** | **Optional.** Stufe 1 läuft zu 100 % offline; Stufe 2 nutzt einen internen oder akademischen Endpunkt (`Academic Cloud` GWDG). |
+| **Ressourcenbedarf:** | Minimal: 1 vCPU, 512 MB RAM. |
 
 ---
 
-## Air-Gapped-Betrieb mit KI / LLM-Anbindung
+## Souveräner Betrieb mit Open-Weight-LLMs (Stufe 2)
 
-Ein zentraler Vorteil der Architektur ist die vollständige Unabhängigkeit von externen Cloud-Diensten:
-1. **Deterministische Prüfung (Stufe 1):** Die AST-Strukturprüfung (15 von 22 Regeln) läuft vollständig lokal und offline in unter 20 ms.
-2. **Semantische Prüfung (Stufe 2 mit Open-Source-LLM):** 
-   * Auch die semantische Sprachmodell-Inferenz kann **zu 100 % Air-Gapped** im Hochschulnetz betrieben werden.
-   * Hierzu wird ein quelloffenes Open-Weight-Modell (z. B. *Qwen 3 30B* oder *Llama 3.1 8B*) auf einem internen Server des Hochschul-Rechenzentrums oder der *Academic Cloud* (GWDG) über Inferenz-Server wie **vLLM** oder **Ollama** gehostet.
-   * Das Dashboard bzw. die Python-Middleware sendet den kompakten JSON-Payload ausschließlich an die interne Netzwerkadresse (z. B. `http://llm-service.intern.hwg-lu.de/v1/chat/completions`).
-   * **Ergebnis:** Zu keinem Zeitpunkt verlassen Formulardaten das interne Hochschulnetzwerk. Die Anforderungen nach Art. 9 und Art. 44 ff. DSGVO bezüglich Datensouveränität werden vollständig erfüllt.
+1. **Deterministische Prüfung (Stufe 1):** Die AST-Strukturprüfung (15 von 22 Governance-Regeln) läuft lokal im Arbeitsspeicher in unter 20 ms.
+2. **Semantische Prüfung (Stufe 2):**
+   * Empfohlene Open-Weight-Modelle ab der 27B/MoE-Klasse (z. B. *Qwen 3 30B A3B*, *Qwen 3.8 27B*, *GLM 5.3 Flash* oder *DeepSeek V4 Flash*) werden über die *Academic Cloud* (GWDG) oder einen internen Inferenz-Server (**vLLM** / **Ollama**) via `/v1/chat/completions` angesprochen.
+   * Zu keinem Zeitpunkt müssen Formulardaten an außereuropäische Cloud-Anbieter übermittelt werden (Art. 44 ff. DSGVO).

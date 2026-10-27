@@ -40,20 +40,12 @@
 \usepackage{float}
 
 % ---------------------------------------------------------
-% Literaturverwaltung (APA 7th Edition konform, performance-optimiert)
+% Literaturverwaltung (Strikt nach APA 7th Edition via biblatex-apa)
 % ---------------------------------------------------------
 \usepackage[
     backend=biber,
-    style=authoryear,
-    maxcitenames=2,
-    mincitenames=1,
-    maxbibnames=99,
-    giveninits=true,
-    uniquelist=false,
-    uniquename=false,
-    dashed=false
+    style=apa
 ]{biblatex}
-\DeclareNameAlias{sortname}{family-given}
 \addbibresource{references.bib}
 
 % ---------------------------------------------------------
@@ -99,6 +91,7 @@
         \textbf{Matrikelnummer:} & 636114 \\
         \textbf{Studiengang:} & Wirtschaftsinformatik (B.Sc.) \\
         \textbf{Erstprüfer:} & Prof. Dr. Simon Kloker \\
+        % \textbf{Zweitprüfer:} & [Nach offizieller Bestellung eintragen] \\
         \textbf{Abgabedatum:} & 07. Dezember 2026 \\
     \end{tabular}
 \end{titlepage}
@@ -108,11 +101,9 @@
 % ---------------------------------------------------------
 \pagenumbering{Roman}
 \tableofcontents
-\newpage
 
 \listoffigures
 \listoftables
-\newpage
 
 % ---------------------------------------------------------
 % Abkürzungsverzeichnis
@@ -123,24 +114,27 @@
 \toprule
 \textbf{Abkürzung} & \textbf{Bedeutung} \\
 \midrule
-API & Application Programming Interface \\
+API & Application Programming Interface (Programmierschnittstelle) \\
 ARIA & Accessible Rich Internet Applications \\
 AST & Abstract Syntax Tree (Abstrakter Syntaxbaum) \\
 BITV 2.0 & Barrierefreie-Informationstechnik-Verordnung 2.0 \\
 B.Sc. & Bachelor of Science \\
 CI & Corporate Identity / Corporate Design \\
+CI/CD & Continuous Integration / Continuous Deployment \\
 CLI & Command Line Interface (Befehlszeilenschnittstelle) \\
-CoT & Chain-of-Thought (Schrittweises logisches Schließen) \\
 CSS & Cascading Style Sheets \\
+DIN & Deutsches Institut für Normung e.\,V. \\
 DOM & Document Object Model \\
 DSGVO & Datenschutz-Grundverordnung (EU) 2016/679 \\
 DSR & Design Science Research (Gestaltungsorientierte Wirtschaftsinformatikforschung) \\
 EGovG RLP & E-Government-Gesetz des Landes Rheinland-Pfalz \\
-FCP & Formcycle Project (Interne Masken-Modelldatei im XFP-Container, .fcp) \\
+FCP & Formcycle Project (Interne Masken-Modelldatei im XFP-Container, \texttt{.fcp}) \\
 FMS & Formular-Management-System \\
 FQ & Teilforschungsfrage (\textit{Research Sub-Question}) \\
+GStB & Geschäftsstelle der Hochschulgremien / Beauftragten \\
 GUID & Globally Unique Identifier \\
 GWDG & Gesellschaft für wissenschaftliche Datenverarbeitung mbH Göttingen \\
+HPC & High-Performance Computing \\
 HR & Human Resources (Personalverwaltung) \\
 HTML & Hypertext Markup Language \\
 HWG & Hochschule für Wirtschaft und Gesellschaft Ludwigshafen \\
@@ -149,6 +143,7 @@ ID & Identifikator / Vorgangsnummer \\
 ISO & International Organization for Standardization \\
 IT & Informationstechnik \\
 JSON & JavaScript Object Notation \\
+KAP & Kapitel (Haushaltskapitel in der Finanzverwaltung) \\
 KI & Künstliche Intelligenz \\
 L-BGG RLP & Landesgesetz zur Gleichstellung von Menschen mit Behinderungen RLP \\
 LDAP & Lightweight Directory Access Protocol \\
@@ -158,18 +153,18 @@ MRQ & Hauptforschungsfrage (\textit{Main Research Question}) \\
 OZG & Onlinezugangsgesetz \\
 PLZ & Postleitzahl \\
 Regex & Regulärer Ausdruck (\textit{Regular Expression}) \\
+REST & Representational State Transfer \\
 SEPA & Single Euro Payments Area (Einheitlicher Euro-Zahlungsverkehrsraum) \\
 SoC & Separation of Concerns (Trennung von Belangen) \\
-SPO & Studien- und Prüfungsordnung \\
 SVG & Scalable Vector Graphics (Skalierbare Vektorgrafik) \\
 UI / UX & User Interface / User Experience \\
 VLM & Vision-Language Model (Multimodales Seh- und Sprachmodell) \\
 WCAG & Web Content Accessibility Guidelines \\
-XFP & XIMA Formcycle Package (Komprimiertes Formulararchiv, .xfp) \\
+XFP & XIMA Formcycle Package (Komprimiertes Formulararchiv, \texttt{.xfp}) \\
 ZFK & Zentrum für Forschung und Kooperation der HWG Ludwigshafen \\
 \bottomrule
 \end{tabularx}
-\newpage
+\cleardoublepage
 
 % ---------------------------------------------------------
 % Hauptteil (Arabische Seitennummerierung)
@@ -185,9 +180,8 @@ ZFK & Zentrum für Forschung und Kooperation der HWG Ludwigshafen \\
 \include{chapters/07_fazit}
 
 % ---------------------------------------------------------
-% Literaturverzeichnis (APA 7th)
+% Literaturverzeichnis (APA 7th Edition)
 % ---------------------------------------------------------
-\newpage
 \printbibliography[title={Literaturverzeichnis}]
 
 % ---------------------------------------------------------

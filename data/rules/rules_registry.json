@@ -20,38 +20,47 @@
       "category": "corporate_design",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "Verhindert visuelle Sprünge und heterogene Zeilenlängen im Hochschulportal (ISO 9241-110 Erwartungskonformität).",
+      "rationale": "Verhindert visuelle Sprünge und heterogene Zeilenlängen im Hochschulportal (DIN EN ISO 9241-110 Erwartungskonformität).",
       "specification": {
-        "target": "form_properties",
+        "target": "layout_containers",
+        "components": [
+          "XHeader",
+          "XPage",
+          "XFooter"
+        ],
         "expected_maxwidth": "850px",
         "allowed_minwidth": "300px"
       },
-      "remediation": "Setzen Sie im Formcycle-Designer unter Formular-Eigenschaften die maximale Breite auf 850px und die minimale Breite auf 300px."
+      "remediation": "Wählen Sie im Formcycle-Designer die Layout-Container (Kopfzeile 'header1', sämtliche Seiten 'p1'… sowie Fußzeile 'footer1') aus und setzen Sie unter 'Layout' das Feld 'Max. Breite' einheitlich auf '850px' sowie 'Min. Breite' auf '300px'."
     },
     {
       "id": "HWG-CD-02",
-      "name": "Offizielles Corporate Design Header-Logo (60px Höhe, rechtsbündig)",
+      "name": "Offizielles Corporate Design Header-Logo (60px Höhe, rechtsbündig, Alt-Text)",
       "category": "corporate_design",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage im Header platziert sein, eine standardisierte Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1). Zweistufige Schweregrad-Logik: Fehlen des Logos wird als Critical (15 Punkte Abzug), Maß- oder Ausrichtungsabweichungen werden als Major (8 Punkte Abzug) bewertet.",
+      "rationale": "Sicherstellung der institutionellen Authentizität und des einheitlichen Corporate Designs der HWG Ludwigshafen. Das offizielle Logo muss als XImage innerhalb des Header-Containers (XHeader) platziert sein, eine Höhe von exakt 60px aufweisen, rechtsbündig ausgerichtet sein und einen barrierefreien Alternativtext führen (WCAG 2.1 Kriterium 1.1.1). Zweistufige Schweregrad-Logik: Fehlen des Logos im Header wird als Critical (15 Punkte Abzug), Maß-, Ausrichtungs- oder Alternativtext-Abweichungen werden als Major (8 Punkte Abzug) bewertet.",
       "specification": {
         "target": "header_elements",
+        "required_parent": "XHeader",
         "required_component": "XImage",
-        "alt_pattern": "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
+        "alt_patterns": [
+          "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
+          "HWG Ludwigshafen"
+        ],
         "required_height": "60px",
         "required_alignment": "right",
-        "severity_rule": "Fehlen des Logos: Critical/15; Maß-/Ausrichtungsabweichung: Major/8"
+        "severity_rule": "Fehlen des Logos im Header: Critical/15; Maß-, Ausrichtungs- oder Alt-Text-Abweichung: Major/8"
       },
-      "remediation": "Wählen Sie im Formcycle-Designer das Logo (XImage) im Header aus. Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (technisches Attribut imageheight = '60') und das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right'). Hinterlegen Sie im Feld 'Alternativtext' die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'.",
+      "remediation": "Platzieren Sie im Kopfbereich ('header1' / XHeader) das offizielle HWG-Logo als Bild-Element (XImage). Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (imageheight = '60'), das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right') und hinterlegen Sie im Feld 'Alternativtext' (alt) die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'.",
       "severity_tiers": {
         "critical": {
           "penalty": 15,
-          "condition": "Fehlen des offiziellen HWG-Header-Banners (XImage) im Kopfbereich"
+          "condition": "Fehlen des offiziellen HWG-Header-Banners (XImage) im Kopfbereich (XHeader)"
         },
         "major": {
           "penalty": 8,
-          "condition": "Maß- oder Ausrichtungsabweichung (Höhe != 60px oder Ausrichtung != rechtsbündig)"
+          "condition": "Maß-, Ausrichtungs- oder Alternativtext-Abweichung (Höhe != 60px, Ausrichtung != rechtsbündig oder fehlender/unvollständiger Alternativtext)"
         }
       }
     },
@@ -69,7 +78,7 @@
           "showlogo": "0"
         }
       },
-      "remediation": "Wählen Sie im Formcycle-Designer das Footer-Element ('footer1') aus und entfernen Sie den Haken bei 'Logo anzeigen' (Eigenschaft showlogo = 0), um den Hinweis 'Powered by XIMA Formcycle' auszublenden."
+      "remediation": "Wählen Sie im Formcycle-Designer das Fußzeilen-Element ('footer1' / XFooter) aus und entfernen Sie unter 'Eigenschaften' den Haken bei 'Logo anzeigen' (showlogo = '0'), um den Hinweis 'Powered by XIMA Formcycle' auszublenden."
     },
     {
       "id": "HWG-CD-04",
@@ -77,23 +86,25 @@
       "category": "corporate_design",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) und 2.4.6 (Überschriften und Beschriftungen) sowie DIN EN ISO 9241-110 (Selbstbeschreibungsfähigkeit): Der Formulartitel bildet den primären Einstiegspunkt und muss sich zwingend im Kopfbereich (Header) befinden. Zur Gewährleistung einer barrierefreien Dokumentenhierarchie für Screenreader muss der Titel semantisch als Überschrift erster Ordnung (<h1>) ausgezeichnet sein.",
+      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen) und 2.4.6 (Überschriften und Beschriftungen) sowie DIN EN ISO 9241-110 (Selbstbeschreibungsfähigkeit): Der Formulartitel bildet den primären Einstiegspunkt, muss sich direkt innerhalb des Kopfbereichs (XHeader) befinden und semantisch eindeutig als Überschrift erster Ordnung (<h1>) ausgezeichnet sein.",
       "specification": {
         "target": "header_elements",
-        "required_location": "header",
-        "required_heading_level": "h1"
+        "required_parent": "XHeader",
+        "required_heading_level": "h1",
+        "max_h1_count": 1
       },
-      "remediation": "Platzieren Sie den Formulartitel im Kopfbereich (Header-Container) und formatieren Sie die Beschriftung im Rich-Text-Editor zwingend als Überschrift erster Ordnung (H1, z. B. <h1>Antrag auf ...</h1>) statt H2 oder unformatiertem Text."
+      "remediation": "Platzieren Sie ein Text-/Überschrift-Element (XSpan / XHeading) direkt innerhalb des Header-Containers ('header1' / XHeader) und formatieren Sie den Formulartitel im Rich-Text-Editor exakt einmal als Überschrift erster Ordnung ('Überschrift 1' / <h1>Antrag auf ...</h1>) statt H2 oder unformatiertem Fließtext."
     },
     {
       "id": "HWG-A11Y-01",
-      "name": "Semantische Gruppierung mit Fieldsets",
+      "name": "Semantische Gruppierung mit Fieldsets und Legenden",
       "category": "accessibility",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen): Screenreader benötigen Fieldset-Strukturen zur Kontextualisierung logischer Blöcke.",
+      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 (Info und Beziehungen): Screenreader benötigen semantische Fieldset-Strukturen mit nicht-leerer Legende (<fieldset>/<legend>) zur Kontextualisierung logischer Eingabeblöcke.",
       "specification": {
         "target": "form_sections",
+        "min_input_fields_for_fieldset": 4,
         "required_container": "XFieldSet",
         "forbidden_container_as_section": [
           "XContainer",
@@ -101,7 +112,7 @@
         ],
         "require_legend": true
       },
-      "remediation": "Gruppieren Sie zusammengehörige Felder in einem XFieldSet mit einer aussagekräftigen Legende (z. B. 'Persönliche Angaben'). Nutzen Sie reine Container nur für internes Styling."
+      "remediation": "Ziehen Sie im Formcycle-Designer unter 'Layout-Elemente' das Element 'Gruppierung (Fieldset)' (XFieldSet) in das Formular, vergeben Sie unter 'Beschriftung' (Legend) einen sprechenden Abschnittstitel (z. B. 'Persönliche Angaben') und ordnen Sie zusammengehörige Eingabefelder darin an. Verwenden Sie keine unsemantischen Container (XContainer) als Abschnittsersatz."
     },
     {
       "id": "HWG-A11Y-02",
@@ -109,30 +120,41 @@
       "category": "accessibility",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen): Pflichtfelder müssen über die native Formcycle-Eigenschaft 'Pflichtfeld' (required='1') und 'Pflichtfeldhinweis anzeigen' (showrequiredhint='1') deklariert werden, damit Formcycle automatisch das rote Sternchen sowie im HTML-DOM das Attribut aria-required='true' rendert.",
+      "rationale": "WCAG 2.1 Erfolgskriterium 3.3.2 (Beschriftungen oder Anweisungen): Pflichtfelder müssen über die native Feldeigenschaft 'Pflichtfeld' (required='1' bzw. bedingte Pflicht über requiredif) deklariert werden, damit Formcycle automatisch das Sternchen am Feldlabel und im HTML-DOM das Attribut aria-required='true' setzt. Zugleich muss in Kopf- oder Fußzeile (XHeader/XFooter) die globale Legende 'Pflichtfeldhinweis anzeigen' (showrequiredhint='1') aktiviert sein.",
       "specification": {
-        "target": "input_fields",
-        "condition": "Feld ist fachlich verpflichtend oder trägt manuelles Sternchen im Label",
-        "required_properties": {
-          "required": "1",
+        "target": "input_fields_and_header_footer",
+        "condition": "Mindestens ein Pflichtfeld vorhanden oder manuelles Sternchen (*) im Labeltext",
+        "required_field_property": {
+          "required": "1"
+        },
+        "required_container_property": {
+          "components": [
+            "XHeader",
+            "XFooter"
+          ],
           "showrequiredhint": "1"
         },
-        "custom_attribute_fallback": "Falls das Feld nur bedingt per Skript verpflichtend ist: Unter 'Erweitert -> HTML-Attribute' (properties.attributes) explizit aria-required='true' hinterlegen."
+        "forbid_manual_asterisk_without_required": true
       },
-      "remediation": "Aktivieren Sie im Formcycle-Designer unter 'Einschränkungen' den Haken 'Pflichtfeld' (required=1) sowie 'Pflichtfeldhinweis anzeigen' (showrequiredhint=1). Dadurch setzt Formcycle automatisch das Sternchen und das DOM-Attribut aria-required='true'. Tippen Sie niemals manuelle Sternchen (*) in den Label-Text."
+      "remediation": "Aktivieren Sie bei jedem Pflichtfeld unter 'Einschränkungen' den Haken 'Pflichtfeld' (required = '1'; niemals ein manuelles Sternchen '*' in den Beschriftungstext tippen!) und setzen Sie im Element 'Kopfzeile' ('header1') oder 'Fußzeile' ('footer1') den Haken bei 'Pflichtfeldhinweis anzeigen' (showrequiredhint = '1')."
     },
     {
       "id": "HWG-A11Y-03",
-      "name": "Saubere Label-Syntax ohne HTML-Entities",
+      "name": "Saubere Label-Syntax ohne HTML-Störfragmente",
       "category": "accessibility",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "HTML-Fragmente wie '<p>Straße</p>' oder Sonderzeichen wie '|' in Labels führen bei Screenreadern und Sprachausgaben zu fehlerhaften Aussprachen.",
+      "rationale": "WCAG 2.1 Erfolgskriterium 1.3.1 & 2.5.3: Während Formcycle 8 einfache Absatz-Wrapper (<p>...</p>) und reguläre Umlaut-Entities beim Rendern automatisch auflöst, führen manuelle Zeilenumbrüche (<br>), kopierte Inline-Formatierungen (<span>, style=), geschützte Leerzeichen-Ketten (&nbsp;), doppelt maskierte Entities (&amp;szlig;) und technische Pipe-Trenner ('|') zu fehlerhaften Screenreader-Ansagen und Layoutbrüchen.",
       "specification": {
         "target": "field_labels",
-        "check": "Keine HTML-Tags (<p>, <br>), keine Entities (&szlig;, &ouml;) und keine technischen Trenner (|) im sichtbaren Text."
+        "allowed_editor_wrapper": "Einfacher Formcycle-Standard-Wrapper (<p>...</p>) und einfach kodierte Umlaute",
+        "disallowed_patterns": [
+          "Manuelle Zeilenumbrüche (<br>) oder geschachtelte Formatierungs-Tags (<span>, <div>, <font>, Inline-style)",
+          "Doppelt maskierte Entities (&amp;auml;, &amp;szlig;) oder mehrfache &nbsp;-Ketten",
+          "Technische Pipe-Trenner ('|') im sichtbaren Labeltext"
+        ]
       },
-      "remediation": "Wählen Sie das betroffene Feld im Formcycle-Designer aus und öffnen Sie unter 'Eigenschaften' den Bereich 'Beschriftung' (Label). Schalten Sie im Texteditor über das Quellcode-Symbol ('<>') in die Quellcode-Ansicht um: Entfernen Sie alle umschließenden HTML-Absatz-Tags ('<p>' und '</p>') und ersetzen Sie maskierte HTML-Entities (wie '&ouml;', '&uuml;', '&auml;', '&szlig;') sowie technische Trenner ('|') durch sauberen Fließtext mit regulären Umlauten (z. B. 'Förderprogramm' statt '<p>F&ouml;rderprogramm</p>' und 'Straße' statt '<p>Stra&szlig;e</p>')."
+      "remediation": "Bereinigen Sie im Feld 'Beschriftung' (Label) manuelle Zeilenumbrüche (<br>), kopierte Formatierungs-Tags (<span>, Inline-Styles), geschützte Leerzeichen-Ketten (&nbsp;), doppelt maskierte Entities sowie technische Trenner ('|'). Lagern Sie erläuternde Zusatzhinweise unter 'Allgemein' in das dedizierte Feld 'Hilfetext' (helptext) aus."
     },
     {
       "id": "HWG-STAMM-01",
@@ -140,20 +162,22 @@
       "category": "master_data",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "Erwartungskonformität nach ISO 9241-110: Natürlicher Lesefluss für Stammdaten erfordert Anrede -> Vorname -> Nachname.",
+      "rationale": "Erwartungskonformität nach DIN EN ISO 9241-110: Natürlicher Lesefluss für persönliche Stammdaten innerhalb einer Sektion erfordert die Sequenz Anrede -> Vorname -> Nachname -> E-Mail-Adresse (bzw. E-Mail / Hochschul-E-Mail) -> Telefonnummer.",
       "specification": {
-        "target": "personal_data_block",
+        "target": "personal_data_block_per_section",
         "expected_sequence": [
           "Anrede",
           "Vorname",
           "Nachname",
-          "E-Mail-Adresse"
+          "E-Mail-Adresse",
+          "Telefonnummer"
         ],
         "disallowed_sequence": [
-          "Nachname vor Vorname"
+          "Nachname (bzw. 'Name Antragstellende/r') vor Vorname",
+          "Namensfelder nach E-Mail oder Telefonnummer innerhalb derselben Sektion"
         ]
       },
-      "remediation": "Ordnen Sie im Stammdaten-Block zuerst das Feld 'Vorname' und danach das Feld 'Nachname' an. Vermeiden Sie umgekehrte Reihenfolgen."
+      "remediation": "Ordnen Sie persönliche Stammdaten innerhalb jedes Fieldsets in der kanonischen Reihenfolge an: Anrede -> Vorname -> Nachname -> E-Mail-Adresse (bzw. E-Mail) -> Telefonnummer. Kapseln Sie getrennte Rollenblöcke (z. B. Antragstellende vs. Vorgesetzte) in eigene Fieldsets."
     },
     {
       "id": "HWG-STAMM-02",
@@ -161,7 +185,7 @@
       "category": "master_data",
       "evaluation_type": "semantic",
       "severity": "minor",
-      "rationale": "Konsistente Bezeichnungen bei Stammdaten verhindern Verwirrung über erforderliche Eingaben (z. B. 'Vorname' statt 'Vorname Antragstellende/r*' und 'E-Mail-Adresse' statt technischer Kürzel).",
+      "rationale": "Konsistente Bezeichnungen bei persönlichen Stammdaten verhindern Verwirrung über erforderliche Eingaben (z. B. getrennte Felder 'Vorname' und 'Nachname' statt 'Name Antragstellende/r' sowie 'E-Mail-Adresse' bzw. 'E-Mail' statt technischer Kürzel).",
       "specification": {
         "target": "master_data_labels",
         "canonical_patterns": {
@@ -176,6 +200,7 @@
           ],
           "email": [
             "E-Mail-Adresse",
+            "E-Mail",
             "Hochschul-E-Mail"
           ],
           "phone": [
@@ -187,12 +212,12 @@
           ]
         },
         "anti_patterns": [
-          "Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r')",
-          "Mehrdeutige Kurzbezeichnungen (z. B. nur 'Name' für Nachname)",
+          "Sperrige Rollenzusätze in Standardfeldern (z. B. 'Name Antragstellende/r', 'Vorname Antragstellende/r')",
+          "Mehrdeutige Kurzbezeichnungen ohne Trennung in Vor- und Nachname (z. B. bloß 'Name')",
           "Technische Feldbezeichner als sichtbares Label (z. B. 'tf1', 'HWGLU-Email')"
         ]
       },
-      "remediation": "Nutzen Sie für persönliche Stammdaten die kanonischen Standardbezeichnungen ('Anrede', 'Vorname', 'Nachname', 'E-Mail-Adresse') ohne sperrige Sonderzusätze."
+      "remediation": "Nutzen Sie für persönliche Stammdaten ausschließlich die kanonischen Standardbezeichnungen ('Anrede', 'Vorname', 'Nachname', 'E-Mail-Adresse' bzw. 'E-Mail' oder 'Hochschul-E-Mail', 'Telefonnummer', 'Matrikelnummer') ohne sperrige Rollenzusätze oder technische Kürzel."
     },
     {
       "id": "HWG-UI-01",
@@ -200,12 +225,19 @@
       "category": "ui_quality_hygiene",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Verhindert Verunsicherung der Nutzenden und unprofessionelle Darstellung durch unbereinigte Template-Reste in allen Bereichen des Formulars.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit: Verhindert Verunsicherung der Antragstellenden durch unbereinigte Skript-, Shibboleth- oder Template-Kommentare in sichtbaren Text- und Rich-Text-Elementen.",
       "specification": {
-        "target": "all_form_elements",
-        "check": "Kein sichtbares Element im gesamten Formular darf technische Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB', 'display:none') enthalten."
+        "target": "all_visible_form_elements",
+        "inspected_properties": [
+          "label",
+          "text",
+          "heading",
+          "rtevalue",
+          "value"
+        ],
+        "check": "Kein für Antragstellende sichtbares Element (inkl. XSpan/rtevalue) darf technische Implementierungshinweise (z. B. 'JavaScript', 'Shibboleth', 'hide', 'LDAP-Member', 'Postfach-SB', 'display:none') enthalten."
       },
-      "remediation": "Entfernen Sie alle technischen Kommentare aus sichtbaren Textelementen. Interne Notizen gehören ausschließlich in das Entwickler-Kommentarfeld der Komponente."
+      "remediation": "Entfernen Sie alle technischen Implementierungshinweise aus sichtbaren Text- und Rich-Text-Elementen (XSpan / Beschriftung). Hinterlegen Sie interne Notizen ausschließlich im Entwickler-Feld 'Kommentar' (comment) der Komponente oder beschränken Sie interne Bearbeiterblöcke unter 'Zugriff / Sichtbarkeit' auf nachgelagerte Workflow-Status (viewstatus)."
     },
     {
       "id": "HWG-BTN-01",
@@ -213,10 +245,10 @@
       "category": "microcopy_buttons",
       "evaluation_type": "semantic",
       "severity": "major",
-      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Erwartungskonformität: Schaltflächen müssen stets eine eindeutige Handlung beschreiben ([Zielobjekt] + [Vollverb im Infinitiv]). Reine Systemzustände oder generische Ein-Wort-Labels stiften Verwirrung.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Erwartungskonformität: Aktionsschaltflächen müssen stets eine eindeutige Handlung beschreiben ([Zielobjekt] + [Vollverb im Infinitiv]). Reine Zustandsbezeichnungen ohne Verb oder generische Ein-Wort-Labels stiften Verwirrung.",
       "specification": {
         "target": "action_buttons",
-        "pattern_rule": "Muss ein konkretes Vollverb im Infinitiv enthalten, das die ausgelöste Transaktion beschreibt.",
+        "pattern_rule": "Jede Absende- oder Prozessschaltfläche muss ein konkretes Vollverb im Infinitiv mit Zielobjekt enthalten, das die ausgelöste Transaktion eindeutig beschreibt.",
         "valid_examples": [
           "Antrag einreichen",
           "Bedarfsmeldung absenden",
@@ -227,10 +259,10 @@
         ],
         "disallowed_patterns": [
           "Reine Substantive oder Statusbezeichnungen ohne Handlungsverb (z. B. bloß 'Kritischer Fall', 'Status', 'Genehmigung')",
-          "Generische, kleingeschriebene Minimal-Labels (z. B. bloß 'senden', 'Submit', 'OK', 'Abschicken')"
+          "Generische, kontextlose Minimal-Labels (z. B. bloß 'senden', 'Submit', 'OK', 'Abschicken')"
         ]
       },
-      "remediation": "Beschriften Sie jede Aktionsschaltfläche mit einer konkreten Handlung im Infinitiv (z. B. 'Antrag einreichen', 'Kritischen Fall einreichen' oder 'Rückmeldung übermitteln') anstelle von reinen Zuständen ('Kritischer Fall') oder generischen Begriffen ('senden')."
+      "remediation": "Wählen Sie im Formcycle-Designer die Schaltflächenleiste (XButtonList) bzw. die Schaltfläche (XButton) aus und beschriften Sie jede Aktionsschaltfläche nach dem Action-Verb-Muster (z. B. 'Antrag einreichen', 'Kritischen Fall einreichen' oder 'Rückmeldung übermitteln') anstelle von reinen Zuständen ('Kritischer Fall') oder generischen Ein-Wort-Begriffen ('senden')."
     },
     {
       "id": "HWG-BTN-02",
@@ -238,13 +270,20 @@
       "category": "microcopy_buttons",
       "evaluation_type": "semantic",
       "severity": "minor",
-      "rationale": "Konsistente Bezeichnungen bei Pagination verringern die kognitive Belastung.",
+      "rationale": "DIN EN ISO 9241-110 Erwartungskonformität & Steuerbarkeit: Konsistente Bezeichnungen bei der Seitennavigation (Pagination) verringern die kognitive Belastung.",
       "specification": {
         "target": "navigation_buttons",
+        "action_types": [
+          "next",
+          "prev",
+          "xnavbar_next",
+          "xnavbar_prev",
+          "page_jump"
+        ],
         "standard_next": "Weiter",
         "standard_back": "Zurück"
       },
-      "remediation": "Verwenden Sie für die Seitennavigation einheitlich 'Weiter' und 'Zurück' anstelle von seitenbezogenen Konstrukten wie 'weiter zu Seite 2'."
+      "remediation": "Wählen Sie in mehrseitigen Formularen die Schaltflächenleiste (XButtonList) aus und benennen Sie Schaltflächen mit Seitenwechsel-Aktion einheitlich 'Weiter' und 'Zurück' anstelle uneinheitlicher Konstrukte wie 'weiter zu Seite 2'."
     },
     {
       "id": "HWG-DSGVO-01",
@@ -252,22 +291,16 @@
       "category": "data_privacy_security",
       "evaluation_type": "deterministic",
       "severity": "critical",
-      "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Hinweis mit Link zur zentralen HWG-Datenschutzerklärung (im Formular oder über die Footer-Option privacyPolicyShow) ist rechtlich zwingend.",
+      "rationale": "Erfüllung der Informationspflichten gemäß Art. 13 DSGVO bei Erhebung personenbezogener Daten. Ein transparenter Datenschutzhinweis über die native Footer-Option (privacyPolicyShow = '1') oder ein expliziter Hinweistext mit aktivem Link zur zentralen HWG-Datenschutzerklärung ist rechtlich zwingend.",
       "specification": {
         "target": "privacy_section_or_footer",
         "condition": "form_contains_personal_data",
-        "required_elements": [
-          "Datenschutz-Hinweis im Formular oder aktivierte Datenschutzerklärung im Footer (privacyPolicyShow = 1)",
-          "Link zur Datenschutzerklärung der HWG Ludwigshafen"
-        ],
-        "keywords": [
-          "Datenschutz",
-          "Datenschutzerklärung",
-          "DSGVO",
-          "hwg-lu.de"
+        "accepted_mechanisms": [
+          "Aktivierte Datenschutzerklärung im Footer (XFooter.privacyPolicyShow = '1')",
+          "Expliziter Datenschutzhinweis (Datenschutz / DSGVO / Art. 13) mit aktiver Verlinkung (href / URL zur HWG-Datenschutzerklärung)"
         ]
       },
-      "remediation": "Fügen Sie vor der Absende-Schaltfläche einen Hinweis auf die Datenverarbeitung mit Link zur HWG-Datenschutzerklärung ein oder aktivieren Sie im Footer die Option 'Datenschutzerklärung anzeigen' (privacyPolicyShow = 1)."
+      "remediation": "Aktivieren Sie im Fußzeilen-Element ('footer1' / XFooter) unter 'Eigenschaften' die native Option 'Datenschutzerklärung anzeigen' (privacyPolicyShow = '1') oder fügen Sie vor der Absende-Schaltfläche einen Textblock (XSpan) mit Hinweis nach Art. 13 DSGVO und aktivem Link zur HWG-Datenschutzerklärung (https://www.hwg-lu.de/datenschutz) ein."
     },
     {
       "id": "HWG-UPLOAD-01",
@@ -275,19 +308,23 @@
       "category": "input_validation_ux",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nutzende müssen vor dem Upload wissen, welche Dateiformate (z. B. PDF) und Dateigrößen (z. B. max. 10 MB) akzeptiert werden, um Systemabbrüche zu verhindern.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Fehlertoleranz: Upload-Komponenten müssen sowohl technisch eingeschränkt als auch im sichtbaren Label/Hilfetext konsistent mit zulässigen Dateiformaten (z. B. PDF, JPG) und Maximalgröße (z. B. max. 10 MB) ausgewiesen sein.",
       "specification": {
         "target": "upload_components",
         "component_types": [
           "XUpload",
           "XFile"
         ],
+        "required_technical_properties": [
+          "fileextension (nicht leer)",
+          "maxfilesize (> 0)"
+        ],
         "required_hint_elements": [
-          "Zulässige Dateiformate (z. B. 'PDF, JPG')",
-          "Maximale Dateigröße (z. B. 'max. 10 MB')"
+          "Zulässige Dateiformate im Label oder Hilfetext (widerspruchsfrei zu fileextension)",
+          "Maximale Dateigröße im Label oder Hilfetext (z. B. 'max. 10 MB')"
         ]
       },
-      "remediation": "Hinterlegen Sie im Hilfetext (Tooltip/Beschreibung) des Upload-Elements klar ersichtlich die erlaubten Dateiformate (z. B. 'Nur PDF-Dateien') sowie die maximale Upload-Größe (z. B. 'max. 10 MB')."
+      "remediation": "Wählen Sie das Upload-Element (XUpload) im Formcycle-Designer aus: (1) Setzen Sie unter 'Einschränkungen' die zulässigen 'Dateiendungen' (fileextension, z. B. '.pdf, .jpg, .png') und die 'Maximale Dateigröße' (maxfilesize in KB, z. B. '10240' für 10 MB). (2) Nennen Sie exakt dieselben Formate und das Größenlimit unter 'Allgemein -> Hilfetext' (z. B. 'Zulässige Formate: PDF, JPG, PNG; max. 10 MB')."
     },
     {
       "id": "HWG-VAL-01",
@@ -295,7 +332,7 @@
       "category": "input_validation_ux",
       "evaluation_type": "deterministic",
       "severity": "major",
-      "rationale": "Fehlerrobustheit und Benutzerführung nach ISO 9241-110: Strukturierte Daten (IBAN, PLZ, Telefon, Datum) dürfen nicht als unvalidierte Freitexte erfasst werden, sondern benötigen Validierungsmuster.",
+      "rationale": "Fehlertoleranz nach DIN EN ISO 9241-110: Strukturierte Daten (IBAN, PLZ, Telefonnummer, Datum, Matrikelnummer) dürfen nicht als unvalidierte Freitexte erfasst werden, sondern benötigen einen typgerechten Formcycle-Validator oder ein hinterlegtes Regex-Prüfmuster (vrule). Für Telefonnummern wird ausdrücklich ein regulärer Ausdruck erlaubt und empfohlen, da der native Formcycle-Datentyp 'phone' kein '+'-Zeichen für internationale Ländervorwahlen (z. B. +49) zulässt.",
       "specification": {
         "target": "structured_fields",
         "field_patterns": [
@@ -304,19 +341,29 @@
           "postleitzahl",
           "telefon",
           "datum",
-          "geburtsdatum"
+          "geburtsdatum",
+          "matrikel",
+          "matrikelnummer"
         ],
-        "required_property": "validation_pattern_or_preset",
+        "accepted_datatypes": [
+          "plzDE",
+          "dateDE",
+          "dateISO",
+          "date",
+          "phone",
+          "email",
+          "regexp (nur mit nicht-leerem Muster in vrule/pattern)"
+        ],
         "copy_paste_regex_catalog": {
           "plz_deutschland": "^[0-9]{5}$",
-          "iban_deutschland": "^[A-Z]{2}[0-9]{20}$",
-          "iban_international_sepa": "^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,28}$",
-          "telefonnummer": "^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$",
+          "iban_deutschland_leerzeichentolerant": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
+          "iban_international_sepa": "^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$",
+          "telefonnummer_inkl_plus": "^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$",
           "matrikelnummer_hwg": "^[0-9]{6,7}$",
           "email_adresse": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
         }
       },
-      "remediation": "Wählen Sie im Formcycle-Designer das unvalidierte Feld aus und navigieren Sie unter 'Eigenschaften' zum Bereich 'Validierung' (bzw. 'Einschränkungen'). Tragen Sie im Feld 'Regulärer Ausdruck (Regex)' direkt das passende Prüfmuster per Copy & Paste ein:\n• Postleitzahl (PLZ, 5 Ziffern): ^[0-9]{5}$\n• IBAN (Deutschland, 22 Zeichen): ^[A-Z]{2}[0-9]{20}$\n• IBAN (International / SEPA): ^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,28}$\n• Telefonnummer (Festnetz & Mobil): ^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$\n• Matrikelnummer (6-7 Ziffern): ^[0-9]{6,7}$\n• E-Mail-Adresse: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\nHinterlegen Sie unter 'Fehlermeldung' stets einen verständlichen Hinweistext (z. B. 'Bitte geben Sie eine gültige 5-stellige deutsche Postleitzahl ein.')."
+      "remediation": "Wählen Sie das unvalidierte Feld (XTextField) im Formcycle-Designer aus und navigieren Sie unter 'Eigenschaften' zum Bereich 'Validierung' (Datentyp / datatype):\n• Postleitzahl, Datum & E-Mail: Nutzen Sie den nativen Formcycle-Datentyp 'Postleitzahl (DE)' (plzDE), 'Datum' (dateDE) bzw. 'E-Mail' (email) oder 'Regulärer Ausdruck' (regexp) mit Prüfmuster (vrule).\n• Telefonnummer (Empfehlung Regex, da Formcycles Typ 'phone' kein '+' für Ländervorwahlen wie +49 erlaubt): Datentyp 'Regulärer Ausdruck' -> ^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$\n• IBAN (DE, leerzeichentolerant): Datentyp 'Regulärer Ausdruck' -> ^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$ (SEPA international: ^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$)\n• Matrikelnummer (HWG, 6–7 Ziffern): Datentyp 'Regulärer Ausdruck' -> ^[0-9]{6,7}$\nHinterlegen Sie unter 'Fehlermeldung' stets einen verständlichen Hinweistext."
     },
     {
       "id": "HWG-UX-01",
@@ -324,7 +371,7 @@
       "category": "input_validation_ux",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "Nielsen Norman Group Form Design: Die optische Breite eines Feldes signalisiert die erwartete Inhaltslänge. Extrem kurze Angaben (PLZ, Hausnummer) dürfen nicht über 100% Breite gestreckt werden.",
+      "rationale": "Erwartungskonformität & visuelle Affordanz (Wroblewski, 2008): Die optische Breite eines Eingabefeldes signalisiert die erwartete Zeichenlänge. Kurze Angaben (PLZ, Hausnummer) dürfen nicht allein über 100% der Zeilenbreite gestreckt werden.",
       "specification": {
         "target": "compact_fields",
         "field_names": [
@@ -333,9 +380,9 @@
           "hausnummer",
           "hnr"
         ],
-        "max_recommended_width_percentage": 40
+        "expected_layout": "Mehrspaltige Zeilenanordnung (computedwidth < 100%, Richtwert 25-40% bzw. gemeinsame rowid mit Nachbarfeld)"
       },
-      "remediation": "Begrenzen Sie die Spaltenbreite von kurzen Eingabefeldern wie Postleitzahl oder Hausnummer auf maximal 30-40% der Zeilenbreite oder platzieren Sie sie nebeneinander in einer Mehrspaltenzeile."
+      "remediation": "Ziehen Sie kurze Eingabefelder (z. B. Postleitzahl neben Wohnort oder Hausnummer neben Straße) im Formcycle-Designer per Drag-and-Drop in dieselbe Formularzeile (computedwidth < 100%, idealerweise 25–40% für PLZ/Hausnummer) oder begrenzen Sie unter 'Layout' die Elementbreite."
     },
     {
       "id": "HWG-UX-02",
@@ -343,28 +390,28 @@
       "category": "input_validation_ux",
       "evaluation_type": "hybrid",
       "severity": "recommendation",
-      "rationale": "ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei großen Formularen (z. B. ab 3 Seiten oder vielen Eingabefeldern/Nachweis-Uploads) sollten Nutzende die Bearbeitung unterbrechen können. Ein Zwischenspeichern-Button mit E-Mail-Link-Versand speichert die bisherigen Angaben und erlaubt die nahtlose Fortsetzung zu einem späteren Zeitpunkt.",
+      "rationale": "DIN EN ISO 9241-110 Steuerbarkeit und Aufgabenangemessenheit: Bei umfangreichen Formularen (ab 3 Seiten oder ab 25 Eingabefeldern) sollten Nutzende die Bearbeitung unterbrechen und später über einen zugesandten Link nahtlos fortsetzen können.",
       "specification": {
         "target": "form_complexity_and_buttons",
-        "trigger_condition": "Formular hat >= 3 Seiten (XPage) oder >= 25 Eingabefelder oder erfordert umfangreiche Dokumenten-Uploads",
-        "recommended_feature": "Schaltfläche 'Zwischenspeichern' mit Workflow-Aktion zum Versand eines Fortsetzungs-Links per E-Mail an die antragstellende Person.",
+        "trigger_condition": "Formular umfasst >= 3 Seiten (XPage) oder >= 25 Eingabefelder",
+        "recommended_feature": "Schaltfläche 'Zwischenspeichern' (ohne Pflichtfeldblockade) mit Workflow-Versand eines Fortsetzungs-Links ([%$URL_FORM%]) per E-Mail an die antragstellende Person.",
         "penalty_points": 0
       },
-      "remediation": "Empfehlung (ohne Punktabzug): Da dieses Formular einen hohen Umfang aufweist, empfiehlt sich die Integration eines 'Zwischenspeichern'-Buttons, der dem Nutzenden per E-Mail einen Link zur späteren Fortsetzung der Bearbeitung zusendet."
+      "remediation": "Empfehlung (ohne Punktabzug): Legen Sie in der Schaltflächenleiste (XButtonList) einen Button 'Zwischenspeichern' mit der Aktion 'absenden' OHNE Pflichtfeldprüfung (submitNoCheck, nicht 'absenden + prüfen'!) an und versenden Sie im Workflow über einen FC_EMAIL-Knoten den Fortsetzungs-Link ([%$URL_FORM%])."
     },
     {
       "id": "HWG-LANG-01",
-      "name": "Erklärung von Hochschul- und Amtsjargon",
+      "name": "Erklärung von Hochschul- und Amtsjargon sowie konsistente Sie-Ansprache",
       "category": "plain_language_semantics",
       "evaluation_type": "semantic",
       "severity": "major",
-      "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich): Hochschulspezifische Fachbegriffe, interne Organisationsabkürzungen und Amtsdeutsch ohne begleitende Hilfetexte überfordern Studierende und externe Antragstellende.",
+      "rationale": "WCAG 2.1 Richtlinie 3.1 (Verständlich) & DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit: Hochschulspezifische Fachbegriffe, interne Organisationskürzel und Amtsdeutsch ohne erläuternde Hilfetexte überfordern Antragstellende.",
       "specification": {
         "target": "text_and_labels",
-        "detection_strategy": "Semantische Analyse durch LLM: Identifikation von bürokratischen Fachbegriffen, internen Organisationskürzeln (z. B. GStB, KAP, ZFK, Kostenstelle) oder Rechtsbegriffen (z. B. Vergabevermerk, Remonstration), für die kein Tooltip, Glossar oder Hilfetext hinterlegt ist.",
-        "requirement": "Jeder identifizierte Jargon-Begriff muss von einem verständlichen Hilfetext oder Tooltip begleitet sein."
+        "detection_strategy": "Semantische Analyse durch LLM: Identifikation von unerklärten Verwaltungs-/Hochschulfachbegriffen und internen Kürzeln (z. B. GStB, KAP, ZFK, Kostenstelle, Vergabevermerk, Remonstration, Haushaltsstelle) ohne zugehörigen Hilfetext/Tooltip sowie Prüfung auf durchgängige 'Sie'-Ansprache.",
+        "requirement": "Jeder identifizierte Jargon-Begriff muss durch einen verständlichen Hilfetext (helptext) oder im unmittelbaren Kontext erläutert sein."
       },
-      "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen mit einem verständlichen Hilfetext (Tooltip) oder einer kurzen Begriffserklärung."
+      "remediation": "Ergänzen Sie hochschulspezifische Fachbegriffe oder Abkürzungen unter 'Allgemein -> Hilfetext' (helptext) um eine kurze, allgemeinverständliche Begriffserklärung und achten Sie auf eine konsistente 'Sie'-Ansprache."
     },
     {
       "id": "HWG-LANG-02",
@@ -372,13 +419,13 @@
       "category": "plain_language_semantics",
       "evaluation_type": "hybrid",
       "severity": "minor",
-      "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte und Hinweise müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das kognitive Verständnis.",
+      "rationale": "DIN EN ISO 9241-110 Aufgabenangemessenheit: Anleitungstexte, Rich-Text-Blöcke und Hilfetexte müssen prägnant formuliert sein. Schachtelsätze mit mehr als 25 Wörtern erschweren das Leseverständnis.",
       "specification": {
-        "target": "instructions_and_descriptions",
+        "target": "instructions_and_helptexts",
         "max_sentence_length_words": 25,
-        "style_criteria": "Aktivformulierungen, keine verschachtelten Passivkonstruktionen, klare Handlungsanweisungen."
+        "style_criteria": "Aktivformulierungen, keine verschachtelten Passivkonstruktionen, klare Handlungsanweisungen in Textblöcken (rtevalue/text) und Hilfetexten (helptext)."
       },
-      "remediation": "Kürzen Sie überlange Schachtelsätze in Anleitungen und Hilfetexten auf maximal 20-25 Wörter pro Satz und nutzen Sie handlungsorientierte Aktivsätze."
+      "remediation": "Kürzen Sie überlange Schachtelsätze in Hinweis- und Hilfetexten auf maximal 20–25 Wörter pro Satz und formulieren Sie handlungsorientierte Aktivsätze."
     },
     {
       "id": "HWG-FEEDBACK-01",
@@ -386,17 +433,16 @@
       "category": "process_transparency",
       "evaluation_type": "hybrid",
       "severity": "minor",
-      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über die automatisierten Workflow-E-Mails (FC_EMAIL) transparent über den Eingang, den aktuellen Bearbeitungsstatus und die nächsten Prozessschritte informiert werden.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit: Nach dem Absenden müssen Antragstellende über eine automatisierte Workflow-E-Mail (FC_EMAIL) transparent über den Eingang, die zuständige Prüfstelle und die nächsten Prozessschritte informiert werden.",
       "specification": {
         "target": "workflow_email_nodes",
-        "target_path": "workflowVersions[].mainProcess.tasks[].nodes[type='FC_EMAIL'].customParameters.body",
+        "target_path": "workflowVersions[].mainProcess.tasks[].nodes[type='FC_EMAIL'].customParameters",
         "required_information": [
-          "Eingangsbestätigung an die antragstellende Person nach dem Absenden",
-          "Information über die zuständige Prüfstelle (z. B. ZFK, Haushaltsabteilung) und den weiteren Prozessablauf",
-          "Status-Updates bei Genehmigung, Ablehnung oder Nachforderung von Unterlagen"
+          "Automatisierte Eingangsbestätigung direkt an die antragstellende Person (nicht ausschließlich interne Funktionspostfächer)",
+          "Benennung der zuständigen Prüfstelle (z. B. ZFK, Finanzabteilung, Fachbereich) und der nächsten Prozessschritte"
         ]
       },
-      "remediation": "Hinterlegen Sie im Formcycle-Workflow einen E-Mail-Knoten (FC_EMAIL) für die antragstellende Person, dessen Text den Eingang bestätigt und transparent erläutert, welche Stelle den Antrag im nächsten Schritt prüft."
+      "remediation": "Hinterlegen Sie im Formcycle-Workflow unter 'Prozess-Aktionen' einen E-Mail-Knoten (FC_EMAIL) an die antragstellende Person, dessen Text den Eingang bestätigt und transparent erläutert, welche Stelle den Antrag im nächsten Schritt bearbeitet."
     },
     {
       "id": "HWG-WF-01",
@@ -404,7 +450,7 @@
       "category": "workflow_governance",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen in der Verwaltung. Mehrstufige Formulare müssen den Lebenszyklus des Antrags über formale Statusübergänge (FC_CHANGE_STATE) abbilden und kanonische Phasen ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt') nutzen. Fachspezifische Zwischenschritte und Unterstatus sind zulässig, sofern sie auf diesen Phasen aufbauen.",
+      "rationale": "Verhindert intransparente Prozessinseln und unklare Bearbeitungsphasen. Workflows müssen den Antragslebenszyklus über formale Statusübergänge (FC_CHANGE_STATE) abbilden und auf den kanonischen Phasen ('Eingegangen', 'In Prüfung', 'Nachforderung ausstehend', 'Genehmigt', 'Abgelehnt', 'Archiviert') aufbauen.",
       "specification": {
         "target": "workflow_state_nodes",
         "canonical_lifecycle": [
@@ -417,11 +463,11 @@
         ],
         "disallowed_patterns": [
           "Workflow ohne Status-Knoten (FC_CHANGE_STATE)",
-          "Willkürliche Ad-hoc-Zustände ohne Prozessbedeutung (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')"
+          "Willkürliche Ad-hoc-Zustände ohne kanonische Phasenbasis (z. B. 'Durch VG ergänzt', 'Kritischer Fall Rückmeldung')"
         ],
-        "allowed_extensions": "Fachbereichsspezifische Teilschritte und Unterstatus (z. B. 'In Prüfung Rückmeldung', 'Eingegangen - Fachbereich') sind zulässig, solange die kanonischen Phasen als Basis dienen."
+        "allowed_extensions": "Fachbereichsspezifische Zusätze sind zulässig, solange eine kanonische Lebenszyklusphase als Wortstamm enthalten ist."
       },
-      "remediation": "Definieren Sie im Workflow strukturierte Statusänderungen (FC_CHANGE_STATE) und nutzen Sie Bezeichnungen, die auf den kanonischen Lebenszyklusphasen basieren ('Eingegangen', 'In Prüfung', 'Genehmigt', 'Abgelehnt'). Fachspezifische Zusätze (wie 'In Prüfung Rückmeldung' oder 'Eingegangen - Finanzabteilung') sind zulässig."
+      "remediation": "Definieren Sie im Formcycle-Workflow über 'Prozess-Aktionen -> Status ändern' (FC_CHANGE_STATE) strukturierte Statusübergänge auf Basis der kanonischen Phasen ('Eingegangen', 'In Prüfung', 'Nachforderung ausstehend', 'Genehmigt', 'Abgelehnt', 'Archiviert')."
     },
     {
       "id": "HWG-WF-02",
@@ -429,16 +475,16 @@
       "category": "workflow_governance",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "ISO 9241-110 Selbstbeschreibungsfähigkeit & Prozesskontrolle: Sämtliche automatisierte E-Mails an Antragstellende und Sachbearbeitende müssen eine eindeutige Vorgangsnummer führen, um Rückfragen, Statusverfolgung und Aktenablage fehlerfrei zu ermöglichen.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Steuerbarkeit: Automatisierte Workflow-E-Mails müssen eine dynamische Vorgangsreferenz ([%$PROJECT_ALIAS%]) führen, um Rückfragen, Zuordnung und Statusverfolgung medienbruchfrei zu ermöglichen.",
       "specification": {
         "target": "workflow_email_nodes",
-        "target_field": "subject_and_body",
+        "target_field": "subject_or_body",
         "required_variable": "[%$PROJECT_ALIAS%]",
         "disallowed_patterns": [
-          "E-Mail-Benachrichtigungen ohne Vorgangsnummer ([%$PROJECT_ALIAS%]) im Betreff oder Textkörper"
+          "Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$PROJECT_ALIAS%] bzw. [%$RECORD_ID%]) im Betreff oder Textkörper"
         ]
       },
-      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff aller E-Mail-Knoten (FC_EMAIL) die Systemvariable [%$PROJECT_ALIAS%] als eindeutige Vorgangsnummer ein."
+      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) den dynamischen Platzhalter [%$PROJECT_ALIAS%] als eindeutige Vorgangsnummer ein."
     }
   ]
 }

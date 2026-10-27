@@ -49,19 +49,25 @@ def build():
         
     thesis_dir = os.path.abspath("thesis")
     
-    print("\n=== [1/3] Erste Kompilierung mit pdflatex ===")
-    res1 = subprocess.run([pdflatex, "-interaction=nonstopmode", "-enable-installer", "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
+    extra_flags = ["-enable-installer"] if "miktex" in pdflatex.lower() else []
+
+    print("\n=== [1/4] Erste Kompilierung mit pdflatex ===")
+    res1 = subprocess.run([pdflatex, "-interaction=nonstopmode", *extra_flags, "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
     print("pdflatex 1 beendet, Return Code:", res1.returncode)
     
     bcf_file = os.path.join(thesis_dir, "main.bcf")
     if os.path.exists(bcf_file) and biber:
-        print("\n=== [2/3] Literaturverzeichnis mit Biber verarbeiten ===")
+        print("\n=== [2/4] Literaturverzeichnis mit Biber verarbeiten ===")
         res2 = subprocess.run([biber, "main"], cwd=thesis_dir, capture_output=True, text=True)
         print("biber beendet, Return Code:", res2.returncode)
         
-    print("\n=== [3/3] Finale Kompilierung mit pdflatex ===")
-    res3 = subprocess.run([pdflatex, "-interaction=nonstopmode", "-enable-installer", "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
-    print("pdflatex final beendet, Return Code:", res3.returncode)
+    print("\n=== [3/4] Zweite Kompilierung mit pdflatex (Referenzen) ===")
+    res3 = subprocess.run([pdflatex, "-interaction=nonstopmode", *extra_flags, "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
+    print("pdflatex 2 beendet, Return Code:", res3.returncode)
+
+    print("\n=== [4/4] Finale Kompilierung mit pdflatex (Seitenumbrüche & Verzeichnisse) ===")
+    res4 = subprocess.run([pdflatex, "-interaction=nonstopmode", *extra_flags, "main.tex"], cwd=thesis_dir, capture_output=True, text=True)
+    print("pdflatex final beendet, Return Code:", res4.returncode)
     
     pdf_path = os.path.join(thesis_dir, "main.pdf")
     if os.path.exists(pdf_path):
