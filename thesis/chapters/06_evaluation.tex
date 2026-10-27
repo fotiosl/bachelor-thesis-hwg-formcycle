@@ -24,6 +24,7 @@ Hierbei bezeichnen $TP$ die zutreffend identifizierten Regelverstöße (\textit{
 
 Tabelle~\ref{tab:eval_results} weist die empirisch gemessenen Ergebnisse der vollständigen zweistufigen Prüfpipeline für das synthetische Kontrollkorpus sowie drei repräsentative HWG-Kernanträge aus. Für Stufe~2 (sieben semantische bzw. hybride Regeln) wurde der standardisierte Audit-Prompt (Anhang~\ref{app:prompt_extrakt}) über die OpenAI-kompatible REST-API der \textit{Academic Cloud} (GWDG) mit dem Referenzmodell \textit{DeepSeek V4 Flash} ausgewertet.
 
+% TODO: Ggf. saniertes 100%-Formular als Vorher-Nachher-Vergleich zum Master-Formular ergänzen
 \begin{table}[htbp]
 \centering
 \scriptsize
@@ -76,10 +77,10 @@ Das kompakte 8B-Modell scheitert an negativen Zählbedingungen (\texttt{HWG-LANG
 \section{Formatives Experten-Review und Validitätsgrenzen}
 \label{sec:praxistauglichkeit_validitaet}
 
-\subsection{Formatives Experten-Review mit der Verwaltungspraxis (FB1)}
+\subsection{Formatives Experten-Review mit der IT-Verwaltungspraxis}
 \label{subsec:experten_review}
 
-Zur Sicherung der Praxisrelevanz wurde ein strukturiertes Experten-Review mit dem Hauptsachbearbeiter und Praktikumsbeauftragten des Fachbereichs~1 (Verantwortlicher u.\,a. für das \textit{FB1-Praktikumsformular}) durchgeführt. Seine Rückmeldungen flossen unmittelbar in die Registry v1.5.0 ein: (1)~verbindliche Deaktivierung des XIMA-Footerlogos (\texttt{HWG-CD-03}), (2)~Klickpfad-Anleitung für die systemeigene Pflichtfeldlegende (\texttt{HWG-A11Y-02}), (3)~gebrauchsfertige Copy-and-Paste-Regex-Muster (\texttt{HWG-VAL-01}), (4)~Zwischenspeicher-Empfehlung bei Großanträgen (\texttt{HWG-UX-02}) sowie (5)~Prüfung transparenter Eingangsbestätigungs-E-Mails (\texttt{HWG-FEEDBACK-01}).
+Zur Sicherung der Praxisrelevanz wurde ein strukturiertes Experten-Review mit dem praxisbetreuenden Mitarbeiter der zentralen Hochschul-IT durchgeführt, der als technischer Formularadministrator maßgeblich an der Digitalisierung von Verwaltungsabläufen und der technischen Umsetzung von Antrags- und Genehmigungsprozessen in Formcycle beteiligt ist (unter anderem verantwortlich für die Implementierung des \textit{FB1-Praktikumsformulars}). Seine praxisnahen Rückmeldungen flossen unmittelbar in die Registry v1.5.0 ein: (1)~verbindliche Deaktivierung des XIMA-Footerlogos (\texttt{HWG-CD-03}), (2)~Klickpfad-Anleitung für die systemeigene Pflichtfeldlegende in Kopf- und Fußzeile (\texttt{HWG-A11Y-02}), (3)~gebrauchsfertige Copy-and-Paste-Regex-Muster (\texttt{HWG-VAL-01}), (4)~Zwischenspeicher-Empfehlung bei Großanträgen (\texttt{HWG-UX-02}) sowie (5)~Prüfung transparenter Eingangsbestätigungs-E-Mails (\texttt{HWG-FEEDBACK-01}).
 
 \subsection{Validitätsbedrohungen}
 \label{subsec:validitaetsbedrohungen}
