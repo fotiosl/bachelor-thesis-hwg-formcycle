@@ -18,39 +18,45 @@
 
 
 \refsection{0}
-  \datalist[entry]{nyt/global//global/global/global}
+  \datalist[entry]{apa/apasortcite//global/global/global}
     \entry{bargas2010usable}{article}{}{}
       \name{author}{6}{}{%
-        {{hash=bdf6d4f2cf774f7ff872823acaf143c7}{%
+        {{un=0,uniquepart=base,hash=bdf6d4f2cf774f7ff872823acaf143c7}{%
            family={Bargas-Avila},
            familyi={B\bibinithyphendelim A\bibinitperiod},
            given={Javier\bibnamedelima A.},
-           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=36fac2fc97a0c56e67a4755d544ab402}{%
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=36fac2fc97a0c56e67a4755d544ab402}{%
            family={Brenzikofer},
            familyi={B\bibinitperiod},
            given={Olivier},
-           giveni={O\bibinitperiod}}}%
-        {{hash=fe3b15a601b05512f1a5d63345c0d16b}{%
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fe3b15a601b05512f1a5d63345c0d16b}{%
            family={Roth},
            familyi={R\bibinitperiod},
            given={Sandra\bibnamedelima P.},
-           giveni={S\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
-        {{hash=20a458a05e810dd849fa017198a43aaa}{%
+           giveni={S\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20a458a05e810dd849fa017198a43aaa}{%
            family={Tuch},
            familyi={T\bibinitperiod},
            given={Alexandre\bibnamedelima N.},
-           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
-        {{hash=fd53a63a14c384d869569560c9a2da82}{%
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fd53a63a14c384d869569560c9a2da82}{%
            family={Orsini},
            familyi={O\bibinitperiod},
            given={S.},
-           giveni={S\bibinitperiod}}}%
-        {{hash=d24973a4ced64e06ab547ff1b0c12887}{%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d24973a4ced64e06ab547ff1b0c12887}{%
            family={Opwis},
            familyi={O\bibinitperiod},
            given={Klaus},
-           giveni={K\bibinitperiod}}}%
+           giveni={K\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{249c757a8c8d688e56ddf9c61b7f43a6}
       \strng{fullhash}{3add050456a4deab99e0b1a0c94b6fc2}
@@ -64,6 +70,7 @@
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Computers in Human Behavior}
@@ -77,28 +84,32 @@
       \verb 10.1016/j.chb.2010.01.017
       \endverb
     \endentry
-    \entry{cha2026design}{inproceedings}{}{}
+    \entry{cha2026design}{article}{}{}
       \name{author}{4}{}{%
-        {{hash=0ec900b968105848385388c5beedff2c}{%
+        {{un=0,uniquepart=base,hash=0ec900b968105848385388c5beedff2c}{%
            family={Cha},
            familyi={C\bibinitperiod},
            given={Seungeon},
-           giveni={S\bibinitperiod}}}%
-        {{hash=4ec41100449a0e2edd4b2cd6bb902d25}{%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4ec41100449a0e2edd4b2cd6bb902d25}{%
            family={Jo},
            familyi={J\bibinitperiod},
            given={Sunghyun},
-           giveni={S\bibinitperiod}}}%
-        {{hash=094af118e2f7f891fd345978d3235788}{%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=094af118e2f7f891fd345978d3235788}{%
            family={Shin},
            familyi={S\bibinitperiod},
            given={Jongho},
-           giveni={J\bibinitperiod}}}%
-        {{hash=90d20dadc377f13a4e3d93db8513877c}{%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=90d20dadc377f13a4e3d93db8513877c}{%
            family={Seo},
            familyi={S\bibinitperiod},
            given={Kyoungwon},
-           giveni={K\bibinitperiod}}}%
+           giveni={K\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Association for Computing Machinery}%
@@ -115,28 +126,27 @@
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (CHI EA '26)}
+      \field{journaltitle}{Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (CHI EA '26)}
       \field{title}{Design System-Compliant User Interface Generation with LLM Agents: A Comparative Study of Context Engineering Strategies}
       \field{year}{2026}
       \verb{doi}
       \verb 10.1145/3772363.3798616
       \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1145/3772363.3798616
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1145/3772363.3798616
-      \endverb
     \endentry
-    \entry{cochrane2005writing}{misc}{}{}
+    \entry{cochrane2005writing}{report}{}{}
       \name{author}{1}{}{%
-        {{hash=5216f32f51594226af2f7becb287a5d1}{%
+        {{un=0,uniquepart=base,hash=5216f32f51594226af2f7becb287a5d1}{%
            family={Cochrane},
            familyi={C\bibinitperiod},
            given={John\bibnamedelima H.},
-           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Graduate School of Business, University of Chicago}%
       }
       \strng{namehash}{5216f32f51594226af2f7becb287a5d1}
       \strng{fullhash}{5216f32f51594226af2f7becb287a5d1}
@@ -150,10 +160,11 @@
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{Graduate School of Business, University of Chicago}
       \field{title}{Writing Tips for Ph.D. Students}
+      \field{type}{Working Paper}
       \field{year}{2005}
       \verb{urlraw}
       \verb https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
@@ -164,29 +175,26 @@
     \endentry
     \entry{iso9241110}{manual}{}{}
       \name{author}{1}{}{%
-        {{hash=2c17e6369f3351198fed96a848795517}{%
-           family={{DIN Deutsches Institut f{"u}r Normung e.\,V.}},
+        {{hash=86a137a6a4dc30add2f4777e72c378e3}{%
+           family={{DIN Deutsches Institut für Normung e.\,V.}},
            familyi={D\bibinitperiod}}}%
       }
       \name{shortauthor}{1}{}{%
-        {{hash=0756f27ca9ade505a577fcdbfde2969b}{%
-           family={DIN},
+        {{un=0,uniquepart=base,hash=0756f27ca9ade505a577fcdbfde2969b}{%
+           family={{DIN}},
            familyi={D\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Berlin}%
       }
       \list{publisher}{1}{%
         {Beuth Verlag}%
       }
       \strng{namehash}{0756f27ca9ade505a577fcdbfde2969b}
-      \strng{fullhash}{2c17e6369f3351198fed96a848795517}
-      \strng{fullhashraw}{2c17e6369f3351198fed96a848795517}
+      \strng{fullhash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{fullhashraw}{86a137a6a4dc30add2f4777e72c378e3}
       \strng{bibnamehash}{0756f27ca9ade505a577fcdbfde2969b}
-      \strng{authorbibnamehash}{2c17e6369f3351198fed96a848795517}
-      \strng{authornamehash}{2c17e6369f3351198fed96a848795517}
-      \strng{authorfullhash}{2c17e6369f3351198fed96a848795517}
-      \strng{authorfullhashraw}{2c17e6369f3351198fed96a848795517}
+      \strng{authorbibnamehash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{authornamehash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{authorfullhash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{authorfullhashraw}{86a137a6a4dc30add2f4777e72c378e3}
       \strng{shortauthorbibnamehash}{0756f27ca9ade505a577fcdbfde2969b}
       \strng{shortauthornamehash}{0756f27ca9ade505a577fcdbfde2969b}
       \strng{shortauthorfullhash}{0756f27ca9ade505a577fcdbfde2969b}
@@ -195,33 +203,38 @@
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{shortauthor}
       \field{labeltitlesource}{title}
       \field{title}{DIN EN ISO 9241-110:2020-10: Ergonomie der Mensch-System-Interaktion -- Teil 110: Interaktionsprinzipien}
       \field{year}{2020}
     \endentry
-    \entry{duan2024generating}{inproceedings}{}{}
+    \entry{duan2024generating}{article}{}{}
       \name{author}{4}{}{%
-        {{hash=3bdad033764ca89e1171a430a36ed028}{%
+        {{un=0,uniquepart=base,hash=3bdad033764ca89e1171a430a36ed028}{%
            family={Duan},
            familyi={D\bibinitperiod},
            given={Peitong},
-           giveni={P\bibinitperiod}}}%
-        {{hash=6ca7213b846f4f84a1cb05364c4a9a6b}{%
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6ca7213b846f4f84a1cb05364c4a9a6b}{%
            family={Warner},
            familyi={W\bibinitperiod},
            given={Jeremy},
-           giveni={J\bibinitperiod}}}%
-        {{hash=2af761d9bef859ea29248418adce0dd7}{%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2af761d9bef859ea29248418adce0dd7}{%
            family={Li},
            familyi={L\bibinitperiod},
            given={Yang},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=6b511e44380adfd5f04a45542be3dd42}{%
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6b511e44380adfd5f04a45542be3dd42}{%
            family={Hartmann},
            familyi={H\bibinitperiod},
            given={Bjoern},
-           giveni={B\bibinitperiod}}}%
+           giveni={B\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Association for Computing Machinery}%
@@ -238,33 +251,30 @@
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems (CHI '24)}
+      \field{journaltitle}{Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems (CHI '24)}
       \field{title}{Generating Automatic Feedback on UI Mockups with Large Language Models}
       \field{year}{2024}
       \verb{doi}
       \verb 10.1145/3613904.3642782
       \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1145/3613904.3642782
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1145/3613904.3642782
-      \endverb
     \endentry
     \entry{gregor2013positioning}{article}{}{}
       \name{author}{2}{}{%
-        {{hash=6cb3773d13196927d56a5877ea24b6a2}{%
+        {{un=0,uniquepart=base,hash=6cb3773d13196927d56a5877ea24b6a2}{%
            family={Gregor},
            familyi={G\bibinitperiod},
            given={Shirley},
-           giveni={S\bibinitperiod}}}%
-        {{hash=e054261c7f1739e1ba1db0a45e385c1b}{%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e054261c7f1739e1ba1db0a45e385c1b}{%
            family={Hevner},
            familyi={H\bibinitperiod},
            given={Alan\bibnamedelima R.},
-           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{62477b683a6398d89f0689141480a261}
       \strng{fullhash}{62477b683a6398d89f0689141480a261}
@@ -278,6 +288,7 @@
       \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{MIS Quarterly}
@@ -291,38 +302,44 @@
       \verb 10.25300/MISQ/2013/37.2.01
       \endverb
     \endentry
-    \entry{guerino2025gpt4o}{inproceedings}{}{}
+    \entry{guerino2025gpt4o}{article}{}{}
       \name{author}{6}{}{%
-        {{hash=a797c098d9443952d9714d6800b1bddf}{%
+        {{un=0,uniquepart=base,hash=a797c098d9443952d9714d6800b1bddf}{%
            family={Guerino},
            familyi={G\bibinitperiod},
            given={Guilherme\bibnamedelima Corredato},
-           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
-        {{hash=3f105dafcb527a1bda80744570b7351a}{%
+           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3f105dafcb527a1bda80744570b7351a}{%
            family={Rodrigues},
            familyi={R\bibinitperiod},
            given={Luiz},
-           giveni={L\bibinitperiod}}}%
-        {{hash=2be55363aefa535134f1a3bc21011444}{%
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2be55363aefa535134f1a3bc21011444}{%
            family={Capeleti},
            familyi={C\bibinitperiod},
            given={Bruna},
-           giveni={B\bibinitperiod}}}%
-        {{hash=6fd29e863a542484c48c14f47f5c4a32}{%
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6fd29e863a542484c48c14f47f5c4a32}{%
            family={Mello},
            familyi={M\bibinitperiod},
            given={Rafael\bibnamedelima Ferreira},
-           giveni={R\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
-        {{hash=882b2e9190eb81fc820ab2cb7bad2e3b}{%
+           giveni={R\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=882b2e9190eb81fc820ab2cb7bad2e3b}{%
            family={Freire},
            familyi={F\bibinitperiod},
            given={André},
-           giveni={A\bibinitperiod}}}%
-        {{hash=c75092efd0b57390dce2b2a9b55eca0e}{%
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c75092efd0b57390dce2b2a9b55eca0e}{%
            family={Zaina},
            familyi={Z\bibinitperiod},
            given={Luciana},
-           giveni={L\bibinitperiod}}}%
+           giveni={L\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Springer}%
@@ -339,9 +356,10 @@
       \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Human-Computer Interaction -- INTERACT 2025}
+      \field{journaltitle}{Human-Computer Interaction -- INTERACT 2025}
       \field{series}{Lecture Notes in Computer Science}
       \field{title}{Can GPT-4o Evaluate Usability Like Human Experts? A Comparative Study on Issue Identification in Heuristic Evaluation}
       \field{volume}{15286}
@@ -351,35 +369,33 @@
       \verb{doi}
       \verb 10.1007/978-3-032-05005-2_20
       \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/2506.16345
-      \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/2506.16345
-      \endverb
     \endentry
     \entry{hevner2004design}{article}{}{}
       \name{author}{4}{}{%
-        {{hash=e054261c7f1739e1ba1db0a45e385c1b}{%
+        {{un=0,uniquepart=base,hash=e054261c7f1739e1ba1db0a45e385c1b}{%
            family={Hevner},
            familyi={H\bibinitperiod},
            given={Alan\bibnamedelima R.},
-           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
-        {{hash=5aec260b5b1381edc4b8ff6755f2d543}{%
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5aec260b5b1381edc4b8ff6755f2d543}{%
            family={March},
            familyi={M\bibinitperiod},
            given={Salvatore\bibnamedelima T.},
-           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
-        {{hash=c518c214dc9e77148493e9ea47f505ab}{%
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c518c214dc9e77148493e9ea47f505ab}{%
            family={Park},
            familyi={P\bibinitperiod},
            given={Jinsoo},
-           giveni={J\bibinitperiod}}}%
-        {{hash=65565df90d4793da7a2f20e5e1b07345}{%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=65565df90d4793da7a2f20e5e1b07345}{%
            family={Ram},
            familyi={R\bibinitperiod},
            given={Sudha},
-           giveni={S\bibinitperiod}}}%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{77b3350005135e016e7a83431f326d8f}
       \strng{fullhash}{b163bef761d9a2c79a3d232595321775}
@@ -393,6 +409,7 @@
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{MIS Quarterly}
@@ -408,21 +425,24 @@
     \endentry
     \entry{inal2020web}{article}{}{}
       \name{author}{3}{}{%
-        {{hash=ab5910e4c8394c1bdda8982b62081e37}{%
+        {{un=0,uniquepart=base,hash=ab5910e4c8394c1bdda8982b62081e37}{%
            family={Inal},
            familyi={I\bibinitperiod},
            given={Yavuz},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=f14fc11bbe2cc4341ccdf736152f1b07}{%
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f14fc11bbe2cc4341ccdf736152f1b07}{%
            family={Gurcan},
            familyi={G\bibinitperiod},
            given={Fatih},
-           giveni={F\bibinitperiod}}}%
-        {{hash=f956c397321cf16b330d741652ea4fa4}{%
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f956c397321cf16b330d741652ea4fa4}{%
            family={Cagiltay},
            familyi={C\bibinitperiod},
            given={Kursat},
-           giveni={K\bibinitperiod}}}%
+           giveni={K\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{359ef2be31c7e43f9bfb9c71f8e60e83}
       \strng{fullhash}{54f15e5434ce55fea455dcab2894bd62}
@@ -436,6 +456,7 @@
       \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Access}
@@ -450,14 +471,12 @@
     \endentry
     \entry{kornmeier2011}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=6b1d267ded98253901436199cf4533e6}{%
+        {{un=0,uniquepart=base,hash=6b1d267ded98253901436199cf4533e6}{%
            family={Kornmeier},
            familyi={K\bibinitperiod},
            given={Martin},
-           giveni={M\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Bern, Stuttgart, Wien}%
+           giveni={M\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Haupt Verlag / UTB}%
@@ -474,6 +493,7 @@
       \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{4}
@@ -482,11 +502,12 @@
     \endentry
     \entry{nielsen1994severity}{inbook}{}{}
       \name{author}{1}{}{%
-        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+        {{un=0,uniquepart=base,hash=753054f71283d85f82cda8e35daf6bac}{%
            family={Nielsen},
            familyi={N\bibinitperiod},
            given={Jakob},
-           giveni={J\bibinitperiod}}}%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
       }
       \name{bookauthor}{1}{}{%
         {{hash=753054f71283d85f82cda8e35daf6bac}{%
@@ -514,6 +535,7 @@
       \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Usability Engineering}
@@ -524,26 +546,30 @@
     \endentry
     \entry{peffers2007design}{article}{}{}
       \name{author}{4}{}{%
-        {{hash=3127efe8cdd4557b7228a8724f568529}{%
+        {{un=0,uniquepart=base,hash=3127efe8cdd4557b7228a8724f568529}{%
            family={Peffers},
            familyi={P\bibinitperiod},
            given={Ken},
-           giveni={K\bibinitperiod}}}%
-        {{hash=8b17b21a3e4c61d1302f46cba38c6e50}{%
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8b17b21a3e4c61d1302f46cba38c6e50}{%
            family={Tuunanen},
            familyi={T\bibinitperiod},
            given={Tuure},
-           giveni={T\bibinitperiod}}}%
-        {{hash=33ad207ea3031c6d744a31f5bc43c547}{%
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=33ad207ea3031c6d744a31f5bc43c547}{%
            family={Rothenberger},
            familyi={R\bibinitperiod},
            given={Marcus\bibnamedelima A.},
-           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=edf3e165ce4429b30d49e353a7d1417a}{%
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=edf3e165ce4429b30d49e353a7d1417a}{%
            family={Chatterjee},
            familyi={C\bibinitperiod},
            given={Samir},
-           giveni={S\bibinitperiod}}}%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{4ccaed1d47a4875e5f027cdf2d20bbca}
       \strng{fullhash}{0d82c455b50c2b184d97697dac2e8660}
@@ -557,6 +583,7 @@
       \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Management Information Systems}
@@ -572,14 +599,12 @@
     \endentry
     \entry{recker2013scientific}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=604e15fd1714275673736d598c9e7e89}{%
+        {{un=0,uniquepart=base,hash=604e15fd1714275673736d598c9e7e89}{%
            family={Recker},
            familyi={R\bibinitperiod},
            given={Jan},
-           giveni={J\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Berlin, Heidelberg}%
+           giveni={J\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Springer}%
@@ -596,6 +621,7 @@
       \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Scientific Research in Information Systems: A Beginner's Guide}
@@ -606,31 +632,36 @@
     \endentry
     \entry{seckler2014validation}{article}{}{}
       \name{author}{5}{}{%
-        {{hash=e41dbe3f200ffd7f5eda5cb732b90aca}{%
+        {{un=0,uniquepart=base,hash=e41dbe3f200ffd7f5eda5cb732b90aca}{%
            family={Seckler},
            familyi={S\bibinitperiod},
            given={Mirjam},
-           giveni={M\bibinitperiod}}}%
-        {{hash=f23eab73c98ba2070857455cc1330837}{%
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f23eab73c98ba2070857455cc1330837}{%
            family={Heinz},
            familyi={H\bibinitperiod},
            given={Silvia},
-           giveni={S\bibinitperiod}}}%
-        {{hash=e4a053eead8ccfc8d3eef8ae96e7fb74}{%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e4a053eead8ccfc8d3eef8ae96e7fb74}{%
            family={Forde},
            familyi={F\bibinitperiod},
            given={Seán},
-           giveni={S\bibinitperiod}}}%
-        {{hash=20a458a05e810dd849fa017198a43aaa}{%
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20a458a05e810dd849fa017198a43aaa}{%
            family={Tuch},
            familyi={T\bibinitperiod},
            given={Alexandre\bibnamedelima N.},
-           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
-        {{hash=d24973a4ced64e06ab547ff1b0c12887}{%
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d24973a4ced64e06ab547ff1b0c12887}{%
            family={Opwis},
            familyi={O\bibinitperiod},
            given={Klaus},
-           giveni={K\bibinitperiod}}}%
+           giveni={K\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{f059784f0ed6dadc349ae8e2d287fe5a}
       \strng{fullhash}{ceb8af2d969c5c434418d525557bf57d}
@@ -644,6 +675,7 @@
       \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Computers in Human Behavior}
@@ -656,18 +688,20 @@
       \verb 10.1016/j.chb.2014.09.022
       \endverb
     \endentry
-    \entry{wang2025aiheureval}{inproceedings}{}{}
+    \entry{wang2025aiheureval}{article}{}{}
       \name{author}{2}{}{%
-        {{hash=504859bd7823bfc1ce4fac621e3312da}{%
+        {{un=0,uniquepart=base,hash=504859bd7823bfc1ce4fac621e3312da}{%
            family={Wang},
            familyi={W\bibinitperiod},
            given={Yuekai},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=e0058f0ded861efba24f480c1e8e6f9b}{%
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e0058f0ded861efba24f480c1e8e6f9b}{%
            family={Xhakaj},
            familyi={X\bibinitperiod},
            given={Franceska},
-           giveni={F\bibinitperiod}}}%
+           giveni={F\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Springer}%
@@ -684,9 +718,10 @@
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{HCI International 2025 Posters}
+      \field{journaltitle}{HCI International 2025 Posters}
       \field{series}{Communications in Computer and Information Science}
       \field{title}{AIHeurEval: Generating Heuristic Evaluations on Multiple UI Screens with Multimodal Large Language Models}
       \field{volume}{1528}
@@ -696,23 +731,18 @@
       \verb{doi}
       \verb 10.1007/978-3-031-94168-9_22
       \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1007/978-3-031-94168-9_22
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1007/978-3-031-94168-9_22
-      \endverb
     \endentry
-    \entry{westermann2026ki}{misc}{}{}
+    \entry{westermann2026ki}{report}{}{}
       \name{author}{1}{}{%
-        {{hash=b66f8d2c3200ff2249ad9486d5d31387}{%
+        {{un=0,uniquepart=base,hash=b66f8d2c3200ff2249ad9486d5d31387}{%
            family={Westermann},
            familyi={W\bibinitperiod},
            given={Anja},
-           giveni={A\bibinitperiod}}}%
+           giveni={A\bibinitperiod},
+           givenun=0}}%
       }
       \list{institution}{1}{%
-        {Universit{"a}t Paderborn, Stabsstelle Bildungsinnovationen und Hochschuldidaktik}%
+        {Universität Paderborn, Stabsstelle Bildungsinnovationen und Hochschuldidaktik}%
       }
       \strng{namehash}{b66f8d2c3200ff2249ad9486d5d31387}
       \strng{fullhash}{b66f8d2c3200ff2249ad9486d5d31387}
@@ -726,23 +756,22 @@
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{Handreichung, Universit{"a}t Paderborn}
-      \field{note}{Lizenziert unter CC BY 4.0}
-      \field{title}{KI in Seminar- und Abschlussarbeiten -- Eine Handreichung f{"u}r Lehrende}
+      \field{note}{CC BY 4.0}
+      \field{title}{KI in Seminar- und Abschlussarbeiten -- Eine Handreichung für Lehrende}
+      \field{type}{Handreichung}
       \field{year}{2026}
     \endentry
     \entry{wroblewski2008web}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=ec5019c09be82a8904485615239ef96f}{%
+        {{un=0,uniquepart=base,hash=ec5019c09be82a8904485615239ef96f}{%
            family={Wroblewski},
            familyi={W\bibinitperiod},
            given={Luke},
-           giveni={L\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Brooklyn, New York}%
+           giveni={L\bibinitperiod},
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Rosenfeld Media}%
@@ -759,6 +788,7 @@
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{isbn}{978-1-933820-24-8}
@@ -767,21 +797,24 @@
     \endentry
     \entry{zhong2025synthetic}{article}{}{}
       \name{author}{3}{}{%
-        {{hash=fb6f572b268cd1cb07b3842ac1200e28}{%
+        {{un=0,uniquepart=base,hash=fb6f572b268cd1cb07b3842ac1200e28}{%
            family={Zhong},
            familyi={Z\bibinitperiod},
            given={Ruican},
-           giveni={R\bibinitperiod}}}%
-        {{hash=4da2be0f9b963f0b6bdddc8e349ca4da}{%
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4da2be0f9b963f0b6bdddc8e349ca4da}{%
            family={McDonald},
            familyi={M\bibinitperiod},
            given={David\bibnamedelima W.},
-           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
-        {{hash=ef7a2e85e7ed8015aa09a687998f9124}{%
+           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ef7a2e85e7ed8015aa09a687998f9124}{%
            family={Hsieh},
            familyi={H\bibinitperiod},
            given={Gary},
-           giveni={G\bibinitperiod}}}%
+           giveni={G\bibinitperiod},
+           givenun=0}}%
       }
       \strng{namehash}{86c54614e2252b321be94922e559e759}
       \strng{fullhash}{5239142cff74124913914ab458767912}
@@ -795,19 +828,835 @@
       \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{arXiv preprint arXiv:2507.02306}
+      \field{journaltitle}{arXiv}
       \field{title}{Synthetic Heuristic Evaluation: A Comparison between AI- and Human-Powered Usability Evaluation}
       \field{year}{2025}
       \verb{doi}
       \verb 10.48550/arXiv.2507.02306
       \endverb
+    \endentry
+  \enddatalist
+  \datalist[entry]{apa/global//global/global/global}
+    \entry{bargas2010usable}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=bdf6d4f2cf774f7ff872823acaf143c7}{%
+           family={Bargas-Avila},
+           familyi={B\bibinithyphendelim A\bibinitperiod},
+           given={Javier\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=36fac2fc97a0c56e67a4755d544ab402}{%
+           family={Brenzikofer},
+           familyi={B\bibinitperiod},
+           given={Olivier},
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fe3b15a601b05512f1a5d63345c0d16b}{%
+           family={Roth},
+           familyi={R\bibinitperiod},
+           given={Sandra\bibnamedelima P.},
+           giveni={S\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20a458a05e810dd849fa017198a43aaa}{%
+           family={Tuch},
+           familyi={T\bibinitperiod},
+           given={Alexandre\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fd53a63a14c384d869569560c9a2da82}{%
+           family={Orsini},
+           familyi={O\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d24973a4ced64e06ab547ff1b0c12887}{%
+           family={Opwis},
+           familyi={O\bibinitperiod},
+           given={Klaus},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{249c757a8c8d688e56ddf9c61b7f43a6}
+      \strng{fullhash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{fullhashraw}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{bibnamehash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{authorbibnamehash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{authornamehash}{249c757a8c8d688e56ddf9c61b7f43a6}
+      \strng{authorfullhash}{3add050456a4deab99e0b1a0c94b6fc2}
+      \strng{authorfullhashraw}{3add050456a4deab99e0b1a0c94b6fc2}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers in Human Behavior}
+      \field{number}{4}
+      \field{title}{Usable forms on the web: An evaluation of web form design guidelines}
+      \field{volume}{26}
+      \field{year}{2010}
+      \field{pages}{841\bibrangedash 851}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.chb.2010.01.017
+      \endverb
+    \endentry
+    \entry{cha2026design}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=0ec900b968105848385388c5beedff2c}{%
+           family={Cha},
+           familyi={C\bibinitperiod},
+           given={Seungeon},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4ec41100449a0e2edd4b2cd6bb902d25}{%
+           family={Jo},
+           familyi={J\bibinitperiod},
+           given={Sunghyun},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=094af118e2f7f891fd345978d3235788}{%
+           family={Shin},
+           familyi={S\bibinitperiod},
+           given={Jongho},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=90d20dadc377f13a4e3d93db8513877c}{%
+           family={Seo},
+           familyi={S\bibinitperiod},
+           given={Kyoungwon},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{a7cbdd122fa638420906ab28da7ebb66}
+      \strng{fullhash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{fullhashraw}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{bibnamehash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{authorbibnamehash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{authornamehash}{a7cbdd122fa638420906ab28da7ebb66}
+      \strng{authorfullhash}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \strng{authorfullhashraw}{9aad0b16a63bcd01aa791a03f6fc1035}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems (CHI EA '26)}
+      \field{title}{Design System-Compliant User Interface Generation with LLM Agents: A Comparative Study of Context Engineering Strategies}
+      \field{year}{2026}
+      \verb{doi}
+      \verb 10.1145/3772363.3798616
+      \endverb
+    \endentry
+    \entry{cochrane2005writing}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5216f32f51594226af2f7becb287a5d1}{%
+           family={Cochrane},
+           familyi={C\bibinitperiod},
+           given={John\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Graduate School of Business, University of Chicago}%
+      }
+      \strng{namehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{fullhash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{fullhashraw}{5216f32f51594226af2f7becb287a5d1}
+      \strng{bibnamehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authorbibnamehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authornamehash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authorfullhash}{5216f32f51594226af2f7becb287a5d1}
+      \strng{authorfullhashraw}{5216f32f51594226af2f7becb287a5d1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Writing Tips for Ph.D. Students}
+      \field{type}{Working Paper}
+      \field{year}{2005}
       \verb{urlraw}
-      \verb https://arxiv.org/abs/2507.02306
+      \verb https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
       \endverb
       \verb{url}
-      \verb https://arxiv.org/abs/2507.02306
+      \verb https://faculty.chicagobooth.edu/john.cochrane/research/papers/phd_paper_writing.pdf
+      \endverb
+    \endentry
+    \entry{iso9241110}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=86a137a6a4dc30add2f4777e72c378e3}{%
+           family={{DIN Deutsches Institut für Normung e.\,V.}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \name{shortauthor}{1}{}{%
+        {{un=0,uniquepart=base,hash=0756f27ca9ade505a577fcdbfde2969b}{%
+           family={{DIN}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Beuth Verlag}%
+      }
+      \strng{namehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{fullhash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{fullhashraw}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{bibnamehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{authorbibnamehash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{authornamehash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{authorfullhash}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{authorfullhashraw}{86a137a6a4dc30add2f4777e72c378e3}
+      \strng{shortauthorbibnamehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{shortauthornamehash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{shortauthorfullhash}{0756f27ca9ade505a577fcdbfde2969b}
+      \strng{shortauthorfullhashraw}{0756f27ca9ade505a577fcdbfde2969b}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{shortauthor}
+      \field{labeltitlesource}{title}
+      \field{title}{DIN EN ISO 9241-110:2020-10: Ergonomie der Mensch-System-Interaktion -- Teil 110: Interaktionsprinzipien}
+      \field{year}{2020}
+    \endentry
+    \entry{duan2024generating}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=3bdad033764ca89e1171a430a36ed028}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Peitong},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6ca7213b846f4f84a1cb05364c4a9a6b}{%
+           family={Warner},
+           familyi={W\bibinitperiod},
+           given={Jeremy},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2af761d9bef859ea29248418adce0dd7}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6b511e44380adfd5f04a45542be3dd42}{%
+           family={Hartmann},
+           familyi={H\bibinitperiod},
+           given={Bjoern},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{7e8f8987326e48dbb8b530f4b34925f9}
+      \strng{fullhash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{fullhashraw}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{bibnamehash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{authorbibnamehash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{authornamehash}{7e8f8987326e48dbb8b530f4b34925f9}
+      \strng{authorfullhash}{ee7d2377bf130d5af1f470f8816374f0}
+      \strng{authorfullhashraw}{ee7d2377bf130d5af1f470f8816374f0}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems (CHI '24)}
+      \field{title}{Generating Automatic Feedback on UI Mockups with Large Language Models}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.1145/3613904.3642782
+      \endverb
+    \endentry
+    \entry{gregor2013positioning}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=6cb3773d13196927d56a5877ea24b6a2}{%
+           family={Gregor},
+           familyi={G\bibinitperiod},
+           given={Shirley},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e054261c7f1739e1ba1db0a45e385c1b}{%
+           family={Hevner},
+           familyi={H\bibinitperiod},
+           given={Alan\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{62477b683a6398d89f0689141480a261}
+      \strng{fullhash}{62477b683a6398d89f0689141480a261}
+      \strng{fullhashraw}{62477b683a6398d89f0689141480a261}
+      \strng{bibnamehash}{62477b683a6398d89f0689141480a261}
+      \strng{authorbibnamehash}{62477b683a6398d89f0689141480a261}
+      \strng{authornamehash}{62477b683a6398d89f0689141480a261}
+      \strng{authorfullhash}{62477b683a6398d89f0689141480a261}
+      \strng{authorfullhashraw}{62477b683a6398d89f0689141480a261}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{MIS Quarterly}
+      \field{number}{2}
+      \field{title}{Positioning and Presenting Design Science Research for Maximum Impact}
+      \field{volume}{37}
+      \field{year}{2013}
+      \field{pages}{337\bibrangedash 355}
+      \range{pages}{19}
+      \verb{doi}
+      \verb 10.25300/MISQ/2013/37.2.01
+      \endverb
+    \endentry
+    \entry{guerino2025gpt4o}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=a797c098d9443952d9714d6800b1bddf}{%
+           family={Guerino},
+           familyi={G\bibinitperiod},
+           given={Guilherme\bibnamedelima Corredato},
+           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3f105dafcb527a1bda80744570b7351a}{%
+           family={Rodrigues},
+           familyi={R\bibinitperiod},
+           given={Luiz},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2be55363aefa535134f1a3bc21011444}{%
+           family={Capeleti},
+           familyi={C\bibinitperiod},
+           given={Bruna},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6fd29e863a542484c48c14f47f5c4a32}{%
+           family={Mello},
+           familyi={M\bibinitperiod},
+           given={Rafael\bibnamedelima Ferreira},
+           giveni={R\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=882b2e9190eb81fc820ab2cb7bad2e3b}{%
+           family={Freire},
+           familyi={F\bibinitperiod},
+           given={André},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c75092efd0b57390dce2b2a9b55eca0e}{%
+           family={Zaina},
+           familyi={Z\bibinitperiod},
+           given={Luciana},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{f5815b93a9530d704201aa7a5b4040b7}
+      \strng{fullhash}{19d5825528083553b78996f58a821e4e}
+      \strng{fullhashraw}{19d5825528083553b78996f58a821e4e}
+      \strng{bibnamehash}{19d5825528083553b78996f58a821e4e}
+      \strng{authorbibnamehash}{19d5825528083553b78996f58a821e4e}
+      \strng{authornamehash}{f5815b93a9530d704201aa7a5b4040b7}
+      \strng{authorfullhash}{19d5825528083553b78996f58a821e4e}
+      \strng{authorfullhashraw}{19d5825528083553b78996f58a821e4e}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Human-Computer Interaction -- INTERACT 2025}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{Can GPT-4o Evaluate Usability Like Human Experts? A Comparative Study on Issue Identification in Heuristic Evaluation}
+      \field{volume}{15286}
+      \field{year}{2025}
+      \field{pages}{381\bibrangedash 402}
+      \range{pages}{22}
+      \verb{doi}
+      \verb 10.1007/978-3-032-05005-2_20
+      \endverb
+    \endentry
+    \entry{hevner2004design}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=e054261c7f1739e1ba1db0a45e385c1b}{%
+           family={Hevner},
+           familyi={H\bibinitperiod},
+           given={Alan\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5aec260b5b1381edc4b8ff6755f2d543}{%
+           family={March},
+           familyi={M\bibinitperiod},
+           given={Salvatore\bibnamedelima T.},
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c518c214dc9e77148493e9ea47f505ab}{%
+           family={Park},
+           familyi={P\bibinitperiod},
+           given={Jinsoo},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=65565df90d4793da7a2f20e5e1b07345}{%
+           family={Ram},
+           familyi={R\bibinitperiod},
+           given={Sudha},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{77b3350005135e016e7a83431f326d8f}
+      \strng{fullhash}{b163bef761d9a2c79a3d232595321775}
+      \strng{fullhashraw}{b163bef761d9a2c79a3d232595321775}
+      \strng{bibnamehash}{b163bef761d9a2c79a3d232595321775}
+      \strng{authorbibnamehash}{b163bef761d9a2c79a3d232595321775}
+      \strng{authornamehash}{77b3350005135e016e7a83431f326d8f}
+      \strng{authorfullhash}{b163bef761d9a2c79a3d232595321775}
+      \strng{authorfullhashraw}{b163bef761d9a2c79a3d232595321775}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{MIS Quarterly}
+      \field{number}{1}
+      \field{title}{Design Science in Information Systems Research}
+      \field{volume}{28}
+      \field{year}{2004}
+      \field{pages}{75\bibrangedash 105}
+      \range{pages}{31}
+      \verb{doi}
+      \verb 10.2307/25148625
+      \endverb
+    \endentry
+    \entry{inal2020web}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=ab5910e4c8394c1bdda8982b62081e37}{%
+           family={Inal},
+           familyi={I\bibinitperiod},
+           given={Yavuz},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f14fc11bbe2cc4341ccdf736152f1b07}{%
+           family={Gurcan},
+           familyi={G\bibinitperiod},
+           given={Fatih},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f956c397321cf16b330d741652ea4fa4}{%
+           family={Cagiltay},
+           familyi={C\bibinitperiod},
+           given={Kursat},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{359ef2be31c7e43f9bfb9c71f8e60e83}
+      \strng{fullhash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{fullhashraw}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{bibnamehash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{authorbibnamehash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{authornamehash}{359ef2be31c7e43f9bfb9c71f8e60e83}
+      \strng{authorfullhash}{54f15e5434ce55fea455dcab2894bd62}
+      \strng{authorfullhashraw}{54f15e5434ce55fea455dcab2894bd62}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{title}{Web Accessibility in Higher Education: A Systematic Literature Review}
+      \field{volume}{8}
+      \field{year}{2020}
+      \field{pages}{162489\bibrangedash 162500}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/ACCESS.2020.3021950
+      \endverb
+    \endentry
+    \entry{kornmeier2011}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6b1d267ded98253901436199cf4533e6}{%
+           family={Kornmeier},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Haupt Verlag / UTB}%
+      }
+      \strng{namehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{fullhash}{6b1d267ded98253901436199cf4533e6}
+      \strng{fullhashraw}{6b1d267ded98253901436199cf4533e6}
+      \strng{bibnamehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authorbibnamehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authornamehash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authorfullhash}{6b1d267ded98253901436199cf4533e6}
+      \strng{authorfullhashraw}{6b1d267ded98253901436199cf4533e6}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{4}
+      \field{title}{Wissenschaftlich schreiben leicht gemacht: für Bachelor, Master und Dissertation}
+      \field{year}{2011}
+    \endentry
+    \entry{nielsen1994severity}{inbook}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           familyi={N\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{bookauthor}{1}{}{%
+        {{hash=753054f71283d85f82cda8e35daf6bac}{%
+           family={Nielsen},
+           familyi={N\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Morgan Kaufmann}%
+      }
+      \strng{namehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{fullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorbibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authornamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorfullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{authorfullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthorbibnamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthornamehash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthorfullhash}{753054f71283d85f82cda8e35daf6bac}
+      \strng{bookauthorfullhashraw}{753054f71283d85f82cda8e35daf6bac}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Usability Engineering}
+      \field{title}{Severity Ratings for Usability Problems}
+      \field{year}{1994}
+      \field{pages}{102\bibrangedash 107}
+      \range{pages}{6}
+    \endentry
+    \entry{peffers2007design}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=3127efe8cdd4557b7228a8724f568529}{%
+           family={Peffers},
+           familyi={P\bibinitperiod},
+           given={Ken},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8b17b21a3e4c61d1302f46cba38c6e50}{%
+           family={Tuunanen},
+           familyi={T\bibinitperiod},
+           given={Tuure},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=33ad207ea3031c6d744a31f5bc43c547}{%
+           family={Rothenberger},
+           familyi={R\bibinitperiod},
+           given={Marcus\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=edf3e165ce4429b30d49e353a7d1417a}{%
+           family={Chatterjee},
+           familyi={C\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4ccaed1d47a4875e5f027cdf2d20bbca}
+      \strng{fullhash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{fullhashraw}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{bibnamehash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{authorbibnamehash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{authornamehash}{4ccaed1d47a4875e5f027cdf2d20bbca}
+      \strng{authorfullhash}{0d82c455b50c2b184d97697dac2e8660}
+      \strng{authorfullhashraw}{0d82c455b50c2b184d97697dac2e8660}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Management Information Systems}
+      \field{number}{3}
+      \field{title}{A Design Science Research Methodology for Information Systems Research}
+      \field{volume}{24}
+      \field{year}{2007}
+      \field{pages}{45\bibrangedash 77}
+      \range{pages}{33}
+      \verb{doi}
+      \verb 10.2753/MIS0742-1222240302
+      \endverb
+    \endentry
+    \entry{recker2013scientific}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=604e15fd1714275673736d598c9e7e89}{%
+           family={Recker},
+           familyi={R\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{fullhash}{604e15fd1714275673736d598c9e7e89}
+      \strng{fullhashraw}{604e15fd1714275673736d598c9e7e89}
+      \strng{bibnamehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authorbibnamehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authornamehash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authorfullhash}{604e15fd1714275673736d598c9e7e89}
+      \strng{authorfullhashraw}{604e15fd1714275673736d598c9e7e89}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Scientific Research in Information Systems: A Beginner's Guide}
+      \field{year}{2013}
+      \verb{doi}
+      \verb 10.1007/978-3-642-30048-6
+      \endverb
+    \endentry
+    \entry{seckler2014validation}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=e41dbe3f200ffd7f5eda5cb732b90aca}{%
+           family={Seckler},
+           familyi={S\bibinitperiod},
+           given={Mirjam},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f23eab73c98ba2070857455cc1330837}{%
+           family={Heinz},
+           familyi={H\bibinitperiod},
+           given={Silvia},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e4a053eead8ccfc8d3eef8ae96e7fb74}{%
+           family={Forde},
+           familyi={F\bibinitperiod},
+           given={Seán},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20a458a05e810dd849fa017198a43aaa}{%
+           family={Tuch},
+           familyi={T\bibinitperiod},
+           given={Alexandre\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d24973a4ced64e06ab547ff1b0c12887}{%
+           family={Opwis},
+           familyi={O\bibinitperiod},
+           given={Klaus},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f059784f0ed6dadc349ae8e2d287fe5a}
+      \strng{fullhash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{fullhashraw}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{bibnamehash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{authorbibnamehash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{authornamehash}{f059784f0ed6dadc349ae8e2d287fe5a}
+      \strng{authorfullhash}{ceb8af2d969c5c434418d525557bf57d}
+      \strng{authorfullhashraw}{ceb8af2d969c5c434418d525557bf57d}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers in Human Behavior}
+      \field{title}{Before the click: Flow in web form completion and its impact on user experience}
+      \field{volume}{41}
+      \field{year}{2014}
+      \field{pages}{156\bibrangedash 166}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.chb.2014.09.022
+      \endverb
+    \endentry
+    \entry{wang2025aiheureval}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=504859bd7823bfc1ce4fac621e3312da}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yuekai},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e0058f0ded861efba24f480c1e8e6f9b}{%
+           family={Xhakaj},
+           familyi={X\bibinitperiod},
+           given={Franceska},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{fullhash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{fullhashraw}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{bibnamehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authorbibnamehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authornamehash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authorfullhash}{945ad4ee220d8e73f6f4f6033862b997}
+      \strng{authorfullhashraw}{945ad4ee220d8e73f6f4f6033862b997}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{HCI International 2025 Posters}
+      \field{series}{Communications in Computer and Information Science}
+      \field{title}{AIHeurEval: Generating Heuristic Evaluations on Multiple UI Screens with Multimodal Large Language Models}
+      \field{volume}{1528}
+      \field{year}{2025}
+      \field{pages}{228\bibrangedash 237}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1007/978-3-031-94168-9_22
+      \endverb
+    \endentry
+    \entry{westermann2026ki}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b66f8d2c3200ff2249ad9486d5d31387}{%
+           family={Westermann},
+           familyi={W\bibinitperiod},
+           given={Anja},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Universität Paderborn, Stabsstelle Bildungsinnovationen und Hochschuldidaktik}%
+      }
+      \strng{namehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{fullhash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{fullhashraw}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{bibnamehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authorbibnamehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authornamehash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authorfullhash}{b66f8d2c3200ff2249ad9486d5d31387}
+      \strng{authorfullhashraw}{b66f8d2c3200ff2249ad9486d5d31387}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{CC BY 4.0}
+      \field{title}{KI in Seminar- und Abschlussarbeiten -- Eine Handreichung für Lehrende}
+      \field{type}{Handreichung}
+      \field{year}{2026}
+    \endentry
+    \entry{wroblewski2008web}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=ec5019c09be82a8904485615239ef96f}{%
+           family={Wroblewski},
+           familyi={W\bibinitperiod},
+           given={Luke},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Rosenfeld Media}%
+      }
+      \strng{namehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{fullhash}{ec5019c09be82a8904485615239ef96f}
+      \strng{fullhashraw}{ec5019c09be82a8904485615239ef96f}
+      \strng{bibnamehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authorbibnamehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authornamehash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authorfullhash}{ec5019c09be82a8904485615239ef96f}
+      \strng{authorfullhashraw}{ec5019c09be82a8904485615239ef96f}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-933820-24-8}
+      \field{title}{Web Form Design: Filling in the Blanks}
+      \field{year}{2008}
+    \endentry
+    \entry{zhong2025synthetic}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=fb6f572b268cd1cb07b3842ac1200e28}{%
+           family={Zhong},
+           familyi={Z\bibinitperiod},
+           given={Ruican},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4da2be0f9b963f0b6bdddc8e349ca4da}{%
+           family={McDonald},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima W.},
+           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ef7a2e85e7ed8015aa09a687998f9124}{%
+           family={Hsieh},
+           familyi={H\bibinitperiod},
+           given={Gary},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{86c54614e2252b321be94922e559e759}
+      \strng{fullhash}{5239142cff74124913914ab458767912}
+      \strng{fullhashraw}{5239142cff74124913914ab458767912}
+      \strng{bibnamehash}{5239142cff74124913914ab458767912}
+      \strng{authorbibnamehash}{5239142cff74124913914ab458767912}
+      \strng{authornamehash}{86c54614e2252b321be94922e559e759}
+      \strng{authorfullhash}{5239142cff74124913914ab458767912}
+      \strng{authorfullhashraw}{5239142cff74124913914ab458767912}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv}
+      \field{title}{Synthetic Heuristic Evaluation: A Comparison between AI- and Human-Powered Usability Evaluation}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.48550/arXiv.2507.02306
       \endverb
     \endentry
   \enddatalist

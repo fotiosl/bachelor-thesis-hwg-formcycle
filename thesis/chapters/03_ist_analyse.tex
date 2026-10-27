@@ -16,14 +16,14 @@ Die Formulare reichen von kompakten einseitigen Masken (30 UI-Elemente) bis zu h
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}Xccc}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}Xccc}
 \toprule
-\textbf{Archetyp} & \textbf{Anwendungsbereiche \& Beispiele} & \textbf{Elemente} & \textbf{Seiten} & \textbf{Anteil} \\
+\textbf{Archetyp} & \textbf{Bereiche \& Beispiele} & \textbf{Elemente} & \textbf{Seiten} & \textbf{Anteil ($n / N$)} \\
 \midrule
-\textbf{1. Studierendenprozesse} & Praxisphasen (\textit{FB1-GiP-Praktikum}), Notenverbuchung & 114--133 & 2 & 22\,\% \\
-\textbf{2. Finanzen \& Beschaffung} & Auslagenerstattung, Vergabevermerke, Dienstreisen & 63--424 & 3--12 & 27\,\% \\
-\textbf{3. Personalverwaltung (HR)} & Stellenausschreibungen, Vertragsänderungen & 110--345 & 2--9 & 24\,\% \\
-\textbf{4. Forschung \& Transfer (ZFK)} & Antrag-Sprints, Promotions- und Tagungsförderung & 30--419 & 1--10 & 27\,\% \\
+\textbf{1. Studierendenprozesse} & Praxisphasen (\textit{FB1-GiP-Praktikum}), Notenverbuchung & 114--133 & 2 & 24\,\% (8/34) \\
+\textbf{2. Finanzen \& Beschaffung} & Auslagenerstattung, Vergabevermerke, Dienstreisen & 63--424 & 3--12 & 26\,\% (9/34) \\
+\textbf{3. Personalverwaltung (HR)} & Stellenausschreibungen, Vertragsänderungen & 110--345 & 2--9 & 24\,\% (8/34) \\
+\textbf{4. Forschung \& Transfer (ZFK)} & Antrag-Sprints, Promotions- und Tagungsförderung & 30--419 & 1--10 & 26\,\% (9/34) \\
 \bottomrule
 \end{tabularx}
 \caption{Funktionale Archetypen des analysierten HWG-Formularbestands ($N = 34$)}
@@ -60,7 +60,7 @@ Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 
 \section{Sechs empirische Kernproblemfelder}
 \label{sec:problemfelder}
 
-\subsection{Problemfeld 1: Layout-Spaltung zwischen 700\,px und 850\,px}
+\subsection{Problemfeld 1: Layout-Spaltung zwischen \texorpdfstring{700\,px}{700 px} und \texorpdfstring{850\,px}{850 px}}
 \label{subsec:problem_breiten}
 Der Bestand teilt sich nahezu hälftig in zwei inkompatible Layout-Generationen: \textbf{53\,\% (18/34)} – darunter Personal- und Studierendenformulare sowie das \textit{Master-Formular} – sind starr auf \texttt{max-width: 700px} begrenzt, was bei mehrspaltigen Zeilen zu Umbrüchen führt. Demgegenüber nutzen \textbf{47\,\% (16/34)} neuere \texttt{850px}-Container. Dieser unkoordinierte Wechsel verletzt die Erwartungskonformität nach \textcite{iso9241110}.
 

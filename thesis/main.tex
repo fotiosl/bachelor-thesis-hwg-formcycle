@@ -15,6 +15,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
 \usepackage{lmodern}
+\usepackage{microtype}
 
 % ---------------------------------------------------------
 % Seitenlayout & Ränder (DIN A4 Vorgaben)
@@ -60,7 +61,9 @@
     linkcolor=hwgblue,
     citecolor=hwgblue,
     urlcolor=hwgblue,
-    pdftitle={Bachelorarbeit HWG Ludwigshafen},
+    plainpages=false,
+    pdfpagelabels=true,
+    pdftitle={Konzeption eines einheitlichen Formular-Standards für die HWG Ludwigshafen und prototypische Umsetzung einer KI-gestützten Compliance-Prüfung in Formcycle},
     pdfauthor={Fotios Logaras}
 ]{hyperref}
 \usepackage{bookmark}
@@ -73,6 +76,7 @@
 % ---------------------------------------------------------
 % Titelseite
 % ---------------------------------------------------------
+\hypersetup{pageanchor=false}
 \begin{titlepage}
     \centering
     {\LARGE \textbf{Hochschule für Wirtschaft und Gesellschaft Ludwigshafen}}\\[0.5cm]
@@ -95,6 +99,7 @@
         \textbf{Abgabedatum:} & 07. Dezember 2026 \\
     \end{tabular}
 \end{titlepage}
+\hypersetup{pageanchor=true}
 
 % ---------------------------------------------------------
 % Verzeichnisse

@@ -583,15 +583,30 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         img_p = header_images[0]
         img_h = str(img_p.get("imageheight") or img_p.get("height") or "").strip().lower()
         img_align = str(img_p.get("textalign") or img_p.get("align") or "").strip().lower()
-        img_alt = clean_visible_text(img_p.get("alt") or img_p.get("alttext") or "")
+        img_alt = clean_visible_text(
+            img_p.get("alt")
+            or img_p.get("alttext")
+            or img_p.get("title")
+            or img_p.get("tooltip")
+            or img_p.get("description")
+            or img_p.get("label")
+            or ""
+        )
         img_alt_low = img_alt.lower()
 
         is_h60 = img_h in ("60", "60px")
-        is_right = img_align in ("right", "2")
+        css_classes = img_p.get("cssclasses") or []
+        if isinstance(css_classes, str):
+            css_classes = [css_classes]
+        is_right = img_align in ("right", "2") or "xm-t-right" in css_classes
         has_valid_alt = bool(img_alt) and (
             "hochschule für wirtschaft und gesellschaft" in img_alt_low
             or "hochschule fuer wirtschaft und gesellschaft" in img_alt_low
             or "hwg ludwigshafen" in img_alt_low
+            or "hwg lu" in img_alt_low
+            or "hwglu" in img_alt_low
+            or "hochschule ludwigshafen" in img_alt_low
+            or (("hwg" in img_alt_low or "hochschule" in img_alt_low or "ludwigshafen" in img_alt_low) and "logo" in img_alt_low)
         )
         if not (is_h60 and is_right and has_valid_alt):
             issues = []

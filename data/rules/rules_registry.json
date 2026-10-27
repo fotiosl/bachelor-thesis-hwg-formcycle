@@ -46,13 +46,17 @@
         "required_component": "XImage",
         "alt_patterns": [
           "Hochschule für Wirtschaft und Gesellschaft Ludwigshafen",
-          "HWG Ludwigshafen"
+          "HWG Ludwigshafen",
+          "HWGLU",
+          "HWG LU",
+          "Das Logo der HWG LU",
+          "Das Logo der HWGLU"
         ],
         "required_height": "60px",
         "required_alignment": "right",
         "severity_rule": "Fehlen des Logos im Header: Critical/15; Maß-, Ausrichtungs- oder Alt-Text-Abweichung: Major/8"
       },
-      "remediation": "Platzieren Sie im Kopfbereich ('header1' / XHeader) das offizielle HWG-Logo als Bild-Element (XImage). Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (imageheight = '60'), das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right') und hinterlegen Sie im Feld 'Alternativtext' (alt) die Bezeichnung 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen'.",
+      "remediation": "Platzieren Sie im Kopfbereich ('header1' / XHeader) das offizielle HWG-Logo als Bild-Element (XImage). Setzen Sie im Eigenschaften-Bereich das Feld 'Höhe (in px)' auf '60' (imageheight = '60'), das Feld 'Ausrichtung' auf 'Rechts' (textalign = 'right') und hinterlegen Sie im Feld 'Alternativtext' (alt) eine institutionsbezogene Bezeichnung wie 'Hochschule für Wirtschaft und Gesellschaft Ludwigshafen', 'HWG Ludwigshafen' oder 'Das Logo der HWG LU'.",
       "severity_tiers": {
         "critical": {
           "penalty": 15,

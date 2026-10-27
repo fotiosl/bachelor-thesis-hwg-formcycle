@@ -1502,10 +1502,19 @@ def generate_dashboard():
                 const ip = headerImages[0];
                 const ih = String(ip.imageheight || ip.height || "").trim().toLowerCase();
                 const ia = String(ip.textalign || ip.align || "").trim().toLowerCase();
-                const ialt = cleanVisibleText(ip.alt || ip.alttext || "").toLowerCase();
+                const ialt = cleanVisibleText(ip.alt || ip.alttext || ip.title || ip.tooltip || ip.description || ip.label || "").toLowerCase();
                 const okH = ["60", "60px"].includes(ih);
-                const okA = ["right", "2"].includes(ia);
-                const okAlt = Boolean(ialt) && (ialt.includes("hochschule für wirtschaft und gesellschaft") || ialt.includes("hwg ludwigshafen"));
+                const cssClasses = Array.isArray(ip.cssclasses) ? ip.cssclasses : [String(ip.cssclasses || "")];
+                const okA = ["right", "2"].includes(ia) || cssClasses.includes("xm-t-right");
+                const okAlt = Boolean(ialt) && (
+                    ialt.includes("hochschule für wirtschaft und gesellschaft") ||
+                    ialt.includes("hochschule fuer wirtschaft und gesellschaft") ||
+                    ialt.includes("hwg ludwigshafen") ||
+                    ialt.includes("hwg lu") ||
+                    ialt.includes("hwglu") ||
+                    ialt.includes("hochschule ludwigshafen") ||
+                    ((ialt.includes("hwg") || ialt.includes("hochschule") || ialt.includes("ludwigshafen")) && ialt.includes("logo"))
+                );
                 if (!(okH && okA && okAlt)) {{
                     const iss = [];
                     if (!okH) iss.push(`Höhe '${{ih || 'undefiniert'}}' statt 60px`);
