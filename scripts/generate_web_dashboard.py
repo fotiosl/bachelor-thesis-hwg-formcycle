@@ -1610,12 +1610,16 @@ def generate_dashboard():
                 }} else results.passed.push("HWG-WF-01 (Kanonische Workflow-Status)");
             }}
 
-            const aliasToks = ["%$project_alias%", "%$record_id%", "%$vorgang", "[%$id%]"];
-            const hasAlias = (workflowEmails || []).some(em => aliasToks.some(t => (`${{em.subject || ""}} ${{em.body || ""}}`).toLowerCase().includes(t)));
-            if (!workflowEmails || workflowEmails.length === 0 || !hasAlias) {{
-                results.violations.push({{ rule: "HWG-WF-02", rule_id: "HWG-WF-02", severity: "minor", message: "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in Workflow-E-Mails." }});
-                results.score -= penalties.minor;
-            }} else results.passed.push("HWG-WF-02 (Vorgangsreferenz vorhanden)");
+            if (!workflowEmails || workflowEmails.length === 0) {{
+                results.not_applicable["HWG-WF-02"] = "Keine automatisierten Workflow-E-Mails im Prozessmodell vorhanden.";
+            }} else {{
+                const aliasToks = ["%$project_alias%", "%$record_id%", "%$vorgang", "[%$id%]"];
+                const hasAlias = workflowEmails.some(em => aliasToks.some(t => (`${{em.subject || ""}} ${{em.body || ""}}`).toLowerCase().includes(t)));
+                if (!hasAlias) {{
+                    results.violations.push({{ rule: "HWG-WF-02", rule_id: "HWG-WF-02", severity: "minor", message: "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in Workflow-E-Mails." }});
+                    results.score -= penalties.minor;
+                }} else results.passed.push("HWG-WF-02 (Vorgangsreferenz vorhanden)");
+            }}
 
             // Stufe 2: Echte LLM-API-Prüfung (sofern API-Key im UI hinterlegt), sonst explizite Kennzeichnung als KI-ungeprüft!
             const llmCfg = getLlmUiConfig();

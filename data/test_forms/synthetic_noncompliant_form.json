@@ -136,6 +136,13 @@
       }
     }
   ],
-  "workflow_emails": [],
+  "workflow_emails": [
+    {
+      "node_name": "E-Mail an Antragstellende",
+      "recipient": "[%$tfEmail%]",
+      "subject": "Ihr Antrag ist eingegangen",
+      "body": "Ihr Antrag wurde erfolgreich übermittelt. Bitte haben Sie etwas Geduld."
+    }
+  ],
   "workflow_states": []
 }

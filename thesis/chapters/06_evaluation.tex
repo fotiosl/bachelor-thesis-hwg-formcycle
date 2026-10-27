@@ -35,10 +35,10 @@ Tabelle~\ref{tab:eval_results} weist die gemessenen Ergebnisse der Stufe~1 (15 d
 \midrule
 \textit{Auslagenerstattung} (Prod) & \textbf{36} (6 / 9 / 7) & $-64$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, keine H1, Label-HTML (2), kein DSGVO-Hinweis, 2 Uploads ohne Größenlimit, Telefon/IBAN unvalidiert, 3 Ad-hoc-Status, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{BTN-01} (\texttt{senden}), \texttt{LANG-01}, \texttt{UX-02} (49 Felder) \\
 \textit{Antrag-Sprints} (ZFK) & \textbf{25} (5 / 8 / 9)* & $-75$\,P.: Kein Logo, XIMA aktiv, keine H1, 0 Fieldsets, Stammdatensequenz vertauscht, kein DSGVO-Hinweis, 3 Ad-hoc-Status, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{STAMM-02}, \texttt{BTN-01} (\texttt{senden}, \enquote{Kritischer Fall}) \\
-\textit{Master-Formular} (Admin) & \textbf{55} (8 / 6 / 8)* & $-45$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, Label-HTML (3), sichtbare Shibboleth-Entwicklernotiz (\texttt{UI-01}), Matrikelnummer unvalidiert, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{LANG-01}, \texttt{UX-02} (29 Felder) \\
+\textit{Master-Formular} (Admin) & \textbf{58} (8 / 5 / 9)* & $-42$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, Label-HTML (3), sichtbare Shibboleth-Entwicklernotiz (\texttt{UI-01}), Matrikelnummer unvalidiert. & Lauf ausstehend; erwartet: \texttt{LANG-01}, \texttt{UX-02} (29 Felder) \\
 \bottomrule
 \end{tabularx}
-\caption{Gemessene Ergebnisse der deterministischen Stufe 1 (N/A = 7 KI-ungeprüfte Regeln; *zusätzlich strukturell nicht anwendbar: \texttt{UPLOAD-01}, bei \textit{Antrag-Sprints} auch \texttt{UX-01}; \enquote{erwartet} = manuelle Annotation des Autors, keine Messung)}
+\caption{Gemessene Ergebnisse der deterministischen Stufe 1 (N/A = 7 KI-ungeprüfte Regeln; *zusätzlich strukturell nicht anwendbar: \texttt{UPLOAD-01}, bei \textit{Master-Formular} auch \texttt{WF-02} [keine E-Mails], bei \textit{Antrag-Sprints} auch \texttt{UX-01}; \enquote{erwartet} = manuelle Annotation des Autors, keine Messung)}
 \label{tab:eval_results}
 \end{table}
 
