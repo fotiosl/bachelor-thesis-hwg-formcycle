@@ -29,7 +29,7 @@
 - [x] Zotero-Bibliothek einrichten und mit `references.bib` synchronisieren.
 
 ### Woche 2 & 3 (15.10. – 28.10.2026): Ist-Analyse & Datenbasis (HWG)
-- [x] Erhebung des gesamten Formularbestands der HWG (34 Formulare, 49 Workflows).
+- [x] Erhebung des gesamten Formularbestands der HWG (34 Formulare, 34 Workflow-Modelle in 53 .fcexport-Dateien).
 - [x] Export der Formulare aus Formcycle als JSON/HTML in `data/raw_forms/`.
 - [x] Systematisches Heuristik-Audit (Usability-Probleme, Barrierefreiheit nach WCAG 2.1).
 - [x] Erstellung visueller Vorher-Nachher-Gegenüberstellungen (Screenshot-Dokumentation in `thesis/figures/`).
@@ -38,7 +38,7 @@
 ### Woche 4 (29.10. – 08.11.2026): Standard-Definition & Testdaten-Erstellung
 - [x] Ausarbeitung des Gestaltungs-Standards (Typografie, Pflichtfelder, Barrierefreiheit, Wording).
 - [x] Übersetzung des Standards in die maschinenlesbare `data/rules/rules_registry.json` (v1.5.0, 22 Regeln).
-- [x] **Dozenten-Meilenstein 1:** Erstellung der synthetischen Testformulare in `data/test_forms/` (Ground Truth mit 18 definierten Defekten).
+- [x] **Dozenten-Meilenstein 1:** Erstellung der synthetischen Testformulare in `data/test_forms/` (Ground Truth mit 19 definierten Defekten).
 
 ### Woche 5 & 6 (09.11. – 22.11.2026): Prototypische Implementierung (Pipeline & Dashboard)
 - [x] Aufsetzen der modularen Python-Middleware in `scripts/test_rule_engine.py` und `web/server.py`.
@@ -54,7 +54,7 @@
 - [x] **Milestone-Meeting 3 mit Betreuer:** Präsentation der Evaluationsergebnisse.
 
 ### Woche 8 & 9 (30.11. – 07.12.2026): Intensive Schreibphase, Vorabkorrektur & Abgabe
-- [x] Verfassen und Zusammenführen aller Kapitel (Kapitel 1–7, ca. 7.100 Wörter, Limit 8.000 Wörter eingehalten).
+- [x] Verfassen und Zusammenführen aller Kapitel (Kapitel 1–7, ca. 4.400 Wörter, Limit 8.000 Wörter eingehalten).
 - [x] Verfassen des 2-seitigen **Reflexionsberichts zur KI-Nutzung** (Anhang B).
 - [x] Dokumentation der Prompt-Spezifikation (Anhang A) und Eidesstattliche Erklärung (Anhang C).
 - [ ] **Vorabkorrekturlesen** (Sprache, Rechtschreibung, roter Faden).

@@ -253,7 +253,14 @@ Prüfe den nachfolgenden komprimierten Formular- und Workflow-Extrakt strikt anh
       "helptext": ""
     }
   ],
-  "workflow_emails": []
+  "workflow_emails": [
+    {
+      "node_name": "E-Mail an Antragstellende",
+      "recipient": "[%$tfEmail%]",
+      "subject": "Ihr Antrag ist eingegangen",
+      "body": "Ihr Antrag wurde erfolgreich übermittelt. Bitte haben Sie etwas Geduld."
+    }
+  ]
 }
 
 === PRÜFINSTRUKTIONEN & NEGATIVE CONSTRAINTS ===

@@ -14,10 +14,10 @@ Der untersuchte Bestand an der HWG Ludwigshafen umfasst **34 Formcycle-Exportarc
 
 ```mermaid
 graph TD
-    A["HWG Formularbestand (34 Archive)"] --> B["1. Studierendenprozesse (22 %)"]
-    A --> C["2. Finanzen, Beschaffung & Reisen (27 %)"]
-    A --> D["3. Personalverwaltung / HR (24 %)"]
-    A --> E["4. Forschung & Transfer / ZFK (27 %)"]
+    A["HWG Formularbestand (34 Archive)"] --> B["1. Studierendenprozesse (24 %, 8/34)"]
+    A --> C["2. Finanzen, Beschaffung & Reisen (26 %, 9/34)"]
+    A --> D["3. Personalverwaltung / HR (24 %, 8/34)"]
+    A --> E["4. Forschung & Transfer / ZFK (26 %, 9/34)"]
 ```
 
 ---

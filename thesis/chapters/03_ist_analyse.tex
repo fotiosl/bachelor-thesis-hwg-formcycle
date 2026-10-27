@@ -48,7 +48,7 @@ Fieldset-Gruppen & 4 \texttt{<fieldset>}* (11 ges.) & 0 Fieldsets (nur \texttt{<
 Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & Programmatisch; Vorname, Nachname, E-Mail optional & Programmatisch inkl. Vorname, Nachname, E-Mail \\
 Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & PLZ (\texttt{plzDE}); Matrikelnr. unvalidiert \\
 Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads \\
-Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Im Footer aktiv (\texttt{privacyPolicyShow="1"}) \\
+Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Im Footer aktiv (\texttt{privacyPolicy\allowbreak Show="1"}) \\
 Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Keiner (Snippet) \\
 Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Keine Bestätigungs-Mail \\
 \bottomrule
@@ -145,4 +145,4 @@ Die Auswertung aller 34 Workflow-Modelle zeigt eine ausgeprägte Prozessfragment
 \section{Ableitung der Kernanforderungen}
 \label{sec:ableitung_anforderungen}
 
-Aus den sechs Problemfeldern resultieren fünf Anforderungen an den HWG-Formular-Standard: (1)~einheitliches 850\,px-Raster mit normiertem HWG-Header (\texttt{<h1>} + 60\,px-Logo inkl. Alt-Text) und deaktiviertem Herstellerlogo, (2)~kanonisches Stammdaten-Muster ohne sichtbare Entwicklernotizen, (3)~verbindliches Action-Verb-Pattern für Schaltflächen sowie verständlich erläuterte Fachbegriffe, (4)~lückenlose Fieldset-, Pflichtfeld-, DSGVO-, Upload- und Formatvalidierungs-Governance sowie (5)~harmonisierte Workflow-Status mit Vorgangs-ID und Eingangsbestätigung.
+Aus den sechs Problemfeldern resultieren fünf Anforderungen an den HWG-Formular-Standard: (1)~einheitliches 850\,px-Raster mit normiertem HWG-Header (\texttt{<h1>} + 60\,px-Logo inkl. Alt-Text) und deaktiviertem Herstellerlogo, (2)~kanonisches Stammdaten-Muster ohne sichtbare Entwicklernotizen, (3)~verbindliches Action-Verb-Pattern für Schaltflächen sowie verständlich erläuterte Fachbegriffe, (4)~lückenlose Fieldset-, Pflichtfeld-, DSGVO-, Upload- und For\-mat\-va\-li\-die\-rungs-Go\-ver\-nan\-ce sowie (5)~harmonisierte Workflow-Status mit Vorgangs-ID und Eingangsbestätigung.

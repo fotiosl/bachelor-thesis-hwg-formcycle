@@ -25,7 +25,7 @@ Das Dashboard unterstützt **drei schlanke Bereitstellungswege**:
 Im Projektverzeichnis ausführen:
 ```bash
 export LLM_API_BASE="https://chat-ai.academiccloud.de/v1"
-export LLM_MODEL="qwen3-30b-a3b-instruct-2507"
+export LLM_MODEL="deepseek-v4-flash-0731" # Standard-Referenzmodell (alternativ z. B. qwen3-30b-a3b-instruct-2507)
 export LLM_API_KEY="<IHR-GWDG-API-KEY>"
 docker compose -f deploy/docker-compose.yml up -d
 ```

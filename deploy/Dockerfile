@@ -11,6 +11,10 @@ FROM python:3.11-alpine
 LABEL maintainer="HWG Ludwigshafen"
 LABEL description="HWG Ludwigshafen Formcycle Compliance Dashboard & Hybrid Engine"
 
+# Python-Optimierungen für Read-Only-Container (keine .pyc Schreibversuche)
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
 # Erforderliche Verzeichnisse und Dateien kopieren

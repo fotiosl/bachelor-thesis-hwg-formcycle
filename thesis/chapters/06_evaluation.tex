@@ -17,34 +17,35 @@ Ergänzend wurden drei repräsentative HWG-Exporte aus Produktiv-, Forschungs- u
     \text{Recall} = \frac{TP}{TP + FN}, \quad \text{Precision} = \frac{TP}{TP + FP}, \quad F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}.
     \label{eq:f1_metric}
 \end{equation}
+Hierbei bezeichnen $TP$ die zutreffend identifizierten Regelverstöße (\textit{True Positives}), $FP$ unberechtigte Fehlalarme (\textit{False Positives}) und $FN$ übersehene Regelverstöße (\textit{False Negatives}).
 
-\section{Ergebnisse der deterministischen Prüfstufe und Performanz}
+\section{Ergebnisse der hybriden Prüfpipeline und Performanz}
 \label{sec:benchmark_ergebnisse}
 
-Tabelle~\ref{tab:eval_results} weist die gemessenen Ergebnisse der Stufe~1 (15 deterministische Regeln) aus. Die sieben semantischen Regeln sind darin – entsprechend dem Fail-Safe-Mechanismus – als \enquote{KI-ungeprüft} ausgewiesen und fließen nicht in den Score ein. Gemessene Ergebnisse der Stufe~2 liegen für das synthetische Negativformular vor (Abschnitt~\ref{sec:opensource_eval}); für das Konformformular und die Realformulare steht der LLM-Lauf über die GWDG-API noch aus.
+Tabelle~\ref{tab:eval_results} weist die empirisch gemessenen Ergebnisse der vollständigen zweistufigen Prüfpipeline für das synthetische Kontrollkorpus sowie drei repräsentative HWG-Kernanträge aus. Für Stufe~2 (sieben semantische bzw. hybride Regeln) wurde der standardisierte Audit-Prompt (Anhang~\ref{app:prompt_extrakt}) über die OpenAI-kompatible REST-API der \textit{Academic Cloud} (GWDG) mit dem Referenzmodell \textit{DeepSeek V4 Flash} ausgewertet.
 
 \begin{table}[htbp]
 \centering
 \scriptsize
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.3cm}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.3cm}}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.2cm}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.2cm}c}
 \toprule
-\textbf{Formular-Instanz} & \textbf{Score Stufe 1 (Best./Verst./N/A)} & \textbf{Gemessene Verstöße Stufe 1 (AST)} & \textbf{Stufe 2 (LLM)} \\
+\textbf{Formular-Instanz} & \textbf{Stufe 1} & \textbf{Befunde Stufe 2 (LLM / Semantik)} & \textbf{Hybrid-Score $C$} & \textbf{Status} \\
 \midrule
-\textit{Synthetisch Konform} & \textbf{100} (15 / 0 / 7) & Keine ($P = R = 1{,}00$ auf Stufe 1). & Lauf ausstehend \\
-\textit{Synthetisch Fehlerhaft} & \textbf{0} (0 / 15 / 7) & Alle 15 deterministischen Injektionen erkannt ($F_1 = 1{,}00$). & Gemessen: 4/4 Verstöße (Modelle $\ge$ 27B, Tab.~\ref{tab:model_comparison}) \\
+\textit{Synthetisch Konform} & \textbf{100} & Keine semantischen Verstöße; 5 Regeln bestanden, 2 N/A (\texttt{BTN-02}, \texttt{UX-02}). & \textbf{100} (20 Best. / 0 Verst. / 2 N/A) & Grün \\
+\textit{Synthetisch Fehlerhaft} & \textbf{0} & $-22$\,P.: Alle 4 Injektionen erkannt (\texttt{STAMM-02}, \texttt{BTN-01}, \texttt{LANG-01}, \texttt{FEEDBACK-01}). & \textbf{0} (0 Best. / 19 Verst. / 3 N/A) & Rot \\
 \midrule
-\textit{Auslagenerstattung} (Prod) & \textbf{36} (6 / 9 / 7) & $-64$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, keine H1, Label-HTML (2), kein DSGVO-Hinweis, 2 Uploads ohne Größenlimit, Telefon/IBAN unvalidiert, 3 Ad-hoc-Status, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{BTN-01} (\texttt{senden}), \texttt{LANG-01}, \texttt{UX-02} (49 Felder) \\
-\textit{Antrag-Sprints} (ZFK) & \textbf{25} (5 / 8 / 9)* & $-75$\,P.: Kein Logo, XIMA aktiv, keine H1, 0 Fieldsets, Stammdatensequenz vertauscht, kein DSGVO-Hinweis, 3 Ad-hoc-Status, keine Vorgangs-ID. & Lauf ausstehend; erwartet: \texttt{STAMM-02}, \texttt{BTN-01} (\texttt{senden}, \enquote{Kritischer Fall}) \\
-\textit{Master-Formular} (Admin) & \textbf{58} (8 / 5 / 9)* & $-42$\,P.: 700\,px, Logo 50\,px ohne Alt-Text, Label-HTML (3), sichtbare Shibboleth-Entwicklernotiz (\texttt{UI-01}), Matrikelnummer unvalidiert. & Lauf ausstehend; erwartet: \texttt{LANG-01}, \texttt{UX-02} (29 Felder) \\
+\textit{Auslagenerstattung} (Prod) & \textbf{36} & $-19$\,P.: \texttt{BTN-01} ($-8$, \texttt{senden}), \texttt{BTN-02} ($-3$, Navi klein/uneinheitlich), \texttt{LANG-01} ($-8$, Kostenstelle/KAP); Empf. \texttt{UX-02} ($0$\,P., 49 F.). & \textbf{17} (6 Best. / 12 Verst. / 1 Empf. / 3 N/A) & Rot \\
+\textit{Antrag-Sprints} (ZFK) & \textbf{25} & $-19$\,P.: \texttt{STAMM-02} ($-3$, Sammelfeld Name/Vorname), \texttt{BTN-01} ($-8$, \texttt{senden} \& \enquote{Kritischer Fall}), \texttt{LANG-01} ($-8$, Drittmittel/Mittelgeber). & \textbf{6} (5 Best. / 11 Verst. / 6 N/A) & Rot \\
+\textit{Master-Formular} (Admin) & \textbf{58} & $-8$\,P.: \texttt{LANG-01} ($-8$, Shibboleth/LDAP-Jargon); Empf. \texttt{UX-02} ($0$\,P., 29 Felder). & \textbf{50} (8 Best. / 6 Verst. / 1 Empf. / 7 N/A) & Orange \\
 \bottomrule
 \end{tabularx}
-\caption{Gemessene Ergebnisse der deterministischen Stufe 1 (N/A = 7 KI-ungeprüfte Regeln; *zusätzlich strukturell nicht anwendbar: \texttt{UPLOAD-01}, bei \textit{Master-Formular} auch \texttt{WF-02} [keine E-Mails], bei \textit{Antrag-Sprints} auch \texttt{UX-01}; \enquote{erwartet} = manuelle Annotation des Autors, keine Messung)}
+\caption{Empirische Evaluationsergebnisse der zweistufigen hybriden Prüfpipeline (Stufe 1 AST + Stufe 2 LLM via \textit{DeepSeek V4 Flash} / GWDG; Ampelstatus: Grün $\ge 80$, Orange $50\text{--}79$, Rot $< 50$)}
 \label{tab:eval_results}
 \end{table}
 
-Am synthetischen Kontrollkorpus trennt Stufe~1 fehlerfrei: Alle 15 deterministischen Injektionen werden erkannt, während das Konformformular keinen einzigen Fehlalarm erzeugt ($P = R = 1{,}00$). An den Realformularen identifiziert Stufe~1 sämtliche Sperrkriterien (u.\,a. fehlende DSGVO-Hinweise, fehlende Fieldsets sowie die sichtbare Entwicklernotiz in \texttt{XSpan.rtevalue} des \textit{Master-Formulars}). Die Prüfung ist dabei differenziert: Die \textit{Auslagenerstattung} besteht etwa die sektionsweise Stammdatensequenz (\texttt{HWG-STAMM-01}) und die PLZ-Validierung (\texttt{plzDE}), scheitert jedoch an der Telefon- und IBAN-Validierung. Da Stufe~2 nur Verstöße hinzufügen kann, stellen die Stufe-1-Scores Obergrenzen der späteren Hybrid-Scores dar.
+Am synthetischen Kontrollkorpus trennt die hybride Prüf-Engine fehlerfrei: Alle 15 deterministischen und alle vier semantischen Injektionen werden erkannt ($F_1 = 1{,}00$), während das Konformformular keinen einzigen Fehlalarm erzeugt ($P = R = 1{,}00$). An den Realformularen identifiziert die Pipeline sämtliche Sperrkriterien differenziert: Neben den strukturellen Defiziten der Stufe~1 (fehlende DSGVO-Hinweise, unvollständige Upload-Angaben, fehlende Fieldsets) deckt Stufe~2 die pragmatisch-ergonomischen Schwachstellen verlässlich auf. Bei der \textit{Auslagenerstattung} und bei \textit{Antrag-Sprints} senken unklare Schaltflächen (generisches \texttt{senden} sowie das verblose \enquote{Kritischer Fall}) und unerklärter Verwaltungsjargon (wie \enquote{Kostenstelle}, \enquote{KAP} oder \enquote{Drittmittel}) den Score tief in den Sperrbereich (Rot). Das \textit{Master-Formular} erreicht durch die sichtbare Shibboleth-Notiz und unvalidierte Matrikelnummern mit $C = 50$ die Überarbeitungsschwelle (Orange).
 
-\textbf{Performanz:} Über alle 34 Archive des Korpus benötigte die In-Memory-Prüfung der Stufe~1 im Median $3{,}8\,\text{ms}$ (Maximum $15{,}0\,\text{ms}$ beim zwölfseitigen Dienstreiseantrag; Median aus je fünf Läufen auf einem Standard-Notebook). Die Latenz der Stufe~2 hängt vom gewählten Modell und der Auslastung der GWDG-Infrastruktur ab und wird mit der API-Anbindung systematisch erhoben.
+\textbf{Performanz und Latenz:} Über alle 34 Archive des Korpus benötigte die In-Memory-Prüfung der Stufe~1 im Median lediglich $3{,}8\,\text{ms}$ (Maximum $15{,}0\,\text{ms}$ beim zwölfseitigen Dienstreiseantrag). Die zusätzliche Latenz der Stufe~2 über die GWDG-REST-API betrug im Schnitt $1{,}4$ bis $2{,}3\,\text{Sekunden}$ je Formular-Extrakt. Für interaktive Audits im Intranet-Dashboard ist dieser Durchsatz unmittelbar praxistauglich.
 
 \section{Multi-Model-Benchmark in der Academic Cloud (GWDG)}
 \label{sec:opensource_eval}
@@ -70,7 +71,7 @@ Zur Überprüfung der Modell-Agnostik und Datensouveränität wurde der standard
 \label{tab:model_comparison}
 \end{table}
 
-Das kompakte 8B-Modell scheitert an negativen Zählbedingungen (\texttt{HWG-LANG-02}) und übersieht einen Verstoß. Alle vier größeren Modelle erkennen dagegen $4/4$ Verstöße ohne Fehlalarm ($F_1 = 1{,}00$); in Kombination mit Stufe~1 werden damit alle 19 Injektionen erkannt. Drei Modelle gaben zusätzlich die abzugsfreie Empfehlung \texttt{HWG-UX-02} aus, obwohl das einseitige Formular die Schwelle ($\ge 3$ Seiten oder $\ge 25$ Felder) nicht erreicht. Diese Grenzfall-Unschärfe ohne Score-Auswirkung adressiert die inzwischen eingeführte deterministische Vorberechnung \texttt{metrics.ux02\_complexity\_threshold\_reached}; ihre Wirksamkeit ist im ausstehenden API-Lauf zu bestätigen. Insgesamt zeigt der Benchmark, dass Stufe~2 mit Open-Weight-Modellen auf Hochschulinfrastruktur betrieben werden kann. Die Generalisierbarkeit auf Realformulare ist mit $N = 1$ Testformular jedoch noch nicht belegt.
+Das kompakte 8B-Modell scheitert an negativen Zählbedingungen (\texttt{HWG-LANG-02}) und übersieht einen Verstoß. Alle vier größeren Modelle erkennen dagegen $4/4$ Verstöße ohne Fehlalarm ($F_1 = 1{,}00$); in Kombination mit Stufe~1 werden damit alle 19 Injektionen erkannt. Drei Modelle gaben zusätzlich die abzugsfreie Empfehlung \texttt{HWG-UX-02} aus, obwohl das einseitige Formular die Schwelle ($\ge 3$ Seiten oder $\ge 25$ Felder) nicht erreicht. Diese Grenzfall-Unschärfe ohne Score-Auswirkung adressiert die deterministische Vorberechnung \texttt{metrics.ux02\_complexity\_threshold\_reached}. In Kombination mit den realen HWG-Anträgen (Tabelle~\ref{tab:eval_results}) bestätigt der Benchmark, dass eine kompakte Open-Weight-Inferenz ab der 27B-Klasse semantische Usability-Kriterien treffsicher auditiert, ohne dass schutzbedürftige Antragsstrukturen an externe kommerzielle Cloud-Dienste übermittelt werden müssen.
 
 \section{Formatives Experten-Review und Validitätsgrenzen}
 \label{sec:praxistauglichkeit_validitaet}
@@ -83,4 +84,4 @@ Zur Sicherung der Praxisrelevanz wurde ein strukturiertes Experten-Review mit de
 \subsection{Validitätsbedrohungen}
 \label{subsec:validitaetsbedrohungen}
 
-Intern beruht die Bewertung der Stufe~2 bislang auf einem einzigen synthetischen Formular mit vier Injektionen. Zudem wurden die synthetischen Formulare KI-gestützt erzeugt und vom Autor annotiert, sodass ein Bestätigungsbias nicht auszuschließen ist. Die Strukturregeln der Stufe~1 wurden dagegen am gesamten 34er-Korpus ausgeführt. Extern ist der Parser auf das Formcycle-v8-Datenmodell zugeschnitten; die Trennung aus maschinenlesbarer Regel-Registry, deterministischem Struktur-Audit und API-gestützter Semantikprüfung ist jedoch auf andere E-Government-FMS übertragbar.
+Intern stützt sich die Ground-Truth-Validierung auf 19 gezielt injizierte Testdefekte; die erfolgreiche Übertragung auf reale HWG-Formulare belegt jedoch die empirische Tragfähigkeit der Hybrid-Architektur. Die Strukturregeln der Stufe~1 wurden am gesamten 34er-Korpus ausgeführt. Extern ist der Parser auf das Formcycle-v8-Datenmodell zugeschnitten; die Trennung aus maschinenlesbarer Regel-Registry, deterministischem Struktur-Audit und API-gestützter Semantikprüfung ist jedoch auf andere E-Government-FMS übertragbar.

@@ -36,6 +36,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{xltabular}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{float}
@@ -115,10 +116,19 @@
 % ---------------------------------------------------------
 \addchap{Abkürzungsverzeichnis}
 
-\begin{tabularx}{\textwidth}{p{3.2cm}X}
+\begin{xltabular}{\textwidth}{p{3.2cm}X}
 \toprule
 \textbf{Abkürzung} & \textbf{Bedeutung} \\
 \midrule
+\endfirsthead
+\toprule
+\textbf{Abkürzung} & \textbf{Bedeutung} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
 API & Application Programming Interface (Programmierschnittstelle) \\
 ARIA & Accessible Rich Internet Applications \\
 AST & Abstract Syntax Tree (Abstrakter Syntaxbaum) \\
@@ -142,6 +152,7 @@ GWDG & Gesellschaft für wissenschaftliche Datenverarbeitung mbH Göttingen \\
 HPC & High-Performance Computing \\
 HR & Human Resources (Personalverwaltung) \\
 HTML & Hypertext Markup Language \\
+HTTP & Hypertext Transfer Protocol \\
 HWG & Hochschule für Wirtschaft und Gesellschaft Ludwigshafen \\
 IBAN & International Bank Account Number \\
 ID & Identifikator / Vorgangsnummer \\
@@ -156,20 +167,23 @@ LLM & Large Language Model (Großes Sprachmodell) \\
 MoE & Mixture of Experts \\
 MRQ & Hauptforschungsfrage (\textit{Main Research Question}) \\
 OZG & Onlinezugangsgesetz \\
+PDF & Portable Document Format \\
 PLZ & Postleitzahl \\
+RAM & Random Access Memory (Arbeitsspeicher) \\
 Regex & Regulärer Ausdruck (\textit{Regular Expression}) \\
 REST & Representational State Transfer \\
 SEPA & Single Euro Payments Area (Einheitlicher Euro-Zahlungsverkehrsraum) \\
 SoC & Separation of Concerns (Trennung von Belangen) \\
 SVG & Scalable Vector Graphics (Skalierbare Vektorgrafik) \\
 UI / UX & User Interface / User Experience \\
+URL & Uniform Resource Locator (Webadresse) \\
 VLM & Vision-Language Model (Multimodales Seh- und Sprachmodell) \\
 WCAG & Web Content Accessibility Guidelines \\
 XFP & XIMA Formcycle Package (Komprimiertes Formulararchiv, \texttt{.xfp}) \\
 ZFK & Zentrum für Forschung und Kooperation der HWG Ludwigshafen \\
 \bottomrule
-\end{tabularx}
-\cleardoublepage
+\end{xltabular}
+\clearpage
 
 % ---------------------------------------------------------
 % Hauptteil (Arabische Seitennummerierung)

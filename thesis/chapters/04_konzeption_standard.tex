@@ -32,13 +32,13 @@ Innerhalb jeder Personensektion folgen Stammdaten strikt der Sequenz (\texttt{HW
 \begin{equation}
     \text{Anrede} \longrightarrow \text{Vorname} \longrightarrow \text{Nachname} \longrightarrow \text{E-Mail} \longrightarrow \text{Telefonnummer}.
 \end{equation}
-Zulässig sind ausschließlich klare Einzelbezeichnungen (\enquote{Anrede}, \enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse}, \enquote{E-Mail} oder \enquote{Hochschul-E-Mail}, \enquote{Telefonnummer}; \texttt{HWG-STAMM-02}) statt ungetrennter Sammelfelder (\enquote{Name Antragstellende/r}) oder interner Kürzel. Sichtbare Entwicklernotizen (auch in \texttt{XSpan.rtevalue}) sind im Produktivbetrieb unzulässig (\texttt{HWG-UI-01}).
+Zulässig sind ausschließlich klare Einzelbezeichnungen wie \enquote{Anrede}, \enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse}, \enquote{E-Mail} bzw.\ \enquote{Hochschul-E-Mail} und \enquote{Telefonnummer} (\texttt{HWG-STAMM-02}) statt ungetrennter Sammelfelder (\enquote{Name Antragstellende/r}) oder interner Kürzel. Sichtbare Entwicklernotizen (auch in \texttt{XSpan.rtevalue}) sind im Produktivbetrieb unzulässig (\texttt{HWG-UI-01}).
 
 \subsection{DSGVO, Dateiuploads, Validierung und sprachliche Klarheit}
 \label{subsec:validierung_microcopy}
 
 \begin{itemize}
-    \item \textbf{DSGVO (\texttt{HWG-DSGVO-01}) \& Uploads (\texttt{HWG-UPLOAD-01}):} Personenbezogene Formulare erfordern die aktivierte Foo\-ter-Da\-ten\-schutz\-er\-klä\-rung (\texttt{privacyPolicyShow="1"}) oder einen verlinkten Art.-13-DSGVO-Hinweis vor dem Absenden. Dateiuploads (\texttt{XUpload}) müssen zulässige Dateiformate und Maximalgröße sowohl technisch als auch sichtbar im Label/Hilfetext kongruent ausweisen.
+    \item \textbf{DSGVO (\texttt{HWG-DSGVO-01}) \& Uploads (\texttt{HWG-UPLOAD-01}):} Personenbezogene Formulare erfordern die aktivierte Foo\-ter-Da\-ten\-schutz\-er\-klä\-rung (\texttt{privacyPolicy\allowbreak Show="1"}) oder einen verlinkten Art.-13-DSGVO-Hinweis vor dem Absenden. Dateiuploads (\texttt{XUpload}) müssen zulässige Dateiformate und Maximalgröße sowohl technisch als auch sichtbar im Label/Hilfetext kongruent ausweisen.
     \item \textbf{Formatvalidierung (\texttt{HWG-VAL-01}) \& Feldbreiten (\texttt{HWG-UX-01}):} Strukturierte Felder erfordern passende native Formcycle-Datentypen (\texttt{email}, \texttt{plzDE}, \texttt{iban}, \texttt{phone}) oder hinterlegte Copy-and-Paste-Regex-Muster:
     \begin{itemize}
         \item PLZ: \texttt{\^{}[0-9]\{5\}\$}
