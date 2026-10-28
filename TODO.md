@@ -6,23 +6,29 @@
 ---
 
 ## 1. Tabelle 3.2 & Tabelle 6.1 mit saniertem 100 %-Formular befüllen
-- [ ] **Tabelle 3.2 (`thesis/chapters/03_ist_analyse.tex`):**
-  - Spalte 4 ist aktuell als *„HWG-Soll-Standard (Referenz)“* mit Platzhalter-Kriterien vorkonfiguriert.
-  *Sobald du das sanierte Formular vorliegen hast:* Die exakten Komponenten/Werte des konkreten sanierten Formulars in die 4. Spalte eintragen (z. B. konkrete Elementanzahl, Seiten, Feldvalidierungen etc.).
-- [ ] **Tabelle 6.1 (`thesis/chapters/06_evaluation.tex`):**
-  - Prüfen, ob das sanierte Formular zusätzlich als Vorher-Nachher-Zeile in die Evaluation aufgenommen werden soll (z. B. Gegenüberstellung: Alt = 50 Punkte / Orange vs. Saniert = 100 Punkte / Grün), oder ob das alte Master-Formular ersetzt wird.
+- [x] **Tabelle 3.2 (`thesis/chapters/03_ist_analyse.tex`):**
+  - Spalte 4 wurde von abstrakten Platzhaltern auf die exakten gemessenen Kennzahlen des sanierten Referenzformulars *„Antrag-Sprints (HWG-Standard)“* umgestellt (1 Seite, 32 Elemente, H1 + 60\,px HWG-Logo mit Alt-Text, XIMA deaktiviert, 3 semantische Fieldsets mit Legenden, 12 Pflichtfelder inkl. globaler Legende, lückenlose Feldvalidierung, Art.-13-DSGVO-Integration, Action-Verb-Buttons und 8 E-Mails mit Vorgangs-ID).
+- [x] **Tabelle 6.1 (`thesis/chapters/06_evaluation.tex`):**
+  - Sanierte Zeile *„Antrag-Sprints (saniert)“* (100 Punkte / Grün; 13 Best. / 0 Verst. / 9 N/A) als direkter Vorher-Nachher-Vergleich zur unbereinigten Fassung (6 Punkte / Rot) eingefügt und im Diskussionstext prägnant erläutert.
+- [x] **Pipeline, Presets & Dashboard:**
+  - Formular `AFörderung Antrag-Sprints für Drittmittelanträge (HWG-Standard).xfp` in `data/raw_forms/standard/` und `data/test_forms/` abgelegt, in `scripts/test_rule_engine.py`, `scripts/generate_web_dashboard.py` und `web/server.py` als Preset integriert und `web/compliance_dashboard.html` neu generiert.
 
 ---
 
-## 2. Systematischer Redundanz-Check (Kapitel 3 vs. Kapitel 4 & weitere)
-- [ ] **Kapitel 3 (Ist-Analyse) vs. Kapitel 4 (Konzeption des Standards):**
-  - Nochmal systematisch Absatz für Absatz gegenlesen.
-  - Prüfen, ob in Kapitel 3 wirklich nur der *Problem Space* (empirische Befunde, Fehlerstatistiken, Nutzerprobleme) steht und in Kapitel 4 rein der *Solution Space* (präskriptive Regelspezifikation, Soll-Werte).
-  - Auf etwaige weitere inhaltliche Textdopplungen in anderen Kapiteln prüfen (z. B. Einleitung vs. Theorie vs. Fazit).
+## 2. Systematischer Redundanz-Check & Reflexionsbericht
+- [x] **Kapitel 3 (Ist-Analyse) vs. Kapitel 4 (Konzeption des Standards):**
+  - Systematisch gegengelesen: Saubere Trennung von Problem Space (Kapitel 3) und Solution Space (Kapitel 4) verifiziert.
+- [x] **Reflexionsbericht (Anhang B):**
+  - Auf exakt 2 Seiten gestrafft (gemäß Kloker-Betreuungsrichtlinien & Westermann 2026), sodass kein Überlauf mehr auf eine 3. Seite entsteht.
+- [x] **Typografie & Build-Optimierung:**
+  - `\pdfminorversion=7` integriert (PDF-1.7-Warnung beseitigt).
+  - Sämtliche `Overfull \hbox`-Randüberstände im Anhang und Fazit behoben.
+  - Tabellenbreite der Eidesstattlichen Erklärung exakt an Satzspiegel angepasst.
 
 ---
 
 ## 3. Optionale Punkte für die Endphase
+- [ ] **Zweitprüfer:** Sobald der Zweitprüfer offiziell bestellt ist, Zeile in `thesis/main.tex` aktivieren.
 - [ ] **Corporate Design / Farbwerte:** Falls am Dashboard (`compliance_dashboard.html`) noch CSS-Farben angepasst werden, Farbhex-Codes und Screenshot (Abbildung 5.2 in `thesis/chapters/05_implementierung.tex`) abstimmen.
 - [ ] **Abschluss-Build:** Vor Abgabe oder finalem Druck immer mit `python scripts/build_thesis.py` kompilieren und die Seitenzahlen/Seitenränder im generierten `thesis/main.pdf` kontrollieren.
 
@@ -33,7 +39,7 @@ Um den aktuellen Stand von diesem Rechner auf deinen Laptop zu übernehmen:
 1. Auf diesem Rechner committen und pushen:
    ```bash
    git add .
-   git commit -m "chore: text revisions, layout fixes in appendix, and TODO notes"
+   git commit -m "chore: streamline reflexionsbericht to exactly 2 pages and fix typography"
    git push origin main
    ```
 2. Auf dem Laptop vor Arbeitsbeginn im Projektordner:

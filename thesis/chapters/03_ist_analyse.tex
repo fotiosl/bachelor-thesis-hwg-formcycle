@@ -30,28 +30,27 @@ Die Formulare reichen von kompakten einseitigen Masken (30 UI-Elemente) bis zu h
 \label{tab:archetypen}
 \end{table}
 
-Zur mikroanalytischen Gegenüberstellung vergleicht Tabelle~\ref{tab:vergleich_kernformulare} drei reale Fachformulare mit den normativen Zielanforderungen des konzipierten HWG-Formularstandards (100\,\%-Soll-Referenz; vgl. Kapitel~\ref{chap:konzeption}).
+Zur mikroanalytischen Gegenüberstellung vergleicht Tabelle~\ref{tab:vergleich_kernformulare} drei reale Fachformulare mit den Anforderungen des konzipierten HWG-Formularstandards, wie sie im sanierten Referenzformular \textit{Antrag-Sprints (HWG-Standard)} implementiert wurden (100\,\%-Soll-Referenz; vgl. Kapitel~\ref{chap:konzeption}).
 
-% TODO: Spalte 4 ("HWG-Soll-Standard (Referenz)") morgen mit den konkreten Werten des sanierten 100%-Formulars befüllen
 \begin{table}[htbp]
 \centering
 \scriptsize
 \begin{tabularx}{\textwidth}{l*4{>{\raggedright\arraybackslash}X}}
 \toprule
-\textbf{Prüfdimension} & \textbf{Auslagenerstattung (Prod)} & \textbf{Antrag-Sprints (Test/ZFK)} & \textbf{FB1-Praktikum (Prod)} & \textbf{HWG-Soll-Standard (Referenz)} \\
+\textbf{Prüfdimension} & \textbf{Auslagenerstattung (Prod)} & \textbf{Antrag-Sprints (Test/ZFK)} & \textbf{FB1-Praktikum (Prod)} & \textbf{HWG-Standard (\textit{Antrag-Sprints} saniert)} \\
 \midrule
-Domäne & Finanzen / Haushalt & Forschung (ZFK) & Fachbereich 1 & Hochschulweite Norm (Soll) \\
+Domäne & Finanzen / Haushalt & Forschung (ZFK) & Fachbereich 1 & Forschung (ZFK) / Standard-Referenz \\
 Layout-Breite & 700\,px (starr) & 850\,px (modern) & 700\,px (starr) & 850\,px (responsiv normiert) \\
-Seitenanzahl & 3 Seiten & 1 Seite & 2 Seiten & Modular nach Umfang (\texttt{XPage}) \\
-Header-Bereich & Logo 50\,px (ohne Alt-Text), keine H1 & Kein Logo, keine H1 & Logo 50\,px (ohne Alt-Text), keine H1 & Logo 60\,px (inkl. Alt-Text), H1 aktiv \\
-Footer-Branding & XIMA deaktiviert & XIMA-Logo aktiv & XIMA deaktiviert & XIMA zwingend deaktiviert \\
-Fieldset-Gruppen & 4 \texttt{<fieldset>}* (11 ges.) & 0 Fieldsets (nur \texttt{<div>}) & 2 \texttt{<fieldset>}* (20 ges.) & Alle Sektionen mit Legende \\
-Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & Programmatisch; Vorname, Nachname, E-Mail optional & Programmatisch (\texttt{required="1"}) + Legende \\
-Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & Lückenlos per Regex / Typ validiert \\
-Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Format \& Größe deklariert \\
-Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Ausgewiesen (Art.\,13 \& Link) \\
-Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verb (z.\,B. \enquote{Antrag einreichen}) \\
-Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Bestätigung mit \texttt{[\%\$PROJECT\_ALIAS\%]} \\
+Seitenanzahl & 3 Seiten & 1 Seite & 2 Seiten & 1 Seite (32 Elemente gesamt) \\
+Header-Bereich & Logo 50\,px (ohne Alt-Text), keine H1 & Kein Logo, keine H1 & Logo 50\,px (ohne Alt-Text), keine H1 & HWG-Logo 60\,px (inkl. Alt-Text), \texttt{<h1>} aktiv \\
+Footer-Branding & XIMA deaktiviert & XIMA-Logo aktiv & XIMA deaktiviert & XIMA deaktiviert (\texttt{showlogo="0"}) \\
+Fieldset-Gruppen & 4 \texttt{<fieldset>}* (11 ges.) & 0 Fieldsets (nur \texttt{<div>}) & 2 \texttt{<fieldset>}* (20 ges.) & 3 \texttt{<fieldset>} mit Legende (vollständig) \\
+Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & Programmatisch; Vorname, Nachname, E-Mail optional & 12 Pflichtfelder (\texttt{required="1"}) + globale Legende \\
+Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & Lückenlos validiert (E-Mail, Regex-Tel., Datum, Währung) \\
+Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads (Regel N/A) \\
+Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Art.\,13 integriert (\texttt{privacy\allowbreak Policy\allowbreak Show="1"}) \\
+Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag Einreichen} / \enquote{Kritischen Fall einreichen} \\
+Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8 E-Mails inkl. \texttt{[\%\$PROJECT\_\allowbreak ALIAS\%]} (5 kanonische Status) \\
 \bottomrule
 \end{tabularx}
 \caption{Vergleich dreier Kernformulare mit den Zielanforderungen des HWG-Soll-Standards (*Werte der Antragstellenden-Ansicht; Gesamtwerte über alle Prozessseiten in Klammern)}
@@ -105,7 +104,7 @@ Das interne \textit{Master-Formular} dient als Kopiervorlage für persönliche A
         \caption{FB1-Praktikumsantrag (Abwandlung)}
         \label{fig:praktikum_pers}
     \end{subfigure}
-    \caption{Divergierende Pflichtfeld- und Label-Konfigurationen persönlicher Stammdaten}
+\caption[Divergierende Pflichtfeld- und Label-Konfigurationen]{Divergierende Pflichtfeld- und Label-Konfigurationen persönlicher Stammdaten}
     \label{fig:vergleich_stammdaten}
 \end{figure}
 

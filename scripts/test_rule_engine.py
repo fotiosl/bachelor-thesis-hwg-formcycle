@@ -1107,6 +1107,7 @@ if __name__ == "__main__":
         "data/test_forms/synthetic_noncompliant_form.json",
         "data/raw_forms/prod/Auslagenerstattung _20260929.xfp",
         "data/raw_forms/test/unfertige und vielleicht fertige formulare/AFörderung Antrag-Sprints für Drittmittelanträge.xfp",
+        "data/raw_forms/standard/AFörderung Antrag-Sprints für Drittmittelanträge (HWG-Standard).xfp",
         "data/raw_forms/test/adminformulare/Master-Formular.xfp",
     ]
 

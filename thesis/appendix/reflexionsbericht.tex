@@ -1,25 +1,36 @@
 \chapter{Reflexionsbericht zur Nutzung von KI-Tools}
 \label{chap:reflexionsbericht}
 
-Gemäß den Betreuungsrichtlinien von Prof.\,Dr.\,Simon Kloker sowie \textcite{westermann2026ki} reflektiert dieser Bericht den Einsatz generativer KI-Werkzeuge im Forschungsprozess. Die wissenschaftliche Gesamtverantwortung, Konzeption, Validierung und finale Textfassung lagen durchgehend beim Autor.
+Gemäß den Betreuungsrichtlinien von Prof.\,Dr.\,Simon Kloker sowie \textcite{westermann2026ki} reflektiert dieser Bericht den kriteriengeleiteten Einsatz generativer KI-Werkzeuge im Forschungsprozess. Die wissenschaftliche Gesamtverantwortung, Konzeption, Validierung und finale Textfassung lagen uneingeschränkt beim Autor.
 
-\subsubsection*{1. Kriteriengeleitete Werkzeugauswahl}
-Für Software-Prototyping, Datenexploration der Formcycle-Exporte und Formulierungshilfen wurde \textit{Google Gemini} in einer agentischen Entwicklungsumgebung genutzt (großes Kontextfenster für \texttt{.fcp}/\texttt{.fcexport}-Modelle, lokaler Skriptaufruf, Schema-Treue). Zur datenschutzkonformen Evaluation der semantischen Prüfstufe (Art.\,44\,ff. DSGVO) wurden fünf Open-Weight-Modelle in der \textit{Academic Cloud} (GWDG) verglichen (\textit{Llama 3.1 8B}, \textit{Qwen 3.8 27B}, \textit{Qwen 3 30B A3B}, \textit{GLM 5.3 Flash}, \textit{DeepSeek V4 Flash}).
+\textbf{1. Kriteriengeleitete Werkzeugauswahl}
 
-\subsubsection*{2. Häufigkeit, Nutzen und Grenzen}
-Hohen Nutzen stiftete die KI beim iterativen Engineering der Python-Prüfpipeline (flache \texttt{.fcp}-Auflösung über \texttt{parentid}, rekursive Workflow-Traversierung, Regex-Katalog) sowie beim UI-Prototyping des Dashboards. Das Pipeline-Diagramm (Abbildung~\ref{fig:pipeline_datenfluss}) wurde vom Autor eigenständig in \textit{draw.io} erstellt; lediglich einzelne Knotenbeschriftungen wurden KI-gestützt präzisiert. Ungeeignet waren Standard-Chat-Prompts auf unkomprimierten Rohdaten, da hierbei Kontextverluste (\textit{Lost in the Middle}) und halluzinierte Attribute auftraten.
+Für Software-Prototyping, Datenexploration der Formcycle-Exporte und Formulierungshilfen wurde \textit{Google Gemini} in einer agentischen Entwicklungsumgebung genutzt (großes Kontextfenster für \texttt{.fcp}/\texttt{.fcexport}-Modelle, Schema-Treue). Zur datenschutzkonformen Evaluation der semantischen Prüfstufe (Art.\,44\,ff. DSGVO) wurden fünf Open-Weight-Modelle in der \textit{Academic Cloud} (GWDG) verglichen (\textit{Llama 3.1 8B}, \textit{Qwen 3.8 27B}, \textit{Qwen 3 30B A3B}, \textit{GLM 5.3 Flash}, \textit{DeepSeek V4 Flash}).
 
-\subsubsection*{3. Technische und wissenschaftliche Herausforderungen}
-Drei Herausforderungen prägten den Einsatz: Erstens fungierte die KI bei der Scoring-Formel (Gl.~\ref{eq:compliance_score}) als Diskussionspartner für Randwertstabilität, während die Schwellenwerte theoriegeleitet nach \textcite{nielsen1994severity} festgelegt wurden. Zweitens offenbarte \textit{Llama 3.1 8B} Zählfehler bei negativen Längenvorgaben (\texttt{HWG-LANG-02}), weshalb quantitative Vor-Metriken deterministisch in Python berechnet werden. Drittens erzeugten Sprachmodelle in frühen Tests fiktive Literaturhinweise; daher wurden alle 18 Quellen eigenständig in Fachdatenbanken (ACM, IEEE, ScienceDirect, SpringerLink) recherchiert und über DOIs verifiziert.
+\textbf{2. Häufigkeit, Nutzen und Grenzen}
 
-\subsubsection*{4. Mehrstufige Validierung (Vier-Augen-Prinzip)}
-Alle KI-gestützten Artefakte wurden nach \textcite{recker2013scientific} mehrstufig geprüft: (1)~Regressionstests der Python-Engine an allen 34 \texttt{.xfp}-Archiven inklusive Fail-Safe-Prüfung bei fehlender API-Verbindung, (2)~manuelles JSON-Audit der synthetischen Testformulare (\texttt{synthetic\_compliant\_form.json} und 19 gezielt injizierte Defekte in \texttt{synthetic\_noncompliant\_form.json}) sowie (3)~Abgleich aller Regeln und Klickpfade gegen BITV 2.0, WCAG 2.1, DIN EN ISO 9241-110 und Formcycle v8.
+Hohen Nutzen bot die KI beim Engineering der Prüf-Engine (flache AST-Auflösung über \texttt{parentid}, rekursive Workflows, Regex-Katalog) sowie beim UI-Prototyping. Das Pipeline-Diagramm (Abbildung~\ref{fig:pipeline_datenfluss}) entstand eigenständig in \textit{draw.io}; lediglich Knotenbeschriftungen wurden KI-gestützt verfeinert. Ungeeignet waren Standard-Prompts auf unkomprimierten Rohdaten wegen Kontextverlusten (\textit{Lost in the Middle}) und Halluzinationen.
 
-\subsubsection*{5. Erforderliche Fach- und Methodenkompetenzen}
-Produktives Context-Engineering setzte fundierte Fachkenntnisse in Barrierefreiheit, Ergonomie und Datenmodellierung voraus, um disjunkte Fehlerklassen zu spezifizieren, Fehlklassifikationen (etwa bei \texttt{HWG-FEEDBACK-01}) zu erkennen und das Scoring deterministisch vom probabilistischen Sprachmodell zu entkoppeln.
+\textbf{3. Technische und wissenschaftliche Herausforderungen}
 
-\subsubsection*{6. Einfluss auf Denk- und Schreibprozess}
-Die Entlastung von Boilerplate-Codierung schuf Freiraum für die konzeptionelle DSR-Arbeit und empirische Korpusanalyse. Dem Risiko eines \textit{Automation Bias} wurde durch kritische Gegenprüfung aller Modellausgaben gegen die realen Rohdaten und eine eigenständige Argumentationsführung begegnet.
+Bei der Scoring-Formel (Gl.~\ref{eq:compliance_score}) fungierte die KI als Diskussionspartner für Randwertstabilität, während die Schwellenwerte theoriegeleitet nach \textcite{nielsen1994severity} festgelegt wurden. Zudem offenbarte \textit{Llama 3.1 8B} Zählfehler bei Längenvorgaben (\texttt{HWG-LANG-02}), weshalb quantitative Vor-Metriken deterministisch in Python berechnet werden. Frühe Modellentwürfe erzeugten fiktive Quellen; daher wurden alle 18 Literaturstellen eigenständig recherchiert und per DOI verifiziert.
 
-\subsubsection*{7. Leitlinien für künftige Arbeiten}
-(1)~\textit{Aufgabentrennung:} Syntax-, Struktur- und Rechenoperationen gehören in deterministischen Code, Sprachmodelle in die semantische Bewertung. (2)~\textit{Context-Engineering vor Modellgröße:} Komprimierte Extrakte mit Negativ-Constraints ermöglichten kompakten Open-Weight-Modellen ($\ge 27$B) am Testformular fehlerfreie Ergebnisse. (3)~\textit{Souveräne Hochschul-KI:} Akademische Cloud-Infrastrukturen ermöglichen leistungsfähige KI-Governance ohne Preisgabe personenbezogener Verwaltungsdaten.
+\textbf{4. Mehrstufige Validierung (Vier-Augen-Prinzip)}
+
+Nach \textcite{recker2013scientific} wurden alle KI-Artefakte methodisch validiert: (1)~Regressionstests der Python-Engine an allen 34 \texttt{.xfp}-Archiven samt Fail-Safe-Prüfung, (2)~manuelles JSON-Audit der synthetischen Testformulare (\texttt{synthetic\_\allowbreak compliant\_\allowbreak form.json} und 19 gezielte Defekte in \texttt{synthetic\_\allowbreak noncompliant\_\allowbreak form.json}) sowie (3)~Regelabgleich gegen BITV 2.0, WCAG 2.1, DIN EN ISO 9241-110 und Formcycle v8.
+
+\textbf{5. Erforderliche Fach- und Methodenkompetenzen}
+
+Zielgerichtetes Context-Engineering erforderte fundierte Domänenkenntnisse in Ergonomie, Barrierefreiheit und Formcycle-Strukturen, um disjunkte Fehlerklassen zu definieren, Fehlalarme zu erkennen und das Scoring deterministisch von probabilistischer LLM-Inferenz zu entkoppeln.
+
+\textbf{6. Einfluss auf Denk- und Schreibprozess}
+
+Die Entlastung von repetitiver Implementierung schuf Fokus für die konzeptionelle DSR-Arbeit und empirische Analyse. Dem Risiko eines \textit{Automation Bias} begegnete der Autor durch kritische Gegenprüfung aller KI-Ausgaben an den realen Rohdaten und eine eigenständige Argumentation.
+
+\textbf{7. Leitlinien für künftige Arbeiten}
+
+\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+    \item \textit{Aufgabentrennung:} Syntax- und Strukturprüfungen gehören in deterministischen Code, LLMs in semantische Bewertungen.
+    \item \textit{Context-Engineering:} Strukturierte JSON-Extrakte mit Negativ-Constraints ermöglichen kompakten Open-Weight-Modellen ($\ge 27$B) fehlerfreie Usability-Audits.
+    \item \textit{Datensouveränität:} Akademische Cloud-Infrastrukturen sichern verlässliche KI-Governance ohne Abfluss schutzwürdiger Daten.
+\end{enumerate}
