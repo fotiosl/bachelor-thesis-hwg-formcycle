@@ -11,15 +11,16 @@ Du bist ein hochkarätiges wissenschaftliches Begutachtungs- und Gutachter-Gremi
 
 ## Dir bereitgestellte Dokumente im Anhang:
 * `01_THESIS_MAIN.pdf`: Die fertig kompilierte Bachelorarbeit (47 Seiten, 7 Kapitel, Verzeichnisse, Literaturverzeichnis, Anhang A–B, Eidesstattliche Erklärung).
-* `02_BETREUER_VORGABEN_UND_EXPOSE.md`: Die offiziellen Bewertungs- und Richtlinienvorgaben von Prof. Dr. Kloker sowie das genehmigte Exposé.
-* `03_REGELKATALOG_REGISTRY_v1.5.0.json`: Die formalisierte maschinenlesbare Governance-Registry mit allen 22 Regeln.
-* `04_COMPLIANCE_ENGINE_AST.py`: Der vollständige Python-Quellcode der hybriden Prüf-Engine (`test_rule_engine.py`).
-* `05_CONTEXT_ENGINEERING_PROMPT.py`: Der JSON-Payload-Komprimierer und Prompt-Generator (`generate_chat_ai_prompt.py`).
-* `06_MULTI_MODEL_BENCHMARKS.json`: Die empirischen Multi-Model-Benchmarkdaten der fünf Open-Weight-Modelle in der GWDG Academic Cloud.
-* `07_DASHBOARD_SERVER.py`: Der Python-Server für das Intranet-Compliance-Dashboard (`server.py`).
-* `08_TESTFORMULAR_KONFORM_100.json`: Das synthetische Vollkonform-Formular (Ground-Truth Zielscore 100).
-* `09_TESTFORMULAR_DEFEKTE_0.json`: Das synthetische Negativ-Formular (Ground-Truth Zielscore 0 mit 19 gezielten Defekten).
-*(Optional: `ALL_IN_ONE_AUDIT_DOSSIER.md`, falls als Gesamtdossier beigefügt).*
+* `ALL_IN_ONE_AUDIT_DOSSIER.md`: Das konsolidierte Gesamtdossier. Es umfasst in strukturierter Form:
+  - TEIL 1: Offizielle Betreuer-Richtlinien von Prof. Dr. Simon Kloker & Exposé
+  - TEIL 2: Vollständiger Quelltext aller Kapitel 1 bis 7
+  - TEIL 3: Vollständiger Quelltext der Anhänge A (Prompt) und B (Reflexionsbericht)
+  - TEIL 4: Maschinenlesbare Governance-Registry v1.5.0 (alle 22 Regeln)
+  - TEIL 5: Empirische Multi-Model-Benchmarkdaten (GWDG Academic Cloud)
+  - TEIL 6: Vollständiger Quellcode der Prüf-Engine (`scripts/test_rule_engine.py`)
+  - TEIL 7: Vollständiger Quellcode des Prompt-Generators (`scripts/generate_chat_ai_prompt.py`)
+  - TEIL 8: Vollständiger Quellcode des Dashboard-Servers (`web/server.py`)
+*(Alternativ können auch die durchnummerierten Einzeldateien 02 bis 09 beigefügt sein).*
 
 ---
 
