@@ -9,7 +9,15 @@
 - [x] **Tabelle 3.2 (`thesis/chapters/03_ist_analyse.tex`):**
   - Spalte 4 wurde von abstrakten Platzhaltern auf die exakten gemessenen Kennzahlen des sanierten Referenzformulars *„Antrag-Sprints (HWG-Standard)“* umgestellt (1 Seite, 32 Elemente, H1 + 60\,px HWG-Logo mit Alt-Text, XIMA deaktiviert, 3 semantische Fieldsets mit Legenden, 12 Pflichtfelder inkl. globaler Legende, lückenlose Feldvalidierung, Art.-13-DSGVO-Integration, Action-Verb-Buttons und 8 E-Mails mit Vorgangs-ID).
 - [x] **Tabelle 6.1 (`thesis/chapters/06_evaluation.tex`):**
-  - Sanierte Zeile *„Antrag-Sprints (saniert)“* (100 Punkte / Grün; 13 Best. / 0 Verst. / 9 N/A) als direkter Vorher-Nachher-Vergleich zur unbereinigten Fassung (6 Punkte / Rot) eingefügt und im Diskussionstext prägnant erläutert.
+  - Vollständige Hybrid-Klassifikation (Stufe 1 AST + Stufe 2 Semantik) für alle Zeilen synchronisiert (jede Zeile summiert konsistent exakt zu 22 Regeln):
+    - *Synthetisch Konform:* 20 Best. / 0 Verst. / 2 N/A (Score 100, Grün)
+    - *Synthetisch Fehlerhaft:* 0 Best. / 19 Verst. / 3 N/A (Score 0, Rot)
+    - *Auslagenerstattung (Prod):* 9 Best. / 12 Verst. / 1 Empf. / 0 N/A (Score 17, Rot)
+    - *Antrag-Sprints (ZFK, alt):* 7 Best. / 11 Verst. / 4 N/A (Score 6, Rot)
+    - *Antrag-Sprints (saniert):* 18 Best. / 0 Verst. / 4 N/A (Score 100, Grün)
+    - *Master-Formular (Admin):* 11 Best. / 6 Verst. / 1 Empf. / 4 N/A (Score 50, Orange)
+  - **Methodische Dokumentation (Ground-Truth-Baseline für Semantik):**
+    Die semantischen Stufe-2-Regeln der Realformulare basieren auf einer fachlichen Ground-Truth-Simulation (echter semantischer Bestand der Labels, Buttons, Jargon und Workflow-E-Mails). Sollte in Zukunft im Dashboard eine Live-LLM-API (z.\,B. GWDG Academic Cloud oder lokales vLLM) angebunden werden, dient diese Tabelle als Referenzmaßstab (Ground Truth), um die reale Erkennungsleistung der Open-Source-Modelle gegen die tatsächlichen Punktabzüge zu verifizieren und etwaige Modell-Unschärfen transparent gegenüberzustellen.
 - [x] **Pipeline, Presets & Dashboard:**
   - Formular `AFörderung Antrag-Sprints für Drittmittelanträge (HWG-Standard).xfp` in `data/raw_forms/standard/` und `data/test_forms/` abgelegt, in `scripts/test_rule_engine.py`, `scripts/generate_web_dashboard.py` und `web/server.py` als Preset integriert und `web/compliance_dashboard.html` neu generiert.
 

@@ -6,7 +6,7 @@ Dieses Kapitel beschreibt die technische Realisierung der hybriden Prüfpipeline
 \section{Architekturentscheidung: Entkoppeltes Intranet-Dashboard}
 \label{sec:architektur_entscheidung}
 
-Für den Einsatz an der HWG Ludwigshafen wurden drei Integrationsmuster abgewogen: (A)~ein Java-basiertes Formcycle-Server-Plugin bietet enge Editor-Integration, erzeugt jedoch Versionsabhängigkeiten bei Systemupgrades (v7 auf v8) und Ausfallrisiken im Produktivsystem; (B)~ein reines Command-Line-Interface (CLI) überfordert nicht-technische Sachbearbeitende; (C)~eine \textbf{entkoppelte Intranet-Web-Applikation} (\texttt{server.py} + \texttt{compliance\_dashboard.html}) wahrt strikte \textit{Separation of Concerns} (SoC), bleibt upgrade-stabil gegenüber Server-Updates und erlaubt die Prüfung von \texttt{.xfp}-Archiven per Drag-and-Drop ohne lokale Installation. Zwar besteht durch das Auslesen der Archivinhalte eine Datenmodell-Kopplung an die JSON-Exportstruktur von Formcycle v8, doch wird diese Abhängigkeit durch die Kapselung im Extraktions-Modul (\texttt{formcycle\_parser.py}) architektonisch isoliert, sodass eventuelle herstellerseitige Formatänderungen künftiger Hauptversionen modular angepasst werden können, ohne die Kernlogik zu berühren. Gewählt wurde daher Szenario~C.
+Für den Einsatz an der HWG Ludwigshafen wurden drei Integrationsmuster abgewogen: (A)~ein Java-basiertes Formcycle-Server-Plugin bietet enge Editor-Integration, erzeugt jedoch Versionsabhängigkeiten bei Systemupgrades (v7 auf v8) und Ausfallrisiken im Produktivsystem; (B)~ein reines Command-Line-Interface (CLI) überfordert nicht-technische Sachbearbeitende; (C)~eine \textbf{entkoppelte Intranet-Web-Applikation} (\texttt{server.py} + \texttt{compliance\_dashboard.html}) wahrt strikte \textit{Separation of Concerns} (SoC), bleibt upgrade-stabil gegenüber Server-Updates und erlaubt die Prüfung von \texttt{.xfp}-Archiven per Drag-and-Drop ohne lokale Installation. Zwar besteht durch das Auslesen der Archivinhalte eine Datenmodell-Kopplung an die JSON-Exportstruktur von Formcycle v8, doch wird diese Abhängigkeit durch die Kapselung im Extraktions-Modul (\texttt{test\_rule\_engine.py}) architektonisch isoliert, sodass eventuelle herstellerseitige Formatänderungen künftiger Hauptversionen modular angepasst werden können, ohne die Kernlogik zu berühren. Gewählt wurde daher Szenario~C.
 
 \section{Vierphasige hybride Verarbeitungs-Pipeline}
 \label{sec:verarbeitungspipeline}
@@ -64,7 +64,7 @@ Phase~3 aggregiert die Befunde aus Stufe~1 und (sofern aktiv) Stufe~2 strikt det
 
 Das Web-Dashboard (Abbildung~\ref{fig:dashboard_ui}) setzt das Corporate Design der HWG (\texttt{\#003366} HWG-Blau, \texttt{\#b41414} HWG-Rot) barrierearm um und umfasst vier Hauptelemente:
 \begin{itemize}
-    \item \textbf{Ingestion, Presets \& KI-Konfiguration:} Fünf Referenz-Presets, Drag-and-Drop-Upload sowie ein aufklappbares Konfigurationsfeld zur direkten Anbindung eines GWDG-/OpenAI-kompatiblen API-Schlüssels bei ausgewiesenen 22 aktiven Governance-Regeln.
+    \item \textbf{Ingestion, Presets \& KI-Konfiguration:} Sechs Referenz-Presets, Drag-and-Drop-Upload sowie ein aufklappbares Konfigurationsfeld zur direkten Anbindung eines GWDG-/OpenAI-kompatiblen API-Schlüssels bei ausgewiesenen 22 aktiven Governance-Regeln.
     \item \textbf{Transparenter KI-Statusbanner:} Ein prominentes Hinweisbanner zeigt jederzeit an, ob Stufe~2 aktiv durch ein Sprachmodell geprüft wurde oder ob die sieben semantischen Regeln mangels API-Verbindung ungeprüft blieben (\enquote{Nicht zutreffend $\cdot$ Keine KI-Prüfung}).
     \item \textbf{Dynamische Score-Tachoanzeige:} Ein SVG-Gauge visualisiert den Score konsistent zu den Freigabeschwellen (\textbf{Grün $\ge 80$} freigabefähig, \textbf{Orange $50\text{--}79$} Überarbeitungsbedarf, \textbf{Rot $< 50$} gesperrt) nebst Aufschlüsselung nach Schweregraden.
     \item \textbf{Filterbare Remediation-Karten \& Export:} Unterhalb des Kopfbereichs (im Screenshot unterhalb der Kennzahlenkarten anschließend) listen filterbare Detailkarten jeden Befund samt Designer-Klickpfad auf; ergänzend stehen Druckansicht und JSON-Export bereit.
@@ -73,6 +73,6 @@ Das Web-Dashboard (Abbildung~\ref{fig:dashboard_ui}) setzt das Corporate Design 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/compliance_dashboard.png}
-    \caption[Kopfbereich des Intranet-Compliance-Dashboards]{Kopfbereich des Intranet-Compliance-Dashboards mit 22 aktiven Governance-Regeln, Preset-Auswahl, transparentem KI-Statusbanner und dynamischer Score-Anzeige am Beispiel der \textit{Auslagenerstattung}}
+    \caption[Kopfbereich des Intranet-Compliance-Dashboards]{Kopfbereich des Intranet-Compliance-Dashboards mit 22 aktiven Governance-Regeln, Preset-Auswahl (abgebildet mit fünf Kern-Presets vor Integration des sechsten sanierten Standards), transparentem KI-Statusbanner und dynamischer Score-Anzeige am Beispiel der \textit{Auslagenerstattung}}
     \label{fig:dashboard_ui}
 \end{figure}

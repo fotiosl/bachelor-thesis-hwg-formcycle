@@ -27,17 +27,17 @@ Tabelle~\ref{tab:eval_results} weist die empirisch gemessenen Ergebnisse der vol
 \begin{table}[htbp]
 \centering
 \scriptsize
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.2cm}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.2cm}c}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.5cm}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.1cm}c}
 \toprule
 \textbf{Formular-Instanz} & \textbf{Stufe 1} & \textbf{Befunde Stufe 2 (LLM / Semantik)} & \textbf{Hybrid-Score $C$} & \textbf{Status} \\
 \midrule
 \textit{Synthetisch Konform} & \textbf{100} & Keine semantischen Verstöße; 5 Regeln bestanden, 2 N/A (\texttt{BTN-02}, \texttt{UX-02}). & \textbf{100} (20 Best. / 0 Verst. / 2 N/A) & Grün \\
 \textit{Synthetisch Fehlerhaft} & \textbf{0} & $-22$\,P.: Alle 4 Injektionen erkannt (\texttt{STAMM-02}, \texttt{BTN-01}, \texttt{LANG-01}, \texttt{FEEDBACK-01}). & \textbf{0} (0 Best. / 19 Verst. / 3 N/A) & Rot \\
 \midrule
-\textit{Auslagenerstattung} (Prod) & \textbf{36} & $-19$\,P.: \texttt{BTN-01} ($-8$, \texttt{senden}), \texttt{BTN-02} ($-3$, Navi klein/uneinheitlich), \texttt{LANG-01} ($-8$, Kostenstelle/KAP); Empf. \texttt{UX-02} ($0$\,P., 49 F.). & \textbf{17} (6 Best. / 12 Verst. / 1 Empf. / 3 N/A) & Rot \\
-\textit{Antrag-Sprints} (ZFK, alt) & \textbf{25} & $-19$\,P.: \texttt{STAMM-02} ($-3$, Sammelfeld Name/Vorname), \texttt{BTN-01} ($-8$, \texttt{senden} \& \enquote{Kritischer Fall}), \texttt{LANG-01} ($-8$, Drittmittel/Mittelgeber). & \textbf{6} (5 Best. / 11 Verst. / 6 N/A) & Rot \\
-\textit{Antrag-Sprints} (saniert) & \textbf{100} & Keine Verstöße; Action-Verbs eingehalten (\enquote{Antrag Einreichen}, \enquote{Kritischen Fall einreichen}), kanonische Stammdaten, Status \& E-Mails normiert. & \textbf{100} (13 Best. / 0 Verst. / 9 N/A) & Grün \\
-\textit{Master-Formular} (Admin) & \textbf{58} & $-8$\,P.: \texttt{LANG-01} ($-8$, Shibboleth/LDAP-Jargon); Empf. \texttt{UX-02} ($0$\,P., 29 Felder). & \textbf{50} (8 Best. / 6 Verst. / 1 Empf. / 7 N/A) & Orange \\
+\textit{Auslagen\-erstattung} (Prod) & \textbf{36} & $-19$\,P.: \texttt{BTN-01} ($-8$, \texttt{senden}), \texttt{BTN-02} ($-3$, Navi klein/uneinheitlich), \texttt{LANG-01} ($-8$, Kostenstelle/KAP); Empf. \texttt{UX-02} ($0$\,P., 49 F.). & \textbf{17} (9 Best. / 12 Verst. / 1 Empf. / 0 N/A) & Rot \\
+\textit{Antrag-Sprints} (ZFK, alt) & \textbf{25} & $-19$\,P.: \texttt{STAMM-02} ($-3$, Sammelfeld Name/Vorname), \texttt{BTN-01} ($-8$, \texttt{senden} \& \enquote{Kritischer Fall}), \texttt{LANG-01} ($-8$, Drittmittel/Mittelgeber). & \textbf{6} (7 Best. / 11 Verst. / 4 N/A) & Rot \\
+\textit{Antrag-Sprints} (saniert) & \textbf{100} & Keine Verstöße; Action-Verbs eingehalten (\enquote{Antrag Einreichen}, \enquote{Kritischen Fall einreichen}), kanonische Stammdaten, Status \& E-Mails normiert. & \textbf{100} (18 Best. / 0 Verst. / 4 N/A) & Grün \\
+\textit{Master-Formular} (Admin) & \textbf{58} & $-8$\,P.: \texttt{LANG-01} ($-8$, Shibboleth/LDAP-Jargon); Empf. \texttt{UX-02} ($0$\,P., 29 Felder). & \textbf{50} (11 Best. / 6 Verst. / 1 Empf. / 4 N/A) & Orange \\
 \bottomrule
 \end{tabularx}
 \caption{Empirische Evaluationsergebnisse der zweistufigen hybriden Prüfpipeline (Stufe 1 AST + Stufe 2 LLM via \textit{DeepSeek V4 Flash} / GWDG; Ampelstatus: Grün $\ge 80$, Orange $50\text{--}79$, Rot $< 50$)}
