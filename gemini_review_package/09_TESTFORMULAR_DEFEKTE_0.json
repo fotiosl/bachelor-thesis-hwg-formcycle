@@ -1,0 +1,148 @@
+{
+  "name": "Synthetic Non-Compliant Form (Ground Truth with Injected Violations)",
+  "description": "Synthetisches Formular mit 19 gezielt injizierten Verstößen (15 deterministische AST-Verstöße und 4 semantische Verstöße) zur quantitativen Validierung der Compliance-Pipeline.",
+  "properties": {
+    "maxwidth": "700px",
+    "minwidth": "300px"
+  },
+  "items": [
+    {
+      "className": "XContainer",
+      "properties": {
+        "name": "contHeaderTitle",
+        "id": "xi-cont-header",
+        "maxwidth": "700px",
+        "heading": "Antrag auf Sondergenehmigung"
+      }
+    },
+    {
+      "className": "XContainer",
+      "properties": {
+        "name": "contPersonalData",
+        "id": "xi-cont-pers",
+        "maxwidth": "700px"
+      }
+    },
+    {
+      "className": "XSelect",
+      "properties": {
+        "name": "selAnrede",
+        "parentid": "xi-cont-pers",
+        "label": "<p>Anrede</p>",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfNachname",
+        "parentid": "xi-cont-pers",
+        "label": "<p>Nachname</p>",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfVorname",
+        "parentid": "xi-cont-pers",
+        "label": "<p>Vorname*</p>",
+        "required": "0"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfEmail",
+        "parentid": "xi-cont-pers",
+        "label": "<p>HWGLU-Email</p>",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XText",
+      "properties": {
+        "name": "txtDevNote",
+        "parentid": "xi-cont-pers",
+        "text": "Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert.",
+        "rtevalue": "<p>Fieldset wird per JavaScript eingeblendet, wenn Shibboleth/LDAP-Member authentifiziert.</p>"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfPLZ",
+        "parentid": "xi-cont-pers",
+        "label": "<p>PLZ | Wohnort<br><span>&amp;szlig;</span></p>",
+        "computedwidth": "100%",
+        "colwidth": "100%",
+        "datatype": "text",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfIBAN",
+        "parentid": "xi-cont-pers",
+        "label": "<p>IBAN</p>",
+        "datatype": "regexp",
+        "vrule": "",
+        "required": "1"
+      }
+    },
+    {
+      "className": "XTextField",
+      "properties": {
+        "name": "tfKostenstelle",
+        "parentid": "xi-cont-pers",
+        "label": "<p>Kostenstelle</p>"
+      }
+    },
+    {
+      "className": "XUpload",
+      "properties": {
+        "name": "uplDateien",
+        "parentid": "xi-cont-pers",
+        "label": "<p>Belege hochladen</p>",
+        "fileextension": "",
+        "maxfilesize": "0"
+      }
+    },
+    {
+      "className": "XButton",
+      "properties": {
+        "name": "btnSubmit",
+        "text": "senden",
+        "type": "submit"
+      }
+    },
+    {
+      "className": "XButton",
+      "properties": {
+        "name": "btnKritisch",
+        "text": "Kritischer Fall",
+        "type": "button"
+      }
+    },
+    {
+      "className": "XFooter",
+      "properties": {
+        "name": "footer1",
+        "maxwidth": "700px",
+        "showlogo": "1",
+        "showrequiredhint": "0",
+        "privacyPolicyShow": "0"
+      }
+    }
+  ],
+  "workflow_emails": [
+    {
+      "node_name": "E-Mail an Antragstellende",
+      "recipient": "[%$tfEmail%]",
+      "subject": "Ihr Antrag ist eingegangen",
+      "body": "Ihr Antrag wurde erfolgreich übermittelt. Bitte haben Sie etwas Geduld."
+    }
+  ],
+  "workflow_states": []
+}
