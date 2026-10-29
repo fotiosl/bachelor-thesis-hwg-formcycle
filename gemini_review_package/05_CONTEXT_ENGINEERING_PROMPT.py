@@ -111,7 +111,11 @@ def extract_workflow_emails_from_fcexport_obj(proj_data):
 
 
 def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, form_name: str) -> dict:
-    items = form_data.get("items", []) or []
+    items = (
+        form_data.get("items")
+        or (form_data.get("elements") or {}).get("items")
+        or []
+    )
 
     # Sichtbarkeitskarte (Elemente mit rein internem viewstatus ohne '-1' markieren)
     id_to_item = {}

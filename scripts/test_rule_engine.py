@@ -212,7 +212,11 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         "score": 100,
     }
 
-    items = form_data.get("items", []) or []
+    items = (
+        form_data.get("items")
+        or (form_data.get("elements") or {}).get("items")
+        or []
+    )
     form_props = form_data.get("properties") or {}
     penalties = registry["scoring"]["severity_penalties"]
 
@@ -981,6 +985,7 @@ def evaluate_stage2_llm(results: dict, form_data: dict, workflow_emails: list, f
     api_base = (
         cfg.get("api_base")
         or os.environ.get("LLM_API_BASE")
+        or os.environ.get("LLM_BASE_URL")
         or os.environ.get("GWDG_API_BASE")
         or DEFAULT_API_BASE
     ).strip().rstrip("/")
@@ -1071,15 +1076,20 @@ def evaluate_stage2_llm(results: dict, form_data: dict, workflow_emails: list, f
         return results
 
 
-def _finalize_rule_ids(results: dict) -> dict:
+def _finalize_rule_ids(results: dict, registry: dict = None) -> dict:
+    rule_lookup = {r["id"]: r for r in (registry or {}).get("rules", [])}
     for v in results["violations"]:
         r_id = v.get("rule") or v.get("rule_id")
         v["rule"] = r_id
         v["rule_id"] = r_id
+        if r_id in rule_lookup and "remediation" not in v:
+            v["remediation"] = rule_lookup[r_id].get("remediation", "")
     for r in results["recommendations"]:
         r_id = r.get("rule") or r.get("rule_id")
         r["rule"] = r_id
         r["rule_id"] = r_id
+        if r_id in rule_lookup and "remediation" not in r:
+            r["remediation"] = rule_lookup[r_id].get("remediation", "")
     results["score"] = max(0, results["score"])
     return results
 
@@ -1091,7 +1101,7 @@ def evaluate_form_bytes(file_bytes: bytes, filename: str, registry: dict, llm_co
     form_data, workflow_emails, workflow_states = _parse_archive_bytes(file_bytes, filename)
     results = evaluate_stage1_ast(form_data, workflow_emails, workflow_states, filename, registry)
     results = evaluate_stage2_llm(results, form_data, workflow_emails, filename, registry, llm_config=llm_config)
-    return _finalize_rule_ids(results)
+    return _finalize_rule_ids(results, registry)
 
 
 def evaluate_form(xfp_path: str, registry: dict, llm_config: dict = None) -> dict:

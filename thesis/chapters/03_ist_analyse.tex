@@ -50,7 +50,7 @@ Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & 
 Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & Lückenlos validiert (E-Mail, Regex-Tel., Datum, Währung) \\
 Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads (Regel N/A) \\
 Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Art.\,13 integriert (\texttt{privacy\allowbreak Policy\allowbreak Show="1"}) \\
-Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag Einreichen} / \enquote{Kritischen Fall einreichen} \\
+Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag einreichen} / \enquote{Kritischen Fall einreichen} \\
 Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8 E-Mails inkl. \texttt{[\%\$PROJECT\_\allowbreak ALIAS\%]} (5 kanonische Status) \\
 \bottomrule
 \end{tabularx}
@@ -63,7 +63,7 @@ Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 
 
 \subsection{Problemfeld 1: Layout-Spaltung zwischen \texorpdfstring{700\,px}{700 px} und \texorpdfstring{850\,px}{850 px}}
 \label{subsec:problem_breiten}
-Der Bestand teilt sich nahezu hälftig in zwei inkompatible Layout-Generationen: \textbf{53\,\% (18/34)} – darunter Personal- und Studierendenformulare sowie das \textit{Master-Formular} – sind starr auf \texttt{max-width: 700px} begrenzt, was bei mehrspaltigen Zeilen zu Umbrüchen führt. Demgegenüber nutzen \textbf{47\,\% (16/34)} neuere \texttt{850px}-Container. Dieser unkoordinierte Wechsel verletzt die Erwartungskonformität nach \textcite{iso9241110}.
+Der Bestand teilt sich nahezu hälftig in zwei inkompatible Layout-Generationen: \textbf{53\,\% (18/34)} – darunter Personal- und Studierendenformulare sowie das \textit{Master-Formular} – sind starr auf \texttt{max-width: 700px} begrenzt, was bei mehrspaltigen Zeilen zu Umbrüchen führt. Demgegenüber nutzen \textbf{47\,\% (16/34)} neuere \texttt{850px}-Container. Dieser unkoordinierte Wechsel verletzt die Erwartungskonformität nach DIN EN ISO 9241-110 \parencite{iso9241110}.
 
 \subsection{Problemfeld 2: Brüche in Corporate Identity, Header und Stammdatensequenz}
 \label{subsec:problem_ci}
@@ -111,7 +111,7 @@ Das interne \textit{Master-Formular} dient als Kopiervorlage für persönliche A
 
 \subsection{Problemfeld 4: Schaltflächen-Microcopy und der Button \enquote{Kritischer Fall}}
 \label{subsec:problem_buttons}
-Aktions- und Navigationsbuttons variieren zwischen kleingeschriebenem \texttt{senden}, unpräzisem \enquote{weiter zu Seite 2} und normgerechtem \enquote{Antrag einreichen} (Abbildung~\ref{fig:buttons_beispiele}). Instruktiv ist insbesondere der im ZFK-Formular \textit{Antrag-Sprints} eingesetzte Button \enquote{Kritischer Fall}: Fachlich war eine dedizierte Einreichungsaktion für Anträge mit besonderer Tragweite (Einbindung des Hochschulpräsidiums) ausdrücklich gewünscht. Das ergonomische Defizit liegt daher nicht in der Existenz der Schaltfläche, sondern im Verstoß gegen das \textbf{Action-Verb-Pattern} \parencite{wroblewski2008web}: Die reine Nominalphrase \enquote{Kritischer Fall} benennt lediglich einen Zustand und lässt offen, welche Systemaktion ausgelöst wird. Erst die Ergänzung eines infinitiven Handlungsverbs – etwa \textbf{\enquote{Kritischen Fall einreichen}} – stellt Selbstbeschreibungsfähigkeit und Erwartungskonformität nach \textcite{iso9241110} her.
+Aktions- und Navigationsbuttons variieren zwischen kleingeschriebenem \texttt{senden}, unpräzisem \enquote{weiter zu Seite 2} und normgerechtem \enquote{Antrag einreichen} (Abbildung~\ref{fig:buttons_beispiele}). Instruktiv ist insbesondere der im ZFK-Formular \textit{Antrag-Sprints} eingesetzte Button \enquote{Kritischer Fall}: Fachlich war eine dedizierte Einreichungsaktion für Anträge mit besonderer Tragweite (Einbindung des Hochschulpräsidiums) ausdrücklich gewünscht. Das ergonomische Defizit liegt daher nicht in der Existenz der Schaltfläche, sondern im Verstoß gegen das \textbf{Action-Verb-Pattern} \parencite{wroblewski2008web}: Die reine Nominalphrase \enquote{Kritischer Fall} benennt lediglich einen Zustand und lässt offen, welche Systemaktion ausgelöst wird. Erst die Ergänzung eines infinitiven Handlungsverbs – etwa \textbf{\enquote{Kritischen Fall einreichen}} – stellt Selbstbeschreibungsfähigkeit und Erwartungskonformität nach DIN EN ISO 9241-110 \parencite{iso9241110} her.
 
 \begin{figure}[htbp]
     \centering

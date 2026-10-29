@@ -253,7 +253,7 @@ In der Praxis der HWG Ludwigshafen erfolgt die technische Umsetzung jedoch weite
 \begin{itemize}
     \item \textbf{Inkonsistentes Corporate Design:} Starre Alt-Layouts (700\,px in 53\,\% des Bestands) wechseln mit 850\,px-Rastern (47\,\%); sämtliche Vorlagen weichen bei Header-Logo oder Alternativtext ab, 97\,\% entbehren einer \texttt{<h1>}-Überschrift im Kopfbereich und 47\,\% zeigen das Herstellerlogo \enquote{Powered by XIMA Formcycle}.
     \item \textbf{Barrierefreiheitsdefizite (WCAG 2.1 / BITV 2.0):} In 47\,\% der Formulare fehlen semantische \texttt{<fieldset>}-Gruppen vollständig (56\,\% weisen insgesamt ungruppierte Abschnitte oder fehlende Legenden auf), und 76\,\% enthalten störende HTML- oder Formatierungsfragmente in Feldlabels.
-    \item \textbf{Ergonomische Brüche der Microcopy:} Schaltflächen verletzen das \textit{Action-Verb-Pattern} durch generische Kleinschreibung (\texttt{senden}) oder verblose Substantive (\enquote{Kritischer Fall} statt einer handlungsleitenden Formulierung wie \enquote{Kritischen Fall einreichen}), was gegen die Dialoggrundsätze der \textcite{iso9241110} verstößt.
+    \item \textbf{Ergonomische Brüche der Microcopy:} Schaltflächen verletzen das \textit{Action-Verb-Pattern} durch generische Kleinschreibung (\texttt{senden}) oder verblose Substantive (\enquote{Kritischer Fall} statt einer handlungsleitenden Formulierung wie \enquote{Kritischen Fall einreichen}), was gegen die Dialoggrundsätze der DIN EN ISO 9241-110 \parencite{iso9241110} verstößt.
     \item \textbf{Datenschutzrisiken (Art.\,13 DSGVO):} 82\,\% der personenbezogenen Formulare entbehren eines ausgewiesenen Datenschutzhinweises samt Verlinkung der Hochschul-Datenschutzerklärung.
     \item \textbf{Workflow-Intransparenz:} In 91\,\% der Prozessmodelle dominieren uneinheitliche Ad-hoc-Statusbezeichnungen, und 79\,\% versenden Prozess-E-Mails ohne dynamische Vorgangsnummer (\texttt{[\%\$PROJECT\_ALIAS\%]}).
 \end{itemize}
@@ -441,7 +441,7 @@ Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & 
 Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & Lückenlos validiert (E-Mail, Regex-Tel., Datum, Währung) \\
 Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads (Regel N/A) \\
 Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Art.\,13 integriert (\texttt{privacy\allowbreak Policy\allowbreak Show="1"}) \\
-Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag Einreichen} / \enquote{Kritischen Fall einreichen} \\
+Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag einreichen} / \enquote{Kritischen Fall einreichen} \\
 Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8 E-Mails inkl. \texttt{[\%\$PROJECT\_\allowbreak ALIAS\%]} (5 kanonische Status) \\
 \bottomrule
 \end{tabularx}
@@ -454,7 +454,7 @@ Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 
 
 \subsection{Problemfeld 1: Layout-Spaltung zwischen \texorpdfstring{700\,px}{700 px} und \texorpdfstring{850\,px}{850 px}}
 \label{subsec:problem_breiten}
-Der Bestand teilt sich nahezu hälftig in zwei inkompatible Layout-Generationen: \textbf{53\,\% (18/34)} – darunter Personal- und Studierendenformulare sowie das \textit{Master-Formular} – sind starr auf \texttt{max-width: 700px} begrenzt, was bei mehrspaltigen Zeilen zu Umbrüchen führt. Demgegenüber nutzen \textbf{47\,\% (16/34)} neuere \texttt{850px}-Container. Dieser unkoordinierte Wechsel verletzt die Erwartungskonformität nach \textcite{iso9241110}.
+Der Bestand teilt sich nahezu hälftig in zwei inkompatible Layout-Generationen: \textbf{53\,\% (18/34)} – darunter Personal- und Studierendenformulare sowie das \textit{Master-Formular} – sind starr auf \texttt{max-width: 700px} begrenzt, was bei mehrspaltigen Zeilen zu Umbrüchen führt. Demgegenüber nutzen \textbf{47\,\% (16/34)} neuere \texttt{850px}-Container. Dieser unkoordinierte Wechsel verletzt die Erwartungskonformität nach DIN EN ISO 9241-110 \parencite{iso9241110}.
 
 \subsection{Problemfeld 2: Brüche in Corporate Identity, Header und Stammdatensequenz}
 \label{subsec:problem_ci}
@@ -502,7 +502,7 @@ Das interne \textit{Master-Formular} dient als Kopiervorlage für persönliche A
 
 \subsection{Problemfeld 4: Schaltflächen-Microcopy und der Button \enquote{Kritischer Fall}}
 \label{subsec:problem_buttons}
-Aktions- und Navigationsbuttons variieren zwischen kleingeschriebenem \texttt{senden}, unpräzisem \enquote{weiter zu Seite 2} und normgerechtem \enquote{Antrag einreichen} (Abbildung~\ref{fig:buttons_beispiele}). Instruktiv ist insbesondere der im ZFK-Formular \textit{Antrag-Sprints} eingesetzte Button \enquote{Kritischer Fall}: Fachlich war eine dedizierte Einreichungsaktion für Anträge mit besonderer Tragweite (Einbindung des Hochschulpräsidiums) ausdrücklich gewünscht. Das ergonomische Defizit liegt daher nicht in der Existenz der Schaltfläche, sondern im Verstoß gegen das \textbf{Action-Verb-Pattern} \parencite{wroblewski2008web}: Die reine Nominalphrase \enquote{Kritischer Fall} benennt lediglich einen Zustand und lässt offen, welche Systemaktion ausgelöst wird. Erst die Ergänzung eines infinitiven Handlungsverbs – etwa \textbf{\enquote{Kritischen Fall einreichen}} – stellt Selbstbeschreibungsfähigkeit und Erwartungskonformität nach \textcite{iso9241110} her.
+Aktions- und Navigationsbuttons variieren zwischen kleingeschriebenem \texttt{senden}, unpräzisem \enquote{weiter zu Seite 2} und normgerechtem \enquote{Antrag einreichen} (Abbildung~\ref{fig:buttons_beispiele}). Instruktiv ist insbesondere der im ZFK-Formular \textit{Antrag-Sprints} eingesetzte Button \enquote{Kritischer Fall}: Fachlich war eine dedizierte Einreichungsaktion für Anträge mit besonderer Tragweite (Einbindung des Hochschulpräsidiums) ausdrücklich gewünscht. Das ergonomische Defizit liegt daher nicht in der Existenz der Schaltfläche, sondern im Verstoß gegen das \textbf{Action-Verb-Pattern} \parencite{wroblewski2008web}: Die reine Nominalphrase \enquote{Kritischer Fall} benennt lediglich einen Zustand und lässt offen, welche Systemaktion ausgelöst wird. Erst die Ergänzung eines infinitiven Handlungsverbs – etwa \textbf{\enquote{Kritischen Fall einreichen}} – stellt Selbstbeschreibungsfähigkeit und Erwartungskonformität nach DIN EN ISO 9241-110 \parencite{iso9241110} her.
 
 \begin{figure}[htbp]
     \centering
@@ -552,7 +552,7 @@ Aufbauend auf den normativen Grundlagen (Kapitel~\ref{chap:theorie}) und den emp
 \subsection{Responsives \texorpdfstring{850\,px}{850 px}-Raster und Pagination}
 \label{subsec:breiten_norm}
 
-Alle Formularcontainer werden auf \texttt{max-width: 850px} bei \texttt{min-width: 300px} normiert (\texttt{HWG-CD-01}). Dies gewährleistet auf Desktop-Monitoren eine lesefreundliche Zeilenlänge von 65--75 Zeichen \parencite{wroblewski2008web}, fügt sich konsistent in das Hochschulportal ein und bricht auf Mobilgeräten responsiv um. Zur Reduktion der kognitiven Belastung empfiehlt die Usability-Forschung, umfangreiche Anträge thematisch in logische Einzelseiten (\texttt{XPage}) zu gliedern \parencite{bargas2010usable, seckler2014validation}. In der automatisierten Governance-Pipeline wird diese Struktur zweifach aufgegriffen: Kommen mehrere Seiten zum Einsatz, erzwingt \texttt{HWG-BTN-02} verbindlich die Benennung der Vor-/Zurück-Aktionen (\texttt{goto\_next}, \texttt{goto\_prev}) mit \enquote{Weiter} und \enquote{Zurück}; ab einem Umfang von drei Seiten empfiehlt \texttt{HWG-UX-02} zudem eine Zwischenspeicher-Funktion.
+Alle Formularcontainer werden auf \texttt{max-width: 850px} bei \texttt{min-width: 300px} normiert (\texttt{HWG-CD-01}). Dies gewährleistet auf Desktop-Monitoren eine lesefreundliche Zeilenlänge von 65--75 Zeichen \parencite{wroblewski2008web}, fügt sich konsistent in das Hochschulportal ein und bricht auf Mobilgeräten responsiv um. Zur Reduktion der kognitiven Belastung empfiehlt die Usability-Forschung, umfangreiche Anträge thematisch in logische Einzelseiten (\texttt{XPage}) zu gliedern \parencite{bargas2010usable, seckler2014validation}. In der automatisierten Governance-Pipeline wird diese Struktur zweifach aufgegriffen: Kommen mehrere Seiten zum Einsatz, erzwingt \texttt{HWG-BTN-02} verbindlich die Benennung der Vor-/Zurück-Aktionen (\texttt{next}, \texttt{prev} bzw.\ \texttt{xnavbar\_next}, \texttt{xnavbar\_prev}) mit \enquote{Weiter} und \enquote{Zurück}; ab einem Umfang von drei Seiten empfiehlt \texttt{HWG-UX-02} zudem eine Zwischenspeicher-Funktion.
 
 \subsection{Corporate Identity und technische Barrierefreiheit}
 \label{subsec:ci_header_footer}
@@ -589,7 +589,7 @@ Zulässig sind ausschließlich klare Einzelbezeichnungen wie \enquote{Anrede}, \
         \item SEPA-IBAN: \texttt{\^{}[A-Z]\{2\}[0-9]\{2\}[A-Z0-9\textbackslash s]\{11,34\}\$}
         \item Telefonnummer: \texttt{\string^(\string\+[0-9]\{1,3\}|0)[0-9\string\s\string\-/]\{6,20\}\$} (zulässig, da der native Typ \texttt{phone} internationale Vorwahlen mit \texttt{+} abweist).
     \end{itemize}
-    Kompakte Felder (PLZ, Hausnummer) sind auf \texttt{computedwidth} $\le 50\,\%$ oder \texttt{max-width} $\le 220\,\text{px}$ zu begrenzen (\texttt{HWG-UX-01}).
+    Kompakte Felder (PLZ, Hausnummer) dürfen nicht über die volle Zeilenbreite gestreckt werden (\texttt{computedwidth} $< 100\,\%$, Richtwert $25\text{--}40\,\%$ in mehrspaltiger Zeilenanordnung; \texttt{HWG-UX-01}).
     \item \textbf{Action-Verb-Microcopy (\texttt{HWG-BTN-01}) \& Verständlichkeit (\texttt{HWG-LANG-01}, \texttt{HWG-LANG-02}):} Primäre Absende-Buttons müssen Zielobjekt und Infinitivverb kombinieren – zulässig sind daher sowohl \enquote{Antrag einreichen} als auch kontextspezifische Auslöser wie \enquote{Kritischen Fall einreichen}, nicht jedoch \texttt{senden} oder verbloses \enquote{Kritischer Fall}. Verwaltungsjargon (z.\,B. Kostenstelle, GStB, KAP, Shibboleth) erfordert einen Hilfetext (\texttt{HWG-LANG-01}); Hinweissätze sollen 25 Wörter nicht überschreiten (\texttt{HWG-LANG-02}).
 \end{itemize}
 
@@ -771,11 +771,11 @@ Tabelle~\ref{tab:eval_results} weist die empirisch gemessenen Ergebnisse der vol
 \textbf{Formular-Instanz} & \textbf{Stufe 1} & \textbf{Befunde Stufe 2 (LLM / Semantik)} & \textbf{Hybrid-Score $C$} & \textbf{Status} \\
 \midrule
 \textit{Synthetisch Konform} & \textbf{100} & Keine semantischen Verstöße; 5 Regeln bestanden, 2 N/A (\texttt{BTN-02}, \texttt{UX-02}). & \textbf{100} (20 Best. / 0 Verst. / 2 N/A) & Grün \\
-\textit{Synthetisch Fehlerhaft} & \textbf{0} & $-22$\,P.: Alle 4 Injektionen erkannt (\texttt{STAMM-02}, \texttt{BTN-01}, \texttt{LANG-01}, \texttt{FEEDBACK-01}). & \textbf{0} (0 Best. / 19 Verst. / 3 N/A) & Rot \\
+\textit{Synthetisch Fehlerhaft} & \textbf{0} & $-22$\,P.: Alle 4 Injektionen erkannt (\texttt{STAMM-02}, \texttt{BTN-01}, \texttt{LANG-01}, \texttt{FEEDBACK-01}); \texttt{LANG-02} bestanden, 2 N/A (\texttt{BTN-02}, \texttt{UX-02}). & \textbf{0} (1 Best. / 19 Verst. / 2 N/A) & Rot \\
 \midrule
 \textit{Auslagen\-erstattung} (Prod) & \textbf{36} & $-19$\,P.: \texttt{BTN-01} ($-8$, \texttt{senden}), \texttt{BTN-02} ($-3$, Navi klein/uneinheitlich), \texttt{LANG-01} ($-8$, Kostenstelle/KAP); Empf. \texttt{UX-02} ($0$\,P., 49 F.). & \textbf{17} (9 Best. / 12 Verst. / 1 Empf. / 0 N/A) & Rot \\
 \textit{Antrag-Sprints} (ZFK, alt) & \textbf{25} & $-19$\,P.: \texttt{STAMM-02} ($-3$, Sammelfeld Name/Vorname), \texttt{BTN-01} ($-8$, \texttt{senden} \& \enquote{Kritischer Fall}), \texttt{LANG-01} ($-8$, Drittmittel/Mittelgeber). & \textbf{6} (7 Best. / 11 Verst. / 4 N/A) & Rot \\
-\textit{Antrag-Sprints} (saniert) & \textbf{100} & Keine Verstöße; Action-Verbs eingehalten (\enquote{Antrag Einreichen}, \enquote{Kritischen Fall einreichen}), kanonische Stammdaten, Status \& E-Mails normiert. & \textbf{100} (18 Best. / 0 Verst. / 4 N/A) & Grün \\
+\textit{Antrag-Sprints} (saniert) & \textbf{100} & Keine Verstöße; Action-Verbs eingehalten (\enquote{Antrag einreichen}, \enquote{Kritischen Fall einreichen}), kanonische Stammdaten, Status \& E-Mails normiert. & \textbf{100} (18 Best. / 0 Verst. / 4 N/A) & Grün \\
 \textit{Master-Formular} (Admin) & \textbf{58} & $-8$\,P.: \texttt{LANG-01} ($-8$, Shibboleth/LDAP-Jargon); Empf. \texttt{UX-02} ($0$\,P., 29 Felder). & \textbf{50} (11 Best. / 6 Verst. / 1 Empf. / 4 N/A) & Orange \\
 \bottomrule
 \end{tabularx}
@@ -811,7 +811,7 @@ Zur Überprüfung der Modell-Agnostik und Datensouveränität wurde der standard
 \label{tab:model_comparison}
 \end{table}
 
-Das kompakte 8B-Modell scheitert an negativen Zählbedingungen (\texttt{HWG-LANG-02}) und übersieht einen Verstoß. Alle vier größeren Modelle erkennen dagegen $4/4$ Verstöße ohne Fehlalarm ($F_1 = 1{,}00$); in Kombination mit Stufe~1 werden damit alle 19 Injektionen erkannt. Drei Modelle gaben zusätzlich die abzugsfreie Empfehlung \texttt{HWG-UX-02} aus, obwohl das einseitige Formular die Schwelle ($\ge 3$ Seiten oder $\ge 25$ Felder) nicht erreicht. Diese Grenzfall-Unschärfe ohne Score-Auswirkung adressiert die deterministische Vorberechnung \texttt{metrics.ux02\_complexity\_threshold\_reached}. In Kombination mit den realen HWG-Anträgen (Tabelle~\ref{tab:eval_results}) bestätigt der Benchmark, dass eine kompakte Open-Weight-Inferenz ab der 27B-Klasse semantische Usability-Kriterien treffsicher auditiert, ohne dass schutzbedürftige Antragsstrukturen an externe kommerzielle Cloud-Dienste übermittelt werden müssen.
+Das kompakte 8B-Modell scheitert an negativen Zählbedingungen (\texttt{HWG-LANG-02}) und übersieht einen Verstoß. Alle vier größeren Modelle erkennen dagegen $4/4$ Verstöße ohne Fehlalarm ($F_1 = 1{,}00$); in Kombination mit Stufe~1 werden damit alle 19 Injektionen erkannt. Im reinen Modell-Benchmark (ohne nachgeschalteten Schwellenwert-Filter) gaben drei Modelle aufgrund des Beleg-Uploads vorsorglich die abzugsfreie Empfehlung \texttt{HWG-UX-02} aus, weshalb in der Pipeline die deterministische Vorabmetrik \texttt{metrics.ux02\_complexity\_threshold\_reached} ergänzt wurde, die \texttt{HWG-UX-02} unterhalb von 3 Seiten bzw.\ 25 Feldern eindeutig als \texttt{N/A} klassifiziert. In Kombination mit den realen HWG-Anträgen (Tabelle~\ref{tab:eval_results}) bestätigt der Benchmark, dass eine kompakte Open-Weight-Inferenz ab der 27B-Klasse semantische Usability-Kriterien treffsicher auditiert, ohne dass schutzbedürftige Antragsstrukturen an externe kommerzielle Cloud-Dienste übermittelt werden müssen.
 
 \section{Formatives Experten-Review und Validitätsgrenzen}
 \label{sec:praxistauglichkeit_validitaet}
@@ -852,7 +852,7 @@ Ausgangspunkt der Arbeit war das Spannungsfeld zwischen den heterogenen Anforder
     \item \textbf{Verbindliches Qualitäts-Gate vor Produktivsetzung:} Etablierung des Intranet-Dashboards als Pflichtprüfung vor jeder Veröffentlichung mit verbindlichem Freigabeschwellenwert $C \ge 80$ (Grün; $50\text{--}79$ Überarbeitungsauflage; $<50$ Sperrung).
     \item \textbf{Echtes Master-Template \& Bereinigung der Kopiervorlage:} Umbenennung des bisherigen Snippets in \enquote{Kopiervorlage Persönliche Stammdaten (Shibboleth/LDAP)} und Beseitigung der Altlasten (sichtbare Entwicklernotiz, unvalidierte Matrikelnummer) sowie parallele Bereitstellung eines vollständigen, sanierten \enquote{HWG-Master-Standardprojekts} (850\,px, normierter Header mit H1 und 60\,px-Logo samt Alt-Text, deaktiviertes XIMA-Logo, Art.-13-DSGVO-Verankerung, kanonische Workflow-Knoten und Action-Verb-Buttons) als schlüsselfertige Basis für künftige Formulare.
     \item \textbf{Durchsetzung von Action-Verb-Microcopy und Workflow-Kanonik:} Verbindliche Benennung aller Abschluss-Buttons mit Zielobjekt und Infinitivverb (einschließlich fachlich gewollter Sonderpfade wie \enquote{Kritischen Fall einreichen}), Einführung der kanonischen Workflow-Status (\texttt{HWG-WF-01}) sowie Pflichtführung von \texttt{[\%\$PROJECT\_ALIAS\%]} (\texttt{HWG-WF-02}).
-    \item \textbf{Datensouveräner Produktivbetrieb der semantischen Prüfstufe:} Anbindung eines OpenAI-kompatiblen Inferenz-Endpunkts im Intranet-Server (\texttt{LLM\_\allowbreak API\_\allowbreak KEY}, \allowbreak\texttt{LLM\_\allowbreak BASE\_\allowbreak URL}) wahlweise über die Academic Cloud der GWDG (\textit{DeepSeek V4 Flash} oder \textit{Qwen 3 30B}) oder über einen hochschuleigenen lokalen Inferenzdienst (z.\,B. \textit{vLLM} oder \textit{Ollama} im Intranet der HWG), um Stufe~2 vollständig datensouverän im regulären Freigabeprozess zu betreiben.
+    \item \textbf{Datensouveräner Produktivbetrieb der semantischen Prüfstufe:} Anbindung eines OpenAI-kompatiblen Inferenz-Endpunkts im Intranet-Server (\texttt{LLM\_\allowbreak API\_\allowbreak KEY}, \allowbreak\texttt{LLM\_\allowbreak API\_\allowbreak BASE}) wahlweise über die Academic Cloud der GWDG (\textit{DeepSeek V4 Flash} oder \textit{Qwen 3 30B}) oder über einen hochschuleigenen lokalen Inferenzdienst (z.\,B. \textit{vLLM} oder \textit{Ollama} im Intranet der HWG), um Stufe~2 vollständig datensouverän im regulären Freigabeprozess zu betreiben.
 \end{enumerate}
 
 \section{Wissenschaftlicher Beitrag und Ausblick}
@@ -1804,7 +1804,11 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         "score": 100,
     }
 
-    items = form_data.get("items", []) or []
+    items = (
+        form_data.get("items")
+        or (form_data.get("elements") or {}).get("items")
+        or []
+    )
     form_props = form_data.get("properties") or {}
     penalties = registry["scoring"]["severity_penalties"]
 
@@ -2573,6 +2577,7 @@ def evaluate_stage2_llm(results: dict, form_data: dict, workflow_emails: list, f
     api_base = (
         cfg.get("api_base")
         or os.environ.get("LLM_API_BASE")
+        or os.environ.get("LLM_BASE_URL")
         or os.environ.get("GWDG_API_BASE")
         or DEFAULT_API_BASE
     ).strip().rstrip("/")
@@ -2663,15 +2668,20 @@ def evaluate_stage2_llm(results: dict, form_data: dict, workflow_emails: list, f
         return results
 
 
-def _finalize_rule_ids(results: dict) -> dict:
+def _finalize_rule_ids(results: dict, registry: dict = None) -> dict:
+    rule_lookup = {r["id"]: r for r in (registry or {}).get("rules", [])}
     for v in results["violations"]:
         r_id = v.get("rule") or v.get("rule_id")
         v["rule"] = r_id
         v["rule_id"] = r_id
+        if r_id in rule_lookup and "remediation" not in v:
+            v["remediation"] = rule_lookup[r_id].get("remediation", "")
     for r in results["recommendations"]:
         r_id = r.get("rule") or r.get("rule_id")
         r["rule"] = r_id
         r["rule_id"] = r_id
+        if r_id in rule_lookup and "remediation" not in r:
+            r["remediation"] = rule_lookup[r_id].get("remediation", "")
     results["score"] = max(0, results["score"])
     return results
 
@@ -2683,7 +2693,7 @@ def evaluate_form_bytes(file_bytes: bytes, filename: str, registry: dict, llm_co
     form_data, workflow_emails, workflow_states = _parse_archive_bytes(file_bytes, filename)
     results = evaluate_stage1_ast(form_data, workflow_emails, workflow_states, filename, registry)
     results = evaluate_stage2_llm(results, form_data, workflow_emails, filename, registry, llm_config=llm_config)
-    return _finalize_rule_ids(results)
+    return _finalize_rule_ids(results, registry)
 
 
 def evaluate_form(xfp_path: str, registry: dict, llm_config: dict = None) -> dict:
@@ -2848,7 +2858,11 @@ def extract_workflow_emails_from_fcexport_obj(proj_data):
 
 
 def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, form_name: str) -> dict:
-    items = form_data.get("items", []) or []
+    items = (
+        form_data.get("items")
+        or (form_data.get("elements") or {}).get("items")
+        or []
+    )
 
     # Sichtbarkeitskarte (Elemente mit rein internem viewstatus ohne '-1' markieren)
     id_to_item = {}
