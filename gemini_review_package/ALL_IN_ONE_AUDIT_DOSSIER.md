@@ -596,7 +596,7 @@ Zulässig sind ausschließlich klare Einzelbezeichnungen wie \enquote{Anrede}, \
 \section{Workflow-Governance}
 \label{sec:workflow_governance}
 
-Für die Prozessmodelle schreibt \texttt{HWG-WF-01} kanonische Lebenszyklus-Status (\enquote{Eingegangen}, \enquote{In Prüfung}, \enquote{Nachforderung ausstehend}, \enquote{Genehmigt}, \enquote{Abgelehnt}, \enquote{Archiviert}) vor. Automatisierte Workflow-E-Mails müssen den dynamischen Vorgangsplatzhalter \texttt{[\%\$PROJECT\_ALIAS\%]} in Betreff oder Textkörper führen (\texttt{HWG-WF-02}) sowie Eingang, zuständige Stelle und nächste Schritte bestätigen (\texttt{HWG-FEEDBACK-01}). Ab drei Seiten oder 25 Eingabefeldern empfiehlt \texttt{HWG-UX-02} abzugsfrei eine Zwischenspeicherfunktion (\texttt{submitNoCheck} mit \texttt{[\%\$URL\_FORM\%]}).
+Für die Prozessmodelle schreibt \texttt{HWG-WF-01} kanonische Lebenszyklus-Status (\enquote{Eingegangen}, \enquote{In Prüfung}, \enquote{Nachforderung ausstehend}, \enquote{Genehmigt}, \enquote{Abgelehnt}, \enquote{Archiviert}) vor. Automatisierte Workflow-E-Mails müssen den dynamischen Vorgangsplatzhalter \texttt{[\%\$RECORD\_ID\%]} in Betreff oder Textkörper führen (\texttt{HWG-WF-02}) sowie Eingang, zuständige Stelle und nächste Schritte bestätigen (\texttt{HWG-FEEDBACK-01}). Ab drei Seiten oder 25 Eingabefeldern empfiehlt \texttt{HWG-UX-02} abzugsfrei eine Zwischenspeicherfunktion (\texttt{submitNoCheck} mit \texttt{[\%\$URL\_FORM\%]}).
 
 \section{Mathematisches Bewertungsmodell und Regelkatalog}
 \label{sec:formalisiertes_scoring}
@@ -647,7 +647,7 @@ Für die Freigabeentscheidung gelten einheitliche Ampelschwellenwerte: \textbf{G
 \texttt{HWG-LANG-02}   & Hybrid (1+2)  & Prägnante Satzlänge ($\le 25$ Wörter) & Minor & 3 \\
 \texttt{HWG-FEEDBACK-01}& Hybrid (1+2) & Transparente Eingangsbestätigungs-E-Mail & Minor & 3 \\
 \texttt{HWG-WF-01}     & Stufe 1 (AST) & Kanonische Workflow-Statusnomenklatur & Minor & 3 \\
-\texttt{HWG-WF-02}     & Stufe 1 (AST) & Vorgangsreferenz \texttt{[\%\$PROJECT\_ALIAS\%]} in E-Mails & Minor & 3 \\
+\texttt{HWG-WF-02}     & Stufe 1 (AST) & Vorgangsreferenz \texttt{[\%\$RECORD\_ID\%]} in E-Mails & Minor & 3 \\
 \bottomrule
 \end{tabularx}
 \caption{Katalog der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Logo fehlt komplett: Critical/$-15$; Maß-, Ausrichtungs- oder Alt-Text-Abweichung: Major/$-8$)}
@@ -851,8 +851,8 @@ Ausgangspunkt der Arbeit war das Spannungsfeld zwischen den heterogenen Anforder
 \begin{enumerate}
     \item \textbf{Verbindliches Qualitäts-Gate vor Produktivsetzung:} Etablierung des Intranet-Dashboards als Pflichtprüfung vor jeder Veröffentlichung mit verbindlichem Freigabeschwellenwert $C \ge 80$ (Grün; $50\text{--}79$ Überarbeitungsauflage; $<50$ Sperrung).
     \item \textbf{Echtes Master-Template \& Bereinigung der Kopiervorlage:} Umbenennung des bisherigen Snippets in \enquote{Kopiervorlage Persönliche Stammdaten (Shibboleth/LDAP)} und Beseitigung der Altlasten (sichtbare Entwicklernotiz, unvalidierte Matrikelnummer) sowie parallele Bereitstellung eines vollständigen, sanierten \enquote{HWG-Master-Standardprojekts} (850\,px, normierter Header mit H1 und 60\,px-Logo samt Alt-Text, deaktiviertes XIMA-Logo, Art.-13-DSGVO-Verankerung, kanonische Workflow-Knoten und Action-Verb-Buttons) als schlüsselfertige Basis für künftige Formulare.
-    \item \textbf{Durchsetzung von Action-Verb-Microcopy und Workflow-Kanonik:} Verbindliche Benennung aller Abschluss-Buttons mit Zielobjekt und Infinitivverb (einschließlich fachlich gewollter Sonderpfade wie \enquote{Kritischen Fall einreichen}), Einführung der kanonischen Workflow-Status (\texttt{HWG-WF-01}) sowie Pflichtführung von \texttt{[\%\$PROJECT\_ALIAS\%]} (\texttt{HWG-WF-02}).
-    \item \textbf{Datensouveräner Produktivbetrieb der semantischen Prüfstufe:} Anbindung eines OpenAI-kompatiblen Inferenz-Endpunkts im Intranet-Server (\texttt{LLM\_\allowbreak API\_\allowbreak KEY}, \allowbreak\texttt{LLM\_\allowbreak API\_\allowbreak BASE}) wahlweise über die Academic Cloud der GWDG (\textit{DeepSeek V4 Flash} oder \textit{Qwen 3 30B}) oder über einen hochschuleigenen lokalen Inferenzdienst (z.\,B. \textit{vLLM} oder \textit{Ollama} im Intranet der HWG), um Stufe~2 vollständig datensouverän im regulären Freigabeprozess zu betreiben.
+    \item \textbf{Durchsetzung von Action-Verb-Microcopy und Workflow-Kanonik:} Verbindliche Benennung aller Abschluss-Buttons mit Zielobjekt und Infinitivverb (einschließlich fachlich gewollter Sonderpfade wie \enquote{Kritischen Fall einreichen}), Einführung der kanonischen Workflow-Status (\texttt{HWG-WF-01}) sowie Pflichtführung von \texttt{[\%\$RECORD\_ID\%]} (\texttt{HWG-WF-02}).
+    \item \textbf{Datensouveräner Produktivbetrieb der semantischen Prüfstufe:} Anbindung eines OpenAI-kompatiblen Inferenz-Endpunkts im Intranet-Server (\texttt{LLM\_\allowbreak API\_\allowbreak KEY}, \allowbreak\texttt{LLM\_\allowbreak API\_\allowbreak BASE}) wahlweise über die Academic Cloud der GWDG (\textit{DeepSeek V4 Flash} oder \textit{Qwen 3 30B}) Dauerhafte Übernahme des praktisch erprobten lokalen Inferenzdienstes (z.\,B. via Ollama mit \textit{Qwen 3.8 27B}) in das Betriebsmodell der Hochschul-IT bzw. wahlweise Anbindung der Academic Cloud der GWDG (\textit{DeepSeek V4 Flash} oder \textit{Qwen 3 30B}), um Stufe~2 vollkommen datensouverän (Art.\,44\,ff. DSGVO) und cloudunabhängig im regulären Freigabeprozess zu betreiben.
 \end{enumerate}
 
 \section{Wissenschaftlicher Beitrag und Ausblick}
@@ -1459,16 +1459,16 @@ Die Entlastung von repetitiver Implementierung schuf Fokus für die konzeptionel
       "category": "workflow_governance",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Steuerbarkeit: Automatisierte Workflow-E-Mails müssen eine dynamische Vorgangsreferenz ([%$PROJECT_ALIAS%]) führen, um Rückfragen, Zuordnung und Statusverfolgung medienbruchfrei zu ermöglichen.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Steuerbarkeit: Automatisierte Workflow-E-Mails müssen eine dynamische Vorgangsreferenz ([%$RECORD_ID%]) führen, um Rückfragen, Zuordnung und Statusverfolgung medienbruchfrei zu ermöglichen.",
       "specification": {
         "target": "workflow_email_nodes",
         "target_field": "subject_or_body",
-        "required_variable": "[%$PROJECT_ALIAS%]",
+        "required_variable": "[%$RECORD_ID%]",
         "disallowed_patterns": [
-          "Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$PROJECT_ALIAS%] bzw. [%$RECORD_ID%]) im Betreff oder Textkörper"
+          "Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$RECORD_ID%] bzw. [%$ID%]) im Betreff oder Textkörper"
         ]
       },
-      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) einen dynamischen Vorgangs-Platzhalter wie [%$PROJECT_ALIAS%] (Projekt-Alias) bzw. [%$RECORD_ID%] / [%$ID%] (laufende Vorgangsnummer) ein."
+      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) den dynamischen Vorgangsplatzhalter [%$RECORD_ID%] (bzw. [%$ID%]) als eindeutige Ticketnummer ein (Best Practice: [[%$PROJECT_ALIAS%] # [%$RECORD_ID%]])."
     }
   ]
 }
@@ -2426,20 +2426,20 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
     if not workflow_emails:
         results["not_applicable"]["HWG-WF-02"] = "Keine automatisierten Workflow-E-Mails im Prozessmodell vorhanden."
     else:
-        alias_tokens = ("%$project_alias%", "%$record_id%", "%$vorgang", "[%$id%]")
-        emails_with_alias = [
+        record_id_tokens = ("%$record_id%", "[%$id%]")
+        emails_with_record_id = [
             em for em in workflow_emails
-            if any(tok in f"{em.get('subject', '')} {em.get('body', '')}".lower() for tok in alias_tokens)
+            if any(tok in f"{em.get('subject', '')} {em.get('body', '')}".lower() for tok in record_id_tokens)
         ]
-        if not emails_with_alias:
+        if not emails_with_record_id:
             results["violations"].append({
                 "rule": "HWG-WF-02",
                 "severity": "minor",
-                "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in den automatisierten Workflow-E-Mails (FC_EMAIL)."
+                "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$RECORD_ID%]) in den automatisierten Workflow-E-Mails (FC_EMAIL)."
             })
             results["score"] -= penalties["minor"]
         else:
-            results["passed"].append(f"HWG-WF-02 (Dynamische Vorgangsreferenz in {len(emails_with_alias)}/{len(workflow_emails)} Workflow-E-Mails vorhanden)")
+            results["passed"].append(f"HWG-WF-02 (Dynamische Vorgangsreferenz ([%$RECORD_ID%]) in {len(emails_with_record_id)}/{len(workflow_emails)} Workflow-E-Mails vorhanden)")
 
     results["score"] = max(0, results["score"])
     return results

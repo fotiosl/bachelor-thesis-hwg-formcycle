@@ -834,20 +834,20 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
     if not workflow_emails:
         results["not_applicable"]["HWG-WF-02"] = "Keine automatisierten Workflow-E-Mails im Prozessmodell vorhanden."
     else:
-        alias_tokens = ("%$project_alias%", "%$record_id%", "%$vorgang", "[%$id%]")
-        emails_with_alias = [
+        record_id_tokens = ("%$record_id%", "[%$id%]")
+        emails_with_record_id = [
             em for em in workflow_emails
-            if any(tok in f"{em.get('subject', '')} {em.get('body', '')}".lower() for tok in alias_tokens)
+            if any(tok in f"{em.get('subject', '')} {em.get('body', '')}".lower() for tok in record_id_tokens)
         ]
-        if not emails_with_alias:
+        if not emails_with_record_id:
             results["violations"].append({
                 "rule": "HWG-WF-02",
                 "severity": "minor",
-                "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$PROJECT_ALIAS%]) in den automatisierten Workflow-E-Mails (FC_EMAIL)."
+                "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$RECORD_ID%]) in den automatisierten Workflow-E-Mails (FC_EMAIL)."
             })
             results["score"] -= penalties["minor"]
         else:
-            results["passed"].append(f"HWG-WF-02 (Dynamische Vorgangsreferenz in {len(emails_with_alias)}/{len(workflow_emails)} Workflow-E-Mails vorhanden)")
+            results["passed"].append(f"HWG-WF-02 (Dynamische Vorgangsreferenz ([%$RECORD_ID%]) in {len(emails_with_record_id)}/{len(workflow_emails)} Workflow-E-Mails vorhanden)")
 
     results["score"] = max(0, results["score"])
     return results

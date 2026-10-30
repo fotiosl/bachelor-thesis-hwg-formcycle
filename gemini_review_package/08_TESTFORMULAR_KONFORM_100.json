@@ -92,7 +92,9 @@
         "label": "<p>E-Mail-Adresse</p>",
         "required": "1",
         "datatype": "email",
-        "validation": { "type": "email" }
+        "validation": {
+          "type": "email"
+        }
       }
     },
     {
@@ -127,7 +129,9 @@
         "label": "<p>Postleitzahl</p>",
         "datatype": "plzDE",
         "pattern": "^[0-9]{5}$",
-        "validation": { "regex": "^[0-9]{5}$" },
+        "validation": {
+          "regex": "^[0-9]{5}$"
+        },
         "required": "1"
       }
     },
@@ -151,7 +155,10 @@
         "datatype": "regexp",
         "vrule": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
         "pattern": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
-        "validation": { "regex": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$", "type": "iban" },
+        "validation": {
+          "regex": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
+          "type": "iban"
+        },
         "required": "1"
       }
     },
@@ -220,8 +227,8 @@
     {
       "node_name": "E-Mail Eingangsbestätigung an Antragstellende",
       "recipient": "[%$tfEmail%]",
-      "subject": "Eingangsbestätigung Ihres Antrags (Vorgangsnummer [%$PROJECT_ALIAS%])",
-      "body": "Vielen Dank für Ihren Antrag (Vorgangsnummer [%$PROJECT_ALIAS%]). Ihr Antrag ist eingegangen und wird nun durch das Studierendensekretariat der HWG Ludwigshafen geprüft. Über die weiteren Prozessschritte und die Entscheidung werden Sie per E-Mail informiert."
+      "subject": "Eingangsbestätigung Ihres Antrags (Vorgangsnummer [%$RECORD_ID%])",
+      "body": "Vielen Dank für Ihren Antrag (Vorgangsnummer [%$RECORD_ID%]). Ihr Antrag ist eingegangen und wird nun durch das Studierendensekretariat der HWG Ludwigshafen geprüft. Über die weiteren Prozessschritte und die Entscheidung werden Sie per E-Mail informiert."
     }
   ],
   "workflow_states": [

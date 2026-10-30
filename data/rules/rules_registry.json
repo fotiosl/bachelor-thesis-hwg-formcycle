@@ -479,16 +479,16 @@
       "category": "workflow_governance",
       "evaluation_type": "deterministic",
       "severity": "minor",
-      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Steuerbarkeit: Automatisierte Workflow-E-Mails müssen eine dynamische Vorgangsreferenz ([%$PROJECT_ALIAS%]) führen, um Rückfragen, Zuordnung und Statusverfolgung medienbruchfrei zu ermöglichen.",
+      "rationale": "DIN EN ISO 9241-110 Selbstbeschreibungsfähigkeit & Steuerbarkeit: Automatisierte Workflow-E-Mails müssen eine dynamische Vorgangsreferenz ([%$RECORD_ID%]) führen, um Rückfragen, Zuordnung und Statusverfolgung medienbruchfrei zu ermöglichen.",
       "specification": {
         "target": "workflow_email_nodes",
         "target_field": "subject_or_body",
-        "required_variable": "[%$PROJECT_ALIAS%]",
+        "required_variable": "[%$RECORD_ID%]",
         "disallowed_patterns": [
-          "Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$PROJECT_ALIAS%] bzw. [%$RECORD_ID%]) im Betreff oder Textkörper"
+          "Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$RECORD_ID%] bzw. [%$ID%]) im Betreff oder Textkörper"
         ]
       },
-      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) einen dynamischen Vorgangs-Platzhalter wie [%$PROJECT_ALIAS%] (Projekt-Alias) bzw. [%$RECORD_ID%] / [%$ID%] (laufende Vorgangsnummer) ein."
+      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) den dynamischen Vorgangsplatzhalter [%$RECORD_ID%] (bzw. [%$ID%]) als eindeutige Ticketnummer ein (Best Practice: [[%$PROJECT_ALIAS%] # [%$RECORD_ID%]])."
     }
   ]
 }

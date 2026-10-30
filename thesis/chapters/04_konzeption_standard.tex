@@ -53,7 +53,7 @@ Zulässig sind ausschließlich klare Einzelbezeichnungen wie \enquote{Anrede}, \
 \section{Workflow-Governance}
 \label{sec:workflow_governance}
 
-Für die Prozessmodelle schreibt \texttt{HWG-WF-01} kanonische Lebenszyklus-Status (\enquote{Eingegangen}, \enquote{In Prüfung}, \enquote{Nachforderung ausstehend}, \enquote{Genehmigt}, \enquote{Abgelehnt}, \enquote{Archiviert}) vor. Automatisierte Workflow-E-Mails müssen den dynamischen Vorgangsplatzhalter \texttt{[\%\$PROJECT\_ALIAS\%]} in Betreff oder Textkörper führen (\texttt{HWG-WF-02}) sowie Eingang, zuständige Stelle und nächste Schritte bestätigen (\texttt{HWG-FEEDBACK-01}). Ab drei Seiten oder 25 Eingabefeldern empfiehlt \texttt{HWG-UX-02} abzugsfrei eine Zwischenspeicherfunktion (\texttt{submitNoCheck} mit \texttt{[\%\$URL\_FORM\%]}).
+Für die Prozessmodelle schreibt \texttt{HWG-WF-01} kanonische Lebenszyklus-Status (\enquote{Eingegangen}, \enquote{In Prüfung}, \enquote{Nachforderung ausstehend}, \enquote{Genehmigt}, \enquote{Abgelehnt}, \enquote{Archiviert}) vor. Automatisierte Workflow-E-Mails müssen den dynamischen Vorgangsplatzhalter \texttt{[\%\$RECORD\_ID\%]} in Betreff oder Textkörper führen (\texttt{HWG-WF-02}) sowie Eingang, zuständige Stelle und nächste Schritte bestätigen (\texttt{HWG-FEEDBACK-01}). Ab drei Seiten oder 25 Eingabefeldern empfiehlt \texttt{HWG-UX-02} abzugsfrei eine Zwischenspeicherfunktion (\texttt{submitNoCheck} mit \texttt{[\%\$URL\_FORM\%]}).
 
 \section{Mathematisches Bewertungsmodell und Regelkatalog}
 \label{sec:formalisiertes_scoring}
@@ -104,7 +104,7 @@ Für die Freigabeentscheidung gelten einheitliche Ampelschwellenwerte: \textbf{G
 \texttt{HWG-LANG-02}   & Hybrid (1+2)  & Prägnante Satzlänge ($\le 25$ Wörter) & Minor & 3 \\
 \texttt{HWG-FEEDBACK-01}& Hybrid (1+2) & Transparente Eingangsbestätigungs-E-Mail & Minor & 3 \\
 \texttt{HWG-WF-01}     & Stufe 1 (AST) & Kanonische Workflow-Statusnomenklatur & Minor & 3 \\
-\texttt{HWG-WF-02}     & Stufe 1 (AST) & Vorgangsreferenz \texttt{[\%\$PROJECT\_ALIAS\%]} in E-Mails & Minor & 3 \\
+\texttt{HWG-WF-02}     & Stufe 1 (AST) & Vorgangsreferenz \texttt{[\%\$RECORD\_ID\%]} in E-Mails & Minor & 3 \\
 \bottomrule
 \end{tabularx}
 \caption{Katalog der 22 Governance-Regeln der Compliance-Registry v1.5.0 (*Logo fehlt komplett: Critical/$-15$; Maß-, Ausrichtungs- oder Alt-Text-Abweichung: Major/$-8$)}

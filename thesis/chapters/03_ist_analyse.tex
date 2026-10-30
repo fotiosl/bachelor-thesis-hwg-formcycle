@@ -51,7 +51,7 @@ Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\t
 Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads (Regel N/A) \\
 Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Art.\,13 integriert (\texttt{privacy\allowbreak Policy\allowbreak Show="1"}) \\
 Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag einreichen} / \enquote{Kritischen Fall einreichen} \\
-Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8 E-Mails inkl. \texttt{[\%\$PROJECT\_\allowbreak ALIAS\%]} (5 kanonische Status) \\
+Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8 E-Mails inkl. \texttt{[\%\$RECORD\_\allowbreak ID\%]} (5 kanonische Status) \\
 \bottomrule
 \end{tabularx}
 \caption{Vergleich dreier Kernformulare mit den Zielanforderungen des HWG-Soll-Standards (*Werte der Antragstellenden-Ansicht; Gesamtwerte über alle Prozessseiten in Klammern)}
@@ -141,7 +141,7 @@ Die Korpusanalyse belegt flächendeckende Defizite in der technischen Qualitäts
 
 \subsection{Problemfeld 6: Workflow-Silos und fehlende Vorgangsreferenzen}
 \label{subsec:workflow_silos}
-Die Auswertung aller 34 Workflow-Modelle zeigt eine ausgeprägte Prozessfragmentierung: Zwar bilden \textbf{56\,\% (19/34)} mehrstufige Genehmigungsketten ab, während \textbf{44\,\% (15/34)} einstufige Einzelaufgaben bleiben, doch operieren selbst mehrstufige Prozesse in vertikalen Abteilungssilos. In \textbf{91\,\% (31/34)} fehlen kanonische Statusbezeichnungen (stattdessen z.\,B. \enquote{Akzeptiert - VG} oder \enquote{Antrag kontiert - warten auf Auszahlung}), und \textbf{79\,\% (27/34)} versenden automatisierte E-Mails ohne die eindeutige Vorgangsreferenz \texttt{[\%\$PROJECT\_ALIAS\%]}.
+Die Auswertung aller 34 Workflow-Modelle zeigt eine ausgeprägte Prozessfragmentierung: Zwar bilden \textbf{56\,\% (19/34)} mehrstufige Genehmigungsketten ab, während \textbf{44\,\% (15/34)} einstufige Einzelaufgaben bleiben, doch operieren selbst mehrstufige Prozesse in vertikalen Abteilungssilos. In \textbf{91\,\% (31/34)} fehlen kanonische Statusbezeichnungen (stattdessen z.\,B. \enquote{Akzeptiert - VG} oder \enquote{Antrag kontiert - warten auf Auszahlung}), und \textbf{79\,\% (27/34)} versenden automatisierte E-Mails ohne die eindeutige Vorgangsreferenz \texttt{[\%\$RECORD\_ID\%]}.
 
 \section{Ableitung der Kernanforderungen}
 \label{sec:ableitung_anforderungen}
