@@ -1342,12 +1342,12 @@ Die Entlastung von repetitiver Implementierung schuf Fokus für die konzeptionel
           "plz_deutschland": "^[0-9]{5}$",
           "iban_deutschland_leerzeichentolerant": "^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$",
           "iban_international_sepa": "^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$",
-          "telefonnummer_inkl_plus": "^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$",
+          "telefonnummer_inkl_plus": "^(\\+[0-9]{1,3}|0)[0-9\\s/-]{6,20}$",
           "matrikelnummer_hwg": "^[0-9]{6,7}$",
           "email_adresse": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
         }
       },
-      "remediation": "Wählen Sie das unvalidierte Feld (XTextField) im Formcycle-Designer aus und navigieren Sie unter 'Eigenschaften' zum Bereich 'Validierung' (Datentyp / datatype):\n• Postleitzahl, Datum & E-Mail: Nutzen Sie den nativen Formcycle-Datentyp 'Postleitzahl (DE)' (plzDE), 'Datum' (dateDE) bzw. 'E-Mail' (email) oder 'Regulärer Ausdruck' (regexp) mit Prüfmuster (vrule).\n• Telefonnummer (Empfehlung Regex, da Formcycles Typ 'phone' kein '+' für Ländervorwahlen wie +49 erlaubt): Datentyp 'Regulärer Ausdruck' -> ^(\\+[0-9]{1,3}|0)[0-9\\s\\-/]{6,20}$\n• IBAN (DE, leerzeichentolerant): Datentyp 'Regulärer Ausdruck' -> ^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$ (SEPA international: ^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$)\n• Matrikelnummer (HWG, 6–7 Ziffern): Datentyp 'Regulärer Ausdruck' -> ^[0-9]{6,7}$\nHinterlegen Sie unter 'Fehlermeldung' stets einen verständlichen Hinweistext."
+      "remediation": "Wählen Sie das unvalidierte Feld (XTextField) im Formcycle-Designer aus und navigieren Sie unter 'Eigenschaften' zum Bereich 'Validierung' (Datentyp / datatype):\n• Postleitzahl, Datum & E-Mail: Nutzen Sie den nativen Formcycle-Datentyp 'Postleitzahl (DE)' (plzDE), 'Datum' (dateDE) bzw. 'E-Mail' (email) oder 'Regulärer Ausdruck' (regexp) mit Prüfmuster (vrule).\n• Telefonnummer (Empfehlung Regex, da Formcycles Typ 'phone' kein '+' für Ländervorwahlen wie +49 erlaubt): Datentyp 'Regulärer Ausdruck' -> ^(\\+[0-9]{1,3}|0)[0-9\\s/-]{6,20}$\n• IBAN (DE, leerzeichentolerant): Datentyp 'Regulärer Ausdruck' -> ^[A-Z]{2}[0-9]{2}(?:\\s?[0-9]{4}){4}\\s?[0-9]{2}$ (SEPA international: ^[A-Z]{2}[0-9]{2}[A-Z0-9\\s]{11,34}$)\n• Matrikelnummer (HWG, 6–7 Ziffern): Datentyp 'Regulärer Ausdruck' -> ^[0-9]{6,7}$\nHinterlegen Sie unter 'Fehlermeldung' stets einen verständlichen Hinweistext."
     },
     {
       "id": "HWG-UX-01",
@@ -1468,7 +1468,7 @@ Die Entlastung von repetitiver Implementierung schuf Fokus für die konzeptionel
           "Fehlende Workflow-E-Mails oder E-Mail-Knoten (FC_EMAIL) ohne dynamischen Vorgangsplatzhalter ([%$PROJECT_ALIAS%] bzw. [%$RECORD_ID%]) im Betreff oder Textkörper"
         ]
       },
-      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) den dynamischen Platzhalter [%$PROJECT_ALIAS%] als eindeutige Vorgangsnummer ein."
+      "remediation": "Binden Sie im Formcycle-Workflow in den Betreff (oder Textkörper) der automatisierten E-Mail-Knoten (FC_EMAIL) einen dynamischen Vorgangs-Platzhalter wie [%$PROJECT_ALIAS%] (Projekt-Alias) bzw. [%$RECORD_ID%] / [%$ID%] (laufende Vorgangsnummer) ein."
     }
   ]
 }
