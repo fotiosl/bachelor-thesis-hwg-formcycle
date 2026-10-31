@@ -28,13 +28,7 @@ Empirische Studien belegen den direkten Einfluss standardisierter Formulargestal
 \subsection{Usability-Schweregradmodelle nach Nielsen}
 \label{subsec:nielsen_severity}
 
-Für ein objektives Compliance-Scoring dürfen Regelverstöße nicht gleichgewichtet werden. Nach \textcite{nielsen1994severity} bemisst sich der Schweregrad eines Usability-Problems an Auftretenshäufigkeit, Auswirkung und Persistenz. Darauf aufbauend unterscheidet das Bewertungsmodell dieser Arbeit vier Klassen:
-\begin{itemize}
-    \item \textbf{Critical ($-15$\,Punkte):} Rechtliche oder funktionale Blocker (z.\,B. fehlender DSGVO-Hinweis, fehlende semantische Fieldsets, sichtbare Entwicklernotizen oder fehlendes Hochschullogo).
-    \item \textbf{Major ($-8$\,Punkte):} Erhebliche Usability- und CI-Mängel (z.\,B. 700\,px-Altlayout, aktives Herstellerlogo, fehlende H1-Überschrift, unvalidierte Strukturfelder, unerklärter Jargon oder verblose Schaltflächen).
-    \item \textbf{Minor ($-3$\,Punkte):} Syntaktische oder prozessuale Unschärfen (z.\,B. HTML-Störfragmente in Labels, Überlänge von Hinweissätzen, fehlende Vorgangsnummer in Workflow-E-Mails).
-    \item \textbf{Recommendation ($0$\,Punkte):} Unverbindliche Komfortempfehlung (z.\,B. Zwischenspeichern bei hohem Formularumfang).
-\end{itemize}
+Für ein objektives Compliance-Scoring dürfen Regelverstöße nicht gleichgewichtet werden. Nach \textcite{nielsen1994severity} bemisst sich der Schweregrad (\textit{Severity}) eines Usability-Problems an drei Faktoren: (1)~der \textit{Auftretenshäufigkeit} (\textit{Frequency}) im Nutzungskontext, (2)~der \textit{Auswirkung} (\textit{Impact}) auf die erfolgreiche Aufgabenbewältigung sowie (3)~der \textit{Persistenz} (\textit{Persistence}), also ob Nutzende das Problem nach einmaligem Auftreten selbstständig umgehen können oder dauerhaft blockiert werden. Während rein kosmetische Unschärfen den Prozessfluss kaum hemmen, führen strukturelle Barrieren oder unklare Fehlermeldungen zum vollständigen Abbruch der Interaktion. Für die Operationalisierung eines automatisierten Compliance-Audits motiviert diese Taxonomie eine abgestufte Differenzierung zwischen rechtlich-funktionalen Blockern (\textit{Critical}), erheblichen ergonomischen oder gestalterischen Mängeln (\textit{Major}), syntaktischen Unschärfen (\textit{Minor}) und unverbindlichen Komfortempfehlungen (\textit{Recommendation}), deren konkrete Punktgewichtung in Abschnitt~\ref{sec:scoring_modell} hergeleitet wird.
 
 \section{Rechtliche Rahmenbedingungen im E-Government}
 \label{sec:rechtliche_grundlagen}
@@ -42,7 +36,7 @@ Für ein objektives Compliance-Scoring dürfen Regelverstöße nicht gleichgewic
 \subsection{Onlinezugangsgesetz und digitale Barrierefreiheit (BITV 2.0 / WCAG 2.1)}
 \label{subsec:bitv_wcag}
 
-Als Körperschaften des öffentlichen Rechts unterliegen staatliche Hochschulen in Rhein\-land-Pfalz unmittelbar dem \textbf{OZG} und dem \textbf{EGovG RLP}. Für die digitale Barrierefreiheit verpflichten das Landesgesetz zur Gleichstellung von Menschen mit Behinderungen (L-BGG RLP) sowie die \textbf{BITV 2.0} (in Umsetzung der Richtlinie [EU] 2016/2102) zur Einhaltung der \textbf{WCAG 2.1 auf Konformitätsstufe AA}:
+Als Körperschaften des öffentlichen Rechts unterliegen staatliche Hochschulen in Rhein\-land-Pfalz unmittelbar dem \textbf{OZG} und dem \textbf{EGovG RLP}. Für die digitale Barrierefreiheit verpflichten das Landesgesetz zur Gleichstellung von Menschen mit Behinderungen (L-BGG RLP) sowie die \textbf{BITV 2.0} --- in Umsetzung der Richtlinie (EU) 2016/2102 --- zur Einhaltung der \textbf{WCAG 2.1 auf Konformitätsstufe AA}:
 \begin{itemize}
     \item \textbf{WCAG 1.1.1 (Nicht-Text-Inhalt):} Aussagekräftige Alternativtexte für Logos und Informationsgrafiken.
     \item \textbf{WCAG 1.3.1 \& 2.4.6 (Info, Beziehungen und Überschriften):} Semantische Feldgruppierung mittels \texttt{<fieldset>} und \texttt{<legend>} sowie eine korrekte \texttt{<h1>}-Dokumentüberschrift.

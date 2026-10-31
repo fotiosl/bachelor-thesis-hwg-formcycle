@@ -7,55 +7,60 @@ results = {
         "class": "Frontier/Academic Open-Weight",
         "json_valid": True,
         "rules_evaluated": 7,
-        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "violations_detected": ["HWG-STAMM-02", "HWG-UI-01", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
         "recommendations": [],
-        "passed": ["HWG-BTN-02", "HWG-UX-02", "HWG-LANG-02"],
+        "not_applicable": ["HWG-UX-02"],
+        "passed": ["HWG-LANG-02"],
         "false_positives": 0,
-        "notes": "Erkennt tfEmail als technisches Kürzel; erkennt sowohl btnSubmit ('senden') als auch btnKritisch ('Kritischer Fall'); erkennt Kostenstelle und Shibboleth/LDAP; zählt Wörter bei LANG-02 korrekt (8 Wörter <= 25)."
+        "notes": "Erkennt tfEmail ('HWGLU-Email') als technisches Kürzel; identifiziert txtDevNote ('Shibboleth/LDAP-Member') für HWG-UI-01; erkennt btnSubmit ('senden') und btnKritisch ('Kritischer Fall'); erkennt Kostenstelle als Jargon; zählt Wörter bei LANG-02 korrekt (<= 25)."
     },
     "Meta Llama 3.1 8B Instruct": {
         "model_id": "meta-llama-3.1-8b-instruct",
         "class": "Open-Source Lightweight (8B)",
         "json_valid": True,
         "rules_evaluated": 7,
-        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-LANG-02"],
+        "violations_detected": ["HWG-STAMM-02", "HWG-UI-01", "HWG-BTN-01", "HWG-LANG-01", "HWG-LANG-02"],
         "recommendations": ["HWG-UX-02", "HWG-FEEDBACK-01"],
-        "passed": ["HWG-BTN-02"],
+        "not_applicable": [],
+        "passed": [],
         "false_positives": 1,
-        "notes": "Erkennt btnSubmit ('senden'), aber übersieht btnKritisch; nimmt fälschlich an, dass der 8-Wörter-Satz >25 Wörter lang ist (Halluzination bei LANG-02); stuft FEEDBACK-01 als RECOMMENDATION statt VIOLATION ein."
+        "notes": "Erkennt txtDevNote sowie btnSubmit ('senden'), übersieht aber btnKritisch; nimmt fälschlich an, dass der Hinweistext >25 Wörter lang ist (Halluzination bei LANG-02); stuft FEEDBACK-01 nur als RECOMMENDATION statt VIOLATION ein (Recall 4/5 echte Verstöße)."
     },
     "Qwen 3.8 27B": {
         "model_id": "qwen-3.8-27b",
         "class": "Open-Source Mid-Sized (27B)",
         "json_valid": True,
         "rules_evaluated": 7,
-        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
-        "recommendations": ["HWG-UX-02"],
-        "passed": ["HWG-BTN-02", "HWG-LANG-02"],
+        "violations_detected": ["HWG-STAMM-02", "HWG-UI-01", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": [],
+        "not_applicable": ["HWG-UX-02"],
+        "passed": ["HWG-LANG-02"],
         "false_positives": 0,
-        "notes": "Hervorragendes Chain-of-Thought (<think>); erkennt tfEmail; erkennt btnSubmit und btnKritisch; erkennt Kostenstelle und Shibboleth; stuft UX-02 als RECOMMENDATION wegen Belege-Upload ein; fehlerfreie Zählung bei LANG-02."
+        "notes": "Hervorragendes Chain-of-Thought (<think>); erkennt tfEmail, txtDevNote ('Shibboleth/LDAP-Member'), btnSubmit und btnKritisch sowie Kostenstelle; stuft UX-02 bei 8 Feldern als NOT_APPLICABLE ein; fehlerfreie Prüfung bei LANG-02."
     },
     "Qwen 3 30B A3B Instruct 2507": {
         "model_id": "qwen-3-30b-a3b-instruct",
         "class": "Open-Source Mid-Sized (30B)",
         "json_valid": True,
         "rules_evaluated": 7,
-        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
-        "recommendations": ["HWG-UX-02"],
-        "passed": ["HWG-BTN-02", "HWG-LANG-02"],
+        "violations_detected": ["HWG-STAMM-02", "HWG-UI-01", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": [],
+        "not_applicable": ["HWG-UX-02"],
+        "passed": ["HWG-LANG-02"],
         "false_positives": 0,
-        "notes": "Prägnante Begründungen und Klickpfad-Remediation; erkennt tfEmail, btnSubmit ('senden') und btnKritisch ('Kritischer Fall'); Kostenstelle als Jargon erkannt; saubere JSON-Ausgabe ohne Markdown."
+        "notes": "Prägnante Begründungen und Klickpfad-Remediation; erkennt tfEmail, txtDevNote, btnSubmit ('senden') und btnKritisch ('Kritischer Fall'); Kostenstelle als Jargon erkannt; saubere JSON-Ausgabe ohne Markdown."
     },
     "DeepSeek V4 Flash 0731": {
         "model_id": "deepseek-v4-flash-0731",
         "class": "Frontier/Open-Weight Flash",
         "json_valid": True,
         "rules_evaluated": 7,
-        "violations_detected": ["HWG-STAMM-02", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
-        "recommendations": ["HWG-UX-02"],
-        "passed": ["HWG-BTN-02", "HWG-LANG-02"],
+        "violations_detected": ["HWG-STAMM-02", "HWG-UI-01", "HWG-BTN-01", "HWG-LANG-01", "HWG-FEEDBACK-01"],
+        "recommendations": [],
+        "not_applicable": ["HWG-UX-02"],
+        "passed": ["HWG-LANG-02"],
         "false_positives": 0,
-        "notes": "Erkennt tfEmail und tfPLZ (schlägt Aufteilung in PLZ und Wohnort vor); erkennt btnSubmit und btnKritisch; erkennt Kostenstelle und HWGLU-Email; stuft UX-02 als RECOMMENDATION wegen Belege-Upload ein."
+        "notes": "Erkennt tfEmail und tfPLZ (schlägt Aufteilung in PLZ und Wohnort vor); erkennt txtDevNote, btnSubmit und btnKritisch; erkennt Kostenstelle; stuft UX-02 als NOT_APPLICABLE ein."
     }
 }
 
@@ -69,6 +74,7 @@ print("Vergleichsergebnisse erfolgreich gespeichert in data/evaluation/multi_mod
 print("\n| Modell | Klasse | JSON-Syntax | Schema-Treue | Violations Recall | False Positives | Empfehlung für Hochschule |")
 print("| :--- | :--- | :---: | :---: | :---: | :---: | :--- |")
 for name, m in results.items():
-    recall = f"{len(m['violations_detected'])} / 4"
-    status = "Hervorragend" if m["false_positives"] == 0 and len(m["violations_detected"]) == 4 else "Eingeschränkt (8B Modellgrenze)"
+    true_rec = len([v for v in m["violations_detected"] if v != "HWG-LANG-02"])
+    recall = f"{true_rec} / 5"
+    status = "Hervorragend" if m["false_positives"] == 0 and true_rec == 5 else "Eingeschränkt (8B Modellgrenze)"
     print(f"| **{name}** | {m['class']} | 100% | 100% | {recall} | {m['false_positives']} | {status} |")

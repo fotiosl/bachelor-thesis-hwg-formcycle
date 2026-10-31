@@ -14,13 +14,13 @@ def generate_dashboard():
     presets = {
         "synth_comp": {
             "name": "Synthetisches Referenzformular (Best-Practice)",
-            "file": "data/test_forms/synthetic_compliant_form.json",
-            "eval": evaluate_form("data/test_forms/synthetic_compliant_form.json", registry),
+            "file": "data/test_forms/synthetic_compliant_form.xfp",
+            "eval": evaluate_form("data/test_forms/synthetic_compliant_form.xfp", registry),
         },
         "synth_noncomp": {
             "name": "Synthetisches Negativformular (Worst-Case)",
-            "file": "data/test_forms/synthetic_noncompliant_form.json",
-            "eval": evaluate_form("data/test_forms/synthetic_noncompliant_form.json", registry),
+            "file": "data/test_forms/synthetic_noncompliant_form.xfp",
+            "eval": evaluate_form("data/test_forms/synthetic_noncompliant_form.xfp", registry),
         },
         "auslagen": {
             "name": "Reales Formular: Auslagenerstattung (Finanzen)",
@@ -853,7 +853,7 @@ def generate_dashboard():
         const registry = {registry_json};
         const presets = {presets_json};
         const SEMANTIC_RULE_IDS = [
-            "HWG-STAMM-02", "HWG-BTN-01", "HWG-BTN-02",
+            "HWG-STAMM-02", "HWG-UI-01", "HWG-BTN-01",
             "HWG-UX-02", "HWG-LANG-01", "HWG-LANG-02", "HWG-FEEDBACK-01"
         ];
 
@@ -1165,7 +1165,7 @@ def generate_dashboard():
             if (!rawLabel) return false;
             const val = String(rawLabel).trim();
             if (/&amp;[a-zA-Z0-9#]+;/.test(val) || val.toLowerCase().includes('&nbsp;')) return true;
-            if (/<\\s*(?:br|span|div|font|table|tr|td|ul|ol|li|h[1-6])\\b/i.test(val)) return true;
+            if (/<\\s*(?:br|span|div|font|table|tr|td|ul|ol|li|h[1-6]|b|strong|i|em|u|a)\\b/i.test(val)) return true;
             if (/\\bstyle\\s*=/i.test(val)) return true;
             const pMatches = val.match(/<\\s*p\\b/gi);
             if (pMatches && pMatches.length > 1) return true;
@@ -1270,7 +1270,7 @@ def generate_dashboard():
 
             function getSectionKey(props) {{
                 for (const anc of getAncestors(props)) {{
-                    if (["XFieldSet", "XContainer", "XContainerInvisible", "XPage"].includes(anc.className)) {{
+                    if (["XFieldSet", "XPage"].includes(anc.className)) {{
                         const ap = anc.properties || {{}};
                         return String(ap.id || ap.name || "root");
                     }}
@@ -1468,13 +1468,15 @@ def generate_dashboard():
                     const valDict = (props.validation && typeof props.validation === 'object') ? props.validation : {{}};
                     const hasCustomRegex = (dt === "regexp" && Boolean(vrule)) || Boolean(props.pattern) || Boolean(valDict.regex);
 
+                    const isEmail = (["email", "e-mail"].some(t => nameLow.includes(t) || lblLower.includes(t)) || /\\bmail\\b/.test(lblLower)) && !lblLower.includes("infotext");
                     const isPlz = /\\b(?:plz|postleitzahl)\\b/.test(lblLower) || nameLow.includes("plz") || nameLow.includes("postleitzahl");
                     const isIban = /\\biban\\b/.test(lblLower) || nameLow.includes("iban");
                     const isPhone = ["telefon", "mobilfunk", "handynummer"].some(t => nameLow.includes(t) || lblLower.includes(t));
                     const isDate = c === "XDate" || nameLow.includes("geburtsdatum") || lblLower.includes("geburtsdatum") || /\\bdatum\\b/.test(lblLower);
                     const isMatrikel = nameLow.includes("matrikel") || lblLower.includes("matrikel");
 
-                    if (isPlz && !(dt === "plzDE" || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
+                    if (isEmail && !(dt === "email" || valDict.type === "email" || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
+                    else if (isPlz && !(dt === "plzDE" || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
                     else if (isIban && !(hasCustomRegex || valDict.type === "iban")) structuredFieldsUnvalidated.push(elemName);
                     else if (isPhone && !(dt === "phone" || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
                     else if (isDate && !(c === "XDate" || ["dateDE", "dateISO", "date", "datetime"].includes(dt) || hasCustomRegex)) structuredFieldsUnvalidated.push(elemName);
@@ -1579,9 +1581,41 @@ def generate_dashboard():
             }} else results.passed.push("HWG-STAMM-01 (Kanonische Stammdaten-Abfolge)");
 
             if (devNotes.length > 0) {{
-                results.violations.push({{ rule: "HWG-UI-01", rule_id: "HWG-UI-01", severity: "critical", message: `Sichtbare Entwickler-Notizen im Frontend: ${{devNotes.slice(0, 2).join('; ')}}.` }});
+                results.violations.push({{ rule: "HWG-UI-01", rule_id: "HWG-UI-01", severity: "critical", message: `Sichtbare Entwickler-Notizen im Frontend: ${{devNotes.slice(0, 2).join("; ")}}.` }});
                 results.score -= penalties.critical;
-            }} else results.passed.push("HWG-UI-01 (Keine Entwickler-Notizen)");
+            }}
+            const paginationBtns = [];
+            items.forEach(it => {{
+                const c = it.className || "";
+                const p = it.properties || {{}};
+                if (c === "XButtonList") {{
+                    (p.buttons || []).forEach(b => {{
+                        const act = b.action || {{}};
+                        const pg = String(act.page || b.page || "").trim().toLowerCase();
+                        if (["next", "prev", "back", "forward"].includes(pg) || /^p\\d+(?:_|$)/.test(pg)) {{
+                            paginationBtns.push({{ elem: b.name || p.name || "btn", label: cleanVisibleText(b.value || b.label || b.title || "") }});
+                        }}
+                    }});
+                }} else if (c === "XButton") {{
+                    const pg = String(p.page || "").trim().toLowerCase();
+                    if (["next", "prev", "back", "forward"].includes(pg) || /^p\\d+(?:_|$)/.test(pg)) {{
+                        paginationBtns.push({{ elem: p.name || "btn", label: cleanVisibleText(p.label || p.value || p.text || "") }});
+                    }}
+                }}
+            }});
+            if (paginationBtns.length === 0) {{
+                results.not_applicable["HWG-BTN-02"] = rawXPageCount <= 1 ? "Einseitiges Formular ohne Seitennavigation." : "Keine expliziten Seitenwechsel-Schaltflächen im Formular definiert.";
+            }} else {{
+                const badPag = paginationBtns.filter(b => !["Weiter", "Zurück"].includes(b.label));
+                if (badPag.length > 0) {{
+                    results.violations.push({{ rule: "HWG-BTN-02", rule_id: "HWG-BTN-02", severity: "minor", message: `Uneinheitliche oder kleingeschriebene Seitennavigation (erlaubt: 'Weiter' / 'Zurück'): ${{badPag.map(b => b.label).join(', ')}}.` }});
+                    results.score -= penalties.minor;
+                }} else results.passed.push("HWG-BTN-02 (Einheitliche Mehrseiten-Navigation 'Weiter' / 'Zurück' eingehalten)");
+            }}
+            const totalInputCount = items.filter(it => inputClasses.has(it.className || "")).length;
+            if (Math.max(1, rawXPageCount) < 3 && totalInputCount < 25) {{
+                results.not_applicable["HWG-UX-02"] = `Formularumfang unterhalb des Schwellenwerts (${{Math.max(1, rawXPageCount)}} Seite(n), ${{totalInputCount}} Felder < 25).`;
+            }}
 
             if (!hasPersonalData) results.not_applicable["HWG-DSGVO-01"] = "Keine personenbezogenen Daten erhoben.";
             else if (!(footerShowsPrivacy || hasTextDsgvoWithLink)) {{
@@ -1611,7 +1645,7 @@ def generate_dashboard():
                 results.score -= penalties.minor;
             }} else {{
                 const canonicalRoots = ["eingegangen", "in prüfung", "in bearbeitung", "nachforderung", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"];
-                const nonCan = workflowStates.filter(s => !canonicalRoots.some(r => s.toLowerCase().trim().includes(r)));
+                const nonCan = workflowStates.filter(s => !canonicalRoots.some(r => s.toLowerCase().trim().startsWith(r)));
                 if (nonCan.length > 0) {{
                     results.violations.push({{ rule: "HWG-WF-01", rule_id: "HWG-WF-01", severity: "minor", message: `Ad-hoc-Workflow-Status gefunden: [${{nonCan.join(', ')}}].` }});
                     results.score -= penalties.minor;
@@ -1622,7 +1656,7 @@ def generate_dashboard():
                 results.not_applicable["HWG-WF-02"] = "Keine automatisierten Workflow-E-Mails im Prozessmodell vorhanden.";
             }} else {{
                 const recordIdToks = ["%$record_id%", "[%$id%]"];
-                const hasRecordId = workflowEmails.some(em => recordIdToks.some(t => (`${{em.subject || ""}} ${{em.body || ""}}`).toLowerCase().includes(t)));
+                const hasRecordId = workflowEmails.every(em => recordIdToks.some(t => (`${{em.subject || ""}} ${{em.body || ""}}`).toLowerCase().includes(t)));
                 if (!hasRecordId) {{
                     results.violations.push({{ rule: "HWG-WF-02", rule_id: "HWG-WF-02", severity: "minor", message: "Fehlender dynamischer Vorgangsplatzhalter ([%$RECORD_ID%]) in Workflow-E-Mails." }});
                     results.score -= penalties.minor;
@@ -1652,13 +1686,13 @@ def generate_dashboard():
                         const p = it.properties || {{}};
                         return {{
                             className: it.className || '',
-                            name: p.name || '',
+                            name: p.name || '', in_header: isInHeader(it),
                             label_or_text: cleanVisibleText(p.label || p.text || p.rtevalue || p.heading || p.legend || '').slice(0, 200),
                             helptext: cleanVisibleText(p.helptext || p.help || p.tooltip || '').slice(0, 200)
                         }};
                     }}).filter(x => x.label_or_text || x.helptext);
                     const effPages = Math.max(1, rawXPageCount);
-                    const prompt = `Prüfe das Formular '${{filename}}' anhand dieser 7 Regeln: ${{JSON.stringify(semRules)}}. Formular-Extrakt: ${{JSON.stringify({{ metrics: {{ page_count: effPages, input_field_count: applicantInputCount, ux02_complexity_threshold_reached: (effPages >= 3 || applicantInputCount >= 25) }}, ui_elements: uiCompact, workflow_emails: workflowEmails }})}}. Antworte NUR mit JSON: {{"form_name":"${{filename}}","evaluated_rules":[{{"rule_id":"HWG-...","status":"PASS|VIOLATION|RECOMMENDATION|NOT_APPLICABLE","severity":"major|minor|recommendation","affected_elements":[],"finding":"...","remediation_suggestion":"..."}}]}}`;
+                    const prompt = `Hinweis: Elemente mit in_header:true sind von HWG-LANG-01 (Jargon im Formulartitel) ausgenommen. Prüfe das Formular '${{filename}}' anhand dieser 7 Regeln: ${{JSON.stringify(semRules)}}. Formular-Extrakt: ${{JSON.stringify({{ metrics: {{ page_count: effPages, input_field_count: applicantInputCount, ux02_complexity_threshold_reached: (effPages >= 3 || applicantInputCount >= 25) }}, ui_elements: uiCompact, workflow_emails: workflowEmails }})}}. Antworte NUR mit JSON: {{"form_name":"${{filename}}","evaluated_rules":[{{"rule_id":"HWG-...","status":"PASS|VIOLATION|RECOMMENDATION|NOT_APPLICABLE","severity":"major|minor|recommendation","affected_elements":[],"finding":"...","remediation_suggestion":"..."}}]}}`;
 
                     const endpoint = llmCfg.apiBase.endsWith('/chat/completions') ? llmCfg.apiBase : `${{llmCfg.apiBase}}/chat/completions`;
                     const resp = await fetch(endpoint, {{
@@ -1683,7 +1717,7 @@ def generate_dashboard():
                         const msg = `[KI-Befund · ${{llmCfg.model}}] ${{ent.finding || ''}}`;
                         if (st === 'VIOLATION') {{
                             if (sev === 'recommendation') results.recommendations.push({{ rule: rid, rule_id: rid, severity: 'recommendation', message: msg }});
-                            else {{
+                            else if (!results.violations.some(v => v.rule === rid)) {{
                                 results.violations.push({{ rule: rid, rule_id: rid, severity: sev, message: msg }});
                                 results.score -= (penalties[sev] || 0);
                             }}

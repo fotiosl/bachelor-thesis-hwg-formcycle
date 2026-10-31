@@ -1,62 +1,87 @@
-"""
-Erzeugung eines strukturierten Evaluations-Prompts (inkl. kontextoptimierter JSON-Extraktion
-und deterministischer AST-Vorabmetriken) für Stufe 2 der hybriden Compliance-Pipeline
-(OpenAI-kompatible REST-API der GWDG Academic Cloud sowie Web-Chat-Evaluation).
-"""
-import html
-import io
-import json
 import os
-import re
 import sys
+import json
 import zipfile
+import io
+import re
+import html
 
 
 INPUT_CLASSES = {
-    "XTextField", "XTextArea", "XSelect", "XCheckbox",
-    "XUpload", "XFile", "XRadio", "XDate", "XNumber"
+    "XTextField",
+    "XTextArea",
+    "XSelect",
+    "XCheckbox",
+    "XRadio",
+    "XDate",
+    "XUpload",
+    "XFile",
+    "XNumber",
 }
 
-ABBREV_PATTERN = re.compile(
-    r"\b(?:z\.\s*B\.|u\.\s*a\.|d\.\s*h\.|bzw\.|gem\.|Art\.|Abs\.|Nr\.|max\.|min\.|ca\.|inkl\.|ggf\.|etc\.|Prof\.|Dr\.|bspw\.|vgl\.|sog\.)",
-    re.IGNORECASE,
+DEV_NOTE_TOKENS = (
+    "javascript",
+    "shibboleth",
+    "shibboleh",
+    "ldap-member",
+    "forms-admin",
+    "postfach-sb",
+    "display:none",
+    "display: none",
+    "ausgeblendet (hide)",
+    "saml-hslu",
+    "todo:",
+    "fixme:",
 )
 
 
 def decode_text_bytes(raw_bytes: bytes) -> str:
-    try:
-        return raw_bytes.decode("utf-8")
-    except UnicodeDecodeError:
-        return raw_bytes.decode("cp1252", errors="replace")
+    for enc in ("utf-8", "utf-8-sig", "cp1252", "latin-1"):
+        try:
+            return raw_bytes.decode(enc)
+        except UnicodeDecodeError:
+            continue
+    return raw_bytes.decode("utf-8", errors="replace")
 
 
-def clean_visible_text(raw: str) -> str:
-    if not raw:
+def clean_visible_text(val) -> str:
+    if not val:
         return ""
-    unescaped = html.unescape(str(raw))
-    stripped = re.sub(r"<[^>]+>", " ", unescaped)
-    return " ".join(stripped.split()).strip()
+    s = str(val)
+    for _ in range(2):
+        s = html.unescape(s)
+    s = re.sub(r"<[^>]+>", " ", s)
+    return " ".join(s.split())
 
 
-def extract_long_sentences(items, max_words: int = 25):
+def extract_long_sentences(items: list, max_words: int = 25, in_header_ids: set = None) -> list:
     long_sents = []
+    abbrev_pattern = re.compile(
+        r"\b(z\.\s*B\.|bzw\.|inkl\.|ggf\.|ca\.|max\.|mind\.|Nr\.|Art\.|Abs\.|Dr\.|Prof\.|d\.\s*h\.|u\.\s*a\.|etc\.|vgl\.|sog\.|St\.|Str\.)",
+        re.IGNORECASE,
+    )
     for it in items:
         props = it.get("properties", {}) or {}
-        elem_name = str(props.get("name") or "unnamed")
-        for key in ("text", "rtevalue", "helptext", "help", "tooltip", "description"):
-            val = str(props.get(key) or "")
-            if not val:
+        iid = str(props.get("id") or props.get("name") or "")
+        if in_header_ids and iid in in_header_ids:
+            continue
+        ename = str(props.get("name") or "unnamed")
+        for field_key in ("rtevalue", "text", "helptext", "help"):
+            raw = props.get(field_key)
+            if not raw:
                 continue
-            txt = clean_visible_text(val)
-            # URLs und Platzhalter neutralisieren, Abkürzungspunkte schützen
-            txt_no_url = re.sub(r"https?://\S+|www\.\S+", "URL", txt)
-            txt_safe = ABBREV_PATTERN.sub(lambda m: m.group(0).replace(".", ""), txt_no_url)
-            for sent in re.split(r"[.!?]+", txt_safe):
-                words = [w for w in sent.strip().split() if re.search(r"[A-Za-zÄÖÜäöüß0-9]", w)]
+            txt = clean_visible_text(raw)
+            if not txt:
+                continue
+            masked = abbrev_pattern.sub(lambda m: m.group(0).replace(".", "_DOT_"), txt)
+            sents = re.split(r"[.!?]+(?:\s+|$)", masked)
+            for s in sents:
+                s_restored = s.replace("_DOT_", ".").strip()
+                words = [w for w in s_restored.split() if any(ch.isalnum() for ch in w)]
                 if len(words) > max_words:
                     long_sents.append({
-                        "element": elem_name,
-                        "property": key,
+                        "element": ename,
+                        "field": field_key,
                         "word_count": len(words),
                         "preview": " ".join(words[:12]) + " ..."
                     })
@@ -67,7 +92,7 @@ def classify_button_role(action_page: str, btn_type: str = "") -> str:
     ap = str(action_page or "").strip()
     ap_low = ap.lower()
     bt_low = str(btn_type or "").strip().lower()
-    if ap_low in ("next", "prev", "xnavbar_next", "xnavbar_prev") or re.match(r"^p\d+$", ap_low):
+    if ap_low in ("next", "prev", "back", "forward", "xnavbar_next", "xnavbar_prev") or re.match(r"^p\d+(?:_|$)", ap_low):
         return "pagination"
     if ap == "submitNoCheck" or bt_low == "save":
         return "submit_no_check"
@@ -117,18 +142,19 @@ def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, fo
         or []
     )
 
-    # Sichtbarkeitskarte (Elemente mit rein internem viewstatus ohne '-1' markieren)
     id_to_item = {}
+    id_to_full_item = {}
     for it in items:
         p = it.get("properties", {}) or {}
         iid = str(p.get("id") or p.get("name") or "")
         if iid:
             id_to_item[iid] = p
+            id_to_full_item[iid] = it
 
     def is_applicant_visible(props: dict) -> bool:
         curr = props
         visited = set()
-        for _ in range(6):
+        for _ in range(8):
             if not curr:
                 break
             vs = curr.get("viewstatus")
@@ -143,8 +169,30 @@ def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, fo
             curr = id_to_item.get(pid)
         return True
 
+    def is_in_header(it: dict) -> bool:
+        if it.get("className") == "XHeader":
+            return True
+        curr = it.get("properties", {}) or {}
+        visited = set()
+        for _ in range(8):
+            pid = str(curr.get("parentid") or "")
+            if not pid or pid in visited:
+                break
+            if pid.lower() == "xi-header-1":
+                return True
+            visited.add(pid)
+            parent_it = id_to_full_item.get(pid)
+            if not parent_it:
+                break
+            if parent_it.get("className") == "XHeader":
+                return True
+            curr = parent_it.get("properties", {}) or {}
+        return False
+
     compact_elements = []
     buttons_extracted = []
+    suspected_dev_notes = []
+    in_header_ids = set()
     raw_xpage_count = 0
     input_count = 0
     upload_count = 0
@@ -160,7 +208,26 @@ def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, fo
             upload_count += 1
 
         applicant_vis = is_applicant_visible(props)
+        in_hdr = is_in_header(it)
         elem_name = str(props.get("name", ""))
+        iid = str(props.get("id") or elem_name or "")
+        if in_hdr and iid:
+            in_header_ids.add(iid)
+
+        # Vorab-Detektion bekannter technischer Entwicklernotizen (Stufe 1 für HWG-UI-01)
+        if applicant_vis:
+            for tk in ("label", "text", "heading", "rtevalue", "value"):
+                tval = str(props.get(tk) or "")
+                if not tval:
+                    continue
+                tval_clean = clean_visible_text(tval)
+                tval_low = tval_clean.lower()
+                if any(pat in tval_low for pat in DEV_NOTE_TOKENS):
+                    suspected_dev_notes.append({
+                        "element": elem_name,
+                        "snippet": tval_clean[:80],
+                    })
+                    break
 
         # Schaltflächen (XButtonList & XButton) strukturiert extrahieren
         if "Button" in c or c == "XButtonList":
@@ -217,16 +284,19 @@ def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, fo
             or ""
         )
         if (lbl or help_txt) and applicant_vis:
-            compact_elements.append({
+            entry = {
                 "className": c,
                 "name": elem_name,
                 "label_or_text": lbl[:240],
                 "helptext": help_txt[:240],
-            })
+            }
+            if in_hdr:
+                entry["in_header"] = True
+            compact_elements.append(entry)
 
     effective_page_count = max(1, raw_xpage_count)
     applicant_items = [it for it in items if is_applicant_visible(it.get("properties", {}) or {})]
-    long_sentences = extract_long_sentences(applicant_items, max_words=25)
+    long_sentences = extract_long_sentences(applicant_items, max_words=25, in_header_ids=in_header_ids)
 
     return {
         "form_name": form_name,
@@ -236,6 +306,8 @@ def extract_compact_payload_from_data(form_data: dict, workflow_emails: list, fo
             "input_field_count": input_count,
             "upload_field_count": upload_count,
             "ux02_complexity_threshold_reached": bool(effective_page_count >= 3 or input_count >= 25),
+            "suspected_dev_notes_count": len(suspected_dev_notes),
+            "suspected_dev_notes": suspected_dev_notes,
             "sentences_over_25_words_count": len(long_sentences),
             "sentences_over_25_words": long_sentences[:6],
         },
@@ -296,12 +368,13 @@ Prüfe den nachfolgenden komprimierten Formular- und Workflow-Extrakt strikt anh
 === PRÜFINSTRUKTIONEN & NEGATIVE CONSTRAINTS ===
 1. Bewerte JEDE der {len(semantic_rules)} Regeln ({', '.join(rule_ids)}) genau einmal im Array "evaluated_rules".
 2. Nutze für hybride Regeln zwingend die deterministischen Vorabmetriken unter "metrics":
+   - HWG-UI-01: Prüfe alle sichtbaren Elemente unter "ui_elements" sowie "metrics.suspected_dev_notes" semantisch darauf, ob interne Entwickler-Notizen, technische Implementierungshinweise (z. B. zu JavaScript, Shibboleth, LDAP, Sichtbarkeit/hide), Baustellenvermerke oder redaktionelle Arbeitskommentare im Frontend stehen. Liegen solche vor, setze status = "VIOLATION".
    - HWG-UX-02: Nur wenn metrics.ux02_complexity_threshold_reached == true ist und kein Zwischenspeichern-Mechanismus existiert, setze status = "RECOMMENDATION" (0 Punkte Abzug). Ist ux02_complexity_threshold_reached == false, setze status = "NOT_APPLICABLE".
-   - HWG-BTN-02: Nur wenn metrics.page_count > 1 ist, prüfe Schaltflächen mit role == "pagination" auf exakte Benennung ("Weiter" / "Zurück"). Bei einseitigen Formularen (metrics.page_count <= 1) setze status = "NOT_APPLICABLE".
    - HWG-LANG-02: Berücksichtige metrics.sentences_over_25_words; wenn dort keine Sätze > 25 Wörter vorliegen und keine extrem verschachtelten Passivkonstruktionen existieren, setze status = "PASS".
-3. HWG-STAMM-02: Für E-Mail-Felder sind "E-Mail-Adresse", "E-Mail" und "Hochschul-E-Mail" zulässig. Persönliche Namensfelder müssen getrennt als "Vorname" und "Nachname" benannt sein ("Name Antragstellende/r", "Name" oder technische Kürzel wie "HWGLU-Email" sind Verstöße).
-4. HWG-BTN-01: Prüfe Aktions- und Absendeschaltflächen (role != "pagination") auf das Action-Verb-Muster ([Zielobjekt] + [Vollverb im Infinitiv]). Formulierungen mit klarem Handlungsverb wie "Antrag einreichen" oder "Kritischen Fall einreichen" sind ZULÄSSIG; reine Zustandsbegriffe ohne Verb ("Kritischer Fall") oder kontextlose Ein-Wort-Labels ("senden", "Submit", "OK") sind Verstöße.
-5. Halluziniere keine Mängel hinzu, die nicht im Extrakt belegt sind.
+3. HWG-STAMM-02: Für E-Mail-Felder sind "E-Mail-Adresse", "E-Mail" und "Hochschul-E-Mail" zulässig. Persönliche Namensfelder müssen getrennt als "Vorname" und "Nachname" benannt sein ("Name Antragstellende/r", "Name" für Personen oder technische Kürzel wie "HWGLU-Email" sind Verstöße; Sachbezeichnungen wie "Benennung des Förderprogramms" sind hingegen zulässig).
+4. HWG-BTN-01: Prüfe ausschließlich für Antragstellende sichtbare Aktions- und Absendeschaltflächen (applicant_visible == true und role != "pagination") auf das Action-Verb-Muster ([Zielobjekt] + [Vollverb im Infinitiv]). Formulierungen mit klarem Handlungsverb wie "Antrag einreichen" oder "Kritischen Fall einreichen" sind ZULÄSSIG; reine Zustandsbegriffe ohne Verb ("Kritischer Fall") oder kontextlose Ein-Wort-Labels ("senden", "Submit", "OK") sind Verstöße.
+5. HWG-LANG-01: Ignoriere den offiziellen Formulartitel im Kopfbereich (Elemente mit in_header == true), da Überschriften im Header keinen Hilfetext besitzen müssen. Prüfe alle übrigen Formularfelder und Hinweistexte auf unerklärte Verwaltungs-/Hochschulfachbegriffe oder Abkürzungen ohne zugehörigen Hilfetext (helptext).
+6. Halluziniere keine Mängel hinzu, die nicht im Extrakt belegt sind.
 
 === VERBINDLICHES JSON-AUSGABEFORMAT ===
 Antworte AUSSCHLIESSLICH mit einem validen JSON-Objekt (ohne Markdown-Codeblöcke):
@@ -330,7 +403,9 @@ def build_prompt(xfp_path: str, registry_path: str = "data/rules/rules_registry.
 
 
 if __name__ == "__main__":
-    target = sys.argv[1] if len(sys.argv) > 1 else "data/test_forms/synthetic_noncompliant_form.json"
+    target = sys.argv[1] if len(sys.argv) > 1 else "data/test_forms/synthetic_noncompliant_form.xfp"
+    if not os.path.exists(target) and target.endswith(".xfp"):
+        target = target[:-4] + ".json"
     out_prompt = build_prompt(target)
     os.makedirs("data/prompts", exist_ok=True)
     out_file = os.path.join("data/prompts", f"chat_ai_prompt_{os.path.basename(target)}.txt")

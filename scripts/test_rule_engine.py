@@ -1,13 +1,14 @@
 """
 Zweistufige hybride Compliance-Prüf-Engine für XIMA Formcycle (v8):
 - Stufe 1 (Deterministisch, < 20 ms): Formale Struktur-, Layout-, Barrierefreiheits-,
-  Validierungs- und Workflow-Prüfung für alle 15 deterministischen Regeln.
-- Stufe 2 (Semantisch/Hybrid via OpenAI-kompatibler LLM-REST-API, z. B. GWDG Academic Cloud):
-  Semantische Evaluierung der 7 semantischen/hybriden Governance-Regeln anhand des
-  kontextoptimierten JSON-Extrakts aus generate_chat_ai_prompt.py.
+  Validierungs-, Navigations- und Workflow-Prüfung für alle 15 deterministischen Regeln
+  sowie deterministische Vorab-Prüfungen für die 4 hybriden Regeln.
+- Stufe 2 (Semantisch/Hybrid via OpenAI-kompatibler LLM-REST-API, z. B. GWDG Academic Cloud
+  oder lokal via Ollama): Semantische Evaluierung der 7 semantischen/hybriden Governance-Regeln
+  anhand des kontextoptimierten JSON-Extrakts aus generate_chat_ai_prompt.py.
 - Fail-Safe-Transparenz: Ist keine LLM-API angebunden oder tritt ein API-Ausfall auf,
-  werden die 7 semantischen Regeln NIEMALS durch starre Heuristiken verfälscht, sondern
-  explizit als ungeprüft ('not_applicable' + 'unverified_semantic') ausgewiesen.
+  werden ungeprüfte semantische Regeln NIEMALS durch starre Heuristiken als bestanden simuliert,
+  sondern explizit als ungeprüft ('not_applicable' + 'unverified_semantic') ausgewiesen.
 """
 import html
 import io
@@ -21,8 +22,10 @@ import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from generate_chat_ai_prompt import (
+    DEV_NOTE_TOKENS,
     INPUT_CLASSES,
     build_prompt_from_payload,
+    classify_button_role,
     clean_visible_text,
     decode_text_bytes,
     extract_compact_payload_from_data,
@@ -30,8 +33,8 @@ from generate_chat_ai_prompt import (
 
 SEMANTIC_RULE_IDS = [
     "HWG-STAMM-02",
+    "HWG-UI-01",
     "HWG-BTN-01",
-    "HWG-BTN-02",
     "HWG-UX-02",
     "HWG-LANG-01",
     "HWG-LANG-02",
@@ -124,7 +127,6 @@ def _parse_archive_bytes(file_bytes: bytes, filename: str):
             fcp_candidates = [n for n in z.namelist() if n.endswith(".fcp")]
             if not fcp_candidates:
                 raise ValueError(f"Keine .fcp Modelldatei im Formulararchiv '{filename}' gefunden.")
-            # Hauptformular bevorzugen (nicht Backup/Subformular, falls mehrere vorhanden)
             fcp_candidates.sort(key=lambda x: (len(x.split("/")), x))
             fcp_name = fcp_candidates[0]
             form_data = json.loads(decode_text_bytes(z.read(fcp_name)))
@@ -152,8 +154,8 @@ def _has_dirty_label_markup(raw_label: str) -> bool:
     # 1. Doppelt maskierte Entities (z. B. &amp;szlig; oder &amp;nbsp;) oder &nbsp;-Ketten
     if re.search(r"&amp;[a-zA-Z0-9#]+;", val) or "&nbsp;" in val.lower():
         return True
-    # 2. Manuelle Zeilenumbrüche, Inline-Spans, verschachtelte Formatierungs-Tags oder Inline-Styles
-    if re.search(r"<\s*(?:br|span|div|font|table|tr|td|ul|ol|li|h[1-6])\b", val, re.IGNORECASE):
+    # 2. Manuelle Zeilenumbrüche, Inline-Formatierungen (<b>, <strong>, <i>, <span>, <font> etc.) oder Inline-Styles
+    if re.search(r"<\s*(?:br|span|div|font|b|strong|i|em|u|a|table|tr|td|ul|ol|li|h[1-6])\b", val, re.IGNORECASE):
         return True
     if re.search(r"\bstyle\s*=", val, re.IGNORECASE):
         return True
@@ -164,6 +166,18 @@ def _has_dirty_label_markup(raw_label: str) -> bool:
     if "|" in cleaned or "<" in cleaned or ">" in cleaned:
         return True
     return False
+
+
+def _is_nontrivial_regex(pattern: str) -> bool:
+    if not pattern:
+        return False
+    p = str(pattern).strip()
+    if len(p) < 4:
+        return False
+    if p in (".*", ".+", "^.*$", "^.+$", "^.*"):
+        return False
+    # Muss mindestens ein echtes Regex-Konstrukt (Zeichenklasse, Quantor oder Escape) enthalten
+    return bool(re.search(r"(\[.+?\]|\\d|\\s|\\w|\{[0-9,]+\}|\+|\?|\|)", p))
 
 
 def _is_width_compact(props: dict, row_counts: dict) -> bool:
@@ -192,7 +206,8 @@ def _is_width_compact(props: dict, row_counts: dict) -> bool:
 
 def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states: list, filename: str, registry: dict) -> dict:
     """
-    Prüft ausschließlich die 15 deterministischen Governance-Regeln (Stufe 1).
+    Prüft alle 15 deterministischen Governance-Regeln (Stufe 1) sowie die deterministischen
+    Vorabbedingungen der hybriden Regeln.
     """
     results = {
         "form": filename,
@@ -218,9 +233,9 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         or []
     )
     form_props = form_data.get("properties") or {}
+    form_images_dict = form_data.get("images") if isinstance(form_data.get("images"), dict) else {}
     penalties = registry["scoring"]["severity_penalties"]
 
-    # Index für Hierarchie- & Sichtbarkeitsauflösung (flaches items-Array mit parentid-Referenzen)
     id_to_item = {}
     for it in items:
         p = it.get("properties", {}) or {}
@@ -246,8 +261,8 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         props = it.get("properties", {}) or {}
         if c == "XHeader":
             return True
-        pid = str(props.get("parentid") or "").lower()
-        if "header" in pid:
+        pid = str(props.get("parentid") or "").strip().lower()
+        if pid == "xi-header-1":
             return True
         return any(anc.get("className") == "XHeader" for anc in get_ancestors(props))
 
@@ -262,13 +277,13 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         return True
 
     def get_section_key(props: dict) -> str:
+        # Gruppiere nach semantischer Sektion (XFieldSet oder XPage), NICHT nach Layout-Spaltencontainer (XContainer)
         for anc in get_ancestors(props):
-            if anc.get("className") in ("XFieldSet", "XContainer", "XContainerInvisible", "XPage"):
+            if anc.get("className") in ("XFieldSet", "XPage"):
                 ap = anc.get("properties") or {}
                 return str(ap.get("id") or ap.get("name") or "root")
-        return str(props.get("parentid") or "root")
+        return "root"
 
-    # Zeilenbelegung (rowid) für HWG-UX-01 zählen
     row_counts = {}
     for it in items:
         props = it.get("properties", {}) or {}
@@ -280,20 +295,24 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
 
     # Container-Breiten (HWG-CD-01)
     container_widths = []
+    container_minwidths_invalid = []
     if isinstance(form_props, dict) and form_props.get("maxwidth"):
         container_widths.append(("form_properties", str(form_props.get("maxwidth")).strip().lower()))
 
     header_images = []
     header_h1_count = 0
     header_has_non_h1_title = False
+    has_footer = False
     footer_shows_logo = False
     header_or_footer_shows_req_hint = False
     footer_shows_privacy = False
 
     fieldsets_all = []
     fieldsets_missing_legend = []
+    fieldset_input_counts = {}
     unsemantic_section_containers = []
     container_input_children = {}
+    loose_page_inputs = {}
 
     required_fields_total = 0
     manual_asterisks_in_labels = []
@@ -310,6 +329,10 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
     has_compact_fields = False
     compact_fields_unconstrained = []
 
+    pagination_buttons = []
+    raw_xpage_count = 0
+    applicant_xpage_count = 0
+    total_input_count = 0
     applicant_input_count = 0
 
     non_person_keywords = [
@@ -328,17 +351,29 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         name_low = elem_name.lower()
         app_vis = is_applicant_visible(props)
 
+        if c == "XPage":
+            raw_xpage_count += 1
+            if app_vis:
+                applicant_xpage_count += 1
+        if c in INPUT_CLASSES:
+            total_input_count += 1
+
         raw_lbl = str(props.get("label") or props.get("text") or props.get("heading") or "")
         lbl_clean = clean_visible_text(raw_lbl)
         lbl_lower = lbl_clean.lower()
         help_raw = str(props.get("helptext") or props.get("help") or props.get("tooltip") or props.get("description") or "")
         help_clean = clean_visible_text(help_raw).lower()
 
-        # 1. HWG-CD-01: Breiten auf XHeader, XPage, XFooter
+        # 1. HWG-CD-01: Breiten auf XHeader, XPage, XFooter (inkl. Erkennung fehlender Breiten)
         if c in ("XHeader", "XPage", "XFooter"):
             mw = str(props.get("maxwidth") or "").strip().lower()
-            if mw:
-                container_widths.append((elem_name, mw))
+            container_widths.append((elem_name, mw or "undefiniert"))
+            minw = str(props.get("minwidth") or "").strip().lower()
+            if c in ("XHeader", "XFooter") and minw and minw not in ("300px", "0px", "0"):
+                container_minwidths_invalid.append(f"{elem_name} (minwidth={minw})")
+        elif c == "XContainer" and not props.get("parentid") and props.get("maxwidth"):
+            mw = str(props.get("maxwidth") or "").strip().lower()
+            container_widths.append((elem_name, mw))
 
         # 2. HWG-CD-02 & HWG-CD-04: Header-Prüfung
         if is_in_header(it):
@@ -350,9 +385,10 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             txt_h = str(props.get("text") or "")
             lvl_h = str(props.get("headinglevel") or "").strip()
             combined_h = f"{rte_h} {hdg_h} {lbl_h} {txt_h}"
-            h1_matches = len(re.findall(r"<\s*h1\b", combined_h, re.IGNORECASE))
-            if h1_matches > 0:
-                header_h1_count += h1_matches
+            h1_blocks = re.findall(r"<\s*h1\b[^>]*>(.*?)<\s*/\s*h1\s*>", combined_h, re.IGNORECASE | re.DOTALL)
+            non_empty_h1 = [b for b in h1_blocks if clean_visible_text(b)]
+            if non_empty_h1:
+                header_h1_count += len(non_empty_h1)
             elif lvl_h == "1" and clean_visible_text(combined_h):
                 header_h1_count += 1
             elif re.search(r"<\s*h[2-6]\b", combined_h, re.IGNORECASE) or (
@@ -365,28 +401,41 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             if str(props.get("showrequiredhint", "0")).strip().lower() in ("1", "true"):
                 header_or_footer_shows_req_hint = True
         if c == "XFooter":
+            has_footer = True
             if str(props.get("showlogo", "0")).strip().lower() in ("1", "true"):
                 footer_shows_logo = True
             if str(props.get("privacyPolicyShow", "0")).strip().lower() in ("1", "true"):
                 footer_shows_privacy = True
 
-        # 4. HWG-A11Y-01: Fieldsets & Legenden vs. unsemantische Container
+        # 4. HWG-A11Y-01: Fieldsets & Legenden vs. unsemantische Container / lose Seitenfelder
         if c == "XFieldSet" and app_vis:
+            fs_key = str(props.get("id") or elem_name)
             fieldsets_all.append(elem_name)
+            fieldset_input_counts.setdefault(fs_key, 0)
             leg_txt = clean_visible_text(props.get("legend") or props.get("label") or props.get("heading") or "")
             if not leg_txt:
                 fieldsets_missing_legend.append(elem_name)
 
         if c in INPUT_CLASSES and app_vis:
             applicant_input_count += 1
-            # Prüfe, ob das Eingabefeld in einem Top-Level-XContainer (ohne umschließendes XFieldSet) liegt
             ancs = get_ancestors(props)
-            in_fieldset = any(a.get("className") == "XFieldSet" for a in ancs)
-            if not in_fieldset:
-                for a in ancs:
-                    if a.get("className") in ("XContainer", "XContainerInvisible") and not is_in_header(a):
-                        cname = str((a.get("properties") or {}).get("name") or "container")
-                        container_input_children[cname] = container_input_children.get(cname, 0) + 1
+            fs_anc = next((a for a in ancs if a.get("className") == "XFieldSet"), None)
+            if fs_anc:
+                fs_p = fs_anc.get("properties") or {}
+                fs_key = str(fs_p.get("id") or fs_p.get("name") or "")
+                fieldset_input_counts[fs_key] = fieldset_input_counts.get(fs_key, 0) + 1
+            else:
+                cont_anc = next(
+                    (a for a in ancs if a.get("className") in ("XContainer", "XContainerInvisible") and not is_in_header(a)),
+                    None,
+                )
+                if cont_anc:
+                    cname = str((cont_anc.get("properties") or {}).get("name") or "container")
+                    container_input_children[cname] = container_input_children.get(cname, 0) + 1
+                else:
+                    page_anc = next((a for a in ancs if a.get("className") == "XPage"), None)
+                    pname = str(((page_anc or {}).get("properties") or {}).get("name") or "page")
+                    loose_page_inputs[pname] = loose_page_inputs.get(pname, 0) + 1
 
         # 5. HWG-A11Y-02: Pflichtfelder & manuelle Sternchen
         if c in INPUT_CLASSES and app_vis:
@@ -396,13 +445,15 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             elif re.search(r"(?:\*\s*$|\(\*\)|\s\*(?:\s|$))", lbl_clean):
                 manual_asterisks_in_labels.append(elem_name)
 
-        # 6. HWG-A11Y-03: Unsaubere HTML-Fragmente in Feld-/Fieldset-Beschriftungen
+        # 6. HWG-A11Y-03: Unsaubere HTML-Fragmente in Feld- und Fieldset-Beschriftungen
         if (c in INPUT_CLASSES or c == "XFieldSet") and app_vis:
-            raw_field_lbl = str(props.get("label") or "")
-            if raw_field_lbl and _has_dirty_label_markup(raw_field_lbl):
-                dirty_labels.append((elem_name, " ".join(raw_field_lbl.split())[:45]))
+            for attr_k in ("label", "legend"):
+                raw_field_lbl = str(props.get(attr_k) or "")
+                if raw_field_lbl and _has_dirty_label_markup(raw_field_lbl):
+                    dirty_labels.append((elem_name, " ".join(raw_field_lbl.split())[:45]))
+                    break
 
-        # 7. HWG-UI-01: Sichtbare Entwickler-Notizen (inkl. XSpan.rtevalue!)
+        # 7. HWG-UI-01 (Vorab-Detektion bekannter technischer Entwickler-Tokens in Stufe 1)
         if app_vis:
             for tk in ("label", "text", "heading", "rtevalue", "value"):
                 tval = str(props.get(tk) or "")
@@ -410,31 +461,41 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
                     continue
                 tval_clean = clean_visible_text(tval)
                 tval_low = tval_clean.lower()
-                if any(
-                    pat in tval_low
-                    for pat in (
-                        "javascript",
-                        "shibboleth",
-                        "shibboleh",
-                        "ldap-member",
-                        "forms-admin",
-                        "postfach-sb",
-                        "display:none",
-                        "display: none",
-                        "ausgeblendet (hide)",
-                        "saml-hslu",
-                    )
-                ):
+                if any(pat in tval_low for pat in DEV_NOTE_TOKENS):
                     dev_notes.append((elem_name, tval_clean[:65]))
                     break
 
-        # 8. HWG-STAMM-01: Stammdaten-Sequenz pro Sektion (ohne XTextArea und ohne interne Bearbeiterfelder)
+        # 8. HWG-BTN-02: Mehrseiten-Navigationsschaltflächen extrahieren
+        if "Button" in c or c == "XButtonList":
+            b_list = props.get("buttons", [])
+            if isinstance(b_list, list) and b_list:
+                for b in b_list:
+                    if not isinstance(b, dict):
+                        continue
+                    val = clean_visible_text(b.get("value") or b.get("text") or b.get("title") or "")
+                    act_page = (b.get("action") or {}).get("page", "") if isinstance(b.get("action"), dict) else ""
+                    if val and classify_button_role(act_page) == "pagination":
+                        pagination_buttons.append({
+                            "element": elem_name,
+                            "label": val,
+                            "action_page": str(act_page),
+                            "applicant_visible": app_vis,
+                        })
+            btn_lbl = clean_visible_text(props.get("text") or props.get("label") or props.get("value") or "")
+            if btn_lbl and classify_button_role("", str(props.get("type", ""))) == "pagination":
+                pagination_buttons.append({
+                    "element": elem_name,
+                    "label": btn_lbl,
+                    "action_page": str(props.get("type", "")),
+                    "applicant_visible": app_vis,
+                })
+
+        # 9. HWG-STAMM-01: Stammdaten-Sequenz pro semantischer Sektion
         if c in INPUT_CLASSES and c != "XTextArea" and app_vis:
             sec_key = get_section_key(props)
             seq = section_personal_sequences.setdefault(sec_key, [])
             has_nachname_in_sec = any(f[0] == "nachname" for f in seq)
 
-            # Explizite Personen-Nachnamensmuster VOR non_person_keywords prüfen (Fix für 'Name Antragstellende/r')
             is_explicit_person_lastname = (
                 "nachname" in name_low
                 or "nachname" in lbl_lower
@@ -460,10 +521,14 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             elif any(t in name_low or t in lbl_lower for t in ("telefon", "telefonnummer", "phone", "mobilfunk")) and c == "XTextField":
                 seq.append(("telefon", elem_name, lbl_clean or "Telefonnummer", 5))
 
-        # 9. HWG-DSGVO-01: Personendaten & Datenschutzhinweis mit Link
+        # 10. HWG-DSGVO-01: Personendaten & Datenschutzhinweis mit Link
         if c in INPUT_CLASSES and any(
             t in name_low or t in lbl_lower
-            for t in ("vorname", "nachname", "email", "e-mail", "matrikel", "geburtsdatum", "iban", "anschrift", "telefon")
+            for t in (
+                "vorname", "nachname", "email", "e-mail", "mail", "matrikel",
+                "geburtsdatum", "iban", "anschrift", "adresse", "telefon",
+                "antragsteller", "studierend", "beschäftigt", "mitarbeiter", "person"
+            )
         ):
             has_personal_data = True
 
@@ -475,11 +540,11 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         has_priv_link = any(
             lnk in raw_html_ctx
             for lnk in ("href=", "https://", "http://", "www.hwg-lu.de/datenschutz", "hwg-lu.de/datenschutz")
-        )
+        ) and ("datenschutz" in raw_html_ctx or "dsgvo" in raw_html_ctx)
         if has_priv_term and has_priv_link:
             has_text_dsgvo_with_link = True
 
-        # 10. HWG-UPLOAD-01: Technische & sichtbare Upload-Spezifikation
+        # 11. HWG-UPLOAD-01: Technische & sichtbare Upload-Spezifikation inkl. Kongruenzprüfung
         if (c in ("XUpload", "XFile", "XUploadButton") or "upload" in name_low) and app_vis:
             has_upload_elements = True
             vis_ctx = f"{lbl_lower} {help_clean}"
@@ -496,11 +561,18 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
                 msize = 0
             has_tech_limits = bool(fext) and msize > 0
 
-            # Widerspruchsprüfung (z. B. Label verspricht docx/xlsx, fileextension erlaubt nur pdf/jpg)
             contradiction = False
             if fext:
-                for promised_ext in ("docx", "xlsx", "zip"):
-                    if promised_ext in vis_ctx and promised_ext[:3] not in fext:
+                for promised_ext in ("pdf", "jpg", "png", "docx", "xlsx", "zip"):
+                    if re.search(rf"\b{promised_ext}\b", vis_ctx) and promised_ext[:3] not in fext:
+                        contradiction = True
+            if msize > 0:
+                mb_match = re.search(r"(\d+)\s*mb\b", vis_ctx)
+                if mb_match:
+                    promised_mb = int(mb_match.group(1))
+                    tech_mb_1024 = round(msize / 1024)
+                    tech_mb_1000 = round(msize / 1000)
+                    if promised_mb not in (tech_mb_1024, tech_mb_1000):
                         contradiction = True
 
             if not (has_vis_formats and has_vis_size and has_tech_limits) or contradiction:
@@ -512,30 +584,44 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
                 if not has_vis_size:
                     reasons.append("Größenlimit im Hilfetext/Label fehlt")
                 if contradiction:
-                    reasons.append("Widerspruch zwischen Textangabe und fileextension")
+                    reasons.append("Widerspruch zwischen Textangabe und technischen Upload-Limits")
                 deficient_uploads.append(f"{elem_name} ({', '.join(reasons)})")
 
-        # 11. HWG-VAL-01: Strukturierte Eingabefelder (PLZ, IBAN, Telefon, Datum, Matrikelnummer)
+        # 12. HWG-VAL-01: Strukturierte Eingabefelder (E-Mail, PLZ, IBAN, Telefon, Datum, Matrikelnummer)
         if c in ("XTextField", "XDate", "XNumber") and app_vis:
             dt = str(props.get("datatype") or "").strip()
             vrule = str(props.get("vrule") or props.get("pattern") or "").strip()
             val_dict = props.get("validation") if isinstance(props.get("validation"), dict) else {}
-            has_custom_regex = (dt == "regexp" and bool(vrule)) or bool(props.get("pattern")) or bool(val_dict.get("regex"))
+            has_custom_regex = (
+                (dt == "regexp" and _is_nontrivial_regex(vrule))
+                or _is_nontrivial_regex(props.get("pattern") or "")
+                or _is_nontrivial_regex(val_dict.get("regex") or "")
+            )
 
+            is_email = (
+                any(t in name_low or t in lbl_lower for t in ("email", "e-mail"))
+                or bool(re.search(r"\bmail\b", lbl_lower))
+            ) and "infotext" not in lbl_lower
             is_plz = bool(re.search(r"\b(?:plz|postleitzahl)\b", lbl_lower)) or "plz" in name_low or "postleitzahl" in name_low
             is_iban = bool(re.search(r"\biban\b", lbl_lower)) or "iban" in name_low
             is_phone = any(t in name_low or t in lbl_lower for t in ("telefon", "mobilfunk", "handynummer"))
-            is_date = c == "XDate" or any(t in name_low or t in lbl_lower for t in ("geburtsdatum",)) or bool(re.search(r"\bdatum\b", lbl_lower))
+            is_date = (
+                c == "XDate"
+                or any(t in name_low or t in lbl_lower for t in ("geburtsdatum", "einreichungsfrist"))
+                or (bool(re.search(r"\bdatum\b", lbl_lower)) and "ort" not in lbl_lower)
+            )
             is_matrikel = "matrikel" in name_low or "matrikel" in lbl_lower
 
-            if is_plz:
+            if is_email:
+                if not (dt == "email" or val_dict.get("type") == "email" or has_custom_regex):
+                    structured_fields_unvalidated.append(f"{elem_name} (E-Mail: Typ '{dt or 'text'}')")
+            elif is_plz:
                 if not (dt == "plzDE" or has_custom_regex):
                     structured_fields_unvalidated.append(f"{elem_name} (PLZ: Typ '{dt or 'text'}')")
             elif is_iban:
                 if not (has_custom_regex or val_dict.get("type") == "iban"):
                     structured_fields_unvalidated.append(f"{elem_name} (IBAN: leeres/fehlendes Regex-Muster)")
             elif is_phone:
-                # Erlaubt sowohl Formcycle-Preset 'phone' als auch eigenen Regex (empfohlen für '+'-Vorwahlen!)
                 if not (dt == "phone" or has_custom_regex):
                     structured_fields_unvalidated.append(f"{elem_name} (Telefon: unvalidierter Freitext)")
             elif is_date:
@@ -545,7 +631,7 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
                 if not has_custom_regex:
                     structured_fields_unvalidated.append(f"{elem_name} (Matrikelnummer: Typ '{dt or 'text'}' ohne 6–7-stelligen Regex)")
 
-        # 12. HWG-UX-01: Kompakte Feldbreiten (PLZ, Hausnummer)
+        # 13. HWG-UX-01: Kompakte Feldbreiten (PLZ, Hausnummer)
         if c == "XTextField" and app_vis:
             is_compact = (
                 bool(re.search(r"\b(?:plz|postleitzahl|hausnummer|hausnr|hnr)\b", lbl_lower))
@@ -559,41 +645,47 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
     for cname, cnt in container_input_children.items():
         if cnt >= 3:
             unsemantic_section_containers.append(f"{cname} ({cnt} Felder)")
+    for pname, cnt in loose_page_inputs.items():
+        if cnt >= 3:
+            unsemantic_section_containers.append(f"Direkt auf Seite {pname} ({cnt} ungruppierte Felder)")
 
-    # --- Regelauswertung Stufe 1 (15 deterministische Regeln) ---
+    # --- Regelauswertung Stufe 1 (15 deterministische Regeln + hybride Vorabfilter) ---
 
     # 1. HWG-CD-01
     distinct_widths = {w for _, w in container_widths if w}
-    if not distinct_widths or distinct_widths != {"850px"}:
-        bad_w = sorted(w for w in distinct_widths if w != "850px") or ["undefiniert"]
+    if not distinct_widths or distinct_widths != {"850px"} or container_minwidths_invalid:
+        bad_w = sorted(w for w in distinct_widths if w != "850px")
+        if container_minwidths_invalid:
+            bad_w.extend(container_minwidths_invalid)
         results["violations"].append({
             "rule": "HWG-CD-01",
             "severity": "major",
-            "message": f"Layout-Container weichen vom 850px-Standard ab (gefunden: {', '.join(bad_w)})."
+            "message": f"Layout-Container weichen vom 850px-Standard ab (gefunden: {', '.join(bad_w or ['undefiniert'])})."
         })
         results["score"] -= penalties["major"]
     else:
         results["passed"].append("HWG-CD-01 (Layout-Breite durchgängig 850px)")
 
     # 2. HWG-CD-02
-    if not header_images:
+    valid_source_images = [
+        ip for ip in header_images
+        if ip.get("image") or ip.get("url") or ip.get("src") or ip.get("base64") or form_images_dict
+    ]
+    if not valid_source_images:
         results["violations"].append({
             "rule": "HWG-CD-02",
             "severity": "critical",
-            "message": "Kein offizielles HWG-Header-Banner (XImage) innerhalb des Header-Containers (XHeader) vorhanden."
+            "message": "Kein offizielles HWG-Header-Banner (XImage mit gültiger Bilddatei) innerhalb des Header-Containers (XHeader) vorhanden."
         })
         results["score"] -= penalties["critical"]
     else:
-        img_p = header_images[0]
+        img_p = valid_source_images[0]
         img_h = str(img_p.get("imageheight") or img_p.get("height") or "").strip().lower()
         img_align = str(img_p.get("textalign") or img_p.get("align") or "").strip().lower()
         img_alt = clean_visible_text(
             img_p.get("alt")
             or img_p.get("alttext")
             or img_p.get("title")
-            or img_p.get("tooltip")
-            or img_p.get("description")
-            or img_p.get("label")
             or ""
         )
         img_alt_low = img_alt.lower()
@@ -630,7 +722,14 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             results["passed"].append("HWG-CD-02 (Header-Logo 60px, rechtsbündig, mit korrektem Alt-Text)")
 
     # 3. HWG-CD-03
-    if footer_shows_logo:
+    if not has_footer:
+        results["violations"].append({
+            "rule": "HWG-CD-03",
+            "severity": "major",
+            "message": "Kein normierter Fußzeilen-Container (XFooter) mit deaktiviertem Herstellerlogo (showlogo='0') vorhanden."
+        })
+        results["score"] -= penalties["major"]
+    elif footer_shows_logo:
         results["violations"].append({
             "rule": "HWG-CD-03",
             "severity": "major",
@@ -658,9 +757,10 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         results["score"] -= penalties["major"]
 
     # 5. HWG-A11Y-01
+    non_empty_fieldsets = [k for k, cnt in fieldset_input_counts.items() if cnt > 0]
     if applicant_input_count < 4 and not fieldsets_all:
         results["not_applicable"]["HWG-A11Y-01"] = "Kleinstformular (< 4 Eingabefelder): Keine Abschnittsgruppierung erforderlich."
-    elif not fieldsets_all:
+    elif not non_empty_fieldsets:
         results["violations"].append({
             "rule": "HWG-A11Y-01",
             "severity": "critical",
@@ -672,7 +772,7 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         if fieldsets_missing_legend:
             issues.append(f"XFieldSet ohne Legende (<legend>): {', '.join(fieldsets_missing_legend[:4])}")
         if unsemantic_section_containers:
-            issues.append(f"Unsemantische XContainer statt Fieldset genutzt: {', '.join(unsemantic_section_containers[:3])}")
+            issues.append(f"Ungruppierte Eingabefelder außerhalb von XFieldSet: {', '.join(unsemantic_section_containers[:3])}")
         results["violations"].append({
             "rule": "HWG-A11Y-01",
             "severity": "critical",
@@ -680,10 +780,12 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         })
         results["score"] -= penalties["critical"]
     else:
-        results["passed"].append(f"HWG-A11Y-01 ({len(fieldsets_all)} XFieldSet-Gruppen mit Legenden vorhanden)")
+        results["passed"].append(f"HWG-A11Y-01 ({len(non_empty_fieldsets)} XFieldSet-Gruppen mit Legenden vorhanden)")
 
     # 6. HWG-A11Y-02
     a11y02_issues = []
+    if applicant_input_count >= 4 and required_fields_total == 0:
+        a11y02_issues.append(f"Kein einziges Pflichtfeld (required='1') unter {applicant_input_count} Eingabefeldern deklariert")
     if required_fields_total > 0 and not header_or_footer_shows_req_hint:
         a11y02_issues.append("Pflichtfeldlegende (showrequiredhint='1') weder in Kopfzeile (XHeader) noch Fußzeile (XFooter) aktiviert")
     if manual_asterisks_in_labels:
@@ -699,7 +801,7 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
     elif required_fields_total > 0:
         results["passed"].append(f"HWG-A11Y-02 ({required_fields_total} Pflichtfelder programmatisch inkl. globaler Legende deklariert)")
     else:
-        results["not_applicable"]["HWG-A11Y-02"] = "Keine Pflichtfelder im Formular deklariert."
+        results["not_applicable"]["HWG-A11Y-02"] = "Kleinstformular ohne Pflichtfelder."
 
     # 7. HWG-A11Y-03
     if dirty_labels:
@@ -720,8 +822,14 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
     for sec_key, seq in section_personal_sequences.items():
         if len(seq) < 2:
             continue
+        seen_ranks_in_current_person = set()
         for i in range(len(seq) - 1):
             curr, nxt = seq[i], seq[i + 1]
+            seen_ranks_in_current_person.add(curr[3])
+            # Falls in derselben Sektion ein zweiter vollständiger Personenblock (z. B. nach Vorname+Nachname erneut Anrede/Vorname) beginnt:
+            if nxt[3] in (1, 2) and 2 in seen_ranks_in_current_person and 3 in seen_ranks_in_current_person:
+                seen_ranks_in_current_person = set()
+                continue
             if curr[3] > nxt[3]:
                 out_of_order.append(f"'{curr[2]}' ({curr[1]}) vor '{nxt[2]}' ({nxt[1]})")
 
@@ -740,17 +848,29 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             f"Keine zusammenhängende Stammdaten-Sektion mit >= 2 Personenfeldern vorhanden (gefunden: {total_personal_fields})."
         )
 
-    # 9. HWG-UI-01
-    if dev_notes:
-        preview_dn = "; ".join(f"{n}: '{txt}'" for n, txt in dev_notes[:3])
-        results["violations"].append({
-            "rule": "HWG-UI-01",
-            "severity": "critical",
-            "message": f"Sichtbare Entwickler-Notizen / technische Hinweise im Frontend: {preview_dn}."
-        })
-        results["score"] -= penalties["critical"]
+    # 9. HWG-BTN-02 (Deterministische Prüfung der Mehrseiten-Navigation)
+    if not pagination_buttons:
+        results["not_applicable"]["HWG-BTN-02"] = (
+            "Einseitiges Formular ohne Seitennavigation."
+            if raw_xpage_count <= 1
+            else "Keine expliziten Seitenwechsel-Schaltflächen im Formular definiert."
+        )
     else:
-        results["passed"].append("HWG-UI-01 (Keine sichtbaren Entwickler-Notizen im Frontend)")
+        app_pag = [b for b in pagination_buttons if b["applicant_visible"]] or pagination_buttons
+        bad_pag = []
+        for b in app_pag:
+            if b["label"] not in ("Weiter", "Zurück"):
+                bad_pag.append(f"'{b['label']}' ({b['element']})")
+        if bad_pag:
+            dedup_bad = list(dict.fromkeys(bad_pag))
+            results["violations"].append({
+                "rule": "HWG-BTN-02",
+                "severity": "minor",
+                "message": f"Uneinheitliche oder kleingeschriebene Seitennavigation (erlaubt: 'Weiter' / 'Zurück'): {', '.join(dedup_bad[:4])}."
+            })
+            results["score"] -= penalties["minor"]
+        else:
+            results["passed"].append("HWG-BTN-02 (Einheitliche Mehrseiten-Navigation 'Weiter' / 'Zurück' eingehalten)")
 
     # 10. HWG-DSGVO-01
     has_dsgvo_notice = footer_shows_privacy or has_text_dsgvo_with_link
@@ -812,13 +932,13 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         })
         results["score"] -= penalties["minor"]
     else:
-        canonical_roots = [
+        canonical_roots = (
             "eingegangen", "in prüfung", "in bearbeitung",
             "nachforderung", "genehmigt", "abgelehnt", "archiviert", "abgeschlossen"
-        ]
+        )
         non_canonical_states = [
             s for s in workflow_states
-            if not any(root in s.lower().strip() for root in canonical_roots)
+            if not any(s.lower().strip().startswith(root) for root in canonical_roots)
         ]
         if non_canonical_states:
             results["violations"].append({
@@ -830,7 +950,7 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
         else:
             results["passed"].append(f"HWG-WF-01 (Kanonischer Workflow-Lebenszyklus eingehalten: {', '.join(workflow_states)})")
 
-    # 15. HWG-WF-02
+    # 15. HWG-WF-02 (Prüfung über ALLE Workflow-E-Mails, kein 1-aus-N-Loophole)
     if not workflow_emails:
         results["not_applicable"]["HWG-WF-02"] = "Keine automatisierten Workflow-E-Mails im Prozessmodell vorhanden."
     else:
@@ -839,15 +959,32 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
             em for em in workflow_emails
             if any(tok in f"{em.get('subject', '')} {em.get('body', '')}".lower() for tok in record_id_tokens)
         ]
-        if not emails_with_record_id:
+        missing_count = len(workflow_emails) - len(emails_with_record_id)
+        if missing_count > 0:
             results["violations"].append({
                 "rule": "HWG-WF-02",
                 "severity": "minor",
-                "message": "Fehlender dynamischer Vorgangsplatzhalter ([%$RECORD_ID%]) in den automatisierten Workflow-E-Mails (FC_EMAIL)."
+                "message": f"Fehlender dynamischer Vorgangsplatzhalter ([%$RECORD_ID%]) in {missing_count}/{len(workflow_emails)} automatisierten Workflow-E-Mails (FC_EMAIL)."
             })
             results["score"] -= penalties["minor"]
         else:
-            results["passed"].append(f"HWG-WF-02 (Dynamische Vorgangsreferenz ([%$RECORD_ID%]) in {len(emails_with_record_id)}/{len(workflow_emails)} Workflow-E-Mails vorhanden)")
+            results["passed"].append(f"HWG-WF-02 (Dynamische Vorgangsreferenz ([%$RECORD_ID%]) in allen {len(workflow_emails)}/{len(workflow_emails)} Workflow-E-Mails vorhanden)")
+
+    # --- Hybride Vorab-Regeln (HWG-UI-01 & HWG-UX-02) ---
+    if dev_notes:
+        preview_dn = "; ".join(f"{n}: '{txt}'" for n, txt in dev_notes[:3])
+        results["violations"].append({
+            "rule": "HWG-UI-01",
+            "severity": "critical",
+            "message": f"Sichtbare Entwickler-Notizen / technische Hinweise im Frontend: {preview_dn}."
+        })
+        results["score"] -= penalties["critical"]
+
+    effective_pages = max(1, raw_xpage_count)
+    if effective_pages < 3 and total_input_count < 25:
+        results["not_applicable"]["HWG-UX-02"] = (
+            f"Formular unterhalb des Komplexitätsschwellenwerts ({effective_pages} Seite(n), {total_input_count} Eingabefelder; Schwellenwert: >= 3 Seiten oder >= 25 Felder)."
+        )
 
     results["score"] = max(0, results["score"])
     return results
@@ -856,7 +993,14 @@ def evaluate_stage1_ast(form_data: dict, workflow_emails: list, workflow_states:
 def _mark_semantic_unverified(results: dict, registry: dict, status: str, reason: str, api_base: str, model: str, rule_ids=None):
     target_ids = rule_ids if rule_ids is not None else SEMANTIC_RULE_IDS
     rule_lookup = {r["id"]: r for r in registry["rules"]}
+    already_violated = {v.get("rule") or v.get("rule_id") for v in results.get("violations", [])}
+
     for rid in target_ids:
+        # Falls eine hybride Regel (z. B. HWG-UI-01 oder HWG-UX-02) bereits deterministisch in Stufe 1 entschieden wurde:
+        if rid in already_violated:
+            continue
+        if rid == "HWG-UX-02" and rid in results.get("not_applicable", {}):
+            continue
         rtype = (rule_lookup.get(rid) or {}).get("evaluation_type", "semantic")
         label = "Semantische KI-Regel" if rtype == "semantic" else "Hybride AST/KI-Regel"
         if rid not in results["unverified_semantic"]:
@@ -876,7 +1020,6 @@ def _mark_semantic_unverified(results: dict, registry: dict, status: str, reason
 
 
 def _extract_json_from_llm_text(raw_text: str) -> dict:
-    # Entferne optionale <think>...</think> Reasoning-Blöcke (z. B. Qwen 3 / DeepSeek)
     cleaned = re.sub(r"<think>.*?</think>", "", raw_text, flags=re.DOTALL | re.IGNORECASE).strip()
     fence_match = re.search(r"```(?:json)?\s*(\{.*\})\s*```", cleaned, flags=re.DOTALL | re.IGNORECASE)
     if fence_match:
@@ -892,12 +1035,13 @@ def _extract_json_from_llm_text(raw_text: str) -> dict:
 def merge_llm_evaluation_payload(results: dict, llm_obj: dict, registry: dict, model_name: str, api_base: str) -> dict:
     """
     Fusioniert die strukturierte JSON-Antwort eines LLMs für die 7 semantischen/hybriden Regeln
-    deterministisch mit den Stufe-1-AST-Ergebnissen gemäß Gleichung (4.2).
+    deterministisch mit den Stufe-1-AST-Ergebnissen gemäß Gleichung (4.3).
     """
     penalties = registry["scoring"]["severity_penalties"]
     rule_lookup = {r["id"]: r for r in registry["rules"]}
     evaluated_entries = llm_obj.get("evaluated_rules") or []
     seen_semantic = set()
+    existing_violation_map = {(v.get("rule") or v.get("rule_id")): v for v in results["violations"]}
 
     for entry in evaluated_entries:
         if not isinstance(entry, dict):
@@ -927,6 +1071,9 @@ def merge_llm_evaluation_payload(results: dict, llm_obj: dict, registry: dict, m
                     "severity": "recommendation",
                     "message": full_msg,
                 })
+            elif rid in existing_violation_map:
+                # Hybride Regel (z. B. HWG-UI-01) wurde bereits in Stufe 1 abgezogen -> Nachricht anreichern, kein Doppelabzug!
+                existing_violation_map[rid]["message"] = full_msg
             else:
                 results["violations"].append({
                     "rule": rid,
@@ -943,15 +1090,19 @@ def merge_llm_evaluation_payload(results: dict, llm_obj: dict, registry: dict, m
                 "message": full_msg,
             })
         elif status in ("NOT_APPLICABLE", "N/A", "NA"):
-            results["not_applicable"][rid] = f"[KI-Prüfung · {model_name}] {finding or 'Auf diesen Formularkontext nicht anwendbar.'}"
+            if rid not in existing_violation_map:
+                results["not_applicable"][rid] = f"[KI-Prüfung · {model_name}] {finding or 'Auf diesen Formularkontext nicht anwendbar.'}"
         elif status == "PASS":
-            results["passed"].append(f"{rid} ({finding or 'Semantische KI-Prüfung bestanden'})")
+            if rid not in existing_violation_map:
+                results["passed"].append(f"{rid} ({finding or 'Semantische KI-Prüfung bestanden'})")
         else:
             results["unverified_semantic"].append(rid)
             results["not_applicable"][rid] = f"KI-Prüfung unvollständig: Unbekannter Status '{status}' vom Modell '{model_name}'."
 
-    missing = [rid for rid in SEMANTIC_RULE_IDS if rid not in seen_semantic]
+    missing = [rid for rid in SEMANTIC_RULE_IDS if rid not in seen_semantic and rid not in existing_violation_map]
     for rid in missing:
+        if rid == "HWG-UX-02" and rid in results.get("not_applicable", {}):
+            continue
         if rid not in results["unverified_semantic"]:
             results["unverified_semantic"].append(rid)
         results["not_applicable"][rid] = (
@@ -960,13 +1111,13 @@ def merge_llm_evaluation_payload(results: dict, llm_obj: dict, registry: dict, m
 
     results["score"] = max(0, results["score"])
     results["llm_evaluation"] = {
-        "evaluated": len(missing) == 0,
-        "status": "ok" if not missing else "partial",
+        "evaluated": len(results["unverified_semantic"]) == 0,
+        "status": "ok" if not results["unverified_semantic"] else "partial",
         "api_base": api_base,
         "model": model_name,
         "reason": f"Semantische Prüfung über Modell '{model_name}' abgeschlossen."
-        if not missing
-        else f"Modell '{model_name}' hat {len(seen_semantic)}/7 semantische Regeln bewertet (fehlend: {', '.join(missing)}).",
+        if not results["unverified_semantic"]
+        else f"Modell '{model_name}' hat {len(seen_semantic)}/7 semantische Regeln bewertet (fehlend: {', '.join(results['unverified_semantic'])}).",
         "unverified_rules": list(results["unverified_semantic"]),
     }
     return results
@@ -996,7 +1147,7 @@ def evaluate_stage2_llm(results: dict, form_data: dict, workflow_emails: list, f
         or DEFAULT_LLM_MODEL
     ).strip()
     timeout_sec = int(cfg.get("timeout") or os.environ.get("LLM_TIMEOUT") or 45)
-    allow_no_key = str(os.environ.get("LLM_ALLOW_NO_KEY", "0")).strip() == "1"
+    allow_no_key = str(os.environ.get("LLM_ALLOW_NO_KEY", "0")).strip() == "1" or "localhost" in api_base or "127.0.0.1" in api_base
 
     if not api_key and not allow_no_key:
         _mark_semantic_unverified(
@@ -1113,8 +1264,8 @@ def evaluate_form(xfp_path: str, registry: dict, llm_config: dict = None) -> dic
 if __name__ == "__main__":
     reg = load_rules()
     test_forms = [
-        "data/test_forms/synthetic_compliant_form.json",
-        "data/test_forms/synthetic_noncompliant_form.json",
+        "data/test_forms/synthetic_compliant_form.xfp",
+        "data/test_forms/synthetic_noncompliant_form.xfp",
         "data/raw_forms/prod/Auslagenerstattung _20260929.xfp",
         "data/raw_forms/test/unfertige und vielleicht fertige formulare/AFörderung Antrag-Sprints für Drittmittelanträge.xfp",
         "data/raw_forms/standard/AFörderung Antrag-Sprints für Drittmittelanträge (HWG-Standard).xfp",
@@ -1125,6 +1276,8 @@ if __name__ == "__main__":
     print(f"Gesamtanzahl Governance-Regeln: {len(reg['rules'])} (15 deterministisch [Stufe 1] + 7 semantisch/hybrid [Stufe 2])")
 
     for tf in test_forms:
+        if not os.path.exists(tf) and tf.endswith(".xfp"):
+            tf = tf[:-4] + ".json"
         res = evaluate_form(tf, reg)
         llm_info = res.get("llm_evaluation", {})
         print(f"\n{'=' * 22} {res['form']} {'=' * 22}")

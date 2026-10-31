@@ -6,7 +6,7 @@ Gemäß den Betreuungsrichtlinien von Prof.\,Dr.\,Simon Kloker sowie \textcite{w
 
 \textbf{1. Kriteriengeleitete Werkzeugauswahl}
 
-Für Software-Prototyping, Datenexploration der Formcycle-Exporte und Formulierungshilfen wurde \textit{Google Gemini} in einer agentischen Entwicklungsumgebung genutzt (großes Kontextfenster für \texttt{.fcp}/\texttt{.fcexport}-Modelle, Schema-Treue). Zur datenschutzkonformen Evaluation der semantischen Prüfstufe (Art.\,44\,ff. DSGVO) wurden fünf Open-Weight-Modelle in der \textit{Academic Cloud} (GWDG) verglichen (\textit{Llama 3.1 8B}, \textit{Qwen 3.8 27B}, \textit{Qwen 3 30B A3B}, \textit{GLM 5.3 Flash}, \textit{DeepSeek V4 Flash}) und das Modell \textit{Qwen 3.8 27B} zusätzlich auf einem lokalen Inferenzserver im HWG-Intranet on-premise validiert.
+Für Software-Prototyping, Datenexploration der Formcycle-Exporte und Formulierungshilfen wurde \textit{Google Gemini} in einer agentischen Entwicklungsumgebung genutzt (großes Kontextfenster für \texttt{.fcp}/\texttt{.fcexport}-Modelle, Schema-Treue). Zur datenschutzkonformen Evaluation der semantischen Prüfstufe (Art.\,44\,ff. DSGVO) wurden fünf Open-Weight-Modelle in der \textit{Academic Cloud} (GWDG) verglichen (\textit{Llama 3.1 8B}, \textit{Qwen 3.8 27B}, \textit{Qwen 3 30B A3B}, \textit{GLM 5.3 Flash}, \textit{DeepSeek V4 Flash}) und das Modell \textit{Qwen 3.8 27B} zusätzlich auf einem lokalen Ollama-Inferenzserver im HWG-Intranet on-premise validiert.
 
 \textbf{2. Häufigkeit, Nutzen und Grenzen}
 
@@ -18,7 +18,7 @@ Bei der Scoring-Formel (Gl.~\ref{eq:compliance_score}) fungierte die KI als Disk
 
 \textbf{4. Mehrstufige Validierung (Vier-Augen-Prinzip)}
 
-Nach \textcite{recker2013scientific} wurden alle KI-Artefakte methodisch validiert: (1)~Regressionstests der Python-Engine an allen 34 \texttt{.xfp}-Archiven samt Fail-Safe-Prüfung, (2)~manuelles JSON-Audit der synthetischen Testformulare (\texttt{synthetic\_\allowbreak compliant\_\allowbreak form.json} und 19 gezielte Defekte in \texttt{synthetic\_\allowbreak noncompliant\_\allowbreak form.json}) sowie (3)~Regelabgleich gegen BITV 2.0, WCAG 2.1, DIN EN ISO 9241-110 und Formcycle v8.
+Nach \textcite{recker2013scientific} wurden alle KI-Artefakte methodisch validiert: (1)~Regressionstests der Python-Engine an allen 34 \texttt{.xfp}-Archiven samt Fail-Safe-Prüfung, (2)~manuelles Archiv- und JSON-Audit der synthetischen Formcycle-v8-Testformulare (\texttt{synthetic\_\allowbreak compliant\_\allowbreak form.xfp} und 19 gezielte Defekte in \texttt{synthetic\_\allowbreak noncompliant\_\allowbreak form.xfp}) sowie (3)~Regelabgleich gegen BITV 2.0, WCAG 2.1, DIN EN ISO 9241-110 und Formcycle v8.
 
 \textbf{5. Erforderliche Fach- und Methodenkompetenzen}
 

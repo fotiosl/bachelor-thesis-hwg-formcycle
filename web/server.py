@@ -14,12 +14,13 @@ DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(DIRECTORY, ".."))
 
 PRESET_PATHS = {
-    "synth_comp": "data/test_forms/synthetic_compliant_form.json",
-    "synth_noncomp": "data/test_forms/synthetic_noncompliant_form.json",
+    "synth_comp": "data/test_forms/synthetic_compliant_form.xfp",
+    "synth_noncomp": "data/test_forms/synthetic_noncompliant_form.xfp",
     "auslagen": "data/raw_forms/prod/Auslagenerstattung _20260929.xfp",
     "sprints": "data/raw_forms/test/unfertige und vielleicht fertige formulare/AFörderung Antrag-Sprints für Drittmittelanträge.xfp",
     "sprints_standard": "data/raw_forms/standard/AFörderung Antrag-Sprints für Drittmittelanträge (HWG-Standard).xfp",
     "master": "data/raw_forms/test/adminformulare/Master-Formular.xfp",
+    "fb1_praktikum": "data/raw_forms/prod/FB1-GiP_Praktikum_final_20251115.xfp",
 }
 
 
@@ -66,7 +67,7 @@ class ComplianceHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 content_length = int(self.headers.get("Content-Length", 0))
                 post_body = self.rfile.read(content_length)
-                raw_header_name = self.headers.get("X-File-Name", "uploaded_form.json")
+                raw_header_name = self.headers.get("X-File-Name", "uploaded_form.xfp")
                 filename = urllib.parse.unquote(raw_header_name)
                 llm_cfg = self._extract_llm_config()
                 reg = load_rules(rules_path)

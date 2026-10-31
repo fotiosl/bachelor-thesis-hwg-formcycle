@@ -7,17 +7,16 @@
 
 ## 1. Tabelle 3.2 & Tabelle 6.1 mit saniertem 100 %-Formular befüllen
 - [x] **Tabelle 3.2 (`thesis/chapters/03_ist_analyse.tex`):**
-  - Spalte 4 wurde von abstrakten Platzhaltern auf die exakten gemessenen Kennzahlen des sanierten Referenzformulars *„Antrag-Sprints (HWG-Standard)“* umgestellt (1 Seite, 32 Elemente, H1 + 60\,px HWG-Logo mit Alt-Text, XIMA deaktiviert, 3 semantische Fieldsets mit Legenden, 12 Pflichtfelder inkl. globaler Legende, lückenlose Feldvalidierung, Art.-13-DSGVO-Integration, Action-Verb-Buttons und 8 E-Mails mit Vorgangs-ID).
+  - Spalte 4 wurde auf die exakten gemessenen Kennzahlen des im Formcycle-v8-Designer sanierten Referenzformulars *„Antrag-Sprints (HWG-Standard)“* umgestellt (1 Seite, 30 Elemente, H1 + 60\,px HWG-Logo mit Alt-Text, XIMA deaktiviert, 2 semantische Fieldsets mit Legenden, 12 Pflichtfelder inkl. globaler Legende, lückenlose Feldvalidierung, Art.-13-DSGVO-Integration, Action-Verb-Buttons und 8/8 E-Mails mit Vorgangs-ID).
 - [x] **Tabelle 6.1 (`thesis/chapters/06_evaluation.tex`):**
-  - Vollständige Hybrid-Klassifikation (Stufe 1 AST + Stufe 2 Semantik) für alle Zeilen synchronisiert (jede Zeile summiert konsistent exakt zu 22 Regeln):
-    - *Synthetisch Konform:* 20 Best. / 0 Verst. / 2 N/A (Score 100, Grün)
-    - *Synthetisch Fehlerhaft:* 0 Best. / 19 Verst. / 3 N/A (Score 0, Rot)
+  - Vollständige Hybrid-Klassifikation (Stufe 1 AST + Stufe 2 Semantik/Hybrid) für alle Zeilen synchronisiert (jede Zeile summiert konsistent exakt zu 22 Regeln):
+    - *Synthetisch Konform (`synthetic_compliant_form.xfp`):* 20 Best. / 0 Verst. / 2 N/A (Score 100, Grün)
+    - *Synthetisch Fehlerhaft (`synthetic_noncompliant_form.xfp`):* 1 Best. / 19 Verst. / 2 N/A (Score 0, Rot)
     - *Auslagenerstattung (Prod):* 9 Best. / 12 Verst. / 1 Empf. / 0 N/A (Score 17, Rot)
     - *Antrag-Sprints (ZFK, alt):* 7 Best. / 11 Verst. / 4 N/A (Score 6, Rot)
     - *Antrag-Sprints (saniert):* 18 Best. / 0 Verst. / 4 N/A (Score 100, Grün)
-    - *Master-Formular (Admin):* 11 Best. / 6 Verst. / 1 Empf. / 4 N/A (Score 50, Orange)
-  - **Methodische Dokumentation (Ground-Truth-Baseline für Semantik):**
-    Die semantischen Stufe-2-Regeln der Realformulare basieren auf einer fachlichen Ground-Truth-Simulation (echter semantischer Bestand der Labels, Buttons, Jargon und Workflow-E-Mails). Sollte in Zukunft im Dashboard eine Live-LLM-API (z.\,B. GWDG Academic Cloud oder lokales vLLM) angebunden werden, dient diese Tabelle als Referenzmaßstab (Ground Truth), um die reale Erkennungsleistung der Open-Source-Modelle gegen die tatsächlichen Punktabzüge zu verifizieren und etwaige Modell-Unschärfen transparent gegenüberzustellen.
+    - *Master-Formular (Admin):* 12 Best. / 6 Verst. / 1 Empf. / 3 N/A (Score 50, Orange)
+  - **Live-Verifikation:** Neben der GWDG Academic Cloud wurde die semantische Stufe lokal über Ollama mit `qwen3.8:27b` verifiziert (mediane Antwortzeit ca. 10 Sekunden).
 - [x] **Pipeline, Presets & Dashboard:**
   - Formular `AFörderung Antrag-Sprints für Drittmittelanträge (HWG-Standard).xfp` in `data/raw_forms/standard/` und `data/test_forms/` abgelegt, in `scripts/test_rule_engine.py`, `scripts/generate_web_dashboard.py` und `web/server.py` als Preset integriert und `web/compliance_dashboard.html` neu generiert.
 

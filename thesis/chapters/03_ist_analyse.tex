@@ -11,19 +11,19 @@ Die Bestandsaufnahme stützt sich auf sämtliche zum Erhebungszeitpunkt verfügb
 \subsection{Funktionale Archetypen und repräsentative Kernanträge}
 \label{subsec:archetypen}
 
-Die Formulare reichen von kompakten einseitigen Masken (30 UI-Elemente) bis zu hochkomplexen Großanträgen mit 424 Elementen auf 12 Seiten und gliedern sich in vier funktionale Archetypen (Tabelle~\ref{tab:archetypen}).
+Die Formulare reichen von kompakten einseitigen Masken (11 UI-Elemente bei technischen Administrationsvorlagen bzw. 30 Elemente bei Fachanträgen) bis zu hochkomplexen Großanträgen mit 424 Elementen auf 12 Seiten und gliedern sich in vier funktionale Archetypen (Tabelle~\ref{tab:archetypen}).
 
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}Xccc}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}Xccc}
 \toprule
 \textbf{Archetyp} & \textbf{Bereiche \& Beispiele} & \textbf{Elemente} & \textbf{Seiten} & \textbf{Anteil ($n / N$)} \\
 \midrule
-\textbf{1. Studierendenprozesse} & Praxisphasen (\textit{FB1-GiP-Praktikum}), Notenverbuchung & 114--133 & 2 & 24\,\% (8/34) \\
-\textbf{2. Finanzen \& Beschaffung} & Auslagenerstattung, Vergabevermerke, Dienstreisen & 63--424 & 3--12 & 26\,\% (9/34) \\
-\textbf{3. Personalverwaltung (HR)} & Stellenausschreibungen, Vertragsänderungen & 110--345 & 2--9 & 24\,\% (8/34) \\
-\textbf{4. Forschung \& Transfer (ZFK)} & Antrag-Sprints, Promotions- und Tagungsförderung & 30--419 & 1--10 & 26\,\% (9/34) \\
+\textbf{1. Studierenden- \& Campus-Services} & Praxisphasen (\textit{FB1-GiP-Praktikum}), Veranstaltungs- \& Wohnungsservice & 43--133 & 2 & 24\,\% (8/34) \\
+\textbf{2. Finanzen \& Beschaffung} & Auslagenerstattung, Vergabevermerke, Dienstreisen, KI-Beschaffung & 39--424 & 3--12 & 26\,\% (9/34) \\
+\textbf{3. Personalverwaltung (HR)} & Stellenausschreibungen, Vertragsänderungen, Weiterbildung, Nebentätigkeit & 63--345 & 2--9 & 21\,\% (7/34) \\
+\textbf{4. Forschung (ZFK), IT \& Administration} & Antrag-Sprints, ZFK-Fördermittel, IT-Bedarfsmeldung, Master-Vorlagen & 11--419 & 1--11 & 29\,\% (10/34) \\
 \bottomrule
 \end{tabularx}
 \caption{Funktionale Archetypen des analysierten HWG-Formularbestands ($N = 34$)}
@@ -42,16 +42,16 @@ Zur mikroanalytischen Gegenüberstellung vergleicht Tabelle~\ref{tab:vergleich_k
 \midrule
 Domäne & Finanzen / Haushalt & Forschung (ZFK) & Fachbereich 1 & Forschung (ZFK) / Standard-Referenz \\
 Layout-Breite & 700\,px (starr) & 850\,px (modern) & 700\,px (starr) & 850\,px (responsiv normiert) \\
-Seitenanzahl & 3 Seiten & 1 Seite & 2 Seiten & 1 Seite (32 Elemente gesamt) \\
+Seitenanzahl & 3 Seiten & 1 Seite & 2 Seiten & 1 Seite (30 Elemente gesamt) \\
 Header-Bereich & Logo 50\,px (ohne Alt-Text), keine H1 & Kein Logo, keine H1 & Logo 50\,px (ohne Alt-Text), keine H1 & HWG-Logo 60\,px (inkl. Alt-Text), \texttt{<h1>} aktiv \\
 Footer-Branding & XIMA deaktiviert & XIMA-Logo aktiv & XIMA deaktiviert & XIMA deaktiviert (\texttt{showlogo="0"}) \\
-Fieldset-Gruppen & 4 \texttt{<fieldset>}* (11 ges.) & 0 Fieldsets (nur \texttt{<div>}) & 2 \texttt{<fieldset>}* (20 ges.) & 3 \texttt{<fieldset>} mit Legende (vollständig) \\
+Fieldset-Gruppen & 4 \texttt{<fieldset>}* (11 ges.) & 0 Fieldsets (nur \texttt{<div>}) & 2 \texttt{<fieldset>}* (20 ges.) & 2 \texttt{<fieldset>} mit Legende (vollständig) \\
 Pflichtfelder & Programmatisch (Stern + ARIA) & Programmatisch (Stern + ARIA) & Programmatisch; Vorname, Nachname, E-Mail optional & 12 Pflichtfelder (\texttt{required="1"}) + globale Legende \\
 Formatvalidierung & PLZ (\texttt{plzDE}); Tel. \& IBAN unvalidiert & Telefon (\texttt{phone}) validiert & PLZ/Matrikelnr. nur \texttt{posinteger}; Kontakt frei & Lückenlos validiert (E-Mail, Regex-Tel., Datum, Währung) \\
 Dateiuploads & 2 Uploads* ohne Größenlimit (4 ges.) & Keine Uploads & 4 Uploads* ohne Größenlimit (17 ges.) & Keine Uploads (Regel N/A) \\
 Datenschutz (Art.\,13) & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Kein DSGVO-Hinweis & Art.\,13 integriert (\texttt{privacy\allowbreak Policy\allowbreak Show="1"}) \\
 Primär-Button & \texttt{senden} & \texttt{senden} / \texttt{Kritischer Fall} & \texttt{Antrag einreichen} & Action-Verbs: \texttt{Antrag einreichen} / \enquote{Kritischen Fall einreichen} \\
-Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8 E-Mails inkl. \texttt{[\%\$RECORD\_\allowbreak ID\%]} (5 kanonische Status) \\
+Workflow-E-Mail & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & Vorhanden (ohne Vorgangs-ID) & 8/8 E-Mails inkl. \texttt{[\%\$RECORD\_\allowbreak ID\%]} (5 kanonische Status) \\
 \bottomrule
 \end{tabularx}
 \caption{Vergleich dreier Kernformulare mit den Zielanforderungen des HWG-Soll-Standards (*Werte der Antragstellenden-Ansicht; Gesamtwerte über alle Prozessseiten in Klammern)}
@@ -136,12 +136,12 @@ Die Korpusanalyse belegt flächendeckende Defizite in der technischen Qualitäts
 \begin{itemize}
     \item \textbf{Fehlende Fieldset-Semantik (WCAG 1.3.1):} \textbf{47\,\% (16/34)} der Formulare besitzen kein einziges \texttt{XFieldSet}-Element; unter Einschluss unbeschrifteter Legenden und ungruppierter Container verfehlen \textbf{56\,\% (19/34)} eine barrierefreie Abschnittsgruppierung.
     \item \textbf{HTML-Störfragmente in Labels:} In \textbf{76\,\% (26/34)} der Vorlagen enthalten Feldlabels störende Inline-Formatierungen (\texttt{<br>}, \texttt{<span>}), unmaskierte Sonderzeichen oder Pipe-Trenner, was zu fehlerhafter Sprachausgabe bei assistiven Technologien führt.
-    \item \textbf{Fehlende DSGVO-Hinweise \& Validierung:} \textbf{82\,\% (28/34)} erheben Personendaten ohne Art.-13-DSGVO-Hinweis, und \textbf{47\,\% (16/34)} belassen strukturierte Felder (IBAN, PLZ, Telefon, Matrikelnummer) ohne wirksame Formatvalidierung.
+    \item \textbf{Fehlende DSGVO-Hinweise \& Validierung:} \textbf{82\,\% aller Formulare (28/34)} --- entsprechend \textbf{85\,\% (28/33)} der personenbezogenen Formulare --- erheben Personendaten ohne Art.-13-DSGVO-Hinweis, und \textbf{56\,\% (19/34)} belassen strukturierte Felder (E-Mail, IBAN, PLZ, Telefon, Matrikelnummer) ohne wirksame Formatvalidierung.
 \end{itemize}
 
 \subsection{Problemfeld 6: Workflow-Silos und fehlende Vorgangsreferenzen}
 \label{subsec:workflow_silos}
-Die Auswertung aller 34 Workflow-Modelle zeigt eine ausgeprägte Prozessfragmentierung: Zwar bilden \textbf{56\,\% (19/34)} mehrstufige Genehmigungsketten ab, während \textbf{44\,\% (15/34)} einstufige Einzelaufgaben bleiben, doch operieren selbst mehrstufige Prozesse in vertikalen Abteilungssilos. In \textbf{91\,\% (31/34)} fehlen kanonische Statusbezeichnungen (stattdessen z.\,B. \enquote{Akzeptiert - VG} oder \enquote{Antrag kontiert - warten auf Auszahlung}), und \textbf{79\,\% (27/34)} versenden automatisierte E-Mails ohne die eindeutige Vorgangsreferenz \texttt{[\%\$RECORD\_ID\%]}.
+Die Auswertung aller 34 Workflow-Modelle zeigt eine ausgeprägte Prozessfragmentierung: Zwar bilden \textbf{56\,\% (19/34)} mehrstufige Genehmigungsketten ab, während \textbf{44\,\% (15/34)} einstufige Einzelaufgaben bleiben, doch operieren selbst mehrstufige Prozesse in vertikalen Abteilungssilos. In \textbf{91\,\% (31/34)} fehlen kanonische Statusbezeichnungen (stattdessen z.\,B. \enquote{Akzeptiert - VG} oder \enquote{Antrag kontiert - warten auf Auszahlung}). Zudem verfehlen \textbf{76\,\% aller Formulare (26/34)} --- entsprechend \textbf{84\,\% (26/31)} der Formulare mit aktivem E-Mail-Versand --- eine durchgängige Referenzierung mittels \texttt{[\%\$RECORD\_ID\%]}: Davon versenden \textbf{71\,\% (24/34)} Prozess-E-Mails gänzlich ohne Vorgangsnummer und zwei weitere Vorlagen (\textbf{6\,\%}) nur unvollständig in einzelnen E-Mail-Knoten, während drei Vorlagen (\textbf{9\,\%}) gar keine E-Mails auslösen.
 
 \section{Ableitung der Kernanforderungen}
 \label{sec:ableitung_anforderungen}

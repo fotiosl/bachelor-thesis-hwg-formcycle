@@ -1,7 +1,7 @@
 \chapter{Prompt-Spezifikation für den semantischen LLM-Audit}
 \label{app:prompt_extrakt}
 
-Zur wissenschaftlichen Reproduzierbarkeit und Dokumentation der Datenherkunft dokumentiert dieser Anhang den standardisierten System- und Inferenz-Prompt (\texttt{generate\_\allowbreak chat\_\allowbreak ai\_\allowbreak prompt.py}) für die semantische Prüfung (Stufe~2) über die REST-API der \textit{Academic Cloud} (GWDG).
+Zur wissenschaftlichen Reproduzierbarkeit und Dokumentation der Datenherkunft dokumentiert dieser Anhang den standardisierten System- und Inferenz-Prompt (\texttt{generate\_\allowbreak chat\_\allowbreak ai\_\allowbreak prompt.py}) für die semantische Prüfung (Stufe~2) über die REST-API der \textit{Academic Cloud} (GWDG) bzw.\ einen lokalen Ollama-Inferenzserver.
 
 \section*{Strukturierter System- und Inferenz-Prompt (v1.5.0)}
 
@@ -13,11 +13,11 @@ Du bist ein wissenschaftlicher Usability-, Barrierefreiheits- und Governance-Aud
 \vspace{0.15cm}
 \textbf{Kontext-Injektion (Katalog der 7 semantischen/hybriden Governance-Regeln v1.5.0):}
 \begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
-    \item \texttt{HWG-STAMM-02} (Stammdaten-Bezeichnungen, Minor, $-3$\,P.): Kanonische Feldnamen erforderlich (\enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse}, \enquote{E-Mail}, \enquote{Telefonnummer}). Technische Kürzel (\texttt{tf1}, \texttt{HWGLU-Email}) oder Sammelfelder (\enquote{Name Antragstellende/r}) sind unzulässig.
-    \item \texttt{HWG-BTN-01} (Aktionsorientierte Buttons, Major, $-8$\,P.): Primäre Buttons erfordern das \textit{Action-Verb-Pattern} (Infinitivverb + Zielobjekt, z.\,B. \enquote{Antrag einreichen} statt generischem \enquote{senden} oder verblosem \enquote{Kritischer Fall}).
-    \item \texttt{HWG-BTN-02} (Mehrseiten-Navigation, Minor, $-3$\,P.): Vor-/Zurück-Aktionen in mehrseitigen Formularen dürfen nur \enquote{Weiter} und \enquote{Zurück} lauten; bei Einseitenformularen ist \texttt{NOT\_APPLICABLE} zu vergeben.
+    \item \texttt{HWG-STAMM-02} (Stammdaten-Bezeichnungen, Minor, $-3$\,P.): Kanonische Feldnamen für Personenfelder erforderlich (\enquote{Anrede}, \enquote{Vorname}, \enquote{Nachname}, \enquote{E-Mail-Adresse}, \enquote{E-Mail}, \enquote{Telefonnummer}). Technische Kürzel (\texttt{tf1}, \texttt{HWGLU-Email}) oder Sammelfelder (\enquote{Name Antragstellende/r}) sind unzulässig; Sach-/Objektnamen (\enquote{Name des Förderprogramms}) sind zulässig.
+    \item \texttt{HWG-UI-01} (Keine Entwicklernotizen im Frontend, Hybrid, Critical, $-15$\,P.): Prüfe \path{metrics.suspected_dev_notes} sowie alle sichtbaren Textelemente auf technische Entwickler- oder Redaktionskommentare (z.\,B. Shibboleth/\allowbreak LDAP-Hinweise, JavaScript-Einblendregeln, TODOs).
+    \item \texttt{HWG-BTN-01} (Aktionsorientierte Buttons, Major, $-8$\,P.): Primäre Buttons erfordern das \textit{Action-Verb-Pattern} (Infinitivverb + Zielobjekt, z.\,B. \enquote{Antrag einreichen} oder \enquote{Kritischen Fall einreichen} statt generischem \enquote{senden} oder verblosem \enquote{Kritischer Fall}).
     \item \texttt{HWG-UX-02} (Zwischenspeichern, Recommendation, $0$\,P.): Ab $\ge 3$ Seiten oder $\ge 25$ Feldern (\path{metrics.ux02_complexity_threshold_reached}) ist ohne Zwischenspeicher (\texttt{submitNoCheck} mit \texttt{[\%\$URL\_FORM\%]}) \texttt{RECOM\allowbreak MENDATION} zu vergeben, sonst \texttt{PASS} bzw.\ \texttt{NOT\_APPLICABLE}.
-    \item \texttt{HWG-LANG-01} (Erklärung von Amtsjargon, Major, $-8$\,P.): Begriffe wie Kostenstelle, Vergabevermerk, GStB, KAP, Drittmittel oder Shibboleth erfordern einen verständlichen Hilfetext (\texttt{helptext}).
+    \item \texttt{HWG-LANG-01} (Erklärung von Amtsjargon, Major, $-8$\,P.): Begriffe wie Kostenstelle, Vergabevermerk, GStB, KAP, Mittelgeber oder Shibboleth in Eingabe- und Fließtextelementen erfordern einen verständlichen Hilfetext (\texttt{helptext}). Elemente im Kopfbereich (\texttt{in\_header: true}) sind als offizielle Formulartitel ausgenommen.
     \item \texttt{HWG-LANG-02} (Prägnante Formulierung, Minor, $-3$\,P.): Hinweissätze sollen maximal 25 Wörter umfassen (\texttt{metrics.sentences\_over\_25\_words}) und keine Schachtelsätze bilden.
     \item \texttt{HWG-FEEDBACK-01} (Prozesstransparenz in Workflow-Mails, Minor, $-3$\,P.): Eingangs-E-Mails müssen Bestätigung, zuständige Stelle und nächste Schritte ausweisen.
 \end{itemize}
